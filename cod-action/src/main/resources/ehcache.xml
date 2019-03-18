@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2018-2018.
+  ~ Beijing blue sky technology co., LTD.
+  ~ All rights reserved
+  ~
+  ~ author: sourcod
+  ~ github: https://github.com/WilleamZhao
+  ~ site：http://codframe.com
+  -->
+
+<ehcache>
+    　　<diskStore path="java.io.tempdir/ehcache" />
+    　　<defaultCache maxElementsInMemory="1000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true" />
+    　　<cache name="ehcacheGO" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="300000" timeToLiveSeconds="600000" overflowToDisk="true" />
+    　　<cache name="shiro" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="300000" timeToLiveSeconds="600000" overflowToDisk="true" />
+</ehcache>

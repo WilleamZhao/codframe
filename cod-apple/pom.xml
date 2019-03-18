@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2018-2019.
+  ~ Beijing sky blue technology co., LTD.
+  ~ All rights reserved
+  ~
+  ~ author: sourcod
+  ~ github: https://github.com/WilleamZhao
+  ~ site：http://codframe.com
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>tlkj.codframe</artifactId>
+        <groupId>com.tlkj</groupId>
+        <version>1.0.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cod-apple</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-model</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-log</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-core</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

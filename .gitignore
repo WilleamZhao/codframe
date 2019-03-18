@@ -1,0 +1,49 @@
+.idea
+*.iml
+*.iws
+*.ipr
+
+# Mac
+.DS_Store
+
+# Maven
+logs/
+target/
+*.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+
+# Windows || Eclipse
+.classpath
+.project
+.settings/
+build/
+
+# Other
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+*.epoch
+*.lck
+catalina.base_IS_UNDEFINED
+Thumbs.db
+.springBeans
+
+_doc/composer.phar
+composer.lock
+.env.*
+.env
+Desktop.ini
+.svn/
+.git/
+temp/
+.factorypath
+
+
+!/cod-log/src/main/java/com.tlkj.cod.log/
+java.io.tempdir
+java.io.*
