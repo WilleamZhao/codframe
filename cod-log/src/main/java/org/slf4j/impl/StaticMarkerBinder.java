@@ -23,28 +23,15 @@ import org.slf4j.spi.MarkerFactoryBinder;
  * @date 2018/12/4 9:03 PM
  */
 public class StaticMarkerBinder implements MarkerFactoryBinder {
-
-    public static final StaticMarkerBinder SINGLETON = new StaticMarkerBinder();
-
-    final IMarkerFactory markerFactory = new BasicMarkerFactory();
+    private final IMarkerFactory markerFactory = new BasicMarkerFactory();
 
     private StaticMarkerBinder() {
 
     }
 
-    /**
-     * Return the singleton of this class.
-     *
-     * @return the StaticMarkerBinder singleton
-     * @since 1.7.14
-     */
-    public static StaticMarkerBinder getSingleton() {
-        return SINGLETON;
-    }
-
     @Override
     public IMarkerFactory getMarkerFactory() {
-        return markerFactory;
+        return this.markerFactory;
     }
 
     @Override

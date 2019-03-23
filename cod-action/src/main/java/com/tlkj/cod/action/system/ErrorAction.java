@@ -13,6 +13,8 @@ package com.tlkj.cod.action.system;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.service.system.LogService;
 import com.tlkj.cod.model.common.GeneralResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("error")
 public class ErrorAction extends GeneralResponse {
+    private static Logger logger = LoggerFactory.getLogger(ErrorAction.class);
 
     @Autowired
     @Qualifier("clogImpl")
@@ -71,5 +74,9 @@ public class ErrorAction extends GeneralResponse {
             // return super.fail();
         }
         return super.success();
+    }
+
+    public static void main(String[] args) {
+        logger.info("asdasd");
     }
 }

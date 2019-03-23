@@ -29,6 +29,7 @@ public class CodLoggerFactory implements ILoggerFactory {
 
     @Override
     public Logger getLogger(String name) {
-        return CodLoggerAdapter.getInstance();
+        //Logger slf4jLogger = (Logger)this.loggerMap.get(name);
+        return CodLoggerAdapter.getInstance(name);
     }
 }

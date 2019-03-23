@@ -23,8 +23,15 @@ public class SystemModel {
 
     private static volatile SystemModel instance;
 
+    /**
+     * 初始化默认设置
+     */
     private SystemModel() {
-
+        codframe = new SystemSetModel();
+        log = new SystemSetLog();
+        allowDisable = new SystemSetAllowDisable();
+        cache = new SystemSetCacheModel();
+        file = new SystemFileModel();
     }
 
     public void setInstance(SystemModel instance) {

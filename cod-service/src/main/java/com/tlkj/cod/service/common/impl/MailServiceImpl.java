@@ -26,6 +26,8 @@ import java.io.File;
 @Service
 public class MailServiceImpl implements MailService {
 
+
+
     /**
      * 发送邮件
      */
@@ -33,4 +35,5 @@ public class MailServiceImpl implements MailService {
     public void send(String subject, String content, String toAddress, String ccAddress, String bccAddress, File[] attachment) {
 
     }
+
 }

@@ -23,7 +23,7 @@ public class SystemSetLog {
     /**
      * 日志支持的类型 clog(默认), slf4j, logback, aliyunLog
      */
-    private String type;
+    private String type = "clog";
 
     /**
      * 日志路径必须以 / 结尾
@@ -33,7 +33,7 @@ public class SystemSetLog {
     /**
      * 按日期拆文件夹 不设置默认 yyyy/MM/dd 格式
      */
-    private String pattern;
+    private String pattern = "yyyy/MM/dd";
 
     /**
      * 是否按日志级别拆分文件夹
@@ -48,7 +48,7 @@ public class SystemSetLog {
     /**
      * 日志等级
      */
-    private String level;
+    private String level = "debug";
 
     /**
      * 是否打印控制台日志

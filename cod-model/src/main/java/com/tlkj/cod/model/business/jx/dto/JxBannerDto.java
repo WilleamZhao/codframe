@@ -5,8 +5,6 @@
  */
 package com.tlkj.cod.model.business.jx.dto;
 
-import java.math.BigDecimal;
-
 /**
  * codFrame auto create
  * Dto
@@ -115,52 +113,5 @@ public class JxBannerDto {
 
     public void setUpdateTime(String updateTime){
         this.updateTime = updateTime;
-    }
-
-    private boolean ad;
-
-    private int asd;
-    private char a;
-    private double b;
-    private BigDecimal bigDecimal;
-
-    public boolean isAd() {
-        return ad;
-    }
-
-    public void setAd(boolean ad) {
-        this.ad = ad;
-    }
-
-    public int getAsd() {
-        return asd;
-    }
-
-    public void setAsd(int asd) {
-        this.asd = asd;
-    }
-
-    public char getA() {
-        return a;
-    }
-
-    public void setA(char a) {
-        this.a = a;
-    }
-
-    public double getB() {
-        return b;
-    }
-
-    public void setB(double b) {
-        this.b = b;
-    }
-
-    public BigDecimal getBigDecimal() {
-        return bigDecimal;
-    }
-
-    public void setBigDecimal(BigDecimal bigDecimal) {
-        this.bigDecimal = bigDecimal;
     }
 }

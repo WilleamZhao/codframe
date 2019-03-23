@@ -9,9 +9,10 @@ package com.tlkj.cod.model.business.jx.entity;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonModelConvert;
 import com.tlkj.cod.model.business.jx.dto.JxBannerDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * codFrame auto create
@@ -127,69 +128,19 @@ public class JxBannerDo extends CodCommonModelConvert implements Serializable,Cl
         this.update_time = update_time;
     }
 
-    private boolean ad;
-
-    private int asd;
-    private char a;
-    private double b;
-    private String bigDecimal;
-
-    public boolean isAd() {
-        return ad;
-    }
-
-    public void setAd(boolean ad) {
-        this.ad = ad;
-    }
-
-    public int getAsd() {
-        return asd;
-    }
-
-    public void setAsd(int asd) {
-        this.asd = asd;
-    }
-
-    public char getA() {
-        return a;
-    }
-
-    public void setA(char a) {
-        this.a = a;
-    }
-
-    public double getB() {
-        return b;
-    }
-
-    public void setB(double b) {
-        this.b = b;
-    }
-
-    public String getBigDecimal() {
-        return bigDecimal;
-    }
-
-    public void setBigDecimal(String bigDecimal) {
-        this.bigDecimal = bigDecimal;
-    }
-
+    private static Logger logger = LoggerFactory.getLogger(JxBannerDo.class);
     public static void main(String[] args) {
+        logger.info("test");
         JxBannerDo bannerDo = new JxBannerDo();
         bannerDo.setId("123");
         bannerDo.setSort("1");
         bannerDo.setImg("asdasda");
         bannerDo.setType("2");
         bannerDo.setCreate_time("asdasda");
-        bannerDo.setA('a');
-        bannerDo.setAd(false);
-        bannerDo.setAsd(123123123);
-        bannerDo.setB(456.456);
-        bannerDo.setBigDecimal("asdas");
-
 
         System.out.println(CodCommonJson.dump(bannerDo));
         JxBannerDto jxBannerDto = bannerDo.toDto(JxBannerDto.class);
         System.out.println(CodCommonJson.dump(jxBannerDto));
+
     }
 }

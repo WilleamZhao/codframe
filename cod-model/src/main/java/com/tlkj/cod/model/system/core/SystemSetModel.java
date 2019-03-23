@@ -23,7 +23,7 @@ public class SystemSetModel {
     /**
      * 端口
      */
-    private int port;
+    private int port = 9999;
 
     /**
      * WEB-INF/web.xml目录
@@ -38,7 +38,7 @@ public class SystemSetModel {
     /**
      * 项目名称
      */
-    private String project;
+    private String project = "codframe";
 
     private String host;
 

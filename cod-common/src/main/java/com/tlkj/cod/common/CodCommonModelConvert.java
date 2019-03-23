@@ -59,21 +59,22 @@ public abstract class CodCommonModelConvert {
         }
         // 3. 设置Dto值
         for (Field field : fields) {
-            // field.setAccessible(true);
             // 4. 私有的 && 非static && 非final
             if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
                 try {
                     Object value = getFieldValueByName(field.getName(), this);
+                    if (value == null){
+                        continue;
+                    }
+                    // 下划线转驼峰
                     String dtoSetName = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, field.getName());
-                    System.out.println(dtoSetName);
                     PropertyDescriptor pd = new PropertyDescriptor(dtoSetName, zlass);
                     Method wM = pd.getWriteMethod();
                     wM.invoke(tempT, value);
-                } catch (IllegalAccessException e){
-                    String dtoSetName = field.getName();
-                    System.out.println(dtoSetName);
-                } catch (IntrospectionException | InvocationTargetException e) {
+                } catch (IllegalAccessException | IntrospectionException | InvocationTargetException e) {
                     e.printStackTrace();
+                    String dtoSetName = field.getName();
+                    logger.warn("Do类必须采用下划线模式, 错误字段{}", dtoSetName);
                     System.err.println("set 错误");
                 }
             }
@@ -93,9 +94,5 @@ public abstract class CodCommonModelConvert {
             System.out.println(e.getMessage());
             return null;
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }

@@ -50,6 +50,9 @@ public class LoginServiceImpl implements LoginService {
 
     private static Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
+    public static void main(String[] args) {
+        logger.info("123123");
+    }
     @Autowired
     Finder finder;
 

@@ -11,6 +11,7 @@
 package org.slf4j.impl;
 
 import org.slf4j.ILoggerFactory;
+import org.slf4j.helpers.Util;
 import org.slf4j.spi.LoggerFactoryBinder;
 
 /**
@@ -28,6 +29,9 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
      *
      */
     private static final StaticLoggerBinder SINGLETON = new StaticLoggerBinder();
+    public static String REQUESTED_API_VERSION = "1.0.2";
+
+    private static final String loggerFactoryClassStr = CodLoggerFactory.class.getName();
 
     /**
      * Return the singleton of this class.
@@ -38,21 +42,20 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
         return SINGLETON;
     }
 
-    private static final String loggerFactoryClassStr = CodLoggerFactory.class.getName();
 
     /**
      * The ILoggerFactory instance returned by the {@link #getLoggerFactory}
      * method should always be the same object
      */
-    private final ILoggerFactory loggerFactory;
+    private final ILoggerFactory loggerFactory = new CodLoggerFactory();
 
     public StaticLoggerBinder() {
-        loggerFactory = new CodLoggerFactory();
+        Util.report("This version of SLF4J requires log4j version 1.2.12 or later. See also http://www.slf4j.org/codes.html#log4j_version");
     }
 
     @Override
     public ILoggerFactory getLoggerFactory() {
-        return loggerFactory;
+        return this.loggerFactory;
     }
 
     @Override
