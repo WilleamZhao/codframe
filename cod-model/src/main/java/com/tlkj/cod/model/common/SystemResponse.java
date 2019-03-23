@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @className SystemResponse
  * @date 2019/1/31 9:52 PM
  */
-public class SystemResponse<T> implements Serializable {
+public class SystemResponse<T> implements Serializable, Cloneable {
 
     /**
      * 序列化
@@ -99,9 +99,64 @@ public class SystemResponse<T> implements Serializable {
 
     }
 
+    /**
+     * 成功
+     */
+    public SystemResponse<T> success(){
+        return success(null);
+    }
+
+    /**
+     * 成功
+     */
+    public SystemResponse<T> success(T T){
+        this.data = T;
+        this.statusCode = StatusCode.SUCCESS_CODE;
+        return this;
+    }
+
+    /**
+     * 失败
+     */
+    public SystemResponse<T> fail(){
+        return fail(StatusCode.FAIL_CODE);
+    }
+
+    /**
+     * 失败
+     */
+    public SystemResponse<T> fail(T T){
+        return fail(StatusCode.FAIL_CODE, T);
+    }
+
+    /**
+     * 失败
+     */
+    public SystemResponse<T> fail(StatusCode statusCode){
+        return fail(statusCode, null);
+    }
+
+    /**
+     * 失败
+     */
+    public SystemResponse<T> fail(StatusCode statusCode, T T){
+        this.statusCode = statusCode;
+        this.data = T;
+        return this;
+    }
+
     public SystemResponse(SystemStatusCode statusCode){
         this.code = statusCode.getCode();
         this.name = statusCode.getName();
         this.msg = statusCode.getDesc();
+        this.statusCode = statusCode.getStatusCode();
+    }
+
+    public SystemResponse(SystemStatusCode statusCode, T data){
+        this.code = statusCode.getCode();
+        this.name = statusCode.getName();
+        this.msg = statusCode.getDesc();
+        this.statusCode = statusCode.getStatusCode();
+        this.data = data;
     }
 }

@@ -36,6 +36,7 @@
         <module>cod-apple</module>
         <module>cod-search</module>
         <module>cod-mybatis</module>
+        <module>cod-user</module>
     </modules>
 
     <name>codframe</name>

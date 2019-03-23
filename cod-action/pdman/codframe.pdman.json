@@ -1899,6 +1899,966 @@
             }
           ],
           "chnname": "用户角色表"
+        },
+        {
+          "title": "jx_banner",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "img",
+              "type": "id",
+              "remark": "",
+              "chnname": "图片"
+            },
+            {
+              "name": "url",
+              "type": "id",
+              "remark": "",
+              "chnname": "链接地址"
+            },
+            {
+              "name": "type",
+              "type": "id",
+              "remark": "",
+              "chnname": "类型"
+            },
+            {
+              "name": "sort",
+              "type": "id",
+              "remark": "",
+              "chnname": "排序"
+            },
+            {
+              "name": "state",
+              "type": "id",
+              "remark": "",
+              "chnname": "状态"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "精享banner"
+        },
+        {
+          "title": "jx_share",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "img",
+              "type": "MiddleString",
+              "remark": "",
+              "chnname": "图片"
+            },
+            {
+              "name": "title",
+              "type": "Intro",
+              "remark": "",
+              "chnname": "标题"
+            },
+            {
+              "name": "intro",
+              "type": "MiddleString",
+              "remark": "",
+              "chnname": "简介"
+            },
+            {
+              "name": "content",
+              "type": "LongText",
+              "remark": "",
+              "chnname": "内容"
+            },
+            {
+              "name": "preview_url",
+              "type": "MiddleString",
+              "remark": "",
+              "chnname": "预览地址"
+            },
+            {
+              "name": "download_url",
+              "type": "MiddleString",
+              "remark": "",
+              "chnname": "下载地址"
+            },
+            {
+              "name": "fine",
+              "type": "type",
+              "remark": "",
+              "chnname": "是否精华"
+            },
+            {
+              "name": "author",
+              "type": "id",
+              "remark": "",
+              "chnname": "作者"
+            },
+            {
+              "name": "zan_num",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "点赞数量"
+            },
+            {
+              "name": "comment_num",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "评论数量"
+            },
+            {
+              "name": "preview_num",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "预览数量"
+            },
+            {
+              "name": "price",
+              "type": "Money",
+              "remark": "",
+              "chnname": "价格"
+            },
+            {
+              "name": "top",
+              "type": "type",
+              "remark": "",
+              "chnname": "是否置顶"
+            },
+            {
+              "name": "sort",
+              "type": "id",
+              "remark": "",
+              "chnname": "排序"
+            },
+            {
+              "name": "recommend",
+              "type": "type",
+              "remark": "",
+              "chnname": "是否推荐"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "分享表"
+        },
+        {
+          "title": "jx_user",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "qq_id",
+              "type": "id",
+              "remark": "",
+              "chnname": "qqid"
+            },
+            {
+              "name": "weibo_id",
+              "type": "id",
+              "remark": "",
+              "chnname": "微博id"
+            },
+            {
+              "name": "openid",
+              "type": "id",
+              "remark": "",
+              "chnname": "openid"
+            },
+            {
+              "name": "unionid",
+              "type": "id",
+              "remark": "",
+              "chnname": "unionid"
+            },
+            {
+              "name": "phone",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "手机号"
+            },
+            {
+              "name": "email",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "邮件地址"
+            },
+            {
+              "name": "nickname",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "昵称"
+            },
+            {
+              "name": "password",
+              "type": "MiddleString",
+              "remark": "",
+              "chnname": "密码"
+            },
+            {
+              "name": "head_url",
+              "type": "MiddleString",
+              "remark": "",
+              "chnname": "头像地址"
+            },
+            {
+              "name": "coin",
+              "type": "Money",
+              "remark": "",
+              "chnname": "精享币"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "用户表"
+        },
+        {
+          "title": "jx_search_history",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "content",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "内容"
+            },
+            {
+              "name": "frequency",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "搜索次数"
+            },
+            {
+              "name": "userid",
+              "type": "id",
+              "remark": "",
+              "chnname": "用户id"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "搜索历史表"
+        },
+        {
+          "title": "jx_tags",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "name",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "名称"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "标签表"
+        },
+        {
+          "title": "jx_category",
+          "fields": [
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            },
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "name",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "名称"
+            },
+            {
+              "name": "p_id",
+              "type": "id",
+              "remark": "",
+              "chnname": "父id"
+            },
+            {
+              "name": "sort",
+              "type": "id",
+              "remark": "",
+              "chnname": "排序"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "分类表"
+        },
+        {
+          "title": "jx_ad",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "img_url",
+              "type": "MiddleString",
+              "remark": "",
+              "chnname": "图片地址"
+            },
+            {
+              "name": "name",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "广告名称"
+            },
+            {
+              "name": "location",
+              "type": "type",
+              "remark": "1:右侧;2:banner;",
+              "chnname": "广告位置"
+            },
+            {
+              "name": "sort",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "广告顺序"
+            },
+            {
+              "name": "url",
+              "type": "MiddleString",
+              "remark": "",
+              "chnname": "url"
+            },
+            {
+              "name": "start_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "开始时间"
+            },
+            {
+              "name": "end_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "结束时间"
+            },
+            {
+              "name": "tip",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "提示"
+            },
+            {
+              "name": "state",
+              "type": "type",
+              "remark": "0:禁用;1:启用;",
+              "chnname": "状态"
+            },
+            {
+              "name": "contact",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "联系人"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "广告表"
+        },
+        {
+          "title": "jx_order",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "no",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "订单号"
+            },
+            {
+              "name": "shop_name",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "商品名称"
+            },
+            {
+              "name": "shop_price",
+              "type": "Money",
+              "remark": "",
+              "chnname": "商品价格"
+            },
+            {
+              "name": "real_price",
+              "type": "Money",
+              "remark": "",
+              "chnname": "真实价格"
+            },
+            {
+              "name": "state",
+              "type": "type",
+              "remark": "1:未支付;2:已支付;",
+              "chnname": "订单状态"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "订单表"
+        },
+        {
+          "title": "jx_comment",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "content",
+              "type": "Intro",
+              "remark": "",
+              "chnname": "内容"
+            },
+            {
+              "name": "p_id",
+              "type": "id",
+              "remark": "",
+              "chnname": "父评论"
+            },
+            {
+              "name": "user_id",
+              "type": "id",
+              "remark": "",
+              "chnname": "用户id"
+            },
+            {
+              "name": "zan_num",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "点赞数量"
+            },
+            {
+              "name": "state",
+              "type": "type",
+              "remark": "0:禁用;1:启用;-1:已删除;",
+              "chnname": "状态"
+            },
+            {
+              "name": "share_id",
+              "type": "id",
+              "remark": "",
+              "chnname": "分享id"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "评论表"
         }
       ],
       "graphCanvas": {

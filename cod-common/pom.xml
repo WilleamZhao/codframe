@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2018-2018.
-  ~ Beijing blue sky technology co., LTD.
+  ~ Copyright (c) 2018-2019.
+  ~ Beijing sky blue technology co., LTD.
   ~ All rights reserved
   ~
   ~ author: sourcod
@@ -12,6 +12,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
@@ -69,6 +70,14 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.3</version>
         </dependency>
+
+        <!-- guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
     </dependencies>
 
     <distributionManagement>
