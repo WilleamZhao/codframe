@@ -96,22 +96,36 @@ public class SystemResponse<T> implements Serializable, Cloneable {
     }
 
     public SystemResponse(){
-
+        success();
     }
 
     /**
      * 成功
      */
     public SystemResponse<T> success(){
-        return success(null);
+        return success(StatusCode.SUCCESS_CODE,null);
     }
 
     /**
      * 成功
      */
     public SystemResponse<T> success(T T){
+        return success(StatusCode.SUCCESS_CODE, T);
+    }
+
+    /**
+     * 成功
+     */
+    public SystemResponse<T> success(StatusCode statusCode){
+        return success(statusCode, null);
+    }
+
+    /**
+     * 成功
+     */
+    public SystemResponse<T> success(StatusCode statusCode, T T){
         this.data = T;
-        this.statusCode = StatusCode.SUCCESS_CODE;
+        this.statusCode = statusCode;
         return this;
     }
 
@@ -158,5 +172,21 @@ public class SystemResponse<T> implements Serializable, Cloneable {
         this.msg = statusCode.getDesc();
         this.statusCode = statusCode.getStatusCode();
         this.data = data;
+    }
+
+    /**
+     * 转成Response
+     */
+    public Response<T> toResponse(){
+        Response<T> responseData = new Response<>();
+        if (this.statusCode != null){
+            responseData.setCode(statusCode.getStatusCode());
+            responseData.setName(statusCode.getStatusName());
+            responseData.setMsg(statusCode.getStatusDesc());
+            if (this.data != null) {
+                responseData.setData(this.data);
+            }
+        }
+        return responseData;
     }
 }

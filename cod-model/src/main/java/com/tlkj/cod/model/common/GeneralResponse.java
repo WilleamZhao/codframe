@@ -20,7 +20,7 @@ import com.tlkj.cod.model.enums.StatusCode;
  * @className GeneralResponse
  * @date 2018/9/12 下午12:48
  */
-public class GeneralResponse {
+public class GeneralResponse extends General{
 
     /**
      * 成功返回
@@ -110,6 +110,18 @@ public class GeneralResponse {
      */
     protected Response output(Object object){
         return object != null ? this.success(object) : this.fail();
+    }
+
+    /**
+     * 系统内部状态返回到接口
+     * @param systemResponse 内部传递Model类
+     * @return
+     */
+    protected Response output(SystemResponse systemResponse){
+        if (systemResponse.getStatusCode() == null){
+            return fail(systemResponse.getData());
+        }
+        return this.setResponseData(systemResponse.getStatusCode(), systemResponse.getData());
     }
 
     /**

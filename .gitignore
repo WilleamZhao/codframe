@@ -47,3 +47,4 @@ temp/
 !/cod-log/src/main/java/com.tlkj.cod.log/
 java.io.tempdir
 java.io.*
+codCache

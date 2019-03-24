@@ -51,6 +51,11 @@ public enum StatusCode {
     PARAM_ERROR_CODE("1014", "参数错误", "参数错误"),
 
     /**
+     * 没有数据
+     */
+    DATA_NULL_CODE("1015", "没有数据", "没有数据"),
+
+    /**
      * 参数openid 为空
      */
     PARAM_OPENID_NULL_CODE("0001", "参数错误", "参数openid为空"),

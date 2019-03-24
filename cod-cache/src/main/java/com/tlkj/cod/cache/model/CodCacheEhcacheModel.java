@@ -30,7 +30,7 @@ public class CodCacheEhcacheModel {
     /**
      * 缓存目录
      */
-    private String rootDirectory = "java.io.tempDir/codEhcacheCache";
+    private String rootDirectory = "codCache/ehcache";
 
     /**
      * key类型

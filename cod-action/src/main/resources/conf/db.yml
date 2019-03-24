@@ -9,9 +9,9 @@ datasource:
 # 1连不上会自动切换2以此类推
 datasource1:
     driverClass: com.mysql.jdbc.Driver
-    url: jdbc:mysql://rm-2ze073417o2rogq4dyo.mysql.rds.aliyuncs.com:3306/codframe
-    username: codframe
-    password: codframep@ssw0rd
+    url: jdbc:mysql://rm-2ze073417o2rogq4dyo.mysql.rds.aliyuncs.com:3306/jx
+    username: jx
+    password: jxp@ssw0rd
 
     #url: jdbc:mysql://192.168.3.3:3307/bjwps
     #username: root

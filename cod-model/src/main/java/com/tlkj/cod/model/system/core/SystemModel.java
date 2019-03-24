@@ -27,11 +27,11 @@ public class SystemModel {
      * 初始化默认设置
      */
     private SystemModel() {
-        codframe = new SystemSetModel();
-        log = new SystemSetLog();
-        allowDisable = new SystemSetAllowDisable();
-        cache = new SystemSetCacheModel();
-        file = new SystemFileModel();
+        codframe = codframe == null ? new SystemSetModel() : codframe;
+        log = log == null ? new SystemSetLog() : log;
+        allowDisable = allowDisable == null ? new SystemSetAllowDisable() : allowDisable;
+        cache = cache ==null ? new SystemSetCacheModel() : cache;
+        file = file == null ? new SystemFileModel() : file;
     }
 
     public void setInstance(SystemModel instance) {

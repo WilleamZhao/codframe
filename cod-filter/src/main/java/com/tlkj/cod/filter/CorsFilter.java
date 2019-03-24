@@ -11,6 +11,7 @@
 package com.tlkj.cod.filter;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
@@ -57,7 +58,7 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Credentials", "true");
         // TODO 动态返回服务版本
         response.setHeader("server", "codFrame v1.0.2");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
+        // response.setHeader("Access-Control-Allow-Credentials", "true");
         filterChain.doFilter(servletRequest, servletResponse);
         // User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)
     }
@@ -68,6 +69,12 @@ public class CorsFilter implements Filter {
      * @return 是
      */
     private boolean verifyBrowserIe(String agent){
+
+        // TODO 没有agent情况
+        if (StringUtils.isBlank(agent)){
+            return false;
+        }
+
         Matcher matcher = pattern.matcher(agent);
         if (matcher.find()){
             int ieVersion = Integer.parseInt(matcher.group(1));

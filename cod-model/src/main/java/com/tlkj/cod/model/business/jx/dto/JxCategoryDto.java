@@ -5,6 +5,8 @@
  */
 package com.tlkj.cod.model.business.jx.dto;
 
+import java.util.List;
+
 /**
  * codFrame auto create
  * Dto
@@ -40,6 +42,11 @@ public class JxCategoryDto {
      * 排序
      */
     private String sort;
+
+    /**
+     * 子级
+     */
+    private List<JxCategoryDto> childList;
 
     public String getCreateTime(){
         return this.createTime;
@@ -87,5 +94,21 @@ public class JxCategoryDto {
 
     public void setSort(String sort){
         this.sort = sort;
+    }
+
+    public String getpId() {
+        return pId;
+    }
+
+    public void setpId(String pId) {
+        this.pId = pId;
+    }
+
+    public List<JxCategoryDto> getChildList() {
+        return childList;
+    }
+
+    public void setChildList(List<JxCategoryDto> childList) {
+        this.childList = childList;
     }
 }

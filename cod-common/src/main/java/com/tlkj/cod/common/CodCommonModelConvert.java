@@ -41,7 +41,6 @@ public abstract class CodCommonModelConvert {
      * @return Dto
      */
     public <T> T toDto(Class<T> zlass){
-
         if (!this.getClass().getSuperclass().getName().equals(CodCommonModelConvert.class.getName())){
             logger.error("不是子类. 不可转换！请继承 {} 类", CodCommonModelConvert.class.getName());
         }

@@ -11,13 +11,13 @@
 package com.tlkj.cod.user.service.impl;
 
 import com.tlkj.cod.cache.CodCacheManager;
+import com.tlkj.cod.core.annotation.Log;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.common.SystemResponse;
 import com.tlkj.cod.user.model.dto.CodCommonUserDto;
 import com.tlkj.cod.user.model.entity.CodCommonUserDo;
 import com.tlkj.cod.user.service.CodCommonUserService;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +40,36 @@ public class CodCommonUserServiceImpl implements CodCommonUserService {
 
     @Autowired
     CodCacheManager codCacheManager;
+
+
+    /**
+     * 注册
+     * @param username 用户名
+     * @param type     类型
+     * @return
+     */
+    @Log(name = "注册")
+    @Override
+    public SystemResponse register(String username, String type) {
+
+        return null;
+    }
+
+    @Override
+    public SystemResponse updatePassword(String id, String oldPassword, String newPassword, String type) {
+
+        return null;
+    }
+
+    @Override
+    public SystemResponse bind(String id, String type, String identifier, String phone, String code) {
+        return null;
+    }
+
+    @Override
+    public SystemResponse logout(String username) {
+        return null;
+    }
 
     /**
      * 获取用户信息
@@ -84,18 +114,15 @@ public class CodCommonUserServiceImpl implements CodCommonUserService {
 
     /**
      * 保存用户
-     * @param userId
-     * @param name
-     * @param headUrl
-     * @param password
-     * @param email
-     * @param phone
+     * @param codCommonUserDo 用户信息
      * @return
      */
     @Override
     public SystemResponse saveUser(CodCommonUserDo codCommonUserDo) {
-        Updater.Update update = StringUtils.isEmpty(codCommonUserDo.getId()) ? updater.insert(CodCommonUserDo.TABLE_NAME) : updater.update(CodCommonUserDo.TABLE_NAME).where("id", codCommonUserDo.getId());
-        if (StringUtils.isEmpty(codCommonUserDo.getReal_name())){
+        SystemResponse response = new SystemResponse();
+        //Updater.Update update = StringUtils.isEmpty(codCommonUserDo.getId()) ? updater.insert(CodCommonUserDo.TABLE_NAME) : updater.update(CodCommonUserDo.TABLE_NAME).where("id", codCommonUserDo.getId());
+        int i = updater.update(codCommonUserDo).update();
+        /*if (StringUtils.isEmpty(codCommonUserDo.getReal_name())){
             update.set("real_name", codCommonUserDo.getReal_name());
         }
 
@@ -169,8 +196,12 @@ public class CodCommonUserServiceImpl implements CodCommonUserService {
 
         if (StringUtils.isEmpty(codCommonUserDo.getPhone())){
             update.set("update_time", "now()", Void.class);
+        }*/
+
+        if (i == 1){
+            return response.success(true);
         }
-        return null;
+        return response.fail(false);
     }
 
     /**

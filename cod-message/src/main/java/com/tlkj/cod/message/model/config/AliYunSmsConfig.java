@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.message.model.config;
 
-import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,20 +24,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class AliYunSmsConfig {
 
-    @Value("${sms.ali.accessKeyId:LTAIRa94f6t5si7d}")
-    private String accessKeyId;
+    //@Value("${sms.ali.accessKeyId:LTAIRa94f6t5si7d}")
+    private String accessKeyId = "LTAIRa94f6t5si7d";
 
-    @Value("${sms.ali.accessKeySecret:h5bH9DZdx36WXTOYaYgpTC3Fuyk7ZR}")
-    private String accessKeySecret;
+    //@Value("${sms.ali.accessKeySecret:h5bH9DZdx36WXTOYaYgpTC3Fuyk7ZR}")
+    private String accessKeySecret = "h5bH9DZdx36WXTOYaYgpTC3Fuyk7ZR";
 
-    @Value("${sms.ali.outId:tlkjOutId}")
-    private String outId;
+    //@Value("${sms.ali.outId:tlkjOutId}")
+    private String outId = "tlkjOutId";
 
-    @Value("${sms.ali.bdSignName:自动抢订票}")
-    private String signName;
+    //@Value("${sms.ali.bdSignName:自动抢订票}")
+    private String signName = "精享网";
 
-    @Value("${sms.ali.bdTemplateCode:SMS_143866792}")
-    private String templateCode;
+    //@Value("${sms.ali.bdTemplateCode:SMS_143866792}")
+    private String templateCode = "SMS_143866792";
 
     public String getAccessKeyId() {
         return accessKeyId;

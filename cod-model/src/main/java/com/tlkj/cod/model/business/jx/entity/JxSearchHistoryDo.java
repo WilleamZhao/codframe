@@ -5,12 +5,14 @@
  */
 package com.tlkj.cod.model.business.jx.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+
 import java.io.Serializable;
 
 /**
  * codFrame auto create
  */
-public class JxSearchHistoryDo implements Serializable,Cloneable{
+public class JxSearchHistoryDo extends CodCommonModelConvert implements Serializable,Cloneable{
     /**
      * 表名
      */

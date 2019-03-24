@@ -1,0 +1,8 @@
+# 获取下载地址接口
+GET http://127.0.0.1:9999/jx/share/download?id=1&userId=1
+
+# 获取分享详情接口
+GET http://127.0.0.1:9999/jx/share/get?id=1
+
+# 获取分享列表接口
+GET http://127.0.0.1:9999/jx/share/list

@@ -12,8 +12,10 @@ package com.tlkj.cod.core.annotation.aop;
 
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.core.annotation.ParamNotNull;
+import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.model.common.GeneralResponse;
+import com.tlkj.cod.model.system.core.SystemModel;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -41,6 +43,9 @@ import java.io.OutputStream;
 public class ParamNotNullAspect extends GeneralResponse{
 
 	@Autowired
+	LogService logService;
+
+	@Autowired
 	private HttpServletRequest request;
 
 	@Autowired
@@ -57,8 +62,21 @@ public class ParamNotNullAspect extends GeneralResponse{
 	@Around("@annotation(com.tlkj.cod.core.annotation.ParamNotNull) && @annotation(paramNotNull) && !execution(int *.* (..)) && (execution(* com.tlkj.cod.action..* (..)) || execution(* com.tlkj.cod.api..* (..)))")
 	public Object advice(ProceedingJoinPoint joinPoint, ParamNotNull paramNotNull) throws Throwable{
 		String[] paraName = paramNotNull.parameter().split(",");
+		String parameter = "";
+
 		for (String para : paraName) {
-			String parameter = request.getParameter(para.trim());
+			Object o = request.getAttribute(para.trim());
+			parameter = o != null ? o.toString() : "";
+
+			if (StringUtils.isEmpty(parameter)){
+				parameter = request.getParameter(para.trim());
+			}
+
+			if ("debug".equals(SystemModel.getInstance().getLog().getLevel())){
+				// System.out.println("参数:" + para + " = " + (StringUtils.isEmpty(parameter) ?  "null" : parameter));
+				logService.info("参数: {} = {}", para, (StringUtils.isEmpty(parameter) ?  "null" : parameter));
+			}
+
 			if (StringUtils.isEmpty(parameter)) {
 				setResponse();
 				return null;

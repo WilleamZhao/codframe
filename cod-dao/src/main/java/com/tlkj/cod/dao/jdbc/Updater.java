@@ -11,6 +11,7 @@
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
+import com.tlkj.cod.common.CodCommonModelConvert;
 import com.tlkj.cod.dao.util.DBConnectionPool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,8 +126,19 @@ public class Updater {
     }
 
     private static <T> String getTableName(Class<T> klass, String table) {
-        if (table == null) {
-            table = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, klass.getSimpleName());
+        if (StringUtils.isEmpty(table)) {
+            try {
+                Object tableName = klass.getField("TABLE_NAME").get(klass.newInstance());
+                if (tableName != null){
+                    table = tableName.toString();
+                    if (StringUtils.isEmpty(table)){
+                        table = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, klass.getSimpleName());
+                    }
+                }
+            } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
+                System.err.println("获取表名失败");
+                e.printStackTrace();
+            }
         }
         return table;
     }
@@ -504,7 +516,7 @@ public class Updater {
         public Update(JdbcTemplate jdbcTemplate, int prefix, Object o) {
             this.jdbcTemplate = jdbcTemplate;
             this.updateObj = o;
-            this.prefix = prefix;
+            // this.prefix = prefix;
             this.table = getTableName(o.getClass());
             getFiledsInfo();
         }
@@ -786,6 +798,14 @@ public class Updater {
             for (Field field : fields) {
                 field.setAccessible(true);
                 try {
+                    if ("id".equals(field.getName())){
+                        Object id = getFieldValueByName(field.getName(), this.updateObj);
+                        if (id != null){
+                            this.prefix = StringUtils.isNotEmpty(id.toString()) ? 0 : 1;
+                        } else {
+                            this.prefix = 1;
+                        }
+                    }
                     if (field.get(this.updateObj) != null) {
                         set(field.getName(), getFieldValueByName(field.getName(), this.updateObj), field.getType());
                     }
