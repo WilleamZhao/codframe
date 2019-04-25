@@ -10,8 +10,11 @@
 
 package com.tlkj.cod.api.jx;
 
+// import com.tlkj.cod.core.annotation.GetParam;
+import com.tlkj.cod.core.annotation.ParamNotNull;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
+import com.tlkj.cod.model.common.SystemResponse;
 import com.tlkj.cod.service.jx.JxCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Desc
+ * Desc 分类action
  *
  * @author sourcod
  * @version 1.0
@@ -38,9 +41,33 @@ public class JxCategoryApi extends GeneralResponse {
     /**
      * 获取分类
      */
+    @ParamNotNull(parameter = "id")
     @RequestMapping(value = "get", method = RequestMethod.GET)
     public Response get(HttpServletRequest request){
         String id = getParams(request, "id");
         return jxCategoryService.getCategory(id).toResponse();
+    }
+
+    /**
+     * 保存分类
+     */
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public Response save(HttpServletRequest request){
+        String id = getParams(request, "id");
+        String name = getParams(request, "name");
+        String pId = getParams(request, "pId");
+        String sort = getParams(request, "sort");
+        SystemResponse response = jxCategoryService.save(id, name, pId, sort);
+        return response.toResponse();
+    }
+
+    /**
+     * 删除分类
+     */
+    @RequestMapping(value = "del", method = RequestMethod.POST)
+    public Response del(HttpServletRequest request){
+        String id = getParams(request, "id");
+        String state = getParams(request, "state");
+        return jxCategoryService.del(id, state).toResponse();
     }
 }

@@ -17,7 +17,7 @@
     <groupId>com.tlkj</groupId>
     <artifactId>tlkj.codframe</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <modules>
         <module>cod-action</module>
         <module>cod-dao</module>
@@ -37,6 +37,8 @@
         <module>cod-search</module>
         <module>cod-mybatis</module>
         <module>cod-user</module>
+        <module>cod-config</module>
+        <module>cod-server</module>
     </modules>
 
     <name>codframe</name>
@@ -112,7 +114,7 @@
         <yaml.version>1.17</yaml.version>
 
         <!-- codFrame框架 -->
-        <codframe.version>1.0.2</codframe.version>
+        <codframe.version>${project.version}</codframe.version>
         <codframe.nexus.releases.url>http://192.168.3.21:8081/repository/maven-releases/</codframe.nexus.releases.url>
         <codframe.nexus.snapshots.url>http://192.168.3.21:8081/repository/maven-snapshots/</codframe.nexus.snapshots.url>
 
@@ -128,6 +130,13 @@
 
         <!-- pinyin4j -->
         <pinyin4j.version>2.5.0</pinyin4j.version>
+
+        <!-- lombok -->
+        <lombok.version>1.16.20</lombok.version>
+
+        <h2.version>1.4.197</h2.version>
+
+        <tomcat-embed.version>8.5.23</tomcat-embed.version>
 
     </properties>
 
@@ -167,6 +176,13 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- spring -->
@@ -242,36 +258,6 @@
             <version>1.1.1</version>
         </dependency>
 
-        <!-- jetty -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-http</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-security</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-start</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-
         <!-- commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -303,6 +289,13 @@
             <version>${commons.fileupload.version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+
     </dependencies>
 
     <distributionManagement>
@@ -326,6 +319,9 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>2.3</version>
+                    <configuration>
+                        <generateBackupPoms>false</generateBackupPoms>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

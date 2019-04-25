@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019.
+ * Copyright (c) 2018-2019.
  * Beijing sky blue technology co., LTD.
  * All rights reserved
  *
@@ -8,14 +8,14 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.service.system.impl;
+package com.tlkj.cod.log.service.impl;
 
 import com.tlkj.cod.common.CodCommonJson;
-import com.tlkj.cod.core.service.AspectLogService;
+import com.tlkj.cod.log.service.AspectLogService;
 import com.tlkj.cod.dao.jdbc.Updater;
+import com.tlkj.cod.model.common.SystemResponse;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.entity.CodFrameLogDo;
-import com.tlkj.cod.service.system.LogService;
+import com.tlkj.cod.log.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,10 +59,15 @@ public class AspectLogServiceImpl implements AspectLogService {
         LogService logService = getLog(type);
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(covert(params, values));
-        assert logService != null;
+        if (logService == null){
+            System.out.println(sb.toString());
+            return StatusCode.FAIL_CODE;
+        }
         logService.debug(sb.toString());
         return StatusCode.SUCCESS_CODE;
     }
+
+
 
     /**
      * 打印方法结束日志
@@ -75,31 +80,39 @@ public class AspectLogServiceImpl implements AspectLogService {
     public StatusCode saveLog(String type, String content, Object o) {
         LogService logService = getLog(type);
         String str = o != null ? o.getClass().isPrimitive() ? o.toString() : CodCommonJson.dump(o) : "";
-        assert logService != null;
+        if (logService == null){
+            System.out.println(str);
+            return StatusCode.FAIL_CODE;
+        }
         logService.info(str);
         return StatusCode.SUCCESS_CODE;
     }
 
     /**
-     * 保存系统日志到数据库
+     * 打印异常日志
+     * @param type    打印日志类型(clog log4j aliyun logback)
+     * @param name    接口名称
+     * @param e       异常信息
+     * @return
      */
     @Override
-    public StatusCode saveSystemLog(String methodName, String content, String ip, String username, String operationName, String operationType, Object[] params, Object[] values, Object o) {
-        Updater.Update update = updater.insert(CodFrameLogDo.TABLE_NAME).setId();
-        update.set("method_name", methodName);
-        update.set("content", content);
-        update.set("ip", ip);
-        update.set("username", username);
-        update.set("operation_name", operationName);
-        update.set("operation_type", operationType);
-        update.set("params", covert(params, values));
-        update.set("results", CodCommonJson.dump(o));
-        if (update.update() == 1){
-            return StatusCode.SUCCESS_CODE;
+    public SystemResponse saveError(String type, String name, Throwable e) {
+        LogService logService = getLog(type);
+        String content = name + "方法异常，";
+        if (logService == null){
+            System.out.println(content);
+            return new SystemResponse().fail();
         }
-        return StatusCode.FAIL_CODE;
+        logService.error(name + "方法异常，", e);
+        return new SystemResponse().success();
     }
 
+    /**
+     * 参数值转换方法
+     * @param params 参数
+     * @param values 值
+     * @return 转换后字符串
+     */
     private String covert(Object[] params, Object[] values){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < params.length; i++){

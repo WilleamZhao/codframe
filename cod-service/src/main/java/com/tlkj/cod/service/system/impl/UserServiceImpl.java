@@ -80,11 +80,10 @@ public class UserServiceImpl implements UserService, LoginUserService {
      */
     @Override
     public CodFrameUserDto getUserByCache(String token) {
-        Subject subject = (Subject) codCacheManager.get(token);
-        if (subject == null){
+        CodFrameUserDo codFrameUserDo = (CodFrameUserDo) codCacheManager.get(token);
+        if (codFrameUserDo == null){
             return null;
         }
-        CodFrameUserDo codFrameUserDo = (CodFrameUserDo) subject.getPrincipals().getPrimaryPrincipal();
         CodFrameUserDto dto = new CodFrameUserDto();
         doToDto(codFrameUserDo, dto);
         return dto;

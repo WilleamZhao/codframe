@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.service.system.impl;
 
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;

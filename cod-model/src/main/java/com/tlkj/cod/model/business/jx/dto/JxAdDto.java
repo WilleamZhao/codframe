@@ -5,10 +5,15 @@
  */
 package com.tlkj.cod.model.business.jx.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * codFrame auto create
  * Dto
  */
+@Getter
+@Setter
 public class JxAdDto {
 
     /**
@@ -75,108 +80,4 @@ public class JxAdDto {
      * 更新时间
      */
     private String updateTime;
-
-    public String getId(){
-        return this.id;
-    }
-
-    public void setId(String id){
-        this.id = id;
-    }
-
-    public String getImgUrl(){
-        return this.imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl){
-        this.imgUrl = imgUrl;
-    }
-
-    public String getName(){
-        return this.name;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public String getLocation(){
-        return this.location;
-    }
-
-    public void setLocation(String location){
-        this.location = location;
-    }
-
-    public String getSort(){
-        return this.sort;
-    }
-
-    public void setSort(String sort){
-        this.sort = sort;
-    }
-
-    public String getUrl(){
-        return this.url;
-    }
-
-    public void setUrl(String url){
-        this.url = url;
-    }
-
-    public String getStartTime(){
-        return this.startTime;
-    }
-
-    public void setStartTime(String startTime){
-        this.startTime = startTime;
-    }
-
-    public String getEndTime(){
-        return this.endTime;
-    }
-
-    public void setEndTime(String endTime){
-        this.endTime = endTime;
-    }
-
-    public String getTip(){
-        return this.tip;
-    }
-
-    public void setTip(String tip){
-        this.tip = tip;
-    }
-
-    public String getState(){
-        return this.state;
-    }
-
-    public void setState(String state){
-        this.state = state;
-    }
-
-    public String getContact(){
-        return this.contact;
-    }
-
-    public void setContact(String contact){
-        this.contact = contact;
-    }
-
-    public String getCreateTime(){
-        return this.createTime;
-    }
-
-    public void setCreateTime(String createTime){
-        this.createTime = createTime;
-    }
-
-    public String getUpdateTime(){
-        return this.updateTime;
-    }
-
-    public void setUpdateTime(String updateTime){
-        this.updateTime = updateTime;
-    }
 }

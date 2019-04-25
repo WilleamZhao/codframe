@@ -11,13 +11,17 @@
 package com.tlkj.cod.api.jx;
 
 import com.tlkj.cod.core.annotation.ParamNotNull;
+import com.tlkj.cod.facade.system.FileFacade;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
+import com.tlkj.cod.model.system.dto.CodFrameFileDto;
 import com.tlkj.cod.service.jx.JxShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +39,9 @@ public class JxShareApi extends GeneralResponse {
 
     @Autowired
     JxShareService jxShareService;
+
+    @Autowired
+    FileFacade fileFacade;
 
     /**
      * 获取精享列表
@@ -76,6 +83,15 @@ public class JxShareApi extends GeneralResponse {
         String id = getParams(request, "id");
         String userId = getParams(request, "userId");
         return jxShareService.download(id, userId).toResponse();
+    }
+
+    /**
+     * 上传文件
+     */
+    @RequestMapping(value = "upload", method = {RequestMethod.PUT, RequestMethod.POST})
+    public Response upload(@RequestParam("file") MultipartFile file, String type){
+        CodFrameFileDto filePath = fileFacade.upload(file, type);
+        return super.output(filePath);
     }
 
 }

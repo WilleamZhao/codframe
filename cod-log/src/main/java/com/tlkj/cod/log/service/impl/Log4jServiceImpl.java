@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019.
+ * Copyright (c) 2018-2019.
  * Beijing sky blue technology co., LTD.
  * All rights reserved
  *
@@ -8,13 +8,13 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.service.system.impl;
+package com.tlkj.cod.log.service.impl;
 
+import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonUUID;
+import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.common.LogMessageModel;
-import com.tlkj.cod.service.system.LogService;
-import com.tlkj.cod.common.CodCommonDate;
 import org.apache.log4j.Logger;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.stereotype.Service;
@@ -69,7 +69,7 @@ public class Log4jServiceImpl implements LogService {
             msg = MessageFormatter.arrayFormat(msg, objects.clone()).getMessage();
         }
         StackTraceElement[] elements = new Throwable().getStackTrace();
-        Logger logger = org.apache.log4j.Logger.getLogger(elements[2].getClassName());
+        Logger logger = Logger.getLogger(elements[2].getClassName());
 
         // 日志消息体
         LogMessageModel model = new LogMessageModel(CodCommonUUID.getUUID(),

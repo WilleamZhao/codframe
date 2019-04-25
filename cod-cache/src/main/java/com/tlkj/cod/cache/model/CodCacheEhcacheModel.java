@@ -51,7 +51,7 @@ public class CodCacheEhcacheModel {
      * 设置堆外储存大小(内存存储) 超出offheap的大小会被淘汰规则淘汰。
      * 单位MB
      */
-    private int offHeap = 300;
+    private int offHeap = 30;
 
     /**
      * 配置磁盘持久化储存(硬盘存储)用来持久化到磁盘

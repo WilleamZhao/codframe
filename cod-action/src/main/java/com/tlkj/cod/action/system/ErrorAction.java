@@ -10,8 +10,9 @@
 
 package com.tlkj.cod.action.system;
 
+import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.common.Response;
-import com.tlkj.cod.service.system.LogService;
+
 import com.tlkj.cod.model.common.GeneralResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

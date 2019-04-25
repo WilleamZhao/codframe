@@ -49,6 +49,10 @@ public class Pagination<T> {
 		return data;
 	}
 
+	public boolean isNull() {
+		return this.data == null || this.data.size() == 0;
+	}
+
 	public int getCurrentPage(){
 		int currentPage = data.size();
 		return currentPage;

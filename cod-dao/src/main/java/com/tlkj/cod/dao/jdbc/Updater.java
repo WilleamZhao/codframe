@@ -69,9 +69,6 @@ public class Updater {
         return new Update(jdbcTemplate, 1).from(table);
     }
 
-    public Update delete(String table) {
-        return new Update(jdbcTemplate, 2).from(table);
-    }
 
     public Update insert(Object object) {
         return new Update(jdbcTemplate, 1, object);
@@ -79,6 +76,10 @@ public class Updater {
 
     public Update insert(String table, Object object) {
         return new Update(jdbcTemplate, 1, object).from(table);
+    }
+
+    public Update delete(String table) {
+        return new Update(jdbcTemplate, 2).from(table);
     }
 
     public Update update(String table) {

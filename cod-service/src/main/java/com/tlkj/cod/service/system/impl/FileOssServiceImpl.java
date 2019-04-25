@@ -12,7 +12,7 @@ package com.tlkj.cod.service.system.impl;
 
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.model.system.core.SystemFileModel;
 import com.tlkj.cod.model.system.core.SystemModel;
 import com.tlkj.cod.service.system.DictService;

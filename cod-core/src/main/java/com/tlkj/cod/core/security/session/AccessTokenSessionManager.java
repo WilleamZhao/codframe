@@ -12,6 +12,7 @@ package com.tlkj.cod.core.security.session;
 
 import com.tlkj.cod.cache.CodCacheManager;
 import com.tlkj.cod.common.CodCommonUUID;
+import com.tlkj.cod.model.system.entity.CodFrameUserDo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
@@ -88,11 +89,11 @@ public class AccessTokenSessionManager extends DefaultWebSessionManager {
         if(StringUtils.isBlank(token)) {
             token = CodCommonUUID.getUUID();
         }
-        Subject subject = (Subject) codCacheManager.get(token);
-        if (subject == null){
+        CodFrameUserDo codFrameUserDo = (CodFrameUserDo) codCacheManager.get(token);
+        if (codFrameUserDo == null){
             return "";
         }
-        return (Serializable) subject.getPrincipals().getPrimaryPrincipal();
+        return codFrameUserDo;
         /*//这段代码还没有去查看其作用，但是这是其父类中所拥有的代码，重写完后我复制了过来...开始
         request1.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
                 ShiroHttpServletRequest.COOKIE_SESSION_ID_SOURCE);

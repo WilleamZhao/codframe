@@ -5,10 +5,15 @@
  */
 package com.tlkj.cod.model.business.jx.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * codFrame auto create
  * Dto
  */
+@Getter
+@Setter
 public class JxBannerDto {
 
     /**
@@ -51,67 +56,4 @@ public class JxBannerDto {
      */
     private String updateTime;
 
-    public String getId(){
-        return this.id;
-    }
-
-    public void setId(String id){
-        this.id = id;
-    }
-
-    public String getImg(){
-        return this.img;
-    }
-
-    public void setImg(String img){
-        this.img = img;
-    }
-
-    public String getUrl(){
-        return this.url;
-    }
-
-    public void setUrl(String url){
-        this.url = url;
-    }
-
-    public String getType(){
-        return this.type;
-    }
-
-    public void setType(String type){
-        this.type = type;
-    }
-
-    public String getSort(){
-        return this.sort;
-    }
-
-    public void setSort(String sort){
-        this.sort = sort;
-    }
-
-    public String getState(){
-        return this.state;
-    }
-
-    public void setState(String state){
-        this.state = state;
-    }
-
-    public String getCreateTime(){
-        return this.createTime;
-    }
-
-    public void setCreateTime(String createTime){
-        this.createTime = createTime;
-    }
-
-    public String getUpdateTime(){
-        return this.updateTime;
-    }
-
-    public void setUpdateTime(String updateTime){
-        this.updateTime = updateTime;
-    }
 }

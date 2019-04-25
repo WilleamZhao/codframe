@@ -5,7 +5,7 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
     </parent>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
@@ -62,6 +62,11 @@
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-facade</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-log</artifactId>
             <version>${codframe.version}</version>
         </dependency>
 

@@ -13,6 +13,12 @@ package com.tlkj.cod.log.service;
 /**
  * Desc 日志服务接口
  *
+ * trace 00;
+ * debug 10;
+ * info 20;
+ * warn 30;
+ * error 40;
+ *
  * @author sourcod
  * @version 1.0
  * @className LogService

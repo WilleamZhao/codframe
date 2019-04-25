@@ -10,9 +10,9 @@
 
 package com.tlkj.cod.action.system;
 
+import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.service.system.LogService;
 import com.tlkj.cod.service.system.SystemSetService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import org.springframework.beans.factory.annotation.Autowired;

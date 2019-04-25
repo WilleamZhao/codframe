@@ -15,7 +15,7 @@ import com.tlkj.cod.apple.model.to.VerifyReceiptTo;
 import com.tlkj.cod.apple.service.ApplePayService;
 import com.tlkj.cod.common.CodCommonHttpClient;
 import com.tlkj.cod.common.CodCommonJson;
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.common.SystemResponse;

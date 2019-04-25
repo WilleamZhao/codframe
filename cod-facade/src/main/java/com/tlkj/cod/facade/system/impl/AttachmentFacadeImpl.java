@@ -11,7 +11,7 @@
 package com.tlkj.cod.facade.system.impl;
 
 import com.tlkj.cod.common.CodCommonNetWork;
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.core.annotation.ParamNotNull;
 import com.tlkj.cod.facade.system.AttachmentFacade;
 import com.tlkj.cod.facade.system.FileFacade;

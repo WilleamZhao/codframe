@@ -10,10 +10,11 @@
 
 package com.tlkj.cod.service.jx.impl;
 
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;
+import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.business.jx.dto.JxShareDto;
 import com.tlkj.cod.model.business.jx.entity.JxShareDo;
@@ -44,6 +45,84 @@ public class JxShareServiceImpl implements JxShareService {
     @Autowired
     Finder finder;
 
+    @Autowired
+    Updater updater;
+
+    @Override
+    public SystemResponse save(String id, String img, String title, String intro, String content, String previewUrl, String downloadUrl, String fine, String author, String zanNum, String commentNum, String previewNum, String price, String top, String sort, String recommend) {
+        SystemResponse response = new SystemResponse();
+        Updater.Update update = StringUtils.isEmpty(id) ? updater.insert(JxShareDo.TABLE_NAME).setId() : updater.update(JxShareDo.TABLE_NAME).where("id", id);
+
+        if (StringUtils.isNotEmpty(img)){
+            update.set("img", img);
+        }
+        if (StringUtils.isNotEmpty(title)){
+            update.set("title", title);
+        }
+        if (StringUtils.isNotEmpty(intro)){
+            update.set("intro", intro);
+        }
+        if (StringUtils.isNotEmpty(content)){
+            update.set("content", content);
+        }
+        if (StringUtils.isNotEmpty(previewUrl)){
+            update.set("preview_url", previewUrl);
+        }
+        if (StringUtils.isNotEmpty(downloadUrl)){
+            update.set("download_url", downloadUrl);
+        }
+        if (StringUtils.isNotEmpty(fine)){
+            update.set("fine", fine);
+        }
+        if (StringUtils.isNotEmpty(author)){
+            update.set("author", author);
+        }
+        if (StringUtils.isNotEmpty(zanNum)){
+            update.set("zan_num", zanNum);
+        }
+        if (StringUtils.isNotEmpty(commentNum)){
+            update.set("comment_num", commentNum);
+        }
+        if (StringUtils.isNotEmpty(previewNum)){
+            update.set("preview_num", previewNum);
+        }
+        if (StringUtils.isNotEmpty(price)){
+            update.set("price", price);
+        }
+        if (StringUtils.isNotEmpty(top)){
+            update.set("top", top);
+        }
+        if (StringUtils.isNotEmpty(sort)){
+            update.set("sort", sort);
+        }
+        if (StringUtils.isNotEmpty(recommend)){
+            update.set("recommend", recommend);
+        }
+        int i = 0;
+        try {
+            i = update.update();
+        } catch (Exception e){
+            e.printStackTrace();
+            return response.fail();
+        }
+        if (i == 1){
+            return response.success(true);
+        }
+        return response.fail(false);
+    }
+
+    @Override
+    public SystemResponse del(String ids) {
+        SystemResponse response = new SystemResponse();
+        if (StringUtils.isNotBlank(ids)){
+            int i = updater.delete(JxShareDo.TABLE_NAME).in("id", ids.split(",")).update();
+            if (i > 0){
+                return response;
+            }
+        }
+        return response.fail();
+    }
+
     @Log(name = "获取分享列表")
     @Override
     public SystemResponse list(String page, String pageSize) {
@@ -63,9 +142,12 @@ public class JxShareServiceImpl implements JxShareService {
         }
 
         List<JxShareDto> list = new ArrayList<>();
-        jxShareDoPagination.getData().forEach(item -> {
-            list.add(item.toDto(JxShareDto.class));
-        });
+        try {
+            jxShareDoPagination.getData().forEach(item -> list.add(item.toDto(JxShareDto.class)));
+        } catch (Exception e){
+            e.printStackTrace();
+            return response.fail();
+        }
         return response.success(new Page(list, jxShareDoPagination));
     }
 
@@ -99,7 +181,19 @@ public class JxShareServiceImpl implements JxShareService {
     @Log(name = "预览")
     @Override
     public SystemResponse preview(String id, String userId) {
+        SystemResponse response = new SystemResponse();
+        if (StringUtils.isBlank(userId)){
+            return response.fail(StatusCode.LOGIN_FAIL_CODE);
+        }
 
-        return null;
+        // TODO 记录预览次数, 或限制等
+        JxShareDo jxShareDo = finder.from(JxShareDo.TABLE_NAME).where("id", id).first(JxShareDo.class);
+        if (jxShareDo == null){
+            return response.success(StatusCode.DATA_NULL_CODE);
+        }
+
+        JxShareDto dto = jxShareDo.toDto(JxShareDto.class);
+        String url = dto.getPreviewUrl();
+        return StringUtils.isEmpty(url) ? response.success(StatusCode.DATA_NULL_CODE) : response.success(url);
     }
 }

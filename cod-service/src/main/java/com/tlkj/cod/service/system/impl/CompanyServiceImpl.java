@@ -10,16 +10,16 @@
 
 package com.tlkj.cod.service.system.impl;
 
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
+import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.system.dto.CodFrameCompanyDto;
 import com.tlkj.cod.model.system.dto.CodFrameCompanyListDto;
 import com.tlkj.cod.model.system.entity.CodFrameCompanyDo;
 import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.service.system.CompanyService;
-import com.tlkj.cod.service.system.LogService;
 import com.tlkj.cod.service.system.SystemSetService;
 import com.tlkj.cod.common.CodCommonDate;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +45,8 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     Updater updater;
 
+    @Autowired
+    LogService logService;
 
     @Autowired
     SystemSetService setService;
@@ -97,8 +99,8 @@ public class CompanyServiceImpl implements CompanyService {
     @Log(name = "查询公司列表")
     @Override
     public Page<List<CodFrameCompanyListDto>> listCompany(String companyName, String companyNickName, String companyNo, String companyContact, String companyFax, String companyPhone, String companyEin, String status) {
-        setService.getLog().info("这是一个测试日志, 1={}, 2={}", "one", "two");
-        setService.getLog().trace("这是一个测试数组日志, 1={}, 2={}", new Object[]{"one", "two"});
+        logService.info("这是一个测试日志, 1={}, 2={}", "one", "two");
+        logService.trace("这是一个测试数组日志, 1={}, 2={}", new Object[]{"one", "two"});
         return null;
     }
 
@@ -149,11 +151,11 @@ public class CompanyServiceImpl implements CompanyService {
                     i = i + updater.delete(CodFrameCompanyDo.TABLE_NAME).where("id", menuIdTrim).update();
                     // 删除子菜单
                     int childNum = updater.delete(CodFrameCompanyDo.TABLE_NAME).where("p_id", menuIdTrim).update();
-                    setService.getLog().info("删除菜单成功, 本菜单数量={}, 子菜单数量={}", menuIdTrim, childNum);
+                    logService.info("删除菜单成功, 本菜单数量={}, 子菜单数量={}", menuIdTrim, childNum);
                 }
             }
         } catch (Exception e){
-            setService.getLog().error("删除菜单错误, {}", e.getMessage());
+            logService.error("删除菜单错误, {}", e.getMessage());
             return StatusCode.FAIL_CODE;
         }
         if (i > 0){

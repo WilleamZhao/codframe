@@ -15,12 +15,11 @@ import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
+import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.model.system.core.SystemSetModel;
 import com.tlkj.cod.model.system.dto.CodFrameSetDto;
 import com.tlkj.cod.model.system.entity.CodFrameSetDo;
-import com.tlkj.cod.service.system.LogService;
 import com.tlkj.cod.service.system.SystemSetService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -53,7 +52,7 @@ public class SystemSetServiceImpl implements SystemSetService {
     Updater updater;
 
     @Autowired
-    List<LogService> logServices;
+    LogService logServices;
 
     /**
      * 保存设置
@@ -129,20 +128,7 @@ public class SystemSetServiceImpl implements SystemSetService {
      */
     @Override
     public LogService getLog() {
-        String setValue;
-        if (model.getLog() != null && StringUtils.isNotBlank(model.getLog().getType())){
-            setValue = model.getLog().getType();
-        } else {
-            setValue = getSetValue("log");
-        }
-        for (LogService f : logServices){
-            if (f.getSupportType().equals(setValue)){
-                return f;
-            }
-        }
-        System.err.println("获取日志service错误");
-        Start.stopJetty();
-        return null;
+        return logServices;
     }
 
     /**

@@ -2859,6 +2859,86 @@
             }
           ],
           "chnname": "评论表"
+        },
+        {
+          "title": "cod_sys_config",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键"
+            },
+            {
+              "name": "value",
+              "type": "id",
+              "remark": "",
+              "chnname": "配置值"
+            },
+            {
+              "name": "name",
+              "type": "id",
+              "remark": "",
+              "chnname": "配置名称"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "配置表"
         }
       ],
       "graphCanvas": {
@@ -3263,7 +3343,7 @@
       {
         "code": "JAVA",
         "template": "package group.rober.pdman.{{=it.module.name}}.entity;\n$blankline\nimport javax.persistence.*;\nimport java.io.Serializable;\nimport java.util.Date;\n$blankline\n$blankline\n\n/** {{=it.entity.chnname}} */\n@Table(name=\"{{=it.entity.title}}\")\npublic class {{=it.func.camel(it.entity.title,true) }} implements Serializable,Cloneable{\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    {{? field.pk }}\n    @Id\n    @GeneratedValue\n    {{?}}\n    private {{=field.type}} {{=it.func.camel(field.name,false)}} ;\n{{~}}\n$blankline\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    public {{=field.type}} get{{=it.func.camel(field.name,true)}}(){\n        return this.{{=it.func.camel(field.name,false)}};\n    }\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    public void set{{=it.func.camel(field.name,true)}}({{=field.type}} {{= it.func.camel(field.name,false) }}){\n        this.{{=it.func.camel(field.name,false)}} = {{= it.func.camel(field.name,false) }};\n    }\n{{~}}\n}",
-        "createTableTemplate": "/*\n * Copyright (c) 2018-2019.\n * Beijing sky blue technology co., LTD.\n * All rights reserved\n */\n \n \npackage com.tlkj.cod.{{=it.module.name}}.entity;\n$blankline\nimport java.io.Serializable;\n$blankline\n$blankline\n/**\n * codFrame auto create\n */\npublic class {{=it.func.camel(it.entity.title,true) }}Do implements Serializable,Cloneable{\n    /**\n     * 表名\n     */\n    public static final String TABLE_NAME = \"{{=it.entity.title}}\";\n    \n{{~it.entity.fields:field:index}}\n    \n    /**\n     * {{=it.func.join(field.chnname,field.remark,';')}} \n     */\n    private {{=field.type}} {{=field.name}};\n    \n{{~}}\n$blankline\n\n{{~it.entity.fields:field:index}}\n    \n    public {{=field.type}} get{{=it.func.camel(field.name,true)}}(){\n        return this.{{=it.func.camel(field.name,false)}};\n    }\n    \n    \n    public void set{{=it.func.camel(field.name,true)}}({{=field.type}} {{= it.func.camel(field.name,false) }}){\n        this.{{=it.func.camel(field.name,false)}} = {{= it.func.camel(field.name,false) }};\n    }\n    \n{{~}}\n}\n",
+        "createTableTemplate": "/*\n * Copyright (c) 2018-2019.\n * Beijing sky blue technology co., LTD.\n * All rights reserved\n */\n \n \npackage com.tlkj.cod.{{=it.module.name}}.entity;\n$blankline\nimport java.io.Serializable;\nimport lombok.Getter;\nimport lombok.Setter;\n$blankline\n$blankline\n/**\n * codFrame auto create\n */\n@Getter\n@Setter\npublic class {{=it.func.camel(it.entity.title,true) }}Do implements Serializable,Cloneable{\n    /**\n     * 表名\n     */\n    public static final String TABLE_NAME = \"{{=it.entity.title}}\";\n    \n{{~it.entity.fields:field:index}}\n    \n    /**\n     * {{=it.func.join(field.chnname,field.remark,';')}} \n     */\n    private {{=field.type}} {{=field.name}};\n    \n{{~}}\n$blankline\n\n}\n",
         "deleteTableTemplate": "",
         "rebuildTableTemplate": "",
         "createFieldTemplate": "",
@@ -3276,7 +3356,7 @@
       {
         "code": "JAVA_DTO",
         "template": "package group.rober.pdman.{{=it.module.name}}.entity;\n$blankline\nimport javax.persistence.*;\nimport java.io.Serializable;\nimport java.util.Date;\n$blankline\n$blankline\n\n/** {{=it.entity.chnname}} */\n@Table(name=\"{{=it.entity.title}}\")\npublic class {{=it.func.camel(it.entity.title,true) }} implements Serializable,Cloneable{\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    {{? field.pk }}\n    @Id\n    @GeneratedValue\n    {{?}}\n    private {{=field.type}} {{=it.func.camel(field.name,false)}} ;\n{{~}}\n$blankline\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    public {{=field.type}} get{{=it.func.camel(field.name,true)}}(){\n        return this.{{=it.func.camel(field.name,false)}};\n    }\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    public void set{{=it.func.camel(field.name,true)}}({{=field.type}} {{= it.func.camel(field.name,false) }}){\n        this.{{=it.func.camel(field.name,false)}} = {{= it.func.camel(field.name,false) }};\n    }\n{{~}}\n}",
-        "createTableTemplate": "/*\n * Copyright (c) 2018-2019.\n * Beijing sky blue technology co., LTD.\n * All rights reserved\n */\n\npackage com.tlkj.cod.{{=it.module.name}}.dto;\n$blankline\n$blankline\n/**\n * codFrame auto create\n * Dto\n */\npublic class {{=it.func.camel(it.entity.title,true) }}Dto {\n    \n{{~it.entity.fields:field:index}}\n    \n    /**\n     * {{=it.func.join(field.chnname,field.remark,';')}} \n     */\n    private {{=field.type}} {{=it.func.camel(field.name,false)}};\n    \n{{~}}\n$blankline\n{{~it.entity.fields:field:index}}\n    \n    public {{=field.type}} get{{=it.func.camel(field.name,true)}}(){\n        return this.{{=it.func.camel(field.name,false)}};\n    }\n    \n    \n    public void set{{=it.func.camel(field.name,true)}}({{=field.type}} {{= it.func.camel(field.name,false) }}){\n        this.{{=it.func.camel(field.name,false)}} = {{= it.func.camel(field.name,false) }};\n    }\n    \n{{~}}\n}",
+        "createTableTemplate": "/*\n * Copyright (c) 2018-2019.\n * Beijing sky blue technology co., LTD.\n * All rights reserved\n */\n\npackage com.tlkj.cod.{{=it.module.name}}.dto;\n$blankline\nimport lombok.Getter;\nimport lombok.Setter;\n$blankline\n/**\n * codFrame auto create\n * Dto\n */\n@Getter\n@Setter\npublic class {{=it.func.camel(it.entity.title,true) }}Dto {\n    \n{{~it.entity.fields:field:index}}\n    \n    /**\n     * {{=it.func.join(field.chnname,field.remark,';')}} \n     */\n    private {{=field.type}} {{=it.func.camel(field.name,false)}};\n    \n{{~}}\n$blankline\n}",
         "deleteTableTemplate": "",
         "rebuildTableTemplate": "",
         "createFieldTemplate": "",

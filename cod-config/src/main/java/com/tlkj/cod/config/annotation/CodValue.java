@@ -8,7 +8,7 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.core.annotation;
+package com.tlkj.cod.config.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -17,31 +17,29 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Desc Log日志
+ * Desc 配置属性注入
  *
  * @author sourcod
  * @version 1.0
- * @className Log
- * @date 2018/10/30 下午8:10
+ * @className CodValue
+ * @date 2019/4/9 11:01 AM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Log {
+@Target({ElementType.METHOD, ElementType.FIELD})
+public @interface CodValue {
 
     /**
-     * 方法名称
+     * 配置名称
      */
-    String name() default "";
+    String name();
 
     /**
-     * 是否打印返回值; 默认打印
-     * 为了解决返回值过多问题
+     * 配置类型
+     * 默认内置数据库
+     * 支持h2、数据库、缓存、配置文件、apollo等
+     *
      */
-    boolean isBack() default true;
+    String type() default "h2";
 
-    /**
-     * 日志类型
-     */
-    String type() default "clog";
 }

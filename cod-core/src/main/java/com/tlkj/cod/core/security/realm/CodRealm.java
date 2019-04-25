@@ -115,7 +115,7 @@ public class CodRealm extends AuthorizingRealm {
             String token = CodCommonUUID.getUUID();
             info = new SimpleAuthenticationInfo(dto, password, token);
             Subject o = SecurityUtils.getSubject();
-            codCacheManager.set(token, info);
+            codCacheManager.set(token, dto);
         } else {
             throw new CredentialsException();
         }
@@ -150,8 +150,8 @@ public class CodRealm extends AuthorizingRealm {
         while (iterator.hasNext()){
             token = iterator.next().toString();
         }
-        Subject subject = (Subject) codCacheManager.get(token);
-        CodFrameUserDo codFrameUserDo = (CodFrameUserDo) subject.getPrincipals().getPrimaryPrincipal();
+        CodFrameUserDo codFrameUserDo = (CodFrameUserDo) codCacheManager.get(token);
+        // CodFrameUserDo codFrameUserDo = (CodFrameUserDo) subject.getPrincipals().getPrimaryPrincipal();
 
         SimpleAuthorizationInfo authorizationInfo =  new SimpleAuthorizationInfo();
 

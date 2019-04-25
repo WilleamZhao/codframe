@@ -23,6 +23,18 @@ import com.tlkj.cod.model.common.SystemResponse;
 public interface JxShareService {
 
     /**
+     * 保存
+     */
+    SystemResponse save(String id, String img, String title, String intro, String content, String previewUrl, String downloadUrl,
+                        String fine, String author, String zanNum, String commentNum, String previewNum, String price, String top,
+                        String sort, String recommend);
+
+    /**
+     * 删除
+     */
+    SystemResponse del(String ids);
+
+    /**
      * 列表
      * @param page     第几页
      * @param pageSize 每页大小

@@ -11,7 +11,7 @@
 package com.tlkj.cod.service.system.impl;
 
 import com.tlkj.cod.common.CodCommonIO;
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.service.system.FileService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;

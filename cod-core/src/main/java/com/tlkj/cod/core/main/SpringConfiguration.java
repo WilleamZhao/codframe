@@ -44,11 +44,11 @@ import java.util.Map;
  * @className SpringConfig
  * @date 2018/12/25 6:01 PM
  */
-/*@Component
+@Component
 @Configuration
 @EnableWebMvc
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@ComponentScan("com.tlkj.cod.*")*/
+@ComponentScan("com.tlkj.cod.*")
 public class SpringConfiguration {
 
     /*@Bean

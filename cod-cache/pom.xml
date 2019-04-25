@@ -15,7 +15,7 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -64,21 +64,21 @@
             <artifactId>cod-log</artifactId>
             <version>${codframe.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-util</artifactId>
             <version>${codframe.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-common</artifactId>
             <version>${codframe.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-model</artifactId>
             <version>${codframe.version}</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 </project>

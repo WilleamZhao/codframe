@@ -18,7 +18,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.message.model.config.AliYunSmsConfig;
 import com.tlkj.cod.message.sms.service.AliSmsService;
 import org.springframework.beans.factory.annotation.Autowired;

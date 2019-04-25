@@ -28,4 +28,33 @@ public interface JxCategoryService {
      * @return
      */
     SystemResponse getCategory(String id);
+
+    /**
+     * 保存分类
+     * @param id   主键
+     * @param name 分类名称
+     * @param pId  父id
+     * @param sort 顺序
+     * @return
+     */
+    SystemResponse save(String id, String name, String pId, String sort);
+
+    /**
+     * 保存分类
+     * @param id    主键
+     * @param state 是否删除子类
+     *              1: 删除
+     *              0: 不删除
+     * @return
+     */
+    SystemResponse del(String id, String state);
+
+    /**
+     * 保存分类
+     * @param name 分类名称
+     * @param pId  父id
+     * @return
+     */
+    SystemResponse list(String name, String pId);
+
 }

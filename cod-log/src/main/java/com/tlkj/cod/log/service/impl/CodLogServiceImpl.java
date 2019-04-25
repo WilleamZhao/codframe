@@ -8,20 +8,26 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.service.system.impl;
+package com.tlkj.cod.log.service.impl;
 
+import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonUUID;
+import com.tlkj.cod.dao.jdbc.Finder;
+import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.common.LogMessageModel;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.service.system.LogService;
-import com.tlkj.cod.common.CodCommonDate;
+import com.tlkj.cod.model.system.entity.CodFrameSetDo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Desc cod log
@@ -31,13 +37,48 @@ import java.util.Arrays;
  * @className CodLogServiceImpl
  * @date 2018/12/5 1:19 PM
  */
+// @Primary
 @Service("clogImpl")
 public class CodLogServiceImpl implements LogService {
+/*
+    private static SystemModel model = SystemModel.getInstance();
+
+    @Autowired
+    List<LogService> logServices;*/
 
     @Override
     public String getSupportType() {
         return "clog";
     }
+
+    @Autowired
+    Finder finder;
+
+    private static String setValue = "";
+
+
+    /**
+     * 获取日志设置
+     * 日志支持的类型 clog(默认), slf4j, logback, aliyunLog
+     * 1. 默认获取配置文件设置
+     * 2. 配置文件没有获取数据库设置
+     * 3. 数据库没有默认采用clog
+     * @return LogService 日志服务
+     */
+    /*public LogService getLog() {
+        if (model.getLog() != null && StringUtils.isNotBlank(model.getLog().getType())){
+            setValue = model.getLog().getType();
+        } else {
+            setValue = getSetValue("clog");
+        }
+        for (LogService f : logServices){
+            if (f.getSupportType().equals(setValue)){
+                return f;
+            }
+        }
+        System.err.println("获取日志service错误");
+        return null;
+    }*/
 
     @Override
     public void trace(String msg, Object... objects) {
@@ -139,5 +180,15 @@ public class CodLogServiceImpl implements LogService {
             default:
                 logger.info(msg, objects);
         }
+    }
+
+    /**
+     * 获取设置Value
+     * @param setCode 设置代码
+     * @return 设置值
+     */
+    private String getSetValue(String setCode) {
+        CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", setCode).first(CodFrameSetDo.class);
+        return setDo.getSet_value();
     }
 }

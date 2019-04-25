@@ -13,7 +13,7 @@ package com.tlkj.cod.service.wechat.impl;
 import com.tlkj.cod.common.CodCommonHttpClient;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.ComCommonJwt;
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.core.annotation.ParamNotNull;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;

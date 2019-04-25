@@ -52,7 +52,7 @@
   | cod-cache   | 缓存模块       |        |
   | cod-common  | 公共模块       |        |
   | cod-core    | 核心模块       |        |
-  | cod-dao     | 数据库操作模块 |        |
+  | cod-dao     | codDao数据库操作模块 |        |
   | cod-facade  | 外部访问模块   |        |
   | cod-filter  | 过滤器模块     |        |
   | cod-log     | 日志模块       |        |

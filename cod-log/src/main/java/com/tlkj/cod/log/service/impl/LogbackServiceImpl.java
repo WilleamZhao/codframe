@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019.
+ * Copyright (c) 2018-2019.
  * Beijing sky blue technology co., LTD.
  * All rights reserved
  *
@@ -8,9 +8,9 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.service.system.impl;
+package com.tlkj.cod.log.service.impl;
 
-import com.tlkj.cod.service.system.LogService;
+import com.tlkj.cod.log.service.LogService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -15,7 +15,7 @@ import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.model.system.dto.CodFrameUserDto;
 import com.tlkj.cod.service.system.UserRoleService;
 import com.tlkj.cod.model.common.GeneralResponse;
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.core.annotation.ParamNotNull;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.Response;

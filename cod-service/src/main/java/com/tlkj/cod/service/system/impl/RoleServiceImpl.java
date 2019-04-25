@@ -10,11 +10,12 @@
 
 package com.tlkj.cod.service.system.impl;
 
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
+import com.tlkj.cod.log.service.LogService;
 import com.tlkj.cod.model.system.dto.CodFrameRoleListDto;
 import com.tlkj.cod.model.system.entity.CodFrameRoleDo;
 import com.tlkj.cod.model.enums.StatusCode;
@@ -48,6 +49,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     SystemSetService service;
+
+    @Autowired
+    LogService logService;
 
     /**
      * 获取角色列表
@@ -154,8 +158,8 @@ public class RoleServiceImpl implements RoleService {
         }
         // updater.delete(CodFrameRe.TABLE_NAME).where("", id);
         if (roleNum >= 1){
-            service.getLog().info("删除管理用户数={}", userRoleNum);
-            service.getLog().info("删除角色菜单数={}", roleMenuNum);
+            logService.info("删除管理用户数={}", userRoleNum);
+            logService.info("删除角色菜单数={}", roleMenuNum);
             return StatusCode.SUCCESS_CODE;
         }
         return StatusCode.FAIL_CODE;

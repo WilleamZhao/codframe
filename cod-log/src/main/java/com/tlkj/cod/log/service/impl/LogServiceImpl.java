@@ -42,6 +42,8 @@ public class LogServiceImpl implements LogService {
     @Autowired
     Finder finder;
 
+    private static String setValue = "";
+
 
     /**
      * 获取日志设置
@@ -52,7 +54,6 @@ public class LogServiceImpl implements LogService {
      * @return LogService 日志服务
      */
     public LogService getLog() {
-        String setValue;
         if (model.getLog() != null && StringUtils.isNotBlank(model.getLog().getType())){
             setValue = model.getLog().getType();
         } else {
@@ -65,6 +66,14 @@ public class LogServiceImpl implements LogService {
         }
         System.err.println("获取日志service错误");
         return null;
+    }
+
+    public LogServiceImpl(){
+
+    }
+
+    public LogServiceImpl(String name){
+        setValue = name;
     }
 
     /**

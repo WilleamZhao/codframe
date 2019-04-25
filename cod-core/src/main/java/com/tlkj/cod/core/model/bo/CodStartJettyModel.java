@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019.
+ * Copyright (c) 2018-2019.
  * Beijing sky blue technology co., LTD.
  * All rights reserved
  *
@@ -8,15 +8,15 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.core.main;
+package com.tlkj.cod.core.model.bo;
 
 /**
  * Desc
  *
  * @author sourcod
  * @version 1.0
- * @className WebConfiguration
- * @date 2018/12/25 5:10 PM
+ * @className CodStartJettyModel
+ * @date 2019/4/24 5:55 PM
  */
-public class WebConfiguration {
+public class CodStartJettyModel extends CodStartModel {
 }

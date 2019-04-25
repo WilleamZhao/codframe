@@ -102,7 +102,11 @@ public class LoginServiceImpl implements LoginService {
             error = "密码错误";
             return "";
         }
-        subject.hasRole("admin");
+        try {
+            subject.hasRole("admin");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         Set set = subject.getPrincipals().getRealmNames();
         Iterator iterator = set.iterator();
         String s = "";

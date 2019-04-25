@@ -8,11 +8,11 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.core.annotation.aop;
+package com.tlkj.cod.log.annotation.aop;
 
-import com.tlkj.cod.core.annotation.Log;
-import com.tlkj.cod.core.service.AspectLogService;
-import com.tlkj.cod.core.spring.SpringContextUtil;
+import com.tlkj.cod.log.annotation.Log;
+import com.tlkj.cod.log.service.AspectLogService;
+import com.tlkj.cod.log.spring.SpringContextUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -23,8 +23,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -42,14 +46,27 @@ public class LogAspect {
 
     private static String BeanType = "clog";
 
+    /*@Autowired
+    @Lazy
+    AspectLogService logService;*/
+
+    @Autowired
+    ApplicationContext applicationContext;
+
+    // service和facade层
+    // @Pointcut("@annotation(com.tlkj.cod.log.annotation.Log) && (execution(* com.tlkj.cod.service..* (..)) || execution(* com.tlkj.cod.facade..* (..)))")
+
     /**
-     * 切 service和facade层
+     * 切点
      */
-    @Pointcut("@annotation(com.tlkj.cod.core.annotation.Log) && (execution(* com.tlkj.cod.service..* (..)) || execution(* com.tlkj.cod.facade..* (..)))")
+    @Pointcut("@annotation(com.tlkj.cod.log.annotation.Log)")
     public void pointCut() {}
 
+    /**
+     * 环绕触发
+     */
     @Around("pointCut()")
-    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object around(ProceedingJoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature)signature;
 
@@ -59,15 +76,24 @@ public class LogAspect {
         String operationName = log.name();
         String operationType = StringUtils.isBlank(log.type()) ? BeanType : log.type();
 
-        AspectLogService logService =  (AspectLogService) SpringContextUtil.getBean( "aspectLogServiceImpl");
+        // TODO
+        WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
+
+        AspectLogService logService =  (AspectLogService) applicationContext.getBean( "aspectLogServiceImpl");
+
         //格式化开始时间
         String startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis());
 
         String[] params = methodSignature.getParameterNames();
         Object[] args = joinPoint.getArgs();
         logService.saveLog(operationType,"进入" + operationName + "方法, 开始时间: " + startTime + "; 参数: ", params, args);
-
-        Object o = joinPoint.proceed();
+        Object o = null;
+        try {
+            o = joinPoint.proceed();
+        } catch (Throwable e){
+            System.err.println(operationName + "方法异常");
+            logService.saveError(operationType, operationName, e);
+        }
 
         /*
          * DONE 解决返回值过多问题

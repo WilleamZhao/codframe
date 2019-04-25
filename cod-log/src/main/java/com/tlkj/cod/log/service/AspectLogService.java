@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019.
+ * Copyright (c) 2018-2019.
  * Beijing sky blue technology co., LTD.
  * All rights reserved
  *
@@ -8,8 +8,9 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.core.service;
+package com.tlkj.cod.log.service;
 
+import com.tlkj.cod.model.common.SystemResponse;
 import com.tlkj.cod.model.enums.StatusCode;
 
 /**
@@ -42,7 +43,10 @@ public interface AspectLogService {
     StatusCode saveLog(String type, String content, Object o);
 
     /**
-     * 保存系统日志接口
+     * 打印异常日志
+     * @param type    打印日志类型(clog log4j aliyun logback)
+     * @param name    接口名称
+     * @return
      */
-    StatusCode saveSystemLog(String methodName, String content, String ip, String username, String operationName, String operationType, Object[] params, Object[] values, Object o);
+    SystemResponse saveError(String type, String name, Throwable e);
 }

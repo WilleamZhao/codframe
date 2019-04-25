@@ -25,6 +25,13 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
@@ -38,12 +45,13 @@ import java.util.Map;
  * @className ShiroConfiguration
  * @date 2018/12/19 10:59 PM
  */
-/*@Configuration
+@Configuration
 @ComponentScan(basePackages = "com.tlkj.cod.*")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
 @EnableAsync
-@EnableScheduling*/
+@EnableWebMvc
+@EnableScheduling
 public class MainConfiguration {
 
     @Bean(name="shiroFilter")

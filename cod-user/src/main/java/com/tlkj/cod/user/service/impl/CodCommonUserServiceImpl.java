@@ -11,7 +11,7 @@
 package com.tlkj.cod.user.service.impl;
 
 import com.tlkj.cod.cache.CodCacheManager;
-import com.tlkj.cod.core.annotation.Log;
+import com.tlkj.cod.log.annotation.Log;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.common.SystemResponse;
