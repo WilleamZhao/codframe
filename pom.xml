@@ -45,6 +45,7 @@
         <module>cod-package</module>
         <module>cod-server</module>
         <module>cod-boot</module>
+        <module>cod-gulian-gwgz</module>
     </modules>
 
     <name>codframe</name>
