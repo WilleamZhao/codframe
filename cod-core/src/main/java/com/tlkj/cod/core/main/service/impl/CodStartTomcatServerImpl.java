@@ -12,12 +12,13 @@ package com.tlkj.cod.core.main.service.impl;
 
 import com.tlkj.cod.core.filter.ParameterRequestFileter;
 import com.tlkj.cod.core.listener.LogoListener;
-import com.tlkj.cod.core.main.CodStartServerInit;
-import com.tlkj.cod.core.main.MainConfiguration;
-import com.tlkj.cod.core.main.WebAppInitializer;
+import com.tlkj.cod.core.main.CodSpringConfiguration;
 import com.tlkj.cod.core.main.service.CodStartServer;
 import com.tlkj.cod.core.model.bo.CodStartModel;
 import com.tlkj.cod.core.model.bo.CodStartTomcatModel;
+import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodServerInitialize;
+import com.tlkj.cod.launcher.model.LauncherModel;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
@@ -31,6 +32,7 @@ import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -47,7 +49,8 @@ import java.util.LinkedList;
  * @className CodStartServerImpl
  * @date 2019/4/9 7:26 PM
  */
-public class CodStartTomcatServerImpl implements CodStartServer {
+@Component
+public class CodStartTomcatServerImpl implements CodStartServer, CodModuleInitialize {
 
     private static Tomcat tomcat = null;
     private static Logger logger = LoggerFactory.getLogger(CodStartTomcatServerImpl.class);
@@ -66,8 +69,8 @@ public class CodStartTomcatServerImpl implements CodStartServer {
     private boolean initSpring = false;
 
     @Override
-    public void init(CodStartServerInit codStartServerInit) {
-        codStartServerInit.init();
+    public void init(CodServerInitialize codStartServerInit) {
+
     }
 
     private void initTomcat(){
@@ -97,7 +100,7 @@ public class CodStartTomcatServerImpl implements CodStartServer {
             */
 
             AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = new AnnotationConfigWebApplicationContext();
-            annotationConfigWebApplicationContext.register(MainConfiguration.class);
+            annotationConfigWebApplicationContext.register(CodSpringConfiguration.class);
             // setServletContext
             annotationConfigWebApplicationContext.setServletContext(new ApplicationContext(standardContext));
 
@@ -146,7 +149,7 @@ public class CodStartTomcatServerImpl implements CodStartServer {
          * spring annotation
          */
         AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = new AnnotationConfigWebApplicationContext();
-        annotationConfigWebApplicationContext.register(MainConfiguration.class);
+        annotationConfigWebApplicationContext.register(CodSpringConfiguration.class);
         // setServletContext
         annotationConfigWebApplicationContext.setServletContext(new ApplicationContext(standardContext));
 
@@ -197,7 +200,6 @@ public class CodStartTomcatServerImpl implements CodStartServer {
 
         // context.addApplicationListener(ContextLoaderListener.class.getName());
 
-        host.setContextClass(WebAppInitializer.class.getName());
         // host.setContextClass(Tomcat.DefaultWebXmlListener.class.getName());
         String a = tomcat.getHost().getConfigClass();
         System.out.println(a);
@@ -311,6 +313,21 @@ public class CodStartTomcatServerImpl implements CodStartServer {
 
     @Override
     public void setServlet(LinkedList<Servlet> servlets) {
+
+    }
+
+    @Override
+    public int order() {
+        return 0;
+    }
+
+    @Override
+    public void init(LauncherModel launcherModel) {
+
+    }
+
+    @Override
+    public void fail(Throwable e) {
 
     }
 }

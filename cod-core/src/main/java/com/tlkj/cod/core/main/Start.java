@@ -105,17 +105,17 @@ public class Start {
             switch (server){
                 case "0":
                     codStartServer = new CodStartJettyServerImpl();
-                    codStartServer.init(new Test1());
+
                     codStartServer.start();
                     break;
                 case "1":
                     codStartServer = new CodStartTomcatServerImpl();
-                    codStartServer.init(new Test1());
+
                     codStartServer.start();
                     break;
                 case "2":
                     codStartServer = new CodStartResinServerImpl();
-                    codStartServer.init(new Test1());
+
                     codStartServer.start();
                     break;
                 default:

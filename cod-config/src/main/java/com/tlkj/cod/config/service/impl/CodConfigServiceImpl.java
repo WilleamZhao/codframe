@@ -30,11 +30,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CodConfigServiceImpl implements CodConfigService {
 
+    @Autowired
     private Finder finder;
 
+    @Autowired
     private Updater updater;
 
-    @Autowired
+    // @Autowired
     public CodConfigServiceImpl(){
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl("jdbc:h2:./codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL");

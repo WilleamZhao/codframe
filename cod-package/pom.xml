@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2018-2019.
+  ~ Beijing sky blue technology co., LTD.
+  ~ All rights reserved
+  ~
+  ~ author: sourcod
+  ~ github: https://github.com/WilleamZhao
+  ~ site：http://codframe.com
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>tlkj.codframe</artifactId>
+        <groupId>com.tlkj</groupId>
+        <version>1.0.3</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cod-package</artifactId>
+
+    <description>部署模块</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-action</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-api</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-apple</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-cache</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-common</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-config</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-core</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-dao</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-facade</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-filter</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-h2</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-log</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-message</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-model</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-mybatis</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-search</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-service</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-test</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-user</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-util</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-view</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-wechat</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <defaultGoal>compile</defaultGoal>
+
+        <finalName>${project.parent.name}</finalName>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+
+        <plugins>
+            <!-- 配置jdk版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- 生成可执行jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.plugin.version}</version>
+                <configuration>
+                    <forceCreation>true</forceCreation>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.tlkj.cod.launcher.CodLaunchMain</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>webapp/WEB-INF/lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                    <!--<includes>
+                        <include>**/*.jar</include>
+                    </includes>-->
+                </configuration>
+            </plugin>
+
+            <!-- 拷贝依赖的jar包到lib目录 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/webapp/WEB-INF/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 打包插件 -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/main/resources/dev/assembly-single.xml</descriptor>
+                        <!-- 测试包 -->
+                        <descriptor>src/main/resources/dev/assembly-multiple.xml.xml</descriptor>
+                    </descriptors>
+                    <!-- 默认模版 http://maven.apache.org/plugins/maven-assembly-plugin/descriptor-refs.html -->
+                    <!--<descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>-->
+                    <archive>
+                        <manifest>
+                            <mainClass>com.tlkj.cod.launcher.CodLaunchMain</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>${project.build.finalName}</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-single</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 跳过这个执行器 -->
+                            <skipAssembly>true</skipAssembly>
+                            <finalName>${project.parent.name}</finalName>
+                            <descriptors>
+                                <descriptor>src/main/resources/dev/assembly-single.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>make-multiple</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 跳过这个执行器 -->
+                            <skipAssembly>false</skipAssembly>
+                            <finalName>${project.parent.name}-multiple</finalName>
+                            <descriptors>
+                                <descriptor>src/main/resources/dev/assembly-multiple.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 跳过单元测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/webapp/WEB-INF</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <targetPath>webapp/WEB-INF</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+</project>

@@ -10,7 +10,12 @@
 
 package com.tlkj.cod.action;
 
-import com.tlkj.cod.core.main.Start;
+import com.tlkj.cod.common.CodCommonFindChildClass;
+import com.tlkj.cod.core.launcher.CodLauncher;
+import com.tlkj.cod.core.util.CodClassLoader;
+import com.tlkj.cod.launcher.CodModuleInitialize;
+
+import java.util.List;
 
 /**
  * Desc 启动方法
@@ -22,7 +27,17 @@ import com.tlkj.cod.core.main.Start;
  */
 public class App {
     public static void main(String[] args) throws Exception {
-        Start start = new Start();
-        start.main(args);
+        // Start start = new Start();
+        // start.main(args);
+        CodLauncher.main(args);
+
+        /*CodCommonFindChildClass codCommonFindChildClass = new CodCommonFindChildClass();
+        CodClassLoader codClassLoader = new CodClassLoader();
+        List list = null;
+        list = CodCommonFindChildClass.getAllAssignedClass(CodModuleInitialize.class, "");
+        // list = CodCommonFindChildClass.getAllAssignedClass(CodModuleInitialize.class, new String[]{});
+        for (Object o : list){
+            System.out.println("实现" + o.toString());
+        }*/
     }
 }

@@ -6,6 +6,14 @@
 # Mac
 .DS_Store
 
+# Mac || idea
+
+# Mac || vscode
+.vscode
+*.versionsBackup
+
+# Mac || Eclipse
+
 # Maven
 logs/
 target/
@@ -21,6 +29,21 @@ target/
 .settings/
 build/
 
+# databases #
+######################
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
 # Other
 *.log
 *.cache
@@ -30,8 +53,14 @@ build/
 *.epoch
 *.lck
 catalina.base_IS_UNDEFINED
-Thumbs.db
 .springBeans
+
+# npm #
+node_modules
+
+# emacs #
+.dir-locals.el
+.projectile
 
 _doc/composer.phar
 composer.lock
@@ -44,7 +73,9 @@ temp/
 .factorypath
 
 
-!/cod-log/src/main/java/com.tlkj.cod.log/
+# cod-frame
 java.io.tempdir
 java.io.*
 codCache
+deploy
+/cod-package/codframe/

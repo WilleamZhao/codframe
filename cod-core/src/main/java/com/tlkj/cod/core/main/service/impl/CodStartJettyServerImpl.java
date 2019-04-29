@@ -11,8 +11,8 @@
 package com.tlkj.cod.core.main.service.impl;
 
 import com.tlkj.cod.core.listener.LogoListener;
-import com.tlkj.cod.core.main.CodStartServerInit;
-import com.tlkj.cod.core.main.MainConfiguration;
+import com.tlkj.cod.launcher.CodServerInitialize;
+import com.tlkj.cod.core.main.CodSpringConfiguration;
 import com.tlkj.cod.core.main.service.CodStartServer;
 import com.tlkj.cod.core.model.bo.CodStartModel;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +25,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -32,6 +34,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import javax.servlet.FilterConfig;
 import javax.servlet.Servlet;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
@@ -48,6 +51,8 @@ import java.util.List;
  * @className CodStartJettyServerImpl
  * @date 2019/4/10 2:33 PM
  */
+@Primary
+@Component
 public class CodStartJettyServerImpl implements CodStartServer {
 
     private static Server server = null;
@@ -68,16 +73,16 @@ public class CodStartJettyServerImpl implements CodStartServer {
     private static List<EventListener> listenerList = new ArrayList<>();
 
     private DispatcherServlet dispatcherServlet = null;
-    private CodStartServerInit startServerInit = null;
+    private CodServerInitialize startServerInit = null;
 
     @Override
-    public void init(CodStartServerInit startServerInit) {
+    public void init(CodServerInitialize startServerInit) {
         this.startServerInit = startServerInit;
     }
 
     @Override
     public void start() {
-        startServerInit.init();
+        // startServerInit.init();
 
         setServerInfo();
 
@@ -92,14 +97,13 @@ public class CodStartJettyServerImpl implements CodStartServer {
         DispatcherServlet dispatcherServlet = new DispatcherServlet(annotationConfigWebApplicationContext);
         dispatcherServlet.refresh();
         */
-        initSpring();
+        // initSpring();
 
-        initServlet();
+        // initServlet();
 
         ServletHolder servletHolder = new ServletHolder(dispatcherServlet);
 
         ServletContextHandler context = new ServletContextHandler();
-
         context.addServlet(servletHolder, "/*");
 
         // 初始化
@@ -108,8 +112,10 @@ public class CodStartJettyServerImpl implements CodStartServer {
         // 动态添加filter
         if (filterList.size() != 0){
             for (int i = 0; i < filterList.size(); i++){
+                // FilterConfig filterConfig = new HolderConfig;
                 ServletHandler servletHandler = new ServletHandler();
                 FilterHolder filterHolder = new FilterHolder(filterList.get(i));
+                // filterHolder.setInitParameter();
                 servletHandler.addFilterWithMapping(filterHolder, "/*", EnumSet.of(DispatcherType.REQUEST));
             }
         }
@@ -155,7 +161,7 @@ public class CodStartJettyServerImpl implements CodStartServer {
      */
     private void initSpring(){
         AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = new AnnotationConfigWebApplicationContext();
-        annotationConfigWebApplicationContext.register(MainConfiguration.class);
+        annotationConfigWebApplicationContext.register(CodSpringConfiguration.class);
         annotationConfigWebApplicationContext.setServletContext(new ContextHandler.StaticContext());
         dispatcherServlet = new DispatcherServlet(annotationConfigWebApplicationContext);
         dispatcherServlet.refresh();
@@ -197,7 +203,7 @@ public class CodStartJettyServerImpl implements CodStartServer {
 
     private WebApplicationContext webApplicationContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(MainConfiguration.class);
+        context.register(CodSpringConfiguration.class);
         return context;
     }
 

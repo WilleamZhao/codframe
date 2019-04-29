@@ -35,7 +35,7 @@ public class CodInitializer implements ApplicationContextInitializer {
     private void initializeSpringConfig(ServletContext container) {
         // Create the 'root' Spring application context
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(SpringConfiguration.class);
+        rootContext.register(CodSpringConfiguration.class);
         // Manage the life cycle of the root application context
         container.addListener(new ContextLoaderListener(rootContext));
     }

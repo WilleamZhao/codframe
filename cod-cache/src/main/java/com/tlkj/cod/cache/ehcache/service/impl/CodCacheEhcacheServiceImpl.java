@@ -150,6 +150,9 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
      * @return Cache
      */
     private Cache getOrAddCache(String cacheName, Class<?> keyType, Class<?> valueType) {
+        if (cacheManager == null){
+            new CodCacheEhcacheServiceImpl(codCacheEhcacheModel);
+        }
         Cache cache = cacheManager.getCache(cacheName, keyType, valueType);
         if (cache == null) {
             synchronized (CodCacheEhcacheServiceImpl.class){

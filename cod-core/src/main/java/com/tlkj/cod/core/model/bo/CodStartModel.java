@@ -10,7 +10,13 @@
 
 package com.tlkj.cod.core.model.bo;
 
+import org.eclipse.jetty.util.PathWatcher;
+
 import java.io.Serializable;
+import java.util.EventListener;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Filter;
 
 /**
  * Desc cod启动model
@@ -73,6 +79,10 @@ public class CodStartModel implements Serializable {
      * 项目名称
      */
     private String projectName = "codframe";
+
+    private LinkedList<EventListener> listeners;
+
+    private LinkedList<Filter> filters;
 
     /**
      * tomcat存储自身信息的目录，比如日志等信息，根目录

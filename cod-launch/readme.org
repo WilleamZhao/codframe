@@ -1,0 +1,12 @@
+* 启动模块
+** 框架启动模块
+
+** 优先级
+
+ - h2 1
+ - dao 2
+ - cache 3
+ - config 4
+ - log 5
+ - core 6
+ - server 7
