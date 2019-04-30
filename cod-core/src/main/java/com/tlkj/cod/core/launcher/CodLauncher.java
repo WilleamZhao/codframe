@@ -81,7 +81,7 @@ public class CodLauncher {
                 list.add(order);
                 linkedList.add(i, codModuleInitialize);
             }
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             System.out.println("启动异常");
             e.printStackTrace();
         }
