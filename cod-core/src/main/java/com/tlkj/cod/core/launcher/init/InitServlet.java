@@ -24,6 +24,11 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitServlet implements CodModuleInitialize {
 
     @Override
+    public String name() {
+        return "servlet";
+    }
+
+    @Override
     public int order() {
         return 50;
     }

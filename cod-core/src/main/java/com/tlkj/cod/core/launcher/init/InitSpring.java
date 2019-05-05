@@ -27,6 +27,12 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
  * @date 2019/4/28 4:03 PM
  */
 public class InitSpring implements CodModuleInitialize {
+
+    @Override
+    public String name() {
+        return "spring";
+    }
+
     @Override
     public int order() {
         return CodModuleOrderEnum.SPRING.getOrder();

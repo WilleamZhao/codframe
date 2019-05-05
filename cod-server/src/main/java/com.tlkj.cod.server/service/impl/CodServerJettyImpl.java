@@ -74,6 +74,7 @@ public class CodServerJettyImpl implements CodServer {
         applicationContext.register(CodSpringMVCConfiguration.class);
 
         applicationContext.setServletContext(new ContextHandler.StaticContext());
+        applicationContext.refresh();
         DispatcherServlet dispatcherServlet = new DispatcherServlet(applicationContext);
         // dispatcherServlet.setContextInitializers();
         dispatcherServlet.refresh();

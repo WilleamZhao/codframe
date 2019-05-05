@@ -96,11 +96,6 @@
         </dependency>
         <dependency>
             <groupId>com.tlkj</groupId>
-            <artifactId>cod-action</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tlkj</groupId>
             <artifactId>cod-mybatis</artifactId>
             <version>${codframe.version}</version>
         </dependency>
@@ -149,6 +144,11 @@
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-wechat</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-gulian-gwgz</artifactId>
             <version>${codframe.version}</version>
         </dependency>
     </dependencies>

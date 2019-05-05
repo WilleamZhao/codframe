@@ -30,7 +30,8 @@ public class GwgzCollectAction extends GeneralResponse {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public Response list(HttpServletRequest request) {
         String openid = request.getParameter("openid");
-        gwgzCollectService.listAdmin(openid);
-        return super.success();
+        String page = request.getParameter("page");
+        String pageSize = request.getParameter("pageSize");
+        return gwgzCollectService.listAdmin(openid, page, pageSize).toResponse();
     }
 }

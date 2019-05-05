@@ -26,6 +26,11 @@ import javax.servlet.ServletContext;
 public class InitH2 implements CodModuleInitialize {
 
     @Override
+    public String name() {
+        return "H2";
+    }
+
+    @Override
     public int order() {
         return 0;
     }

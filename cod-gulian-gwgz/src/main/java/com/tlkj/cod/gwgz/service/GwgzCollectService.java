@@ -12,13 +12,15 @@ import com.tlkj.cod.model.common.SystemResponse;
  */
 public interface GwgzCollectService {
 
-    SystemResponse list(String page, String pageSize);
+    SystemResponse list(String openid, String page, String pageSize);
 
-    SystemResponse listAdmin(String openid);
+    SystemResponse listAdmin(String openid, String page, String pageSize);
 
-    SystemResponse get();
+    SystemResponse get(String openid, String id);
 
     SystemResponse getAdmin();
 
     SystemResponse save();
+
+    SystemResponse del(String openid, String id);
 }

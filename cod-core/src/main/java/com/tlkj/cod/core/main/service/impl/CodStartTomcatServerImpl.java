@@ -317,6 +317,11 @@ public class CodStartTomcatServerImpl implements CodStartServer, CodModuleInitia
     }
 
     @Override
+    public String name() {
+        return "服务模块";
+    }
+
+    @Override
     public int order() {
         return 0;
     }

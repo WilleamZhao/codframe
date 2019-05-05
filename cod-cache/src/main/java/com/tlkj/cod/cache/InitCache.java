@@ -26,6 +26,11 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitCache implements CodModuleInitialize {
 
     @Override
+    public String name() {
+        return "缓存";
+    }
+
+    @Override
     public int order() {
         return 4;
     }

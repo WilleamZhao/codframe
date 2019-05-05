@@ -24,6 +24,11 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitConfig implements CodModuleInitialize {
 
     @Override
+    public String name() {
+        return "配置";
+    }
+
+    @Override
     public int order() {
         return 1;
     }

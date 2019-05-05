@@ -37,6 +37,12 @@
             <groupId>com.google.code.simple-spring-memcached</groupId>
             <artifactId>spymemcached</artifactId>
             <version>${spymemcached.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- jedis -->
         <dependency>

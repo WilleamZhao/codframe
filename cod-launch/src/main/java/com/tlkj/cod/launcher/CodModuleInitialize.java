@@ -25,6 +25,12 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public interface CodModuleInitialize {
 
     /**
+     * 模块名称
+     * @return 模块名称
+     */
+    String name();
+
+    /**
      * 设置模块顺序
      * 小于0 启动服务之前 (优先级最高)
      * 大于0 启动服务之后 (可获取到ServletContext)

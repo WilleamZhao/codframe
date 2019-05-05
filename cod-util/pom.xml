@@ -93,6 +93,12 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
             <version>${ehcache.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- pinyin4j -->

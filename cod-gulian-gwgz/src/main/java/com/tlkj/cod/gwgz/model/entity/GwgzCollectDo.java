@@ -7,16 +7,19 @@ package com.tlkj.cod.gwgz.model.entity;
  */
 
 import java.io.Serializable;
+
+import com.tlkj.cod.common.CodCommonModelConvert;
 import lombok.Getter;
 import lombok.Setter;
 
 
 /**
  * codFrame auto create
+ * @author sourcod
  */
 @Getter
 @Setter
-public class GwgzCollectDo implements Serializable,Cloneable{
+public class GwgzCollectDo extends CodCommonModelConvert implements Serializable,Cloneable{
     /**
      * 表名
      */

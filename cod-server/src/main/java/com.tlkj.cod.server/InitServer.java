@@ -38,6 +38,11 @@ public class InitServer implements CodModuleInitialize, CodServerInitialize {
     }
 
     @Override
+    public String name() {
+        return "服务";
+    }
+
+    @Override
     public int order() {
         return CodModuleOrderEnum.SERVER.getOrder();
     }

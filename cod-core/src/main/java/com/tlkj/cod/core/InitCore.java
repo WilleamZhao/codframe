@@ -27,6 +27,11 @@ import javax.servlet.ServletContext;
 public class InitCore implements CodModuleInitialize {
 
     @Override
+    public String name() {
+        return "核心";
+    }
+
+    @Override
     public int order() {
         return 1;
     }

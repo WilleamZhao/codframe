@@ -16,6 +16,8 @@ import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.CodServerInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,6 +39,7 @@ public class CodLauncher {
 
     private static List list = new ArrayList();
     private static final LauncherModel launcherModel = new LauncherModel();
+    private static Logger logger = LoggerFactory.getLogger(CodLauncher.class);
 
     /**
      * 1. 加载模块
@@ -60,7 +63,6 @@ public class CodLauncher {
         try {
             for (Class<?> c : CodCommonFindChildClass.getAllAssignedClass(CodModuleInitialize.class, "com.tlkj.cod")) {
                 codModuleInitialize = (CodModuleInitialize) c.newInstance();
-
                 int order = codModuleInitialize.order();
                 if (order == CodModuleOrderEnum.SPRING.getOrder() && !c.isAssignableFrom(InitSpring.class)){
                     System.out.println("order " + CodModuleOrderEnum.SPRING.getOrder() + " 是保留序号. 跳过");
@@ -87,9 +89,12 @@ public class CodLauncher {
         }
         for (CodModuleInitialize module : linkedList){
             try {
+                logger.info("开始加载 {} 模块", module.name());
                 module.init(launcherModel);
+                logger.info("加载 {} 模块完成", module.name());
             } catch (Exception e){
                 // TODO cod set log Debug
+                logger.info("加载 {} 模块是吧", module.name());
                 e.printStackTrace();
                 module.fail(e);
             }
