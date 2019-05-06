@@ -45,7 +45,6 @@
         <module>cod-package</module>
         <module>cod-server</module>
         <module>cod-boot</module>
-        <module>cod-gulian-gwgz</module>
         <module>cod-http</module>
     </modules>
 
@@ -171,6 +170,24 @@
         <!-- spring -->
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
@@ -189,11 +206,11 @@
         </dependency>
 
         <!-- javax.servlet-api -->
-        <dependency>
+        <!--<dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- json -->
         <dependency>

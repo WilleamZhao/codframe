@@ -24,12 +24,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>

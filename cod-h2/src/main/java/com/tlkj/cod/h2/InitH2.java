@@ -13,8 +13,6 @@ package com.tlkj.cod.h2;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
 
-import javax.servlet.ServletContext;
-
 /**
  * Desc 初始化h2
  *

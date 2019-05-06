@@ -11,7 +11,7 @@
 package com.tlkj.cod.common.constant;
 
 /**
- * Desc
+ * Desc JWT常量
  *
  * @className CodCommonJWTConstant
  *
