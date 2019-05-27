@@ -21,6 +21,11 @@ package com.tlkj.cod.launcher;
 public enum CodModuleOrderEnum {
 
     /**
+     * 启动h2
+     */
+    H2(-50),
+
+    /**
      * 启动spring
      */
     SPRING(0),

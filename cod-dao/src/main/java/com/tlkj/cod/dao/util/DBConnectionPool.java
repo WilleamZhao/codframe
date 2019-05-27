@@ -114,7 +114,7 @@ public class DBConnectionPool {
                     getBasicDataSource();
                     break;
                 case ("HikariCP"):
-                    getHikariDataSource();
+                    dataSource = getHikariDataSource(dataConnectBean);
                     break;
                 case ("c3p0"):
                     getComboPooledDataSource();
@@ -158,7 +158,7 @@ public class DBConnectionPool {
      * Hikari 数据源
      * @return Hikari 数据源
      */
-    private void getHikariDataSource(){
+    public DataSource getHikariDataSource(DataConnectBean dataConnectBean){
         HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         hikariDataSource.setUsername(dataConnectBean.getUsername());
@@ -179,7 +179,8 @@ public class DBConnectionPool {
         if (StringUtils.isNotBlank(dataConnectBean.getInitSql())){
             hikariDataSource.setConnectionInitSql(dataConnectBean.getInitialSize());
         }
-        dataSource = hikariDataSource;
+        // dataSource = hikariDataSource;
+        return hikariDataSource;
     }
 
     /**

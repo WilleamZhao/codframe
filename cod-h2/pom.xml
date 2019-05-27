@@ -30,11 +30,17 @@
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-launch</artifactId>
-            <version>1.0.3</version>
-            <scope>compile</scope>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-dao</artifactId>
+            <version>${codframe.version}</version>
         </dependency>
     </dependencies>
 

@@ -13,6 +13,7 @@ package com.tlkj.cod.launcher.model;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import org.springframework.context.ApplicationContext;
 
+import javax.sql.DataSource;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,5 +101,16 @@ public class LauncherModel<T> implements Serializable {
 
     public ServerModel getServer() {
         return (ServerModel) map.get(CodModuleOrderEnum.SERVER.getOrder());
+    }
+
+    /**
+     * h2
+     */
+    public void setH2(DataSource dataSource){
+        map.put(CodModuleOrderEnum.H2.getOrder(), dataSource);
+    }
+
+    public DataSource getH2(){
+        return (DataSource) map.get(CodModuleOrderEnum.H2.getOrder());
     }
 }

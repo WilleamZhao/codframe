@@ -30,7 +30,7 @@ import java.util.Map;
  * @author sourcod
  */
 @Repository
-public class Finder {
+public class Finder extends CodDaoer{
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -47,32 +47,13 @@ public class Finder {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public int update(String sql){
-		return this.jdbcTemplate.update(sql);
-	}
-
-	public int update(String sql, Object[] params){
-        return this.jdbcTemplate.update(sql, params);
-	}
-
-    public int update(String sql, Object[] params, Integer[] types){
-        return this.jdbcTemplate.update(sql, params, types);
-    }
-
-	public int[] batchUpdate(String... sql){
-		return this.jdbcTemplate.batchUpdate(sql);
-	}
-
-    public void execute(String sql){
-		this.jdbcTemplate.execute(sql);
-	}
-
 	public Query from(String table) {
 		return new Query(jdbcTemplate).from(table);
 	}
 
 	/**
 	 * 查询视图
+	 * TODO 待完善
 	 */
 	public Query fromView(CodDataView view){
 		Query query;
@@ -85,7 +66,9 @@ public class Finder {
 		view.getJoins(query);
 		view.getSelect(query);
 		view.getWhere(query);
-		System.out.println(query.createGenerator().toSQL());
+		if (query.dev){
+			System.out.println(query.createGenerator().toSQL());
+		}
 		return query;
 	}
 

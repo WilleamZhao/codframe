@@ -11,6 +11,8 @@
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
+import com.tlkj.cod.common.CodCommonFile;
+import com.tlkj.cod.common.CodCommonIO;
 import com.tlkj.cod.common.CodCommonModelConvert;
 import com.tlkj.cod.dao.util.DBConnectionPool;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +22,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -68,7 +73,6 @@ public class Updater {
     public Update insert(String table) {
         return new Update(jdbcTemplate, 1).from(table);
     }
-
 
     public Update insert(Object object) {
         return new Update(jdbcTemplate, 1, object);
@@ -120,6 +124,21 @@ public class Updater {
 
     public void execute(String sql) {
         jdbcTemplate.execute(sql);
+    }
+
+    /**
+     * TODO 执行文件
+     * 类似Mybatis
+     * @return
+     */
+    public Object executeFile(String url, Map map){
+        try {
+            InputStream in = new FileInputStream(url);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // this.jdbcTemplate.execute();
+        return null;
     }
 
     private static <T> String getTableName(Class<T> klass) {

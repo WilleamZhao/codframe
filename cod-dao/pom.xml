@@ -43,6 +43,7 @@
     <properties>
         <mysql.version>5.1.34</mysql.version>
         <!--<guava.version>19.0</guava.version>-->
+        <mybatis.version>3.4.6</mybatis.version>
     </properties>
 
     <dependencies>
@@ -99,6 +100,13 @@
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.9.1.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
         </dependency>
 
         <!-- cod -->

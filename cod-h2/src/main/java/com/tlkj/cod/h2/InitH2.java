@@ -10,8 +10,14 @@
 
 package com.tlkj.cod.h2;
 
+import com.tlkj.cod.dao.bean.DataConnectBean;
+import com.tlkj.cod.dao.util.DBConnectionPool;
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.LauncherModel;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.sql.DataSource;
 
 /**
  * Desc 初始化h2
@@ -30,16 +36,32 @@ public class InitH2 implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 0;
+        return CodModuleOrderEnum.H2.getOrder();
     }
 
     @Override
     public void init(LauncherModel launcherModel) {
-
+        launcherModel.setH2(defaultDataSource());
     }
 
     @Override
     public void fail(Throwable e) {
 
+    }
+
+    /**
+     * h2数据库连接
+     * @return
+     */
+    private DataSource defaultDataSource(){
+        DataConnectBean dataConnectBean = new DataConnectBean();
+        dataConnectBean.setCharacterEncoding("utf-8");
+        dataConnectBean.setDriverClass("org.h2.Driver");
+        // dataConnectBean.setMaxActive();
+        dataConnectBean.setUrl("jdbc:h2:./codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL");
+        dataConnectBean.setUsername("codframe");
+        dataConnectBean.setPassword("123456");
+        DBConnectionPool dbConnectionPool = new DBConnectionPool();
+        return dbConnectionPool.getHikariDataSource(dataConnectBean);
     }
 }

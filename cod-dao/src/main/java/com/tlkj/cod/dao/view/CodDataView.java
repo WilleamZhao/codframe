@@ -12,6 +12,7 @@ package com.tlkj.cod.dao.view;
 
 /**
  * Desc Cod视图接口
+ * 逻辑视图
  *
  * @author sourcod
  * @version 1.0

@@ -46,6 +46,7 @@
         <module>cod-server</module>
         <module>cod-boot</module>
         <module>cod-http</module>
+        <module>cod-admin</module>
     </modules>
 
     <name>codframe</name>
