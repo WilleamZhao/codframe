@@ -7,11 +7,15 @@ datasource:
 
 # 数据源 从1开始
 # 1连不上会自动切换2以此类推
-datasource2:
-    driverClass: org.h2.Driver
-    url: jdbc:h2:./target/testDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
-    username: jx
-    password: jxp@ssw0rd
+datasource1:
+    #driverClass: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://47.106.237.199:3306/gwgz
+    #username: root
+    #password: Unrealcheng2010022!1@1#0
+    driverClass: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-2ze073417o2rogq4dyo.mysql.rds.aliyuncs.com:3306/codframe
+    username: codframe
+    password: codframep@ssw0rd
 
     #url: jdbc:mysql://192.168.3.3:3307/bjwps
     #username: root
@@ -32,11 +36,11 @@ datasource2:
     characterEncoding: utf-8
     testQuery: select 1
 
-datasource1:
-    driverClass: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.106.237.199:3306/gwgz
-    username: root
-    password: Unrealcheng2010022!1@1#0
+datasource2:
+    driverClass: org.h2.Driver
+    url: jdbc:h2:./target/testDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
+    username: jx
+    password: jxp@ssw0rd
 
     #url: jdbc:mysql://192.168.3.3:3307/bjwps
     #username: root

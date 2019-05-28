@@ -57,12 +57,12 @@ public class DataConnectBean {
     /**
      * 最大空闲
      */
-    private String maxIdle;
+    private String maxIdle = "20";
 
     /**
      * 最小空闲
      */
-    private String minIdle;
+    private String minIdle = "1";
 
     /**
      * 最大等待时长
