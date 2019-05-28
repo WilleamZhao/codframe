@@ -28,6 +28,9 @@ import java.util.Map;
  */
 public class LauncherModel<T> implements Serializable {
 
+    /**
+     * data
+     */
     private Map<Integer, Object> map = new HashMap<>();
 
     /**
@@ -104,13 +107,13 @@ public class LauncherModel<T> implements Serializable {
     }
 
     /**
-     * h2
+     * data
      */
-    public void setH2(DataSource dataSource){
-        map.put(CodModuleOrderEnum.H2.getOrder(), dataSource);
+    public void setCodData(DataSource dataSource){
+        map.put(CodModuleOrderEnum.DATA.getOrder(), dataSource);
     }
 
-    public DataSource getH2(){
-        return (DataSource) map.get(CodModuleOrderEnum.H2.getOrder());
+    public DataSource getCodData(){
+        return (DataSource) map.get(CodModuleOrderEnum.DATA.getOrder());
     }
 }

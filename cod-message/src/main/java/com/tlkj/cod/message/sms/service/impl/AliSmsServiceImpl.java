@@ -109,4 +109,10 @@ public class AliSmsServiceImpl implements AliSmsService {
          */
         return false;
     }
+
+    @Override
+    public boolean dynamicSend(String nationcode, String phone, String content, String signName, String templateCode) {
+        // TODO this.send()
+        return false;
+    }
 }

@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c) 2018-2019.
-  ~ Beijing sky blue technology co., LTD.
-  ~ All rights reserved
-  ~
-  ~ author: sourcod
-  ~ github: https://github.com/WilleamZhao
-  ~ site：http://codframe.com
-  -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -19,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cod-test</artifactId>
+    <artifactId>cod-data</artifactId>
 
     <dependencies>
         <dependency>
@@ -30,11 +20,15 @@
 
         <dependency>
             <groupId>com.tlkj</groupId>
+            <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
             <artifactId>cod-dao</artifactId>
             <version>${codframe.version}</version>
         </dependency>
 
-
     </dependencies>
-
 </project>

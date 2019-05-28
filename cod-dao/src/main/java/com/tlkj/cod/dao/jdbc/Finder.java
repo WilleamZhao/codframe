@@ -27,6 +27,7 @@ import java.util.Map;
 
 /**
  * 查询工具类
+ * 支持 mysql oracle
  * @author sourcod
  */
 @Repository

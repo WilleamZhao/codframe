@@ -12,6 +12,7 @@ package com.tlkj.cod.h2;
 
 import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.util.DBConnectionPool;
+import com.tlkj.cod.h2.model.CodH2Config;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.LauncherModel;
@@ -36,12 +37,12 @@ public class InitH2 implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return CodModuleOrderEnum.H2.getOrder();
+        return CodModuleOrderEnum.DATA.getOrder();
     }
 
     @Override
     public void init(LauncherModel launcherModel) {
-        launcherModel.setH2(defaultDataSource());
+        launcherModel.setCodData(defaultDataSource());
     }
 
     @Override
@@ -54,13 +55,13 @@ public class InitH2 implements CodModuleInitialize {
      * @return
      */
     private DataSource defaultDataSource(){
+        CodH2Config codH2Config = new CodH2Config();
         DataConnectBean dataConnectBean = new DataConnectBean();
-        dataConnectBean.setCharacterEncoding("utf-8");
-        dataConnectBean.setDriverClass("org.h2.Driver");
-        // dataConnectBean.setMaxActive();
-        dataConnectBean.setUrl("jdbc:h2:./codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL");
-        dataConnectBean.setUsername("codframe");
-        dataConnectBean.setPassword("123456");
+        dataConnectBean.setCharacterEncoding(codH2Config.getEncoding());
+        dataConnectBean.setDriverClass(codH2Config.getDriver());
+        dataConnectBean.setUrl(codH2Config.getUrl());
+        dataConnectBean.setUsername(codH2Config.getUsername());
+        dataConnectBean.setPassword(codH2Config.getPassword());
         DBConnectionPool dbConnectionPool = new DBConnectionPool();
         return dbConnectionPool.getHikariDataSource(dataConnectBean);
     }
