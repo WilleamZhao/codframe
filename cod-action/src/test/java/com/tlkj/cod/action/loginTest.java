@@ -35,7 +35,7 @@ public class loginTest {
         System.out.println(url);*/
     }
 
-    /*@Test
+    /*@FileTest
     public void testServiceHelloFail() {
         String username = "admin";
         String param11 = "param11";
