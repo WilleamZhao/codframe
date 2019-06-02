@@ -24,6 +24,7 @@ public interface FileService {
 
     /**
      * 上传文件接口
+     * @param url    文件名称前缀
      * @param fileName    文件名称
      * @param inputStream 文件流
      * @return
