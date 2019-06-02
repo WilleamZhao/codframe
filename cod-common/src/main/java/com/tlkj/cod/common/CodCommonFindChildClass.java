@@ -45,7 +45,7 @@ public class CodCommonFindChildClass {
         }
         List<Class<?>> classes = new ArrayList<>();
         for (Class<?> c : getClasses(cls, pk)) {
-            if (cls.isAssignableFrom(c) && !cls.equals(c)) {
+            if (cls.isAssignableFrom(c) && !c.isInterface() && !cls.equals(c)) {
                 classes.add(c);
             }
         }
@@ -210,7 +210,7 @@ public class CodCommonFindChildClass {
     }
 
     /**
-     *    加载类
+     * 加载类
      * @param fullClzName 类全名
      * @return
      */

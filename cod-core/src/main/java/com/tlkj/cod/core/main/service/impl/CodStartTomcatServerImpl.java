@@ -17,7 +17,7 @@ import com.tlkj.cod.core.main.service.CodStartServer;
 import com.tlkj.cod.core.model.bo.CodStartModel;
 import com.tlkj.cod.core.model.bo.CodStartTomcatModel;
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.CodServerInitialize;
+import com.tlkj.cod.launcher.init.CodServerInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
@@ -50,7 +50,7 @@ import java.util.LinkedList;
  * @date 2019/4/9 7:26 PM
  */
 @Component
-public class CodStartTomcatServerImpl implements CodStartServer, CodModuleInitialize {
+public class CodStartTomcatServerImpl implements CodStartServer {
 
     private static Tomcat tomcat = null;
     private static Logger logger = LoggerFactory.getLogger(CodStartTomcatServerImpl.class);
@@ -313,26 +313,6 @@ public class CodStartTomcatServerImpl implements CodStartServer, CodModuleInitia
 
     @Override
     public void setServlet(LinkedList<Servlet> servlets) {
-
-    }
-
-    @Override
-    public String name() {
-        return "服务模块";
-    }
-
-    @Override
-    public int order() {
-        return 0;
-    }
-
-    @Override
-    public void init(LauncherModel launcherModel) {
-
-    }
-
-    @Override
-    public void fail(Throwable e) {
 
     }
 }

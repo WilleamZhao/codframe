@@ -36,11 +36,6 @@ public class InitOldServer implements CodModuleInitialize {
     private static SystemModel system = null;
 
     @Override
-    public String name() {
-        return "旧服务";
-    }
-
-    @Override
     public int order() {
         return -10;
     }

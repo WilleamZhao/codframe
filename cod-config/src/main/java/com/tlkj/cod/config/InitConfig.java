@@ -10,8 +10,17 @@
 
 package com.tlkj.cod.config;
 
+import com.google.common.collect.Lists;
+import com.tlkj.cod.common.CodCommonJson;
+import com.tlkj.cod.config.model.enums.CodConfigSourceType;
+import com.tlkj.cod.config.service.impl.CodConfigDataServiceImpl;
+import com.tlkj.cod.config.spring.config.PropertySourcesConstants;
+import com.tlkj.cod.config.spring.config.PropertySourcesProcessor;
+import com.tlkj.cod.config.spring.property.SpringValueRegistry;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 /**
  * Desc 配置初始化
@@ -24,18 +33,26 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitConfig implements CodModuleInitialize {
 
     @Override
-    public String name() {
-        return "配置";
-    }
-
-    @Override
     public int order() {
-        return 1;
+        return -8;
     }
 
     @Override
     public void init(LauncherModel launcherModel) {
         System.out.println("开始初始化配置");
+        AnnotationConfigWebApplicationContext applicationContext = launcherModel.getSpring();
+
+        // 支持placeholder
+        applicationContext.register(PropertySourcesPlaceholderConfigurer.class);
+
+        // 注册codData数据源
+        PropertySourcesProcessor.addCodConfigDataSource(Lists.newArrayList(new CodConfigDataServiceImpl()), 0);
+
+        // 定义processor
+        PropertySourcesProcessor propertySourcesProcessor = new PropertySourcesProcessor();
+        propertySourcesProcessor.setEnvironment(applicationContext.getEnvironment());
+        applicationContext.addBeanFactoryPostProcessor(propertySourcesProcessor);
+        launcherModel.finish();
     }
 
     @Override

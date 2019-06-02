@@ -10,6 +10,7 @@
 
 package com.tlkj.cod.dao.bean;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,16 +23,19 @@ import org.springframework.stereotype.Component;
 @Component("dataSource")
 public class DataConnectBean {
 
+    @Value("${cod.database.type}")
     private String datasourcd;
 
     /**
      * 驱动类
      */
+    @Value("${cod.database.driverClass}")
     private String driverClass;
 
     /**
      * URL
      */
+    @Value("${cod.database.url}")
     private String url;
 
     /**

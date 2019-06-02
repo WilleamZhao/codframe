@@ -26,11 +26,6 @@ import javax.servlet.ServletContext;
 public class InitApi implements CodModuleInitialize {
 
     @Override
-    public String name() {
-        return "API模块";
-    }
-
-    @Override
     public int order() {
         return -1;
     }

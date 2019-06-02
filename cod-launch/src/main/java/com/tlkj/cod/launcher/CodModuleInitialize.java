@@ -25,10 +25,12 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public interface CodModuleInitialize {
 
     /**
-     * 模块名称
-     * @return 模块名称
+     * spring scan package name
+     * @return scan package name
      */
-    String name();
+    default String name(){
+        return this.getClass().getPackage().getName();
+    }
 
     /**
      * 设置模块顺序

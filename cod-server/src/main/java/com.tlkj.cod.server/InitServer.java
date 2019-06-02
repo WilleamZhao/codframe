@@ -13,7 +13,7 @@ package com.tlkj.cod.server;
 import com.tlkj.cod.filter.CorsFilter;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.launcher.CodServerInitialize;
+import com.tlkj.cod.launcher.init.CodServerInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
 import com.tlkj.cod.server.model.FilterModel;
 import com.tlkj.cod.server.model.server.CodServerModel;
@@ -38,11 +38,6 @@ public class InitServer implements CodModuleInitialize, CodServerInitialize {
     }
 
     @Override
-    public String name() {
-        return "服务";
-    }
-
-    @Override
     public int order() {
         return CodModuleOrderEnum.SERVER.getOrder();
     }
@@ -53,10 +48,10 @@ public class InitServer implements CodModuleInitialize, CodServerInitialize {
 
         // TODO 从配置模块里读取
 
-        CodServer codServer = (CodServer) launcherModel.getSpring().getBean("codServerJetty");
-        System.out.println("初始化server");
-        launcherModel.setServer(this.setCodServerDefault());
-        codServer.start(launcherModel);
+        // CodServer codServer = (CodServer) launcherModel.getSpring().getBean("codServerJetty");
+        // System.out.println("初始化server");
+        // launcherModel.setServer(this.setCodServerDefault());
+        // codServer.start(launcherModel);
     }
 
     @Override

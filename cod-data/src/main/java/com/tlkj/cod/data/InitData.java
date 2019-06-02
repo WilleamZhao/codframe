@@ -1,15 +1,16 @@
 package com.tlkj.cod.data;
 
-import com.tlkj.cod.dao.bean.CodDaoBean;
+/*import com.tlkj.cod.dao.bean.CodDaoBean;
 import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
-import com.tlkj.cod.dao.util.DBConnectionPool;
+import com.tlkj.cod.dao.util.DBConnectionPool;*/
 import com.tlkj.cod.data.service.CodDataService;
+import com.tlkj.cod.data.service.impl.CodDataH2ServiceImpl;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.LauncherModel;
-import org.springframework.jdbc.core.JdbcTemplate;
+//import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
@@ -35,8 +36,10 @@ public class InitData implements CodModuleInitialize {
 
     @Override
     public void init(LauncherModel launcherModel) {
-        CodDataService codDataService = new CodDataService();
-        DataConnectBean dataConnectBean = new DataConnectBean();
+        CodDataService codDataService = new CodDataH2ServiceImpl();
+        codDataService.init();
+
+        /*DataConnectBean dataConnectBean = new DataConnectBean();
         dataConnectBean.setCharacterEncoding("utf-8");
         dataConnectBean.setDriverClass("org.h2.Driver");
         // dataConnectBean.setMaxActive();
@@ -50,7 +53,7 @@ public class InitData implements CodModuleInitialize {
         Updater updater = new Updater(jdbcTemplate);
         CodDaoBean codDaoBean = new CodDaoBean();
         codDaoBean.setFinder(finder);
-        codDaoBean.setUpdater(updater);
+        codDaoBean.setUpdater(updater);*/
         // launcherModel.setCodData();
     }
 

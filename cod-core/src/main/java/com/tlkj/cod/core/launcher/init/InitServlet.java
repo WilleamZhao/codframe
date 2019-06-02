@@ -10,27 +10,23 @@
 
 package com.tlkj.cod.core.launcher.init;
 
-import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
+import com.tlkj.cod.launcher.init.CodServletInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
 
 /**
- * Desc
+ * Desc servlet 初始化
  *
  * @author sourcod
  * @version 1.0
  * @className InitServlet
  * @date 2019/4/28 4:16 PM
  */
-public class InitServlet implements CodModuleInitialize {
-
-    @Override
-    public String name() {
-        return "servlet";
-    }
+public class InitServlet implements CodServletInitialize {
 
     @Override
     public int order() {
-        return 50;
+        return CodModuleOrderEnum.SERVLET.getOrder();
     }
 
     @Override

@@ -19,6 +19,7 @@ import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.service.system.DictService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +40,7 @@ import java.util.List;
 public class DictAction extends GeneralResponse {
 
     @Autowired
+    @Lazy
     DictService dictService;
 
     /**

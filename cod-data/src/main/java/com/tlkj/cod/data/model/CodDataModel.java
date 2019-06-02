@@ -1,5 +1,6 @@
 package com.tlkj.cod.data.model;
 
+import com.tlkj.cod.data.model.enums.CodDataTypeEnum;
 import com.tlkj.cod.data.service.CodDataService;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,6 @@ public class CodDataModel {
      * 1: H2
      * 2: 配置文件
      */
-    private boolean type;
+    private CodDataTypeEnum type;
 
 }

@@ -11,7 +11,9 @@
 package com.tlkj.cod.launcher.model;
 
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
+import com.tlkj.cod.launcher.model.enums.LauncherStateEnum;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import javax.sql.DataSource;
 import java.io.Serializable;
@@ -20,13 +22,27 @@ import java.util.Map;
 
 /**
  * Desc 初始化model
+ * 单例模式
  *
  * @author sourcod
  * @version 1.0
  * @className LauncherModel
  * @date 2019/4/28 4:49 PM
  */
-public class LauncherModel<T> implements Serializable {
+public class LauncherModel implements Serializable {
+
+    private static volatile LauncherModel singleton;
+
+    public static LauncherModel getInstance() {
+        if (singleton == null) {
+            synchronized (LauncherModel.class) {
+                if (singleton == null) {
+                    singleton = new LauncherModel();
+                }
+            }
+        }
+        return singleton;
+    }
 
     /**
      * data
@@ -41,6 +57,11 @@ public class LauncherModel<T> implements Serializable {
      * 1: 启动成功
      */
     private int state = 0;
+
+    /**
+     * 模块启动状态
+     */
+    private LauncherStateEnum stateEnum = LauncherStateEnum.CONTINUE;
 
     public boolean isStart(){
         if (state == 1){
@@ -65,6 +86,14 @@ public class LauncherModel<T> implements Serializable {
         this.map.putAll(map);
     }
 
+    public LauncherStateEnum getStateEnum() {
+        return stateEnum;
+    }
+
+    public void setStateEnum(LauncherStateEnum stateEnum) {
+        this.stateEnum = stateEnum;
+    }
+
     /**
      * 获取单个Data
      */
@@ -84,8 +113,13 @@ public class LauncherModel<T> implements Serializable {
     /**
      * 获取spring
      */
-    public ApplicationContext getSpring() {
-        return (ApplicationContext) map.get(CodModuleOrderEnum.SPRING.getOrder());
+    public AnnotationConfigWebApplicationContext getSpring() {
+        AnnotationConfigWebApplicationContext applicationContext = (AnnotationConfigWebApplicationContext) map.get(CodModuleOrderEnum.SPRING.getOrder());
+        if (applicationContext == null){
+            applicationContext = new AnnotationConfigWebApplicationContext();
+            setSpring(applicationContext);
+        }
+        return applicationContext;
     }
 
     /**
@@ -115,5 +149,37 @@ public class LauncherModel<T> implements Serializable {
 
     public DataSource getCodData(){
         return (DataSource) map.get(CodModuleOrderEnum.DATA.getOrder());
+    }
+
+    /**
+     * 继续执行下一步
+     * 刷新
+     * @return
+     */
+    public void finish(){
+        this.stateEnum = LauncherStateEnum.SUCCESS;
+    }
+
+    /**
+     * 失败不继续
+     */
+    public void fail(){
+        this.stateEnum = LauncherStateEnum.FAIL;
+    }
+
+    /**
+     * 停止执行下一步
+     * @return
+     */
+    public LauncherModel stop(){
+        this.stateEnum = LauncherStateEnum.STOP;
+        return this;
+    }
+
+    /**
+     * 继续执行不刷新
+     */
+    public void next(){
+        this.stateEnum = LauncherStateEnum.CONTINUE;
     }
 }

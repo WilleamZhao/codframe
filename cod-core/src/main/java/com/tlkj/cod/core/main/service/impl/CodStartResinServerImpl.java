@@ -11,7 +11,7 @@
 package com.tlkj.cod.core.main.service.impl;
 
 import com.tlkj.cod.core.main.service.CodStartServer;
-import com.tlkj.cod.launcher.CodServerInitialize;
+import com.tlkj.cod.launcher.init.CodServerInitialize;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;

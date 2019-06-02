@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.core.main.service;
 
-import com.tlkj.cod.launcher.CodServerInitialize;
+import com.tlkj.cod.launcher.init.CodServerInitialize;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
