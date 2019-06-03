@@ -1,6 +1,5 @@
 package com.tlkj.cod.dao.facade.impl;
 
-import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.CodConfigService;
 import com.tlkj.cod.config.service.ConfigChangeListener;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -28,8 +26,13 @@ public class CodConfigDatabaseServiceImpl implements CodConfigService {
 
     private Map<String, Object> map = new HashMap<>();
 
+    private Finder finder = null;
+
     @Autowired
-    Finder finder;
+    public CodConfigDatabaseServiceImpl(){
+        this.finder = new Finder();
+    }
+
 
     @Override
     public CodConfigSourceType getType() {

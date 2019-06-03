@@ -4,7 +4,7 @@ import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 
 /**
- * Desc
+ * Desc codDao
  *
  * @author sourcod
  * @version 1.0

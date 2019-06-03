@@ -5,13 +5,12 @@ import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.config.model.config.CodCoreConfig;
 import com.tlkj.cod.config.spring.config.PropertySourcesProcessor;
 import com.tlkj.cod.dao.facade.impl.CodConfigDatabaseServiceImpl;
-import com.tlkj.cod.dao.model.Testa;
 import com.tlkj.cod.launcher.init.CodSpringInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 /**
- * Desc
+ * Desc 初始化Dao
  *
  * @author sourcod
  * @version 1.0

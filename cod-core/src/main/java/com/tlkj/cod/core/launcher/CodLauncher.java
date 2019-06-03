@@ -88,12 +88,8 @@ public class CodLauncher {
         LAUNCHER_MODEL.getSpring().register(CodSpringConfiguration.class);
 
         // 设置环境
-        Map map = new HashMap<>();
-        map.put("spring.profiles.active", "dev");
-        map.put("spring.profiles.default", "dev");
-        map.put("spring.liveBeansView.mbeanDomain", "dev");
-        MapPropertySource mapPropertySource = new MapPropertySource("springMbean", map);
-        LAUNCHER_MODEL.getSpring().getEnvironment().getPropertySources().addFirst(mapPropertySource);
+        setEnv("dev");
+
         int i = 0;
         m : for (CodModuleInitialize module : linkedList){
             if (i > 6){
@@ -150,8 +146,17 @@ public class CodLauncher {
         list.add(i, codModuleInitialize);
     }
 
-
-
-
+    /**
+     * 设置环境
+     */
+    private static void setEnv(String env){
+        // 设置环境
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("spring.profiles.active", env);
+        map.put("spring.profiles.default", env);
+        map.put("spring.liveBeansView.mbeanDomain", env);
+        MapPropertySource mapPropertySource = new MapPropertySource("springMbean", map);
+        LAUNCHER_MODEL.getSpring().getEnvironment().getPropertySources().addFirst(mapPropertySource);
+    }
 
 }

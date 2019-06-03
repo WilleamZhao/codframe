@@ -1,5 +1,7 @@
 package com.tlkj.cod.data.service;
 
+import java.util.Map;
+
 /**
  * Desc cod data service
  *
@@ -10,11 +12,30 @@ package com.tlkj.cod.data.service;
  */
 public interface CodDataService {
 
+    /**
+     *
+     */
     void init();
 
+    /**
+     * 获取配置
+     */
+    Map<String, String> config();
+
+    /**
+     * 获取数据
+     */
     void getData();
 
+
+    /**
+     * 设置数据
+     */
     void setData();
 
 
+
+
+
 }
+

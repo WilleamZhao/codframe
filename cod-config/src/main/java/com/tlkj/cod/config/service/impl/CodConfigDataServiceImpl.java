@@ -4,10 +4,9 @@ import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.CodConfigService;
 import com.tlkj.cod.config.service.ConfigChangeListener;
 import com.tlkj.cod.data.service.CodDataService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -26,8 +25,7 @@ public class CodConfigDataServiceImpl implements CodConfigService {
 
     private Map<String, Object> map = new HashMap<>();
 
-    @Resource(name = "codDataH2ServiceImpl")
-    CodDataService codDataService;
+    CodDataService codDataService = new CodDataServiceImpl();
 
     @Override
     public CodConfigSourceType getType() {
@@ -48,6 +46,7 @@ public class CodConfigDataServiceImpl implements CodConfigService {
         map.put("zxc", "333");
         map.put("fff", "444");
         map.put("cod.database.url", "444");
+        // map = codDataService.config();
         return map;
     }
 

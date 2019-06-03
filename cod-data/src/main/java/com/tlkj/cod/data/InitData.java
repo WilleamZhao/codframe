@@ -1,18 +1,10 @@
 package com.tlkj.cod.data;
 
-/*import com.tlkj.cod.dao.bean.CodDaoBean;
-import com.tlkj.cod.dao.bean.DataConnectBean;
-import com.tlkj.cod.dao.jdbc.Finder;
-import com.tlkj.cod.dao.jdbc.Updater;
-import com.tlkj.cod.dao.util.DBConnectionPool;*/
 import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.data.service.impl.CodDataH2ServiceImpl;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.LauncherModel;
-//import org.springframework.jdbc.core.JdbcTemplate;
-
-import javax.sql.DataSource;
 
 /**
  * Desc 初始化数据
@@ -23,11 +15,6 @@ import javax.sql.DataSource;
  * @date 2019/5/28 11:06 AM
  */
 public class InitData implements CodModuleInitialize {
-
-    @Override
-    public String name() {
-        return null;
-    }
 
     @Override
     public int order() {

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.sql.DataSource;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * Desc CodData H2数据库
@@ -81,6 +82,11 @@ public class CodDataH2ServiceImpl implements CodDataService {
         codDataModel.setInit(true);
         codDataModel.setCodDataService(this);
         codDataModel.setType(CodDataTypeEnum.H2);
+    }
+
+    @Override
+    public Map<String, String> config() {
+        return null;
     }
 
     @Override

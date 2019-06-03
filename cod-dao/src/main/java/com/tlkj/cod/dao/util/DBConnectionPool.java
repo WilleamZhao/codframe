@@ -60,6 +60,7 @@ public class DBConnectionPool {
 
     private static String type = "";
 
+    /*
     static {
         InputStream in;
         try {
@@ -84,6 +85,8 @@ public class DBConnectionPool {
             }
         }
     }
+    */
+
     /**
      * 默认构造器
      * 读取配置文件设置数据源类型
