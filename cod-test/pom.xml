@@ -21,5 +21,20 @@
 
     <artifactId>cod-test</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-model</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-dao</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+
+    </dependencies>
 
 </project>

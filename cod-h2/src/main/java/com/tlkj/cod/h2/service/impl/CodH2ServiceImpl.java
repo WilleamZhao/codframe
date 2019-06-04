@@ -34,7 +34,6 @@ import java.util.UUID;
 @Service
 public class CodH2ServiceImpl {
 
-    //@Autowired
     public CodH2ServiceImpl(){
         DataConnectBean dataConnectBean = new DataConnectBean();
         dataConnectBean.setCharacterEncoding("utf-8");

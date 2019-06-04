@@ -10,6 +10,8 @@
 
 package com.tlkj.cod.message.sms.service;
 
+import com.tlkj.cod.message.sms.SmsService;
+
 /**
  * Desc ali短信服务接口
  *
@@ -18,7 +20,7 @@ package com.tlkj.cod.message.sms.service;
  * @className AliSmsService
  * @date 2019/1/29 9:14 PM
  */
-public interface AliSmsService {
+public interface AliSmsService extends SmsService {
 
     /**
      * 发送短信接口

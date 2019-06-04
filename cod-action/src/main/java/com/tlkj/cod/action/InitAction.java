@@ -24,13 +24,8 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitAction implements CodModuleInitialize {
 
     @Override
-    public String name() {
-        return "action模块";
-    }
-
-    @Override
     public int order() {
-        return -2;
+        return -1;
     }
 
     @Override

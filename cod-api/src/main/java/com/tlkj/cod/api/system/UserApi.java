@@ -12,6 +12,7 @@ package com.tlkj.cod.api.system;
 
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.system.dto.CodFrameUserDto;
+import com.tlkj.cod.model.wechat.entity.WxUserDo;
 import com.tlkj.cod.service.system.UserService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class UserApi extends GeneralResponse {
     @Autowired
     UserService userService;
 
+    @Autowired
+    WxUserDo wxUserDo;
+
     /**
      * 获取用户信息
      */
@@ -44,5 +48,10 @@ public class UserApi extends GeneralResponse {
         String token = request.getParameter("token");
         CodFrameUserDto dto = userService.getUserByCache(token);
         return dto == null ? super.fail() : super.success(dto);
+    }
+
+    @RequestMapping(value = "test")
+    public Response test(HttpServletRequest request){
+        return success(wxUserDo);
     }
 }

@@ -38,6 +38,7 @@ public class CodValueAspect {
 
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("asd");
         return joinPoint.proceed();
     }
 }

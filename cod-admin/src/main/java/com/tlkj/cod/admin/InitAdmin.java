@@ -14,11 +14,6 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitAdmin implements CodModuleInitialize {
 
     @Override
-    public String name() {
-        return "管理模块";
-    }
-
-    @Override
     public int order() {
         return 1;
     }

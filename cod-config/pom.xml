@@ -24,21 +24,33 @@
     <dependencies>
 
         <!-- cod -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-dao</artifactId>
             <version>${codframe.version}</version>
-        </dependency>
+        </dependency>-->
+
+        <!--<dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-cache</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>-->
 
         <dependency>
             <groupId>com.tlkj</groupId>
-            <artifactId>cod-cache</artifactId>
+            <artifactId>cod-common</artifactId>
             <version>${codframe.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-data</artifactId>
             <version>${codframe.version}</version>
         </dependency>
 

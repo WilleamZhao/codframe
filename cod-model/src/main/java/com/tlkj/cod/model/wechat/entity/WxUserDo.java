@@ -10,6 +10,15 @@
 
 package com.tlkj.cod.model.wechat.entity;
 
+import com.tlkj.cod.config.annotation.CodValue;
+import com.tlkj.cod.config.model.enums.CodConfigSourceType;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.StandardEnvironment;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 /**
  * Desc
  *
@@ -18,10 +27,16 @@ package com.tlkj.cod.model.wechat.entity;
  * @className WxUserDo
  * @date 2018/11/6 下午10:53
  */
+@Component
 public class WxUserDo {
 
+    @Value("${asasdd:mmm}")
+    @CodValue(type = CodConfigSourceType.DATABASE)
     private String id;
+
+    @Value("${spring.liveBeansView.mbeanDomain:123444}")
     private String openid;
+
     private String unionid;
     private String nickname;
     private String head_url;
@@ -127,5 +142,21 @@ public class WxUserDo {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public static void main(String[] args) {
+        // Java 系统属性
+        String key = "java.home";
+
+
+        StandardEnvironment environment = new StandardEnvironment();
+
+        // 获取 ${environment} 的值
+        String property = environment.getProperty(key);
+        System.out.println(String.format("Environment#getProperty(%s) = %s", key, property));
+
+        // 解析占位符 ${environment}
+        String placeholders = environment.resolvePlaceholders("${java.home}");
+        System.out.println(String.format("Environment#resolvePlaceholders(${java.home}) = %s", placeholders));
     }
 }

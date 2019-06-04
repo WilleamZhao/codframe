@@ -1,9 +1,8 @@
 package com.tlkj.cod.h2.service;
 
-// import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- * Desc
+ * Desc 内置H2数据库 Service
  *
  * @author sourcod
  * @version 1.0
@@ -12,5 +11,12 @@ package com.tlkj.cod.h2.service;
  */
 public interface CodH2Service {
 
+    void getData();
+
+    void setData();
+
+    void initData();
+
+    void isData();
 
 }

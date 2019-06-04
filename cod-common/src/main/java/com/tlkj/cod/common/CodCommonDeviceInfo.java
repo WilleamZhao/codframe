@@ -37,11 +37,26 @@ public class CodCommonDeviceInfo {
 
     private static SystemInfo si = new SystemInfo();
 
+    /**
+     * 硬件
+     * @return
+     */
     public static HardwareAbstractionLayer getHardware(){
         return si.getHardware();
     }
 
-    /************************/
+    /**
+     * 操作系统
+     * @return
+     */
+    public static OperatingSystem getOperatingSystem(){
+        return si.getOperatingSystem();
+    }
+
+    /**
+     * 服务器信息
+     * @param computerSystem
+     */
     private static void printComputerSystem(final ComputerSystem computerSystem) {
         System.out.println("manufacturer: " + computerSystem.getManufacturer());
         System.out.println("model: " + computerSystem.getModel());
@@ -52,8 +67,7 @@ public class CodCommonDeviceInfo {
         System.out.println("  name: " + firmware.getName());
         System.out.println("  description: " + firmware.getDescription());
         System.out.println("  version: " + firmware.getVersion());
-        System.out.println("  release date: " + (firmware.getReleaseDate() == null ? "unknown"
-                : firmware.getReleaseDate() == null ? "unknown" : firmware.getReleaseDate()));
+        System.out.println("  release date: " + (firmware.getReleaseDate() == null ? "unknown" : firmware.getReleaseDate()));
         final Baseboard baseboard = computerSystem.getBaseboard();
         System.out.println("baseboard:");
         System.out.println("  manufacturer: " + baseboard.getManufacturer());
@@ -61,6 +75,11 @@ public class CodCommonDeviceInfo {
         System.out.println("  version: " + baseboard.getVersion());
         System.out.println("  serialnumber: " + baseboard.getSerialNumber());
     }
+
+    /**
+     * cpu
+     * @param processor
+     */
     private static void printProcessor(CentralProcessor processor) {
         System.out.println(processor);
         System.out.println("CPU标识" + processor.getIdentifier());
@@ -69,12 +88,22 @@ public class CodCommonDeviceInfo {
         System.out.println("Identifier: " + processor.getIdentifier());
         System.out.println("ProcessorID: " + processor.getProcessorID());
     }
+
+    /**
+     * 内存
+     * @param memory
+     */
     private static void printMemory(GlobalMemory memory) {
         System.out.println("以使用内存: " + FormatUtil.formatBytes(memory.getAvailable()) + "总共内存"
                 + FormatUtil.formatBytes(memory.getTotal()));
         System.out.println("Swap used: " + FormatUtil.formatBytes(memory.getSwapUsed()) + "/"
                 + FormatUtil.formatBytes(memory.getSwapTotal()));
     }
+
+    /**
+     * cpu
+     * @param processor
+     */
     private static void printCpu(CentralProcessor processor) {
         System.out.println("Uptime: " + FormatUtil.formatElapsedSecs(processor.getSystemUptime()));
         long[] prevTicks = processor.getSystemCpuLoadTicks();
@@ -110,6 +139,8 @@ public class CodCommonDeviceInfo {
         }
         System.out.println(procCpu.toString());
     }
+
+
     private static void printProcesses(OperatingSystem os, GlobalMemory memory) {
         System.out.println("Processes: " + os.getProcessCount() + ", Threads: " + os.getThreadCount());
         // Sort by highest CPU
@@ -150,6 +181,10 @@ public class CodCommonDeviceInfo {
         System.out.println(sb.toString());
     }
 
+    /**
+     * 磁盘信息
+     * @param diskStores
+     */
     private static void printDisks(HWDiskStore[] diskStores) {
         System.out.println("Disks:");
         for (HWDiskStore disk : diskStores) {
@@ -174,6 +209,11 @@ public class CodCommonDeviceInfo {
             }
         }
     }
+
+    /**
+     * 文件系统
+     * @param fileSystem
+     */
     private static void printFileSystem(FileSystem fileSystem) {
         System.out.println("File System:");
         System.out.format(" File Descriptors: %d/%d%n", fileSystem.getOpenFileDescriptors(),
@@ -191,6 +231,11 @@ public class CodCommonDeviceInfo {
                     fs.getVolume(), fs.getLogicalVolume(), fs.getMount());
         }
     }
+
+    /**
+     * 网络信息
+     * @param networkIFs
+     */
     private static void printNetworkInterfaces(NetworkIF[] networkIFs) {
         System.out.println("Network interfaces:");
         for (NetworkIF net : networkIFs) {
@@ -210,6 +255,11 @@ public class CodCommonDeviceInfo {
                     hasData ? " (" + net.getOutErrors() + " err)" : "");
         }
     }
+
+    /**
+     * 网络配置
+     * @param networkParams
+     */
     private static void printNetworkParameters(NetworkParams networkParams) {
         System.out.println("Network parameters:");
         System.out.format(" Host name: %s%n", networkParams.getHostName());

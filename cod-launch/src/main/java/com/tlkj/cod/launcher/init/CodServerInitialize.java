@@ -8,16 +8,18 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.launcher;
+package com.tlkj.cod.launcher.init;
+
+import com.tlkj.cod.launcher.CodModuleInitialize;
 
 /**
- * Desc Cod框架服务启动初始化
+ * Desc cod框架服务启动初始化
  *
  * @author sourcod
  * @version 1.0
  * @className CodStartServerInit
  * @date 2019/4/24 6:01 PM
  */
-public interface CodServerInitialize {
+public interface CodServerInitialize extends CodModuleInitialize {
 
 }

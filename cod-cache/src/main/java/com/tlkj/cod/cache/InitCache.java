@@ -10,9 +10,12 @@
 
 package com.tlkj.cod.cache;
 
+import com.tlkj.cod.common.CodCommonJson;
+import com.tlkj.cod.dao.bean.DataConnectBean;
+import com.tlkj.cod.dao.model.config.CodDataSourceConfig;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
-
+import com.tlkj.cod.model.wechat.entity.WxUserDo;
 
 
 /**
@@ -26,17 +29,16 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitCache implements CodModuleInitialize {
 
     @Override
-    public String name() {
-        return "缓存";
-    }
-
-    @Override
     public int order() {
-        return 4;
+        return -4;
     }
 
     @Override
     public void init(LauncherModel launcherModel) {
+        // Object o = launcherModel.getSpring().getBean(WxUserDo.class);
+        // System.out.println(CodCommonJson.dump(o));
+        Object o = launcherModel.getSpring().getBean(CodDataSourceConfig.class);
+        System.out.println(CodCommonJson.dump(o));
 
     }
 

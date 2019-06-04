@@ -14,11 +14,6 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitHttp implements CodModuleInitialize {
 
     @Override
-    public String name() {
-        return "HTTP";
-    }
-
-    @Override
     public int order() {
         return 101;
     }

@@ -121,7 +121,7 @@ public class CodServerTomcatImpl implements CodServer {
         AnnotationConfigWebApplicationContext applicationContext = (AnnotationConfigWebApplicationContext) launcherModel.getSpring();
 
         // 注册springMVC
-        applicationContext.register(CodSpringMVCConfiguration.class);
+        // applicationContext.register(CodSpringMVCConfiguration.class);
 
         applicationContext.setServletContext(new ApplicationContext(standardContext));
         // applicationContext.register(CodSpringConfiguration.class);

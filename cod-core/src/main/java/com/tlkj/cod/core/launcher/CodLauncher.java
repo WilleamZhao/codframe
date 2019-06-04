@@ -11,17 +11,21 @@
 package com.tlkj.cod.core.launcher;
 
 import com.tlkj.cod.common.CodCommonFindChildClass;
-import com.tlkj.cod.core.launcher.init.InitSpring;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.launcher.CodServerInitialize;
+import com.tlkj.cod.launcher.config.CodSpringConfiguration;
+import com.tlkj.cod.launcher.exception.CodStartServerFailException;
 import com.tlkj.cod.launcher.model.LauncherModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.PropertySource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -38,7 +42,7 @@ public class CodLauncher {
     // private static LinkedList<CodModuleInitialize> linkedList = new LinkedList<>();
 
     private static List list = new ArrayList();
-    private static final LauncherModel launcherModel = new LauncherModel();
+    private static final LauncherModel LAUNCHER_MODEL = LauncherModel.getInstance();
     private static Logger logger = LoggerFactory.getLogger(CodLauncher.class);
 
     /**
@@ -50,8 +54,8 @@ public class CodLauncher {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println("开始启动了");
-        if (launcherModel.isStart()){
+        System.out.println("开始启动codFrame");
+        if (LAUNCHER_MODEL.isStart()){
             return;
         }
         CodModuleInitialize codModuleInitialize = null;
@@ -64,13 +68,7 @@ public class CodLauncher {
             for (Class<?> c : CodCommonFindChildClass.getAllAssignedClass(CodModuleInitialize.class, "com.tlkj.cod")) {
                 codModuleInitialize = (CodModuleInitialize) c.newInstance();
                 int order = codModuleInitialize.order();
-                if (order == CodModuleOrderEnum.SPRING.getOrder() && !c.isAssignableFrom(InitSpring.class)){
-                    System.out.println("order " + CodModuleOrderEnum.SPRING.getOrder() + " 是保留序号. 跳过");
-                    continue;
-                }
-
-                if (order == CodModuleOrderEnum.SERVER.getOrder() && !CodServerInitialize.class.isAssignableFrom(c)){
-                    System.out.println("order " + CodModuleOrderEnum.SERVER.getOrder() + " 是保留序号. 跳过");
+                if (!CodModuleOrderEnum.isAvailable(order, c)){
                     continue;
                 }
 
@@ -87,25 +85,49 @@ public class CodLauncher {
             System.out.println("启动异常");
             e.printStackTrace();
         }
-        for (CodModuleInitialize module : linkedList){
+        LAUNCHER_MODEL.getSpring().register(CodSpringConfiguration.class);
+
+        // 设置环境
+        setEnv("dev");
+
+        int i = 0;
+        m : for (CodModuleInitialize module : linkedList){
+            if (i > 6){
+                break;
+            }
             try {
                 logger.info("开始加载 {} 模块", module.name());
-                module.init(launcherModel);
+                System.out.println("开始启动" + module.order());
+                System.out.println("开始启动" + module.name());
+                LAUNCHER_MODEL.getSpring().scan(module.name());
+                module.init(LAUNCHER_MODEL);
+                switch (LAUNCHER_MODEL.getStateEnum()){
+                    case FAIL:
+                        LAUNCHER_MODEL.next();
+                        throw new CodStartServerFailException();
+                    case STOP:
+                        System.out.println("停止启动" + module.order());
+                        break m;
+                    case SUCCESS:
+                        LAUNCHER_MODEL.getSpring().refresh();
+                        LAUNCHER_MODEL.next();
+                        break;
+                    case CONTINUE:
+                        break;
+                    default:
+                        break;
+                }
                 logger.info("加载 {} 模块完成", module.name());
-            } catch (Exception e){
+            } catch (CodStartServerFailException e){
+                System.out.println("服务启动失败");
+                logger.error("模块 {} 启动失败, 继续启动", module.name());
+            } catch (Exception e) {
                 // TODO cod set log Debug
-                logger.info("加载 {} 模块是吧", module.name());
+                logger.info("加载 {} 模块失败", module.name());
                 e.printStackTrace();
                 module.fail(e);
             }
-            /*if (module.order() == 0) {
-                module.init(launcherModel);
-                // initSpring();
-            } else if (module.order() == 100){
-
-            } else {
-                module.init(launcherModel);
-            }*/
+            i++;
         }
         System.out.println("启动模块数量:" + list.size());
         System.out.println("codFrame框架 启动完成.");
@@ -124,8 +146,17 @@ public class CodLauncher {
         list.add(i, codModuleInitialize);
     }
 
-
-
-
+    /**
+     * 设置环境
+     */
+    private static void setEnv(String env){
+        // 设置环境
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("spring.profiles.active", env);
+        map.put("spring.profiles.default", env);
+        map.put("spring.liveBeansView.mbeanDomain", env);
+        MapPropertySource mapPropertySource = new MapPropertySource("springMbean", map);
+        LAUNCHER_MODEL.getSpring().getEnvironment().getPropertySources().addFirst(mapPropertySource);
+    }
 
 }

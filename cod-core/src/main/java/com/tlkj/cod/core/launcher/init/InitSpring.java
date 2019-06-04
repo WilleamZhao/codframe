@@ -14,23 +14,32 @@ package com.tlkj.cod.core.launcher.init;
 import com.tlkj.cod.core.main.CodSpringConfiguration;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
+import com.tlkj.cod.launcher.init.CodSpringInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 
 /**
- * Desc
+ * Desc 初始化 spring
  *
  * @author sourcod
  * @version 1.0
  * @className InitSpring
  * @date 2019/4/28 4:03 PM
  */
-public class InitSpring implements CodModuleInitialize {
+public class InitSpring implements CodSpringInitialize {
 
+    /**
+     * spring scan
+     * @return
+     */
     @Override
     public String name() {
-        return "spring";
+        return "com.tlkj.cod";
     }
 
     @Override
@@ -45,8 +54,9 @@ public class InitSpring implements CodModuleInitialize {
         /*
          * spring annotation
          */
-        AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = new AnnotationConfigWebApplicationContext();
+        AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = launcherModel.getSpring();
         annotationConfigWebApplicationContext.register(CodSpringConfiguration.class);
+        annotationConfigWebApplicationContext.scan("com.tlkj.cod.core");
         annotationConfigWebApplicationContext.refresh();
         // set spring
         launcherModel.setSpring(annotationConfigWebApplicationContext);

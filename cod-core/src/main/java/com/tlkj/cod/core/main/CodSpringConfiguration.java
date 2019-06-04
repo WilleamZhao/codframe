@@ -10,34 +10,10 @@
 
 package com.tlkj.cod.core.main;
 
-import com.tlkj.cod.core.security.login.LoginFilter;
-import com.tlkj.cod.core.security.matcher.CodCredentialsMatcher;
-import com.tlkj.cod.core.security.mgt.StatelessDefaultSubjectFactory;
-import com.tlkj.cod.core.security.realm.CodRealm;
-import com.tlkj.cod.core.security.session.AccessTokenSessionManager;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
-import org.apache.shiro.mgt.DefaultSubjectDAO;
-import org.apache.shiro.mgt.SubjectDAO;
-import org.apache.shiro.session.mgt.SessionManager;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.servlet.SimpleCookie;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import javax.servlet.Filter;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Desc Cod SpringBean 配置
@@ -48,15 +24,21 @@ import java.util.Map;
  * @date 2018/12/19 10:59 PM
  */
 @Configuration
-@ComponentScan(basePackages = "com.tlkj.cod")
+// @ComponentScan(basePackages = "com.tlkj.cod")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@EnableTransactionManagement
-@EnableAsync
+// @EnableTransactionManagement
+// @EnableAsync
+@Lazy
 // @EnableWebMvc
-@EnableScheduling
+// @EnableScheduling
 public class CodSpringConfiguration  extends WebMvcConfigurerAdapter {
 
-    @Bean(name="shiroFilter")
+    /*@Bean(name = "postProcessor")
+    public AbstractCodConfigProcessor codConfigProcessor(){
+        return new SpringValueProcessor();
+    }*/
+
+    /*@Bean(name="shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") org.apache.shiro.mgt.SecurityManager manager) {
         ShiroFilterFactoryBean filter = new ShiroFilterFactoryBean();
         filter.setSecurityManager(manager);
@@ -104,11 +86,11 @@ public class CodSpringConfiguration  extends WebMvcConfigurerAdapter {
         return new CodCredentialsMatcher();
     }
 
-    /**
+    *//**
      * 配置核心安全事务管理器
      * @param codRealm codRealm
      * @return SecurityManager
-     */
+     *//*
     @Bean(name="securityManager")
     public DefaultWebSecurityManager securityManager(@Qualifier("codRealm") CodRealm codRealm,
                                                      @Qualifier("statelessDefaultSubjectFactory") StatelessDefaultSubjectFactory statelessDefaultSubjectFactory,
@@ -126,11 +108,11 @@ public class CodSpringConfiguration  extends WebMvcConfigurerAdapter {
         return securityManager;
     }
 
-    /**
+    *//**
      * 配置自定义的权限登录器
      * @param matcher matcher
      * @return AuthRealm
-     */
+     *//*
     @Bean(name="codRealm")
     public CodRealm authRealm(@Qualifier("codCredentialsMatcher") CredentialsMatcher matcher) {
         CodRealm authRealm = new CodRealm();
@@ -138,10 +120,10 @@ public class CodSpringConfiguration  extends WebMvcConfigurerAdapter {
         return authRealm;
     }
 
-    /**
+    *//**
      * 自定义RememberMe
      * @return
-     */
+     *//*
     public SimpleCookie getRememberMeCookie() {
         // 这个参数是cookie的名称，对应前端的checkbox 的name = rememberMe
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
@@ -150,10 +132,10 @@ public class CodSpringConfiguration  extends WebMvcConfigurerAdapter {
         return simpleCookie;
     }
 
-    /**
+    *//**
      * 设置上传文件最大值
      * 1M=1*1024*1024(B)=1048576 bytes
-     */
+     *//*
     @Bean
     public CommonsMultipartResolver multipartResolver(){
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -178,7 +160,7 @@ public class CodSpringConfiguration  extends WebMvcConfigurerAdapter {
         evaluator.setSessionStorageEnabled(false);
         defaultSubjectDAO.setSessionStorageEvaluator(evaluator);
         return defaultSubjectDAO;
-    }
+    }*/
 
 
 }

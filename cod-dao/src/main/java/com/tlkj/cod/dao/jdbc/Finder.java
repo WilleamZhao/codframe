@@ -27,10 +27,11 @@ import java.util.Map;
 
 /**
  * 查询工具类
+ * 支持 mysql oracle
  * @author sourcod
  */
 @Repository
-public class Finder extends CodDaoer{
+public class Finder{
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -693,8 +694,7 @@ public class Finder extends CodDaoer{
 		}
 
 		private <T> List<T> doQuery(Class<T> klass, Generator g) {
-			BeanPropertyRowMapper<T> mapper = new BeanPropertyRowMapper<T>(
-					klass);
+			BeanPropertyRowMapper<T> mapper = new BeanPropertyRowMapper<T>(klass);
 			mapper.setPrimitivesDefaultedForNullValue(true);
 			if (dev){
 				System.out.println(g.toSQL());
