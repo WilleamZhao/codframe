@@ -28,6 +28,12 @@ import org.springframework.stereotype.Component;
 public class DataConnectBean {
 
     /**
+     * 数据源名称
+     */
+    @Value("${cod.database.source.name:}")
+    private String name;
+
+    /**
      * 数据源类型
      * dbcp;
      * c3p0;

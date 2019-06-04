@@ -26,9 +26,14 @@ import com.tlkj.cod.launcher.init.CodSpringInitialize;
 public enum CodModuleOrderEnum {
 
     /**
+     * 不加载
+     */
+    NO(Integer.MIN_VALUE, CodModuleInitialize.class),
+
+    /**
      * 启动data
      */
-    DATA(-100, CodDataInitialize.class),
+    DATA(-60, CodDataInitialize.class),
 
     /**
      * 启动spring

@@ -13,29 +13,26 @@ import java.util.Map;
 public interface CodDataService {
 
     /**
-     *
+     * 初始化
      */
-    void init();
+    public void init();
 
     /**
      * 获取配置
+     * @return 配置
      */
-    Map<String, String> config();
+    Map<String, String> getConfig();
 
     /**
      * 获取数据
      */
-    void getData();
+    String getData(String key);
 
 
     /**
      * 设置数据
      */
-    void setData();
-
-
-
-
+    void setData(String key, String value);
 
 }
 

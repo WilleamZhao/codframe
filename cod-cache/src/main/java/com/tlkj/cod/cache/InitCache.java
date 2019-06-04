@@ -35,10 +35,8 @@ public class InitCache implements CodModuleInitialize {
 
     @Override
     public void init(LauncherModel launcherModel) {
-        // Object o = launcherModel.getSpring().getBean(WxUserDo.class);
-        // System.out.println(CodCommonJson.dump(o));
-        Object o = launcherModel.getSpring().getBean(CodDataSourceConfig.class);
-        System.out.println(CodCommonJson.dump(o));
+        /*Object o = launcherModel.getSpring().getBean(CodDataSourceConfig.class);
+        System.out.println(CodCommonJson.dump(o));*/
 
     }
 

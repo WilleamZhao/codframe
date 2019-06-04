@@ -84,7 +84,7 @@ public class AutoUpdateConfigChangeListener implements ConfigChangeListener {
             value = parseJsonValue((String) value, springValue.getGenericType());
         } else {
             if (springValue.isField()) {
-                // org.springframework.beans.TypeConverter#convertIfNecessary(java.lang.Object, java.lang.Class, java.lang.reflect.Field) is available from Spring 3.2.0+
+                // org.springframework.beans.TypeConverter#convertIfNecessary(java.lang.Object, java.lang.Class, java.lang.reflect.CodField) is available from Spring 3.2.0+
                 if (typeConverterHasConvertIfNecessaryWithFieldParameter) {
                     value = this.typeConverter.convertIfNecessary(value, springValue.getTargetType(), springValue.getField());
                 } else {

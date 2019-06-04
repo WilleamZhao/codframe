@@ -12,6 +12,7 @@ package com.tlkj.cod.core.launcher.init;
 
 import com.tlkj.cod.core.main.Start;
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.LauncherModel;
 import com.tlkj.cod.model.system.core.SystemModel;
 import org.yaml.snakeyaml.Yaml;
@@ -37,7 +38,7 @@ public class InitOldServer implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return -10;
+        return CodModuleOrderEnum.NO.getOrder();
     }
 
     /**

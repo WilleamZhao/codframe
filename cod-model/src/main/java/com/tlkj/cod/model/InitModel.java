@@ -23,10 +23,10 @@ public class InitModel implements CodModuleInitialize {
 
     @Override
     public void init(LauncherModel launcherModel) {
-        Object o = launcherModel.getSpring().getBean(CodDataSourceConfig.class);
+        /*Object o = launcherModel.getSpring().getBean(CodDataSourceConfig.class);
         System.out.println(CodCommonJson.dump(o));
         o = launcherModel.getSpring().getBean(CodCoreConfig.class);
-        System.out.println(CodCommonJson.dump(o));
+        System.out.println(CodCommonJson.dump(o));*/
     }
 
     @Override

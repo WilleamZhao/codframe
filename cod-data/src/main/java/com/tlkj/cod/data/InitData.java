@@ -1,9 +1,13 @@
 package com.tlkj.cod.data;
 
+import com.tlkj.cod.dao.bean.DataConnectBean;
+import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
+import com.tlkj.cod.dao.util.DBConnectionPool;
+import com.tlkj.cod.data.model.config.CodDataConfig;
 import com.tlkj.cod.data.service.CodDataService;
-import com.tlkj.cod.data.service.impl.CodDataH2ServiceImpl;
-import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
+import com.tlkj.cod.launcher.init.CodDataInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
 
 /**
@@ -14,7 +18,7 @@ import com.tlkj.cod.launcher.model.LauncherModel;
  * @className InitData
  * @date 2019/5/28 11:06 AM
  */
-public class InitData implements CodModuleInitialize {
+public class InitData implements CodDataInitialize {
 
     @Override
     public int order() {
@@ -23,8 +27,21 @@ public class InitData implements CodModuleInitialize {
 
     @Override
     public void init(LauncherModel launcherModel) {
-        CodDataService codDataService = new CodDataH2ServiceImpl();
-        codDataService.init();
+        // 设置 CodData 数据库连接信息 H2
+        DataConnectBean bean = new DataConnectBean();
+        CodDataConfig codDataConfig = new CodDataConfig();
+        bean.setPassword(codDataConfig.getPassword());
+        bean.setUsername(codDataConfig.getUsername());
+        bean.setDriverClass(codDataConfig.getDriver());
+        bean.setUrl(codDataConfig.getUrl());
+        bean.setCharacterEncoding(codDataConfig.getEncoding());
+        DBConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), bean);
+
+        // new 配置
+        // CodDataService codDataService = new CodDataServiceImpl();
+
+        // 执行初始化方法
+        // codDataService.init();
 
         /*DataConnectBean dataConnectBean = new DataConnectBean();
         dataConnectBean.setCharacterEncoding("utf-8");

@@ -11,9 +11,9 @@
 package com.tlkj.cod.api;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.LauncherModel;
 
-import javax.servlet.ServletContext;
 
 /**
  * Desc
@@ -27,7 +27,7 @@ public class InitApi implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return -1;
+        return CodModuleOrderEnum.NO.getOrder();
     }
 
     @Override

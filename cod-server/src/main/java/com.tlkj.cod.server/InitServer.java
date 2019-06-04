@@ -31,11 +31,7 @@ import java.util.Map;
  * @className InitServer
  * @date 2019/4/28 5:11 PM
  */
-public class InitServer implements CodModuleInitialize, CodServerInitialize {
-
-    public InitServer(){
-
-    }
+public class InitServer implements CodServerInitialize {
 
     @Override
     public int order() {
@@ -46,12 +42,13 @@ public class InitServer implements CodModuleInitialize, CodServerInitialize {
     @Override
     public void init(LauncherModel launcherModel) {
 
-        // TODO 从配置模块里读取
+        launcherModel.getSpring().refresh();
 
-        // CodServer codServer = (CodServer) launcherModel.getSpring().getBean("codServerJetty");
-        // System.out.println("初始化server");
-        // launcherModel.setServer(this.setCodServerDefault());
-        // codServer.start(launcherModel);
+        // TODO 从配置模块里读取
+        CodServer codServer = (CodServer) launcherModel.getSpring().getBean("codServerJetty");
+        System.out.println("初始化server");
+        launcherModel.setServer(this.setCodServerDefault());
+        codServer.start(launcherModel);
     }
 
     @Override

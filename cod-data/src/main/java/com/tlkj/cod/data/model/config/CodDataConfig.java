@@ -3,8 +3,6 @@ package com.tlkj.cod.data.model.config;
 import com.tlkj.cod.common.CodCommonDeviceInfo;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 /**
  * Desc 内置H2数据库信息
@@ -16,17 +14,13 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Setter
-@Component
 public class CodDataConfig {
 
-    @Value("${cod.config.data.driver:org.h2.Driver}")
-    private String driver;
+    private String driver = "org.h2.Driver";
 
-    @Value("${cod.config.data.encode:UTF-8}")
-    private String encoding;
+    private String encoding = "UTF-8";
 
-    @Value("${cod.config.data.url:jdbc:h2:./.codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL}")
-    private String url;
+    private String url = "jdbc:h2:./.codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL";
 
     private String username = CodCommonDeviceInfo.getHardware().getComputerSystem().getSerialNumber();
 

@@ -13,7 +13,7 @@ public enum CodDataTypeEnum {
     /**
      * H2数据库
      */
-    H2,
+    DATA,
 
     /**
      * 配置文件

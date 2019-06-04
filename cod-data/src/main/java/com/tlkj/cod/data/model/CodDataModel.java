@@ -30,7 +30,7 @@ public class CodDataModel {
 
     /**
      * 数据类型
-     * 1: H2
+     * 1: DATA
      * 2: 配置文件
      */
     private CodDataTypeEnum type;

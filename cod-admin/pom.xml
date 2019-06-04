@@ -17,5 +17,54 @@
             <artifactId>cod-launch</artifactId>
             <version>${codframe.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-dao</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-common</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-cache</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-http</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-log</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-model</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-core</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.11</version>
+        </dependency>
+
     </dependencies>
 </project>

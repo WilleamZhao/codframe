@@ -39,7 +39,7 @@ public class InitSpring implements CodSpringInitialize {
      */
     @Override
     public String name() {
-        return "com.tlkj.cod";
+        return "com.tlkj.cod.spring";
     }
 
     @Override

@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @className RoleFacadeImpl
  * @date 2018/12/14 2:56 PM
  */
-@Service
+//@Service
 public class RoleFacadeImpl implements RoleFacade {
 
     @Autowired

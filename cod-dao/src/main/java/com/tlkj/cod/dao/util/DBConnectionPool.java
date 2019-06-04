@@ -7,21 +7,14 @@ import com.tlkj.cod.dao.exception.NoSupportDataSourceException;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
-import org.yaml.snakeyaml.Yaml;
-
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * 数据库连接池
@@ -34,19 +27,30 @@ import java.util.Properties;
  * @className DbConnectionPool
  * @date 2018/8/8 下午1:08
  */
-@Component("codDataSource")
 public class DBConnectionPool {
 
-    private DBConnectionPool dbConnectionPool;
+    private DataSource dataSource;
 
-    private static DataConnectBean dataConnectBean = new DataConnectBean();
-    private static DataSource dataSource;
+    private static volatile DBConnectionPool instance;
 
-    private static Properties prop = new Properties();
-    private static Yaml yaml = new Yaml();
-    static private Map map = new HashMap();
+    /**
+     * 线程安全
+     */
+    public static DBConnectionPool getInstance() {
+        if (instance == null) {
+            synchronized (DBConnectionPool.class) {
+                if (instance == null) {
+                    instance = new DBConnectionPool();
+                }
+            }
+        }
+        return instance;
+    }
 
-
+    /**
+     * 连接缓存
+     */
+    private Map<String, DataSource> map = new HashMap<>();
 
     /**
      * 数据库序号 从1开始
@@ -60,39 +64,22 @@ public class DBConnectionPool {
 
     private static String type = "";
 
-    /*
-    static {
-        InputStream in;
-        try {
-            System.out.println("开始加载数据库配置文件！");
-            // 获取config配置文件夹路径
-            in = new FileInputStream("conf/db.yml");
-            if (in.available() != 0) {
-                map = (Map) yaml.load(in);
-                System.out.println("加载数据库配置文件db.yml成功！");
-            }
-        } catch (IOException e) {
-            try {
-                in = DBConnectionPool.class.getResource("/conf/db.yml").openStream();
-                if (in.available() != 0) {
-                    map = (Map) yaml.load(in);
-                    System.out.println("加载数据库配置文件db.yml成功！");
-                } else {
-                    System.out.println("读取配置文件错误" + e.getMessage());
-                }
-            } catch (IOException e1) {
-                System.out.println("读取配置文件错误" + e1.getMessage());
-            }
-        }
+    /**
+     * 默认构造方法
+     */
+    public DBConnectionPool(){
+
     }
-    */
 
     /**
      * 默认构造器
      * 读取配置文件设置数据源类型
      * 默认使用dbcp数据源
      */
-    public DBConnectionPool() {
+    public DBConnectionPool(DataConnectBean dataConnectBean) {
+        this.dataSource = setDataSource(dataConnectBean);
+        this.map.put(dataConnectBean.getName(), this.dataSource);
+        /*
         number = getValueByKey("datasource.number");
         type = getValueByKey("datasource.type");
         if (StringUtils.isEmpty(dataConnectBean.getDriverClass())){
@@ -101,29 +88,71 @@ public class DBConnectionPool {
         if (dataSource == null){
             setDataSource();
         }
+        */
+    }
+
+    /**
+     * 获取数据源
+     * @param name 数据源名称
+     * @return
+     */
+    public DataSource getDataSource(String name){
+        return getDataSource(name, null);
+    }
+
+    /**
+     * 获取数据源
+     * @param dataConnectBean 数据源信息
+     * @return
+     */
+    public DataSource getDataSource(DataConnectBean dataConnectBean){
+        return getDataSource("", dataConnectBean);
+    }
+
+    public DataSource getDataSource(String name, DataConnectBean dataConnectBean){
+        DataSource dataSource = null;
+        if (StringUtils.isNotBlank(name)){
+            dataSource = this.map.get(name);
+        }
+        if (dataSource == null && dataConnectBean != null){
+            dataSource = setDataSource(name, dataConnectBean);
+        }
+        return dataSource;
     }
 
 
     /**
-     * 设置数据库源
+     * 获取数据库源
      */
-    private void setDataSource(){
+    public synchronized DataSource setDataSource(DataConnectBean dataConnectBean){
+        return setDataSource(dataConnectBean.getName(), dataConnectBean);
+    }
+
+    /**
+     * 获取数据库源
+     */
+    public synchronized DataSource setDataSource(String name, DataConnectBean dataConnectBean){
+        if (dataConnectBean == null){
+            return null;
+        }
+        String type = dataConnectBean.getType();
         if (StringUtils.isEmpty(type)){
             type = "dbcp";
         }
+        DataSource dataSource = null;
         try {
             switch (type){
                 case ("dbcp"):
-                    getBasicDataSource();
+                    dataSource = getBasicDataSource(dataConnectBean);
                     break;
                 case ("HikariCP"):
                     dataSource = getHikariDataSource(dataConnectBean);
                     break;
                 case ("c3p0"):
-                    getComboPooledDataSource();
+                    dataSource = getComboPooledDataSource(dataConnectBean);
                     break;
                 case ("druid"):
-                    getDruidDataSource();
+                    dataSource = getDruidDataSource(dataConnectBean);
                     break;
                 default:
                     throw new NoSupportDataSourceException();
@@ -132,30 +161,38 @@ public class DBConnectionPool {
             System.out.println("数据源" + type + "数据库" + dataSourceNo + "连接失败" + e.getMessage());
             throw new NoSupportDataSourceException("数据源" + type + "数据库" + dataSourceNo + "连接失败" + e.getMessage());
         }
+        if (dataSource != null){
+            if (StringUtils.isNotBlank(name)){
+                this.map.put(name, dataSource);
+            } else {
+                this.map.put(dataConnectBean.getName(), dataSource);
+            }
+        }
+        return dataSource;
     }
 
     /**
      * 获取datasource
      * @return datasource
      */
-    public final synchronized DataSource getDataSource() {
+    /*public final synchronized DataSource getDataSource(DataConnectBean dataConnectBean) {
         try {
             if (dataSource.getConnection() == null){
                 if (dataSourceNo < Integer.parseInt(number)){
                     dataSourceNo++;
-                    setDataSource();
-                    return this.getDataSource();
+                    getHikariDataSource(dataConnectBean);
+                    return this.getDataSource(dataConnectBean);
                 }
             }
         } catch (SQLException e) {
             if (!(dataSourceNo < Integer.parseInt(number))){
                 System.err.println("所有数据库连接全部连不上");
             } else {
-                return this.getDataSource();
+                return this.getDataSource(dataConnectBean);
             }
         }
         return dataSource;
-    }
+    }*/
 
     /**
      * Hikari 数据源
@@ -190,7 +227,7 @@ public class DBConnectionPool {
      * dbcp 数据源
      * @return dbcp数据源
      */
-    private void getBasicDataSource(){
+    public DataSource getBasicDataSource(DataConnectBean dataConnectBean){
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         basicDataSource.setDriverClassName(dataConnectBean.getDriverClass());
@@ -204,14 +241,14 @@ public class DBConnectionPool {
             List<String> list = new ArrayList<>(Arrays.asList(initSqls));
             basicDataSource.setConnectionInitSqls(list);
         }
-        dataSource = basicDataSource;
+        return basicDataSource;
     }
 
     /**
      * c3p0 数据源
      * @return c3p0数据源
      */
-    private void getComboPooledDataSource(){
+    public DataSource getComboPooledDataSource(DataConnectBean dataConnectBean){
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
         try {
             comboPooledDataSource.setDriverClass(dataConnectBean.getDriverClass());
@@ -224,14 +261,14 @@ public class DBConnectionPool {
         comboPooledDataSource.setInitialPoolSize(Integer.parseInt(dataConnectBean.getInitialSize()));
         comboPooledDataSource.setMaxPoolSize(Integer.parseInt(dataConnectBean.getMaxActive()));
         comboPooledDataSource.setMaxIdleTime(Integer.parseInt(dataConnectBean.getMaxIdle()));
-        dataSource = comboPooledDataSource;
+        return comboPooledDataSource;
     }
 
     /**
      * druid 数据源
      * @return druid 数据源
      */
-    private void getDruidDataSource(){
+    public DataSource getDruidDataSource(DataConnectBean dataConnectBean){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         druidDataSource.setUsername(dataConnectBean.getUsername());
@@ -248,13 +285,13 @@ public class DBConnectionPool {
             List<String> list = new ArrayList<>(Arrays.asList(initSqls));
             druidDataSource.setConnectionInitSqls(list);
         }
-        dataSource = druidDataSource;
+        return druidDataSource;
     }
 
     /**
      * 设置DataConnectBean数据库连接类
      */
-    private static void setDataConnectBean(){
+    /*private void setDataConnectBean(){
         dataConnectBean.setDriverClass(getValueByKey("datasource" + dataSourceNo + ".driverClass"));
         dataConnectBean.setUrl(getValueByKey("datasource" + dataSourceNo + ".url"));
         dataConnectBean.setUsername(getValueByKey("datasource" + dataSourceNo + ".username"));
@@ -268,7 +305,7 @@ public class DBConnectionPool {
         dataConnectBean.setUseUnicode(getValueByKey("datasource" + dataSourceNo + ".useUnicode"));
         dataConnectBean.setCharacterEncoding(getValueByKey("datasource" + dataSourceNo + ".characterEncoding"));
         dataConnectBean.setInitSql(getValueByKey("datasource" + dataSourceNo + ".initSql"));
-    }
+    }*/
 
     /**
      * 获取数据库配置
@@ -276,7 +313,7 @@ public class DBConnectionPool {
      * @return
      */
     public static String getValueByKey(String key) {
-        if (StringUtils.isEmpty(key)){
+        /*if (StringUtils.isEmpty(key)){
             return null;
         }
         String propKey = prop.getProperty(key);
@@ -292,7 +329,8 @@ public class DBConnectionPool {
                 propKey = tempMap.get(strings[i]) != null ? tempMap.get(strings[i]).toString() : "";
             }
         }
-        return propKey;
+        return propKey;*/
+        return "";
     }
 
 }

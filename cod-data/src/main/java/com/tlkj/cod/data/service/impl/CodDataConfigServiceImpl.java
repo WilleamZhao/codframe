@@ -20,17 +20,17 @@ public class CodDataConfigServiceImpl implements CodDataService {
     }
 
     @Override
-    public Map<String, String> config() {
+    public Map<String, String> getConfig() {
         return null;
     }
 
     @Override
-    public void getData() {
-
+    public String getData(String key) {
+        return null;
     }
 
     @Override
-    public void setData() {
+    public void setData(String key, String value) {
 
     }
 }

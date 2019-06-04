@@ -11,12 +11,8 @@
 package com.tlkj.cod.config;
 
 import com.google.common.collect.Lists;
-import com.tlkj.cod.common.CodCommonJson;
-import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.impl.CodConfigDataServiceImpl;
-import com.tlkj.cod.config.spring.config.PropertySourcesConstants;
 import com.tlkj.cod.config.spring.config.PropertySourcesProcessor;
-import com.tlkj.cod.config.spring.property.SpringValueRegistry;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.model.LauncherModel;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -34,7 +30,7 @@ public class InitConfig implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return -8;
+        return -50;
     }
 
     @Override

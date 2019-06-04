@@ -1,7 +1,6 @@
 package com.tlkj.cod.h2.service.impl;
 
 import com.tlkj.cod.common.CodCommonDeviceInfo;
-import com.tlkj.cod.dao.bean.CodDaoBean;
 import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
@@ -10,7 +9,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -42,15 +40,16 @@ public class CodH2ServiceImpl {
         dataConnectBean.setUrl("jdbc:h2:./codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL");
         dataConnectBean.setUsername("codframe");
         dataConnectBean.setPassword("123456");
-        DBConnectionPool dbConnectionPool = new DBConnectionPool();
+        DBConnectionPool dbConnectionPool = new DBConnectionPool(dataConnectBean);
         DataSource dataSource = dbConnectionPool.getHikariDataSource(dataConnectBean);
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         Finder finder = new Finder(jdbcTemplate);
         Updater updater = new Updater(jdbcTemplate);
+        /*
         CodDaoBean codDaoBean = new CodDaoBean();
         codDaoBean.setFinder(finder);
         codDaoBean.setUpdater(updater);
-
+        */
     }
 
     //数据库连接URL，当前连接的是E:/H2目录下的gacl数据库

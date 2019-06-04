@@ -11,6 +11,7 @@
 package com.tlkj.cod.action;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.LauncherModel;
 
 /**
@@ -25,7 +26,7 @@ public class InitAction implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return -1;
+        return CodModuleOrderEnum.NO.getOrder();
     }
 
     @Override

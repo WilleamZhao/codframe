@@ -1,6 +1,7 @@
 package com.tlkj.cod.facade;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.LauncherModel;
 
 /**
@@ -14,7 +15,7 @@ import com.tlkj.cod.launcher.model.LauncherModel;
 public class InitFacade implements CodModuleInitialize {
     @Override
     public int order() {
-        return -2;
+        return CodModuleOrderEnum.NO.getOrder();
     }
 
     @Override

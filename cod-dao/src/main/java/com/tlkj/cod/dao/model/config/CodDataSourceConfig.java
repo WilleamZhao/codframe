@@ -18,9 +18,9 @@ import org.springframework.stereotype.Component;
 @Component("codDatasource")
 public class CodDataSourceConfig {
 
-    @Value("${cod.database.type}")
+    @Value("${cod.database.type:}")
     private String url;
 
-    @Value("${cod.database.url}")
+    @Value("${cod.database.url:}")
     private String username;
 }

@@ -1,10 +1,14 @@
 package com.tlkj.cod.dao.util;
 
 import com.sun.jna.platform.win32.Netapi32Util;
+import com.tlkj.cod.dao.annotation.CodField;
+import com.tlkj.cod.dao.annotation.CodTable;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +25,8 @@ public class CreateTable {
     public static Map<String, String> javaProperty2SqlColumnMap = new HashMap<>();
 
     static {
-        javaProperty2SqlColumnMap.put("Integer", "INTEGER");
+        javaProperty2SqlColumnMap.put("Integer", "int");
+        javaProperty2SqlColumnMap.put("int", "int");
         javaProperty2SqlColumnMap.put("Short", "tinyint");
         javaProperty2SqlColumnMap.put("Long", "bigint");
         javaProperty2SqlColumnMap.put("BigDecimal", "decimal(19,2)");
@@ -32,84 +37,145 @@ public class CreateTable {
         javaProperty2SqlColumnMap.put("String", "VARCHAR(255)");
     }
 
+    public static String createTable(Class obj){
+        return createTable(obj, "");
+    }
+
+    /**
+     * 创建表
+     * @param obj       类
+     * @param tableName 表名 不传默认类名
+     * @return 建表 sql 语句
+     */
     public static String createTable(Class obj, String tableName){
-        Field[] fields = null;
-        fields = obj.getDeclaredFields();
-//        Class annotationType = null;
-        String param = null;
-        String column = null;
-//        XmlElement xmlElement = null;
-        StringBuilder sb = null;
-        sb = new StringBuilder(50);
-        if (tableName == null || tableName.equals("")) {
-//未传表明默认用类名
-            tableName = obj.getName();
-            tableName = tableName.substring(tableName.lastIndexOf(".") + 1);
+        StringBuilder sb = new StringBuilder();
+
+        CodTable codTable = obj.getClass().getAnnotation(CodTable.class);
+        String tableCharset = "";
+        String tableComment = "";
+        String tableEngine = "";
+        boolean isDrop = false;
+        if (codTable != null){
+            if (StringUtils.isBlank(tableName)) {
+                tableName = codTable.name();
+            }
+            tableCharset = codTable.charset();
+            tableComment = codTable.comment();
+            tableEngine = codTable.engine();
+            isDrop = codTable.drop();
         }
-//        sb.append("\r\ndrop table if exists  ").append(tableName).append(";\r\n");
-        sb.append("create table ").append(tableName).append(" ( \r\n");
-        System.out.println(tableName);
+
+        // 未传表明默认用类名
+        if (StringUtils.isBlank(tableName)) {
+            tableName = obj.getClass().getSimpleName();
+        }
+
+        // 换行符
+        String line = System.getProperty("line.separator");
+
+        if (isDrop){
+            sb.append(line).append("drop table if exists  ").append(tableName).append(";").append(line);
+        }
+
+        sb.append("create table ").append(tableName).append(" ( ").append(line);
+
+        Field[] fields = obj.getDeclaredFields();
         boolean firstId = true;
-        File file = null;
+
         for (Field f : fields) {
-            column = f.getName();
-            if (column.equals("serialVersionUID")) {
+
+            // 参数
+            String param = null;
+            // 列名
+            String column = null;
+            // 默认值
+            String defaultValue = "";
+            // 是否允许为空
+            boolean isNull = false;
+            // 备注
+            String comment = "";
+
+            // 静态的
+            boolean isStatic = Modifier.isStatic(f.getModifiers());
+            if (isStatic){
                 continue;
             }
-//            sb.append(column).append(" ");
-//            System.out.println(column + "," + f.getType());
-            param = f.getType().getSimpleName();
-            sb.append(column);//一般第一个是主键
-            sb.append(" ").append(javaProperty2SqlColumnMap.get(param)).append(" ");
-            /*if (param instanceof Integer) {
-                sb.append(" INTEGER ");
-            } else if (param instanceof Short) {
-                sb.append(" tinyint ");
-            } else if (param instanceof Long) {
-                sb.append(" bigint ");
-            } else if (param instanceof BigDecimal) {
-                sb.append(" decimal(19,2) ");
-            } else if (param instanceof Double) {
-                sb.append(" double precision not null ");
-            } else if (param instanceof Float) {
-                sb.append(" float ");
-            } else if (param instanceof Boolean) {
-                sb.append(" bit ");
-            } else if (param instanceof Timestamp) {
-                sb.append(" datetime ");
+
+            CodField codField = f.getAnnotation(CodField.class);
+            if (codField != null){
+                param = codField.type();
+                column = codField.name();
+                isNull = codField.isNull();
+                defaultValue = codField.def();
+                comment = codField.comment();
+            }
+            sb.append(" ");
+            if (StringUtils.isBlank(column)){
+                column = f.getName();
+                sb.append(column).append(" ");
             } else {
-                sb.append("  ");//根据需要自行修改
-            }*/
-            if (firstId) {//类型转换
-                sb.append(" PRIMARY KEY ");
+                sb.append(column).append(" ");
+            }
+
+            // 序列化ID
+            if ("serialVersionUID".equals(column)) {
+                continue;
+            }
+
+            // 一般第一个是主键
+            if (StringUtils.isBlank(param)){
+                param = f.getType().getSimpleName();
+                sb.append(javaProperty2SqlColumnMap.get(param));
+            } else {
+                sb.append(param);
+            }
+
+            sb.append(" ");
+
+
+            if (StringUtils.isNotBlank(defaultValue)){
+                sb.append("default").append(" ").append(defaultValue).append(" ");
+            }
+
+            if (!isNull){
+                sb.append(" not null ");
+            }
+
+            if (StringUtils.isNotBlank(comment)){
+                sb.append(" comment ").append("'").append(comment).append("'");
+            }
+
+            //类型转换
+            if (firstId) {
+                sb.append(" PRIMARY KEY");
                 firstId = false;
             }
-            //获取字段中包含fieldMeta的注解
-            //2、获取属性上的所有注释
-            Annotation[] allAnnotations = f.getAnnotations();
-            /*for(Annotation an : allAnnotations){
-                sb.append(" COMMIT '");
-                xmlElement = (XmlElement)an;
-                annotationType = an.annotationType();
-                param = ((XmlElement) an).name();
-                System.out.println("属性【"+f.getName()+"-----的注释类型有: " + param);
-                sb.append(param).append("'");
-            }*/
-            sb.append(",\n ");
+            sb.append(",").append(line);
         }
-        String sql = null;
-        sql = sb.toString();
-        //去掉最后一个逗号
-        int lastIndex = sql.lastIndexOf(",");
-        sql = sql.substring(0, lastIndex) + sql.substring(lastIndex + 1);
+        // 去掉最后一个逗号
+        sb.deleteCharAt(sb.lastIndexOf(","));
+        sb.append(")").append(line);
 
-        sql = sql.substring(0, sql.length() - 1) + " )ENGINE =INNODB DEFAULT  CHARSET= utf8;\r\n";
-        System.out.println("sql :" + sql);
+        if (StringUtils.isNotBlank(tableComment)){
+            sb.append(" COMMENT ").append(tableComment).append(line);
+        }
+
+        if (StringUtils.isNotBlank(tableEngine)){
+            sb.append(" ENGINE = ").append(tableEngine);
+        }
+
+        if (StringUtils.isNotBlank(tableCharset)){
+            sb.append(" CHARSET = ").append(tableCharset);
+        }
+
+        sb.append(";");
+
+        System.out.println(sb.toString());
 
         //复制到剪切板
         // WindowUtil.setSysClipboardText(sql);
         // ToastMessage.toast("复制到剪切板",2000, Color.blue);
-        return sql;
+        return sb.toString();
         /*file = new File("WebContent/createTable/建表.txt");
         if (!file.getParentFile().exists()) {
             if (!file.getParentFile().mkdirs()) {

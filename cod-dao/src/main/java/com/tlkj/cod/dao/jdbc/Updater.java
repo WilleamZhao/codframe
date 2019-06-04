@@ -11,17 +11,15 @@
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
-import com.tlkj.cod.common.CodCommonFile;
-import com.tlkj.cod.common.CodCommonIO;
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.DBConnectionPool;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -29,6 +27,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -52,6 +51,24 @@ public class Updater {
     }
 
     /**
+     * 设置数据源
+     * @param name 数据源名称
+     * @return
+     */
+    public Updater ds(String name) {
+        return new Updater(new JdbcTemplate(DBConnectionPool.getInstance().getDataSource(name)));
+    }
+
+    /**
+     * 设置默认数据源
+     * @param name 数据源名称
+     * @return
+     */
+    void dsf(String name) {
+        this.jdbcTemplate = new JdbcTemplate(DBConnectionPool.getInstance().getDataSource(name));
+    }
+
+    /**
      * 设置编码方式
      * utf8mb4 解决4字节汉字保存问题
      * 命令会将 character_set_client、character_set_connection、character_set_results 3个会话字符集相关变量均设置为 utf8mb4，以保证写入或者读出的数据使用 utf8mb4 字符集进行解释。
@@ -61,19 +78,28 @@ public class Updater {
         execute("set names " + characterEncoding);
     }
 
-    @Autowired
-    public Updater(DBConnectionPool dbConnectionPool) {
-        jdbcTemplate = new JdbcTemplate(dbConnectionPool.getDataSource());
-    }
-
     public Updater(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public Updater(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public Update insert(String table) {
         return new Update(jdbcTemplate, 1).from(table);
     }
 
+    public Update insert(String table, String name) {
+        DataSource dataSource = DBConnectionPool.getInstance().getDataSource(name);
+        if (dataSource == null){
+            return null;
+        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return new Update(jdbcTemplate, 1).from(table);
+    }
+
+    // TODO 更新继承的类
     public Update insert(Object object) {
         return new Update(jdbcTemplate, 1, object);
     }
@@ -86,7 +112,25 @@ public class Updater {
         return new Update(jdbcTemplate, 2).from(table);
     }
 
+    public Update delete(String table, String name) {
+        DataSource dataSource = DBConnectionPool.getInstance().getDataSource(name);
+        if (dataSource == null){
+            return null;
+        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return new Update(jdbcTemplate, 2).from(table);
+    }
+
     public Update update(String table) {
+        return new Update(jdbcTemplate, 0).from(table);
+    }
+
+    public Update update(String table, String name) {
+        DataSource dataSource = DBConnectionPool.getInstance().getDataSource(name);
+        if (dataSource == null){
+            return null;
+        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return new Update(jdbcTemplate, 0).from(table);
     }
 

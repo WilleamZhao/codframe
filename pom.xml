@@ -48,6 +48,7 @@
         <module>cod-http</module>
         <module>cod-admin</module>
         <module>cod-data</module>
+        <module>cod-file</module>
     </modules>
 
     <name>codframe</name>

@@ -18,6 +18,7 @@ import com.tlkj.cod.launcher.exception.CodStartServerFailException;
 import com.tlkj.cod.launcher.model.LauncherModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.PropertySource;
 
@@ -72,6 +73,11 @@ public class CodLauncher {
                     continue;
                 }
 
+                // 不加载
+                if (codModuleInitialize.order() == Integer.MIN_VALUE){
+                    continue;
+                }
+
                 int i = 0;
                 for (int o : list){
                     if (o < order){
@@ -85,16 +91,19 @@ public class CodLauncher {
             System.out.println("启动异常");
             e.printStackTrace();
         }
+
         LAUNCHER_MODEL.getSpring().register(CodSpringConfiguration.class);
+
+        LAUNCHER_MODEL.getSpring().register(CommonAnnotationBeanPostProcessor.class);
 
         // 设置环境
         setEnv("dev");
 
         int i = 0;
         m : for (CodModuleInitialize module : linkedList){
-            if (i > 6){
+            /*if (i > 6){
                 break;
-            }
+            }*/
             try {
                 logger.info("开始加载 {} 模块", module.name());
                 System.out.println("开始启动" + module.order());

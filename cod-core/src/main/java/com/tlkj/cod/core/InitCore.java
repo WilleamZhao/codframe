@@ -28,7 +28,7 @@ public class InitCore implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 1;
+        return 2;
     }
 
     @Override
