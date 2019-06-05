@@ -42,7 +42,7 @@ public class SpringValueProcessor extends AbstractCodConfigProcessor implements 
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        PlaceholderHelper.getInstance().resolvePropertyValue(beanFactory, "wxUserDo", "${spring.profiles.default}");
+        // PlaceholderHelper.getInstance().resolvePropertyValue(beanFactory, "wxUserDo", "${spring.profiles.default}");
     }
 
     @Override

@@ -12,7 +12,6 @@ package com.tlkj.cod.config.service;
 
 import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -79,13 +78,13 @@ public interface CodConfigService {
      * 添加listener
      * @param listener listener
      */
-    void addChangeListener(ConfigChangeListener listener);
+    void addChangeListener(CodConfigChangeListener listener);
 
-    void addChangeListener(ConfigChangeListener listener, Set<String> interestedKeys);
+    void addChangeListener(CodConfigChangeListener listener, Set<String> interestedKeys);
 
-    void addChangeListener(ConfigChangeListener listener, Set<String> interestedKeys, Set<String> interestedKeyPrefixes);
+    void addChangeListener(CodConfigChangeListener listener, Set<String> interestedKeys, Set<String> interestedKeyPrefixes);
 
-    boolean removeChangeListener(ConfigChangeListener listener);
+    boolean removeChangeListener(CodConfigChangeListener listener);
 
     <T> T getProperty(String key, Function<String, T> function, T defaultValue);
 

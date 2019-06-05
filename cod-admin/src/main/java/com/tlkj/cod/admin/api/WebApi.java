@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.admin.api;
 
-import com.tlkj.cod.admin.service.SystemSetService;
+import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import org.apache.commons.lang3.StringUtils;
@@ -32,14 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebApi extends GeneralResponse {
 
     @Autowired
-    private SystemSetService systemSetService;
+    private CodAdminSystemSetService codAdminSystemSetService;
 
     /**
      * 获取前端url
      */
     @RequestMapping(value = "getFrontUrl", method = {RequestMethod.GET})
     public Response getWebUrl(){
-        String frontUrl = systemSetService.getSetValue("web_front_url");
+        String frontUrl = codAdminSystemSetService.getSetValue("web_front_url");
         return StringUtils.isNotBlank(frontUrl) ? super.success(frontUrl) : super.fail();
     }
 
@@ -48,7 +48,7 @@ public class WebApi extends GeneralResponse {
      */
     @RequestMapping(value = "getWebName", method = {RequestMethod.GET})
     public Response getWebName(){
-        String webName = systemSetService.getSetValue("web_name");
+        String webName = codAdminSystemSetService.getSetValue("web_name");
         return StringUtils.isNotBlank(webName) ? super.success(webName) : super.fail();
     }
 }

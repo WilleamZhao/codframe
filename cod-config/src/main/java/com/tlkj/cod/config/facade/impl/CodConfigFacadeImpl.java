@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @className CodConfigFacadeImpl
  * @date 2019/5/30 11:30 AM
  */
-@Service
+// @Service
 public class CodConfigFacadeImpl implements CodConfigFacade {
 
     // @Autowired
@@ -32,7 +32,7 @@ public class CodConfigFacadeImpl implements CodConfigFacade {
     private static final List<Map<String, Object>> list = new ArrayList<>();
     private static final List<CodConfig> codConfigs = new ArrayList<>();
 
-    @Autowired
+    // @Autowired
     public CodConfigFacadeImpl(List<CodConfigService> codConfigServices){
         this.codConfigServiceList = sort(codConfigServices);
     }

@@ -1,7 +1,7 @@
 package com.tlkj.cod.dao;
 
-import com.tlkj.cod.launcher.init.CodSpringInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.init.CodModuleSpringInitialize;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc 初始化Dao
@@ -11,7 +11,7 @@ import com.tlkj.cod.launcher.model.LauncherModel;
  * @className InitDao
  * @date 2019/5/30 10:24 AM
  */
-public class InitDao implements CodSpringInitialize {
+public class InitDao implements CodModuleSpringInitialize {
 
     @Override
     public int order() {
@@ -19,10 +19,10 @@ public class InitDao implements CodSpringInitialize {
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
 
         /*
-        AnnotationConfigWebApplicationContext applicationContext = launcherModel.getSpring();
+        AnnotationConfigWebApplicationContext applicationContext = codModuleLauncherModel.getSpring();
 
         // 注册codData数据源
         PropertySourcesProcessor.addCodConfigDataSource(Lists.newArrayList(new CodConfigDatabaseServiceImpl()), 0);
@@ -32,9 +32,9 @@ public class InitDao implements CodSpringInitialize {
         propertySourcesProcessor.setEnvironment(applicationContext.getEnvironment());
         applicationContext.addBeanFactoryPostProcessor(propertySourcesProcessor);
 
-        Object o1 = launcherModel.getSpring().getBean(CodCoreConfig.class);
+        Object o1 = codModuleLauncherModel.getSpring().getBean(CodCoreConfig.class);
         System.out.println(CodCommonJson.dump(o1));
-        launcherModel.finish();
+        codModuleLauncherModel.finish();
         */
     }
 

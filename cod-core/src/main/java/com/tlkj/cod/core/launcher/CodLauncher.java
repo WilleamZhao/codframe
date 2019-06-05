@@ -14,13 +14,12 @@ import com.tlkj.cod.common.CodCommonFindChildClass;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.config.CodSpringConfiguration;
-import com.tlkj.cod.launcher.exception.CodStartServerFailException;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.exception.CodModuleStartFailException;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.core.env.MapPropertySource;
-import org.springframework.core.env.PropertySource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +42,7 @@ public class CodLauncher {
     // private static LinkedList<CodModuleInitialize> linkedList = new LinkedList<>();
 
     private static List list = new ArrayList();
-    private static final LauncherModel LAUNCHER_MODEL = LauncherModel.getInstance();
+    private static final CodModuleLauncherModel LAUNCHER_MODEL = CodModuleLauncherModel.getInstance();
     private static Logger logger = LoggerFactory.getLogger(CodLauncher.class);
 
     /**
@@ -113,7 +112,7 @@ public class CodLauncher {
                 switch (LAUNCHER_MODEL.getStateEnum()){
                     case FAIL:
                         LAUNCHER_MODEL.next();
-                        throw new CodStartServerFailException();
+                        throw new CodModuleStartFailException();
                     case STOP:
                         System.out.println("停止启动" + module.order());
                         break m;
@@ -127,7 +126,7 @@ public class CodLauncher {
                         break;
                 }
                 logger.info("加载 {} 模块完成", module.name());
-            } catch (CodStartServerFailException e){
+            } catch (CodModuleStartFailException e){
                 System.out.println("服务启动失败");
                 logger.error("模块 {} 启动失败, 继续启动", module.name());
             } catch (Exception e) {

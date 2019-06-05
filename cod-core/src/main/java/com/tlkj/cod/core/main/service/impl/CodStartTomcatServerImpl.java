@@ -16,9 +16,7 @@ import com.tlkj.cod.core.main.CodSpringConfiguration;
 import com.tlkj.cod.core.main.service.CodStartServer;
 import com.tlkj.cod.core.model.bo.CodStartModel;
 import com.tlkj.cod.core.model.bo.CodStartTomcatModel;
-import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.init.CodServerInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
@@ -69,7 +67,7 @@ public class CodStartTomcatServerImpl implements CodStartServer {
     private boolean initSpring = false;
 
     @Override
-    public void init(CodServerInitialize codStartServerInit) {
+    public void init(CodModuleServerInitialize codStartServerInit) {
 
     }
 

@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.admin.api;
 
-import com.tlkj.cod.admin.service.UserService;
+import com.tlkj.cod.admin.service.CodAdminUserService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.system.dto.CodFrameUserDto;
@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserApi extends GeneralResponse {
 
     @Autowired
-    UserService userService;
+    CodAdminUserService codAdminUserService;
 
     @Autowired
     WxUserDo wxUserDo;
@@ -46,7 +46,7 @@ public class UserApi extends GeneralResponse {
     @RequestMapping(value = "getUser", method = {RequestMethod.GET})
     public Response getUserByCache(HttpServletRequest request){
         String token = request.getParameter("token");
-        CodFrameUserDto dto = userService.getUserByCache(token);
+        CodFrameUserDto dto = codAdminUserService.getUserByCache(token);
         return dto == null ? super.fail() : super.success(dto);
     }
 

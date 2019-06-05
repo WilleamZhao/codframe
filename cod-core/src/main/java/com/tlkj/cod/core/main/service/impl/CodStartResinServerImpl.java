@@ -11,7 +11,7 @@
 package com.tlkj.cod.core.main.service.impl;
 
 import com.tlkj.cod.core.main.service.CodStartServer;
-import com.tlkj.cod.launcher.init.CodServerInitialize;
+import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
@@ -31,7 +31,7 @@ import java.util.LinkedList;
 public class CodStartResinServerImpl implements CodStartServer {
 
     @Override
-    public void init(CodServerInitialize codStartServerInit) {
+    public void init(CodModuleServerInitialize codStartServerInit) {
 
     }
 

@@ -10,9 +10,9 @@
 
 package com.tlkj.cod.server.model.server;
 
-import com.tlkj.cod.launcher.model.ServerModel;
-import com.tlkj.cod.server.model.FilterModel;
-import com.tlkj.cod.server.model.ServletModel;
+import com.tlkj.cod.launcher.model.CodModuleServerModel;
+import com.tlkj.cod.server.model.CodServerFilterModel;
+import com.tlkj.cod.server.model.CodServerServletModel;
 
 import java.io.Serializable;
 import java.util.EventListener;
@@ -27,7 +27,7 @@ import java.util.LinkedList;
  * @className CodServerModel
  * @date 2019/4/9 7:21 PM
  */
-public class CodServerModel extends ServerModel implements Serializable {
+public class CodServerModel extends CodModuleServerModel implements Serializable {
 
     private static volatile CodServerModel instance;
 
@@ -85,9 +85,9 @@ public class CodServerModel extends ServerModel implements Serializable {
 
     private LinkedList<EventListener> listeners = new LinkedList<>();
 
-    private LinkedList<FilterModel> filters = new LinkedList<>();
+    private LinkedList<CodServerFilterModel> filters = new LinkedList<>();
 
-    private LinkedList<ServletModel> servlets = new LinkedList<>();
+    private LinkedList<CodServerServletModel> servlets = new LinkedList<>();
 
     /**
      * tomcat存储自身信息的目录，比如日志等信息，根目录
@@ -164,27 +164,27 @@ public class CodServerModel extends ServerModel implements Serializable {
         this.listeners.add(listener);
     }
 
-    public LinkedList<FilterModel> getFilters() {
+    public LinkedList<CodServerFilterModel> getFilters() {
         return filters;
     }
 
-    public void addFilters(LinkedList<FilterModel> filters) {
+    public void addFilters(LinkedList<CodServerFilterModel> filters) {
         this.filters.addAll(filters);
     }
 
-    public void addFilter(FilterModel filter) {
+    public void addFilter(CodServerFilterModel filter) {
         this.filters.add(filter);
     }
 
-    public LinkedList<ServletModel> getServlets() {
+    public LinkedList<CodServerServletModel> getServlets() {
         return servlets;
     }
 
-    public void addServlets(LinkedList<ServletModel> servlets) {
+    public void addServlets(LinkedList<CodServerServletModel> servlets) {
         this.servlets.addAll(servlets);
     }
 
-    public void addServlet(ServletModel servlet) {
+    public void addServlet(CodServerServletModel servlet) {
         this.servlets.add(servlet);
     }
 }

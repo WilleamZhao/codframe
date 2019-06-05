@@ -161,7 +161,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <!-- userAgentUtils -->

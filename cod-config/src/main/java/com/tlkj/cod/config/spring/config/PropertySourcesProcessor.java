@@ -5,7 +5,7 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.tlkj.cod.config.service.CodConfigService;
-import com.tlkj.cod.config.spring.property.AutoUpdateConfigChangeListener;
+import com.tlkj.cod.config.spring.property.AutoUpdateCodConfigChangeListener;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -85,7 +85,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
         if (!AUTO_UPDATE_INITIALIZED_BEAN_FACTORIES.add(beanFactory)) {
             return;
         }
-        AutoUpdateConfigChangeListener autoUpdateConfigChangeListener = new AutoUpdateConfigChangeListener(environment, beanFactory);
+        AutoUpdateCodConfigChangeListener autoUpdateConfigChangeListener = new AutoUpdateCodConfigChangeListener(environment, beanFactory);
 
         List<ConfigPropertySource> configPropertySources = configPropertySourceFactory.getAllConfigPropertySources();
         for (ConfigPropertySource configPropertySource : configPropertySources) {

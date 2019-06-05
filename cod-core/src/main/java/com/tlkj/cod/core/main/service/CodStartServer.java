@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.core.main.service;
 
-import com.tlkj.cod.launcher.init.CodServerInitialize;
+import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -30,7 +30,7 @@ public interface CodStartServer {
     /**
      * 初始化
      */
-    void init(CodServerInitialize codStartServerInit);
+    void init(CodModuleServerInitialize codStartServerInit);
 
     /**
      * 启动

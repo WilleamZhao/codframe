@@ -1,7 +1,7 @@
 package com.tlkj.cod.admin;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc 初始化管理模块
@@ -19,7 +19,7 @@ public class InitAdmin implements CodModuleInitialize {
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
         System.out.println("初始化成功");
     }
 

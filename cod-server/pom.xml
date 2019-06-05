@@ -30,6 +30,14 @@
             <artifactId>tomcat-embed-core</artifactId>
             <version>8.5.23</version>
         </dependency>
+
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-logging-juli -->
         <!--<dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -74,10 +82,5 @@
             <version>${codframe.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-filter</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
     </dependencies>
 </project>

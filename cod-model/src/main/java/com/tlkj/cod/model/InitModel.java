@@ -1,10 +1,7 @@
 package com.tlkj.cod.model;
 
-import com.tlkj.cod.common.CodCommonJson;
-import com.tlkj.cod.config.model.config.CodCoreConfig;
-import com.tlkj.cod.dao.model.config.CodDataSourceConfig;
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc 初始化model
@@ -22,10 +19,10 @@ public class InitModel implements CodModuleInitialize {
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
-        /*Object o = launcherModel.getSpring().getBean(CodDataSourceConfig.class);
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
+        /*Object o = codModuleLauncherModel.getSpring().getBean(CodDataSourceConfig.class);
         System.out.println(CodCommonJson.dump(o));
-        o = launcherModel.getSpring().getBean(CodCoreConfig.class);
+        o = codModuleLauncherModel.getSpring().getBean(CodCoreConfig.class);
         System.out.println(CodCommonJson.dump(o));*/
     }
 

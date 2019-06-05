@@ -2,7 +2,7 @@ package com.tlkj.cod.config.service.impl;
 
 import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.CodConfigService;
-import com.tlkj.cod.config.service.ConfigChangeListener;
+import com.tlkj.cod.config.service.CodConfigChangeListener;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.function.Function;
  * @className CodConfigPropertiesServiceImpl
  * @date 2019/5/30 11:18 AM
  */
-@Service("codConfigPropertiesServiceImpl")
+// @Service("codConfigPropertiesServiceImpl")
 public class CodConfigPropertiesServiceImpl implements CodConfigService {
 
     private final List<Map<String, Object>> list = new ArrayList<>();
@@ -60,22 +60,22 @@ public class CodConfigPropertiesServiceImpl implements CodConfigService {
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener) {
+    public void addChangeListener(CodConfigChangeListener listener) {
 
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener, Set<String> interestedKeys) {
+    public void addChangeListener(CodConfigChangeListener listener, Set<String> interestedKeys) {
 
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener, Set<String> interestedKeys, Set<String> interestedKeyPrefixes) {
+    public void addChangeListener(CodConfigChangeListener listener, Set<String> interestedKeys, Set<String> interestedKeyPrefixes) {
 
     }
 
     @Override
-    public boolean removeChangeListener(ConfigChangeListener listener) {
+    public boolean removeChangeListener(CodConfigChangeListener listener) {
         return false;
     }
 

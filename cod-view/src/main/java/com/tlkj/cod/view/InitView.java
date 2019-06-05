@@ -2,7 +2,7 @@ package com.tlkj.cod.view;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc 初始化 view
@@ -20,7 +20,7 @@ public class InitView implements CodModuleInitialize {
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
 
     }
 

@@ -40,7 +40,7 @@
     </build>
 
     <dependencies>
-        <!-- aliyun log -->
+        <!-- aliyun codLog -->
         <dependency>
             <groupId>com.aliyun.openservices</groupId>
             <artifactId>aliyun-log</artifactId>
@@ -106,6 +106,19 @@
             <groupId>com.belerweb</groupId>
             <artifactId>pinyin4j</artifactId>
             <version>${pinyin4j.version}</version>
+        </dependency>
+
+        <!-- cod -->
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-common</artifactId>
+            <version>1.0.3</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- cod -->

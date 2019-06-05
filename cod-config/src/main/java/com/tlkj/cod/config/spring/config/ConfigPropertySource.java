@@ -2,7 +2,7 @@ package com.tlkj.cod.config.spring.config;
 
 import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.CodConfigService;
-import com.tlkj.cod.config.service.ConfigChangeListener;
+import com.tlkj.cod.config.service.CodConfigChangeListener;
 import org.springframework.core.env.EnumerablePropertySource;
 
 import java.util.Set;
@@ -35,7 +35,7 @@ public class ConfigPropertySource extends EnumerablePropertySource<CodConfigServ
 
 
 
-    public void addChangeListener(ConfigChangeListener listener) {
+    public void addChangeListener(CodConfigChangeListener listener) {
         this.source.addChangeListener(listener);
     }
 }

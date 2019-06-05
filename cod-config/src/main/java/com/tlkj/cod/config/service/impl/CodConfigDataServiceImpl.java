@@ -2,7 +2,7 @@ package com.tlkj.cod.config.service.impl;
 
 import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.CodConfigService;
-import com.tlkj.cod.config.service.ConfigChangeListener;
+import com.tlkj.cod.config.service.CodConfigChangeListener;
 import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.function.Function;
  * @className CodConfigDataServiceImpl
  * @date 2019/5/30 11:17 AM
  */
-@Service("codConfigDataServiceImpl")
+// @Service("codConfigDataServiceImpl")
 public class CodConfigDataServiceImpl implements CodConfigService {
 
     private Map<String, Object> map = new HashMap<>();
@@ -70,22 +70,22 @@ public class CodConfigDataServiceImpl implements CodConfigService {
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener) {
+    public void addChangeListener(CodConfigChangeListener listener) {
 
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener, Set<String> interestedKeys) {
+    public void addChangeListener(CodConfigChangeListener listener, Set<String> interestedKeys) {
 
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener, Set<String> interestedKeys, Set<String> interestedKeyPrefixes) {
+    public void addChangeListener(CodConfigChangeListener listener, Set<String> interestedKeys, Set<String> interestedKeyPrefixes) {
 
     }
 
     @Override
-    public boolean removeChangeListener(ConfigChangeListener listener) {
+    public boolean removeChangeListener(CodConfigChangeListener listener) {
         return false;
     }
 

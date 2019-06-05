@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.admin.service.impl;
 
-import com.tlkj.cod.admin.service.MemcachedService;
+import com.tlkj.cod.admin.service.CodAdminMemcachedService;
 import com.tlkj.cod.core.security.cache.MemcachedCacheManager;
 import net.sf.ehcache.CacheException;
 import org.apache.shiro.cache.Cache;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 public class MemcachedShiroCacheManagerImpl implements MemcachedCacheManager {
 
     @Autowired
-    MemcachedService memcachedService;
+    CodAdminMemcachedService codAdminMemcachedService;
 
     @Override
     public <K, V> void createCache(String name, Cache<K, V> cache) throws CacheException {

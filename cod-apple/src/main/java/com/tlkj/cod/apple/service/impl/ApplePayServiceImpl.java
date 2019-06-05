@@ -14,9 +14,9 @@ import com.tlkj.cod.apple.model.to.VerifyReceiptTo;
 import com.tlkj.cod.apple.service.ApplePayService;
 import com.tlkj.cod.common.CodCommonHttpClient;
 import com.tlkj.cod.common.CodCommonJson;
-import com.tlkj.cod.log.annotation.Log;
+import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.dao.jdbc.Updater;
-import com.tlkj.cod.log.service.LogService;
+import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.common.SystemResponse;
 import com.tlkj.cod.model.enums.StatusCode;
 import net.sf.json.JSONObject;
@@ -47,12 +47,12 @@ public class ApplePayServiceImpl implements ApplePayService {
     private final static String formalUrl = "https://buy.itunes.apple.com/verifyReceipt";
 
     @Autowired
-    LogService logService;
+    CodLogService codLogService;
 
     @Autowired
     Updater updater;
 
-    @Log(name = "验证支付")
+    @CodLog(name = "验证支付")
     @Override
     public SystemResponse verifyPay(String receipt) {
         SystemResponse systemResponse;
@@ -92,7 +92,7 @@ public class ApplePayServiceImpl implements ApplePayService {
                 return systemResponse;
             }
         } catch (IOException | URISyntaxException e) {
-            logService.error("验证支付异常", e);
+            codLogService.error("验证支付异常", e);
             systemResponse.setStatusCode(StatusCode.FAIL_CODE);
             return systemResponse;
         }

@@ -13,7 +13,7 @@ package com.tlkj.cod.core.launcher.init;
 import com.tlkj.cod.core.main.Start;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import com.tlkj.cod.model.system.core.SystemModel;
 import org.yaml.snakeyaml.Yaml;
 
@@ -43,10 +43,10 @@ public class InitOldServer implements CodModuleInitialize {
 
     /**
      * TODO 1.0.2
-     * @param launcherModel 小于0 null
+     * @param codModuleLauncherModel 小于0 null
      */
     @Override
-    public void init(LauncherModel launcherModel) {
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
         System.out.println("开始初始化旧项目配置");
         InputStream in;
         try {

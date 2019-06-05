@@ -16,6 +16,14 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>${qiniu.version}</version>
+        </dependency>
+
+        <!-- cod -->
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-common</artifactId>
@@ -23,10 +31,11 @@
         </dependency>
 
         <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <version>${qiniu.version}</version>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
         </dependency>
+
     </dependencies>
 
 </project>

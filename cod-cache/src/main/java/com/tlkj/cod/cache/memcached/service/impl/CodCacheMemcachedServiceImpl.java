@@ -13,7 +13,7 @@ package com.tlkj.cod.cache.memcached.service.impl;
 import com.tlkj.cod.cache.CodCacheManager;
 import com.tlkj.cod.cache.memcached.service.CodCacheMemcachedService;
 import com.tlkj.cod.cache.model.CodCacheMemcachedModel;
-import com.tlkj.cod.log.service.LogService;
+import com.tlkj.cod.log.service.CodLogService;
 import net.spy.memcached.AddrUtil;
 import net.spy.memcached.ConnectionFactoryBuilder;
 import net.spy.memcached.MemcachedClient;
@@ -40,13 +40,13 @@ import java.util.concurrent.Future;
 @Service("codCacheMemcached")
 public class CodCacheMemcachedServiceImpl implements CodCacheMemcachedService, CodCacheManager {
 
-    private LogService logService;
+    private CodLogService codLogService;
 
     private static MemcachedClient mcc = null;
 
     @Autowired
-    public CodCacheMemcachedServiceImpl(LogService logService){
-        this.logService = logService;
+    public CodCacheMemcachedServiceImpl(CodLogService codLogService){
+        this.codLogService = codLogService;
     }
 
     public CodCacheMemcachedServiceImpl(){
@@ -68,9 +68,9 @@ public class CodCacheMemcachedServiceImpl implements CodCacheMemcachedService, C
                 }
             }
         } catch (IOException e) {
-            logService.error("MemCached:加载失败", e);
+            codLogService.error("MemCached:加载失败", e);
         }
-        logService.info("MemCached:成功加载");
+        codLogService.info("MemCached:成功加载");
     }
 
     @Override

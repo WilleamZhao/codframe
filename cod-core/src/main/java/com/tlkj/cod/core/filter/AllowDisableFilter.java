@@ -11,14 +11,9 @@
 package com.tlkj.cod.core.filter;
 
 import com.tlkj.cod.common.CodCommonNetWork;
-import com.tlkj.cod.core.spring.SpringContextUtil;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.bo.CodFrameDictItemBo;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.model.system.core.SystemSetAllowDisable;
-// import com.tlkj.cod.service.system.DictService;
-// import com.tlkj.cod.service.system.SystemSetService;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.Filter;
@@ -29,7 +24,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 /**
  * Desc 黑白名单过滤器

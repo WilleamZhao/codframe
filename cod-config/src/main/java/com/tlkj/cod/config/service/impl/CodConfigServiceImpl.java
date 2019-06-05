@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.CodConfigService;
-import com.tlkj.cod.config.service.ConfigChangeListener;
+import com.tlkj.cod.config.service.CodConfigChangeListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +28,9 @@ public class CodConfigServiceImpl implements CodConfigService {
     // CodConfigFacade codConfigFacade;
 
 
-    private final List<ConfigChangeListener> listeners = Lists.newCopyOnWriteArrayList();
-    private final Map<ConfigChangeListener, Set<String>> codInterestedKeys = Maps.newConcurrentMap();
-    private final Map<ConfigChangeListener, Set<String>> codInterestedKeyPrefixes = Maps.newConcurrentMap();
+    private final List<CodConfigChangeListener> listeners = Lists.newCopyOnWriteArrayList();
+    private final Map<CodConfigChangeListener, Set<String>> codInterestedKeys = Maps.newConcurrentMap();
+    private final Map<CodConfigChangeListener, Set<String>> codInterestedKeyPrefixes = Maps.newConcurrentMap();
 
 
     /**
@@ -81,17 +81,17 @@ public class CodConfigServiceImpl implements CodConfigService {
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener) {
+    public void addChangeListener(CodConfigChangeListener listener) {
         addChangeListener(listener, null);
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener, Set<String> interestedKeys) {
+    public void addChangeListener(CodConfigChangeListener listener, Set<String> interestedKeys) {
         addChangeListener(listener, interestedKeys, null);
     }
 
     @Override
-    public void addChangeListener(ConfigChangeListener listener, Set<String> interestedKeys, Set<String> interestedKeyPrefixes) {
+    public void addChangeListener(CodConfigChangeListener listener, Set<String> interestedKeys, Set<String> interestedKeyPrefixes) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
             if (interestedKeys != null && !interestedKeys.isEmpty()) {
@@ -104,7 +104,7 @@ public class CodConfigServiceImpl implements CodConfigService {
     }
 
     @Override
-    public boolean removeChangeListener(ConfigChangeListener listener) {
+    public boolean removeChangeListener(CodConfigChangeListener listener) {
         codInterestedKeys.remove(listener);
         codInterestedKeyPrefixes.remove(listener);
         return listeners.remove(listener);

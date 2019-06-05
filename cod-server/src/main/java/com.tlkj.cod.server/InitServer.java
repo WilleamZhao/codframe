@@ -10,14 +10,12 @@
 
 package com.tlkj.cod.server;
 
-import com.tlkj.cod.filter.CorsFilter;
-import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.launcher.init.CodServerInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
-import com.tlkj.cod.server.model.FilterModel;
+import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.server.model.CodServerFilterModel;
 import com.tlkj.cod.server.model.server.CodServerModel;
-import com.tlkj.cod.server.service.CodServer;
+import com.tlkj.cod.server.service.CodServerService;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.HashMap;
@@ -31,7 +29,7 @@ import java.util.Map;
  * @className InitServer
  * @date 2019/4/28 5:11 PM
  */
-public class InitServer implements CodServerInitialize {
+public class InitServer implements CodModuleServerInitialize {
 
     @Override
     public int order() {
@@ -40,15 +38,15 @@ public class InitServer implements CodServerInitialize {
 
 
     @Override
-    public void init(LauncherModel launcherModel) {
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
 
-        launcherModel.getSpring().refresh();
+        codModuleLauncherModel.getSpring().refresh();
 
         // TODO 从配置模块里读取
-        CodServer codServer = (CodServer) launcherModel.getSpring().getBean("codServerJetty");
-        System.out.println("初始化server");
-        launcherModel.setServer(this.setCodServerDefault());
-        codServer.start(launcherModel);
+        CodServerService codServerService = (CodServerService) codModuleLauncherModel.getSpring().getBean("codServerJetty");
+        setCharacterEncodingFilter();
+        codModuleLauncherModel.setServer(CodServerModel.getInstance());
+        codServerService.start(codModuleLauncherModel);
     }
 
     @Override
@@ -58,28 +56,21 @@ public class InitServer implements CodServerInitialize {
     }
 
     /**
-     * TODO 设置默认配置
-     * @return
+     * TODO 编码方式
      */
-    private CodServerModel setCodServerDefault(){
-        CodServerModel codServer = new CodServerModel();
-        FilterModel filterModel = new FilterModel();
-        filterModel.setMapping("/*");
-        filterModel.setFilter(new CorsFilter());
-        filterModel.setName("cors");
-        codServer.addFilter(filterModel);
-
-        FilterModel filterModel1 = new FilterModel();
-        filterModel1.setMapping("/*");
-        filterModel1.setFilter(new CharacterEncodingFilter());
-        filterModel1.setName("character");
+    private void setCharacterEncodingFilter(){
+        CodServerModel codServer = CodServerModel.getInstance();
+        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
+        codServerFilterModel.setMapping("/*");
+        codServerFilterModel.setFilter(new CharacterEncodingFilter());
+        codServerFilterModel.setName("character");
 
         Map map = new HashMap();
         map.put("encoding", "UTF-8");
         map.put("forceEncoding", "true");
-        filterModel1.setParamList(map);
+        codServerFilterModel.setParamList(map);
 
-        codServer.addFilter(filterModel1);
-        return codServer;
+        codServer.addFilter(codServerFilterModel);
+
     }
 }

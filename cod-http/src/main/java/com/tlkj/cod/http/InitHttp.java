@@ -1,7 +1,7 @@
 package com.tlkj.cod.http;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc cod http模块
@@ -19,7 +19,7 @@ public class InitHttp implements CodModuleInitialize {
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
         System.out.println("开始初始化http模块");
     }
 

@@ -11,7 +11,7 @@
 package com.tlkj.cod.user.service.impl;
 
 import com.tlkj.cod.cache.CodCacheManager;
-import com.tlkj.cod.log.annotation.Log;
+import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.common.SystemResponse;
@@ -48,7 +48,7 @@ public class CodCommonUserServiceImpl implements CodCommonUserService {
      * @param type     类型
      * @return
      */
-    @Log(name = "注册")
+    @CodLog(name = "注册")
     @Override
     public SystemResponse register(String username, String type) {
 

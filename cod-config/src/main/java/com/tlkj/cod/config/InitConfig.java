@@ -14,7 +14,7 @@ import com.google.common.collect.Lists;
 import com.tlkj.cod.config.service.impl.CodConfigDataServiceImpl;
 import com.tlkj.cod.config.spring.config.PropertySourcesProcessor;
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
@@ -34,9 +34,9 @@ public class InitConfig implements CodModuleInitialize {
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
         System.out.println("开始初始化配置");
-        AnnotationConfigWebApplicationContext applicationContext = launcherModel.getSpring();
+        AnnotationConfigWebApplicationContext applicationContext = codModuleLauncherModel.getSpring();
 
         // 支持placeholder
         applicationContext.register(PropertySourcesPlaceholderConfigurer.class);
@@ -48,7 +48,7 @@ public class InitConfig implements CodModuleInitialize {
         PropertySourcesProcessor propertySourcesProcessor = new PropertySourcesProcessor();
         propertySourcesProcessor.setEnvironment(applicationContext.getEnvironment());
         applicationContext.addBeanFactoryPostProcessor(propertySourcesProcessor);
-        launcherModel.finish();
+        codModuleLauncherModel.finish();
     }
 
     @Override

@@ -11,10 +11,7 @@
 package com.tlkj.cod.core;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import javax.servlet.ServletContext;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc 初始化 core
@@ -32,7 +29,7 @@ public class InitCore implements CodModuleInitialize {
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
         // WebApplicationContextUtils.getWebApplicationContext(servletContext);
     }
 

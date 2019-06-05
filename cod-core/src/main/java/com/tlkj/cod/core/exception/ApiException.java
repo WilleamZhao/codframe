@@ -11,7 +11,7 @@
 package com.tlkj.cod.core.exception;
 
 /**
- * Description:自定义Exception,主要是为了返回JSON信息
+ * desc 自定义Exception,主要是为了返回JSON信息
  *
  * @author sourcod
  * @create 2018-11-27

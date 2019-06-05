@@ -18,7 +18,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.tlkj.cod.log.annotation.Log;
+import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.message.model.config.AliYunSmsConfig;
 import com.tlkj.cod.message.sms.service.AliSmsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class AliSmsServiceImpl implements AliSmsService {
      * @return
      */
     @Override
-    @Log(name = "发送短信")
+    @CodLog(name = "发送短信")
     public boolean send(String phone, String code, String signName, String templateCode) {
         // systemSetService.getLog().info("发送短信[阿里云], 电话号={}, 验证码={}", phone, code);
 

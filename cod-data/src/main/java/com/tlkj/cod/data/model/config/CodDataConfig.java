@@ -16,14 +16,33 @@ import lombok.Setter;
 @Setter
 public class CodDataConfig {
 
+    private String type = "data";
+
+    /**
+     * 驱动
+     */
     private String driver = "org.h2.Driver";
 
+    /**
+     * 编码
+     */
     private String encoding = "UTF-8";
 
+    /**
+     * 默认地址
+     */
     private String url = "jdbc:h2:./.codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL";
 
+    /**
+     * 用户名
+     * 随机电脑序列号
+     */
     private String username = CodCommonDeviceInfo.getHardware().getComputerSystem().getSerialNumber();
 
+    /**
+     * 密码
+     * 每台电脑不一样 (CPU ID)
+     */
     private String password = CodCommonDeviceInfo.getHardware().getProcessor().getProcessorID();
 
 

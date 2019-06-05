@@ -10,10 +10,10 @@
 
 package com.tlkj.cod.launcher;
 
-import com.tlkj.cod.launcher.init.CodDataInitialize;
-import com.tlkj.cod.launcher.init.CodServerInitialize;
-import com.tlkj.cod.launcher.init.CodServletInitialize;
-import com.tlkj.cod.launcher.init.CodSpringInitialize;
+import com.tlkj.cod.launcher.init.CodModuleDataInitialize;
+import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
+import com.tlkj.cod.launcher.init.CodModuleServletInitialize;
+import com.tlkj.cod.launcher.init.CodModuleSpringInitialize;
 
 /**
  * Desc
@@ -33,22 +33,22 @@ public enum CodModuleOrderEnum {
     /**
      * 启动data
      */
-    DATA(-60, CodDataInitialize.class),
+    DATA(-60, CodModuleDataInitialize.class),
 
     /**
      * 启动spring
      */
-    SPRING(0, CodSpringInitialize.class),
+    SPRING(0, CodModuleSpringInitialize.class),
 
     /**
      * 启动servlet
      */
-    SERVLET(50, CodServletInitialize.class),
+    SERVLET(50, CodModuleServletInitialize.class),
 
     /**
      * 启动服务
      */
-    SERVER(100, CodServerInitialize.class);
+    SERVER(100, CodModuleServerInitialize.class);
 
     private int order;
 

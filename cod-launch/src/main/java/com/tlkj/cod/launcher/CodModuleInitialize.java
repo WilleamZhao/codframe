@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.launcher;
 
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc 初始化模块方法
@@ -42,10 +42,10 @@ public interface CodModuleInitialize {
 
     /**
      * 模块初始化
-     * @param launcherModel 小于0 null
+     * @param codModuleLauncherModel 小于0 null
      * @return
      */
-    void init(LauncherModel launcherModel);
+    void init(CodModuleLauncherModel codModuleLauncherModel);
 
     /**
      * 模块初始化失败

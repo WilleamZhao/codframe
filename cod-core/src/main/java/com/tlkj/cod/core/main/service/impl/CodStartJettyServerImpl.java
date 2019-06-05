@@ -11,7 +11,7 @@
 package com.tlkj.cod.core.main.service.impl;
 
 import com.tlkj.cod.core.listener.LogoListener;
-import com.tlkj.cod.launcher.init.CodServerInitialize;
+import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
 import com.tlkj.cod.core.main.CodSpringConfiguration;
 import com.tlkj.cod.core.main.service.CodStartServer;
 import com.tlkj.cod.core.model.bo.CodStartModel;
@@ -72,10 +72,10 @@ public class CodStartJettyServerImpl implements CodStartServer {
     private static List<EventListener> listenerList = new ArrayList<>();
 
     private DispatcherServlet dispatcherServlet = null;
-    private CodServerInitialize startServerInit = null;
+    private CodModuleServerInitialize startServerInit = null;
 
     @Override
-    public void init(CodServerInitialize startServerInit) {
+    public void init(CodModuleServerInitialize startServerInit) {
         this.startServerInit = startServerInit;
     }
 

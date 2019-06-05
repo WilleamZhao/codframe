@@ -1,7 +1,7 @@
 package com.tlkj.cod.log;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc
@@ -19,8 +19,8 @@ public class InitLog implements CodModuleInitialize {
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
-        launcherModel.finish();
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
+        codModuleLauncherModel.finish();
     }
 
     @Override

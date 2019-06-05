@@ -17,7 +17,7 @@ import com.tlkj.cod.cache.model.CodCacheFormatType;
 import com.tlkj.cod.cache.model.CodCacheModel;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonSerializable;
-import com.tlkj.cod.log.service.LogService;
+import com.tlkj.cod.log.service.CodLogService;
 import org.apache.commons.lang3.StringUtils;
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
@@ -60,7 +60,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
     private static CodCacheEhcacheModel codCacheEhcacheModel = new CodCacheEhcacheModel();
 
     @Autowired
-    LogService logService;
+    CodLogService codLogService;
 
     /**
      * 构造方法初始化 cacheManager
@@ -84,7 +84,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
                         //创建之后立即初始化
                         .build(true);
             } catch (StateTransitionException e){
-                logService.error("错误", e);
+                codLogService.error("错误", e);
                 System.out.println("TODO 错误");
             }
         }
@@ -315,11 +315,11 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
             try {
                 codCacheModel = CodCommonJson.load(obj.toString(), CodCacheModel.class);
             } catch (Exception e){
-                logService.error("目标类型转换失败");
+                codLogService.error("目标类型转换失败");
                 try {
                     return zlass.cast(obj);
                 } catch (Exception e1){
-                    logService.error("缓存类型和目标类型不匹配");
+                    codLogService.error("缓存类型和目标类型不匹配");
                     return null;
                 }
             }
@@ -330,7 +330,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         }
 
         if (codCacheModel.getTime() != 0 && codCacheModel.getTime() < Calendar.getInstance().getTime().getTime()){
-            logService.debug("缓存过期");
+            codLogService.debug("缓存过期");
             return null;
         }
 

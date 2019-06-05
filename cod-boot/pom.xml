@@ -26,16 +26,6 @@
     <dependencies>
         <dependency>
             <groupId>com.tlkj</groupId>
-            <artifactId>cod-action</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-api</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tlkj</groupId>
             <artifactId>cod-apple</artifactId>
             <version>${codframe.version}</version>
         </dependency>
@@ -62,11 +52,6 @@
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-dao</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-facade</artifactId>
             <version>${codframe.version}</version>
         </dependency>
         <dependency>
@@ -114,12 +99,6 @@
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-server</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-service</artifactId>
             <version>${codframe.version}</version>
         </dependency>
 
