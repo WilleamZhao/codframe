@@ -10,6 +10,9 @@
 
 package com.tlkj.cod.admin.model.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Desc 用户部门dto
  *
@@ -18,6 +21,8 @@ package com.tlkj.cod.admin.model.dto;
  * @className CodAdminUserDeptListDto
  * @date 2019/1/7 11:57 PM
  */
+@Getter
+@Setter
 public class CodAdminUserDeptListDto {
 
     private String id;
@@ -26,43 +31,4 @@ public class CodAdminUserDeptListDto {
     private String userName;
     private String deptName;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
 }

@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 通过FileAction上传的文件Do
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminTempFileDo
  * @date 2019/3/7 6:05 PM
  */
-public class CodAdminTempFileDo {
+@Getter
+@Setter
+public class CodAdminTempFileDo extends CodCommonModelConvert implements Serializable {
 
     public final static String TABLE_NAME = "cod_sys_file";
 

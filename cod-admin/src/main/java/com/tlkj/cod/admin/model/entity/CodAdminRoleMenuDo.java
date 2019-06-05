@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 角色菜单表
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminRoleMenuDo
  * @date 2018/12/26 1:13 PM
  */
-public class CodAdminRoleMenuDo {
+@Getter
+@Setter
+public class CodAdminRoleMenuDo extends CodCommonModelConvert implements Serializable {
 
     public static String TABLE_NAME = "cod_sys_role_menu";
 
@@ -37,27 +45,4 @@ public class CodAdminRoleMenuDo {
      */
     private String menu_id;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getRole_id() {
-        return role_id;
-    }
-
-    public void setRole_id(String role_id) {
-        this.role_id = role_id;
-    }
-
-    public String getMenu_id() {
-        return menu_id;
-    }
-
-    public void setMenu_id(String menu_id) {
-        this.menu_id = menu_id;
-    }
 }

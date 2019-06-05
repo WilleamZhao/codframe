@@ -10,6 +10,9 @@
 
 package com.tlkj.cod.admin.model.bo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Desc 菜单Bo
  *
@@ -18,6 +21,8 @@ package com.tlkj.cod.admin.model.bo;
  * @className MenuBo
  * @date 2018/10/29 下午3:00
  */
+@Getter
+@Setter
 public class CodAdminMenuBo {
 
 

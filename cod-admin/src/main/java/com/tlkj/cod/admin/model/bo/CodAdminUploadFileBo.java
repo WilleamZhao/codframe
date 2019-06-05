@@ -10,6 +10,9 @@
 
 package com.tlkj.cod.admin.model.bo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Desc 上传文件Bo
  *
@@ -18,6 +21,8 @@ package com.tlkj.cod.admin.model.bo;
  * @className CodAdminUploadFileBo
  * @date 2018/11/20 7:10 PM
  */
+@Getter
+@Setter
 public class CodAdminUploadFileBo {
 
     /**
@@ -35,27 +40,4 @@ public class CodAdminUploadFileBo {
      */
     private String uploadTime;
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getFullUrl() {
-        return fullUrl;
-    }
-
-    public void setFullUrl(String fullUrl) {
-        this.fullUrl = fullUrl;
-    }
-
-    public String getUploadTime() {
-        return uploadTime;
-    }
-
-    public void setUploadTime(String uploadTime) {
-        this.uploadTime = uploadTime;
-    }
 }

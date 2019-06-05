@@ -8,7 +8,7 @@
  * site：http://codframe.com
  */
 
-package com.tlkj.cod.model.common;
+package com.tlkj.cod.log.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,15 +22,15 @@ import java.io.Serializable;
  * @className LogMessageModel
  * @date 2018/12/3 4:25 PM
  */
-public class LogMessageModel implements Serializable {
+public class CodLogMessageModel implements Serializable {
 
     private static final long serialVersionUID = 8674434550747529862L;
 
-    public LogMessageModel() {
+    public CodLogMessageModel() {
 
     }
 
-    public LogMessageModel(String id, String fileName, String className, String methodName, int line, String level, String time, String msg) {
+    public CodLogMessageModel(String id, String fileName, String className, String methodName, int line, String level, String time, String msg) {
         this.id = id;
         this.fileName = fileName;
         this.className = className;

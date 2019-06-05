@@ -27,20 +27,20 @@ import java.util.Map;
  * @className DbConnectionPool
  * @date 2018/8/8 下午1:08
  */
-public class DBConnectionPool {
+public class CodDaoConnectionPool {
 
     private DataSource dataSource;
 
-    private static volatile DBConnectionPool instance;
+    private static volatile CodDaoConnectionPool instance;
 
     /**
      * 线程安全
      */
-    public static DBConnectionPool getInstance() {
+    public static CodDaoConnectionPool getInstance() {
         if (instance == null) {
-            synchronized (DBConnectionPool.class) {
+            synchronized (CodDaoConnectionPool.class) {
                 if (instance == null) {
-                    instance = new DBConnectionPool();
+                    instance = new CodDaoConnectionPool();
                 }
             }
         }
@@ -67,7 +67,7 @@ public class DBConnectionPool {
     /**
      * 默认构造方法
      */
-    public DBConnectionPool(){
+    public CodDaoConnectionPool(){
 
     }
 
@@ -76,7 +76,7 @@ public class DBConnectionPool {
      * 读取配置文件设置数据源类型
      * 默认使用dbcp数据源
      */
-    public DBConnectionPool(DataConnectBean dataConnectBean) {
+    public CodDaoConnectionPool(DataConnectBean dataConnectBean) {
         this.dataSource = setDataSource(dataConnectBean);
         this.map.put(dataConnectBean.getName(), this.dataSource);
         /*

@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
  * @date 2018/12/19 8:18 PM
  */
 @Service
-public class MemcachedShiroCacheManagerImpl implements MemcachedCacheManager {
+public class CodAdminMemcachedShiroCacheManagerImpl implements MemcachedCacheManager {
 
     @Autowired
     CodAdminMemcachedService codAdminMemcachedService;

@@ -2,7 +2,7 @@ package com.tlkj.cod.data;
 
 import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
-import com.tlkj.cod.dao.util.DBConnectionPool;
+import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.data.model.config.CodDataConfig;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.init.CodModuleDataInitialize;
@@ -33,7 +33,7 @@ public class InitModuleData implements CodModuleDataInitialize {
         bean.setDriverClass(codDataConfig.getDriver());
         bean.setUrl(codDataConfig.getUrl());
         bean.setCharacterEncoding(codDataConfig.getEncoding());
-        DBConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), bean);
+        CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), bean);
 
         // new 配置
         // CodDataService codDataService = new CodDataServiceImpl();
@@ -48,7 +48,7 @@ public class InitModuleData implements CodModuleDataInitialize {
         dataConnectBean.setUrl("jdbc:h2:./codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL");
         dataConnectBean.setUsername("codframe");
         dataConnectBean.setPassword("123456");
-        DBConnectionPool dbConnectionPool = new DBConnectionPool();
+        CodDaoConnectionPool dbConnectionPool = new CodDaoConnectionPool();
         DataSource dataSource = dbConnectionPool.getHikariDataSource(dataConnectBean);
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         Finder finder = new Finder(jdbcTemplate);

@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 菜单列表Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminMenuListDto
  * @date 2018/10/29 下午11:20
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminMenuListDto {
 
@@ -83,99 +87,4 @@ public class CodAdminMenuListDto {
      */
     private String updateTime;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
-    public String getMenuTitle() {
-        return menuTitle;
-    }
-
-    public void setMenuTitle(String menuTitle) {
-        this.menuTitle = menuTitle;
-    }
-
-    public String getJump() {
-        return jump;
-    }
-
-    public void setJump(String jump) {
-        this.jump = jump;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getpId() {
-        return pId;
-    }
-
-    public void setpId(String pId) {
-        this.pId = pId;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getPrevMenuName() {
-        return prevMenuName;
-    }
-
-    public void setPrevMenuName(String prevMenuName) {
-        this.prevMenuName = prevMenuName;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
 }

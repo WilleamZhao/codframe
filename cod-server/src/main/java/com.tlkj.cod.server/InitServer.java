@@ -39,7 +39,6 @@ public class InitServer implements CodModuleServerInitialize {
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-
         codModuleLauncherModel.getSpring().refresh();
 
         // TODO 从配置模块里读取

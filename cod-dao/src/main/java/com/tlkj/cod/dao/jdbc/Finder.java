@@ -13,7 +13,7 @@ package com.tlkj.cod.dao.jdbc;
 import com.google.common.base.CaseFormat;
 import com.tlkj.cod.dao.exception.CodDataViewException;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
-import com.tlkj.cod.dao.util.DBConnectionPool;
+import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.dao.view.CodDataView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -47,7 +47,7 @@ public class Finder {
      */
     @PostConstruct
     public void init(){
-        DataSource dataSource = DBConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
         if (dataSource != null){
             this.jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -55,7 +55,7 @@ public class Finder {
 
     /*
     @Autowired
-    public Finder(DBConnectionPool dbConnectionPool) {
+    public Finder(CodDaoConnectionPool dbConnectionPool) {
         jdbcTemplate = new JdbcTemplate(dbConnectionPool.getDataSource());
     }
     */
@@ -74,7 +74,7 @@ public class Finder {
      * @return
      */
     public Query ds(String name) {
-        return new Query(new JdbcTemplate(DBConnectionPool.getInstance().getDataSource(name)));
+        return new Query(new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name)));
     }
 
     /**
@@ -83,7 +83,7 @@ public class Finder {
      * @return
      */
     public Finder dsf(String name) {
-        this.jdbcTemplate = new JdbcTemplate(DBConnectionPool.getInstance().getDataSource(name));
+        this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
         return this;
     }
 
@@ -103,7 +103,7 @@ public class Finder {
      * @return
      */
     public Query from(String table, String name) {
-        DataSource dataSource = DBConnectionPool.getInstance().getDataSource(name);
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
         if (dataSource == null){
             return null;
         }
@@ -468,11 +468,11 @@ public class Finder {
         }
 
         public Query(String name) {
-            this.jdbcTemplate = new JdbcTemplate(DBConnectionPool.getInstance().getDataSource(name));
+            this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
         }
 
         public Query(String name, int prefix) {
-            this.jdbcTemplate = new JdbcTemplate(DBConnectionPool.getInstance().getDataSource(name));
+            this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
             this.prefix = prefix;
         }
 

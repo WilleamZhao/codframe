@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 通过FileAction上传的文件Do
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodFrameTempFileDto
  * @date 2019/3/7 6:12 PM
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodFrameTempFileDto {
 
@@ -68,75 +72,4 @@ public class CodFrameTempFileDto {
      */
     private String status;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getFileUrl() {
-        return fileUrl;
-    }
-
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
-    }
-
-    public String getFileSize() {
-        return fileSize;
-    }
-
-    public void setFileSize(String fileSize) {
-        this.fileSize = fileSize;
-    }
-
-    public String getFileUnit() {
-        return fileUnit;
-    }
-
-    public void setFileUnit(String fileUnit) {
-        this.fileUnit = fileUnit;
-    }
-
-    public String getExtName() {
-        return extName;
-    }
-
-    public void setExtName(String extName) {
-        this.extName = extName;
-    }
-
-    public String getFileItemCode() {
-        return fileItemCode;
-    }
-
-    public void setFileItemCode(String fileItemCode) {
-        this.fileItemCode = fileItemCode;
-    }
-
-    public String getUploadTime() {
-        return uploadTime;
-    }
-
-    public void setUploadTime(String uploadTime) {
-        this.uploadTime = uploadTime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

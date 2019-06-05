@@ -20,7 +20,7 @@ import com.tlkj.cod.model.enums.StatusCode;
  * @className GeneralResponse
  * @date 2018/9/12 下午12:48
  */
-public class GeneralResponse extends General{
+public class GeneralResponse extends General {
 
     /**
      * 成功返回

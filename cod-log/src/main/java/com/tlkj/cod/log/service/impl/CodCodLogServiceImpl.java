@@ -17,7 +17,7 @@ import com.tlkj.cod.common.CodCommonUUID;
 import com.tlkj.cod.common.constant.CodCommonAnsiConstant;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.log.service.CodLogService;
-import com.tlkj.cod.model.common.LogMessageModel;
+import com.tlkj.cod.log.service.model.CodLogMessageModel;
 import com.tlkj.cod.model.system.core.SystemModel;
 import com.tlkj.cod.model.system.entity.CodFrameSetDo;
 import org.slf4j.Logger;
@@ -140,7 +140,7 @@ public class CodCodLogServiceImpl implements CodLogService {
             }
             msg = MessageFormatter.arrayFormat(msg, tempObject).getMessage();
             // 日志消息体
-            LogMessageModel model = new LogMessageModel(CodCommonUUID.getUUID(),
+            CodLogMessageModel model = new CodLogMessageModel(CodCommonUUID.getUUID(),
                     elements[2].getFileName(), elements[2].getClassName(),
                     elements[2].getMethodName(), elements[2].getLineNumber(), level,
                     CodCommonDate.getDate("yyyy-MM-dd HH:mm:ss,SSS"), msg);

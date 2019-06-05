@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 部门列表Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminDeptListDto
  * @date 2018/11/7 下午11:05
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminDeptListDto {
     private String id;
@@ -33,83 +37,4 @@ public class CodAdminDeptListDto {
     private String status;
     private String sort;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public String getDeptNo() {
-        return deptNo;
-    }
-
-    public void setDeptNo(String deptNo) {
-        this.deptNo = deptNo;
-    }
-
-    public String getDeptLevel() {
-        return deptLevel;
-    }
-
-    public void setDeptLevel(String deptLevel) {
-        this.deptLevel = deptLevel;
-    }
-
-    public String getDeptAdmin() {
-        return deptAdmin;
-    }
-
-    public void setDeptAdmin(String deptAdmin) {
-        this.deptAdmin = deptAdmin;
-    }
-
-    public String getpId() {
-        return pId;
-    }
-
-    public void setpId(String pId) {
-        this.pId = pId;
-    }
-
-    public String getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
 }

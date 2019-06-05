@@ -10,7 +10,7 @@
 
 package org.slf4j.impl;
 
-import com.tlkj.cod.model.common.LogMessageModel;
+import com.tlkj.cod.log.service.model.CodLogMessageModel;
 import com.tlkj.cod.model.system.core.SystemModel;
 import com.tlkj.cod.model.system.core.SystemSetLog;
 import com.tlkj.cod.common.CodCommonDate;
@@ -322,7 +322,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
         }
 
         // 日志消息体
-        LogMessageModel model = new LogMessageModel(CodCommonUUID.getUUID(),
+        CodLogMessageModel model = new CodLogMessageModel(CodCommonUUID.getUUID(),
                 classFileName, className,
                 element.getMethodName(), element.getLineNumber(), level,
                 CodCommonDate.getDate("yyyy-MM-dd HH:mm:ss,SSS"), msg);

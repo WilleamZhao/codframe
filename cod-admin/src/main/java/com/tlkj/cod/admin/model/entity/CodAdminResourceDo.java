@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 资源表Do
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminResourceDo
  * @date 2018/10/30 下午3:03
  */
-public class CodAdminResourceDo {
+@Getter
+@Setter
+public class CodAdminResourceDo extends CodCommonModelConvert implements Serializable {
 
     public static String TABLE_NAME = "cod_sys_resource";
 
@@ -72,83 +80,4 @@ public class CodAdminResourceDo {
      */
     private String update_time;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getResource_name() {
-        return resource_name;
-    }
-
-    public void setResource_name(String resource_name) {
-        this.resource_name = resource_name;
-    }
-
-    public String getResource_desc() {
-        return resource_desc;
-    }
-
-    public void setResource_desc(String resource_desc) {
-        this.resource_desc = resource_desc;
-    }
-
-    public String getResource_url() {
-        return resource_url;
-    }
-
-    public void setResource_url(String resource_url) {
-        this.resource_url = resource_url;
-    }
-
-    public String getResource_r_status() {
-        return resource_r_status;
-    }
-
-    public void setResource_r_status(String resource_r_status) {
-        this.resource_r_status = resource_r_status;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getPermission_id() {
-        return permission_id;
-    }
-
-    public void setPermission_id(String permission_id) {
-        this.permission_id = permission_id;
-    }
-
-    public String getPermission_code() {
-        return permission_code;
-    }
-
-    public void setPermission_code(String permission_code) {
-        this.permission_code = permission_code;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getUpdate_time() {
-        return update_time;
-    }
-
-    public void setUpdate_time(String update_time) {
-        this.update_time = update_time;
-    }
 }

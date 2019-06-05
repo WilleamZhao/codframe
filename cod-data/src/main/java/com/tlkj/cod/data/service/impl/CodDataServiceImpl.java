@@ -4,8 +4,8 @@ import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
+import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.dao.util.CreateTable;
-import com.tlkj.cod.dao.util.DBConnectionPool;
 import com.tlkj.cod.data.model.config.CodDataConfig;
 import com.tlkj.cod.data.model.entity.CodDataConfigDo;
 import com.tlkj.cod.data.service.CodDataService;
@@ -44,7 +44,7 @@ public class CodDataServiceImpl implements CodDataService {
         dataConnectBean.setUsername(codDataConfig.getUsername());
         dataConnectBean.setPassword(codDataConfig.getPassword());
         dataConnectBean.setName(CodDaoDatasourceTypeEnum.DATA.name());
-        DBConnectionPool.getInstance().setDataSource(dataConnectBean);
+        CodDaoConnectionPool.getInstance().setDataSource(dataConnectBean);
         finder.dsf(CodDaoDatasourceTypeEnum.DATA.name());
     }
 
@@ -61,14 +61,14 @@ public class CodDataServiceImpl implements CodDataService {
         dataConnectBean.setUsername(codDataConfig.getUsername());
         dataConnectBean.setPassword(codDataConfig.getPassword());
         dataConnectBean.setName(CodDaoDatasourceTypeEnum.DATA.name());
-        DBConnectionPool.getInstance().setDataSource(dataConnectBean);
+        CodDaoConnectionPool.getInstance().setDataSource(dataConnectBean);
         if (finder == null){
             // finder.dsf(CodDaoDatasourceTypeEnum.DATA.name());
-            finder = new Finder(DBConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
+            finder = new Finder(CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
         }
 
         if (updater == null){
-            updater = new Updater(DBConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
+            updater = new Updater(CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
         }
 
         // config

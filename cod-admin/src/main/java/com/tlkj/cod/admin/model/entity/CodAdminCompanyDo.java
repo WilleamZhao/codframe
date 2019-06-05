@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 公司表Do
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminCompanyDo
  * @date 2018/10/30 下午2:47
  */
-public class CodAdminCompanyDo {
+@Getter
+@Setter
+public class CodAdminCompanyDo extends CodCommonModelConvert implements Serializable {
 
     public static final String TABLE_NAME = "cod_sys_company";
 
@@ -87,107 +95,4 @@ public class CodAdminCompanyDo {
      */
     private String update_time;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCompany_name() {
-        return company_name;
-    }
-
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
-    }
-
-    public String getCompany_nickname() {
-        return company_nickname;
-    }
-
-    public void setCompany_nickname(String company_nickname) {
-        this.company_nickname = company_nickname;
-    }
-
-    public String getCompany_no() {
-        return company_no;
-    }
-
-    public void setCompany_no(String company_no) {
-        this.company_no = company_no;
-    }
-
-    public String getCompany_contact() {
-        return company_contact;
-    }
-
-    public void setCompany_contact(String company_contact) {
-        this.company_contact = company_contact;
-    }
-
-    public String getCompany_fax() {
-        return company_fax;
-    }
-
-    public void setCompany_fax(String company_fax) {
-        this.company_fax = company_fax;
-    }
-
-    public String getCompany_phone() {
-        return company_phone;
-    }
-
-    public void setCompany_phone(String company_phone) {
-        this.company_phone = company_phone;
-    }
-
-    public String getCompany_ein() {
-        return company_ein;
-    }
-
-    public void setCompany_ein(String company_ein) {
-        this.company_ein = company_ein;
-    }
-
-    public String getCompany_address() {
-        return company_address;
-    }
-
-    public void setCompany_address(String company_address) {
-        this.company_address = company_address;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getUpdate_time() {
-        return update_time;
-    }
-
-    public void setUpdate_time(String update_time) {
-        this.update_time = update_time;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
 }

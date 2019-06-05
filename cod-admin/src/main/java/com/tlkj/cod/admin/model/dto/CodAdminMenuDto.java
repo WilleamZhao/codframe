@@ -13,6 +13,8 @@ package com.tlkj.cod.admin.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -24,6 +26,8 @@ import java.util.List;
  * @className CodAdminMenuDto
  * @date 2018/10/29 下午2:59
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties({"id"})
 public class CodAdminMenuDto {
@@ -64,52 +68,4 @@ public class CodAdminMenuDto {
     @JsonProperty("list")
     private List<CodAdminMenuDto> menuDtoList;
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
-    public String getMenuTitle() {
-        return menuTitle;
-    }
-
-    public void setMenuTitle(String menuTitle) {
-        this.menuTitle = menuTitle;
-    }
-
-    public String getJump() {
-        return jump;
-    }
-
-    public void setJump(String jump) {
-        this.jump = jump;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public List<CodAdminMenuDto> getMenuDtoList() {
-        return menuDtoList;
-    }
-
-    public void setMenuDtoList(List<CodAdminMenuDto> menuDtoList) {
-        this.menuDtoList = menuDtoList;
-    }
 }

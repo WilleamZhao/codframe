@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 系统日志Do
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminLogDo
  * @date 2018/12/6 4:44 PM
  */
-public class CodAdminLogDo {
+@Getter
+@Setter
+public class CodAdminLogDo extends CodCommonModelConvert implements Serializable {
 
     public static String TABLE_NAME = "cod_sys_log";
 
@@ -77,91 +85,4 @@ public class CodAdminLogDo {
      */
     private String create_time;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getOperation_name() {
-        return operation_name;
-    }
-
-    public void setOperation_name(String operation_name) {
-        this.operation_name = operation_name;
-    }
-
-    public String getOperation_type() {
-        return operation_type;
-    }
-
-    public void setOperation_type(String operation_type) {
-        this.operation_type = operation_type;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getResults() {
-        return results;
-    }
-
-    public void setResults(String results) {
-        this.results = results;
-    }
-
-    public String getMethod_name() {
-        return method_name;
-    }
-
-    public void setMethod_name(String method_name) {
-        this.method_name = method_name;
-    }
-
-    public String getParams() {
-        return params;
-    }
-
-    public void setParams(String params) {
-        this.params = params;
-    }
-
-    public String getError_msg() {
-        return error_msg;
-    }
-
-    public void setError_msg(String error_msg) {
-        this.error_msg = error_msg;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
 }

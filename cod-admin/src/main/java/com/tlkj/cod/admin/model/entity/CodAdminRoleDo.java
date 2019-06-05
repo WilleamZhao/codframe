@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 角色表DO
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminRoleDo
  * @date 2018/10/29 上午10:47
  */
-public class CodAdminRoleDo {
+@Getter
+@Setter
+public class CodAdminRoleDo extends CodCommonModelConvert implements Serializable {
 
     public static String TABLE_NAME = "cod_sys_role";
 
@@ -66,67 +74,5 @@ public class CodAdminRoleDo {
      */
     private String update_time;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getRole_name() {
-        return role_name;
-    }
-
-    public void setRole_name(String role_name) {
-        this.role_name = role_name;
-    }
-
-    public String getRole_desc() {
-        return role_desc;
-    }
-
-    public void setRole_desc(String role_desc) {
-        this.role_desc = role_desc;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getUpdate_time() {
-        return update_time;
-    }
-
-    public void setUpdate_time(String update_time) {
-        this.update_time = update_time;
-    }
-
-    public String getRole_remark() {
-        return role_remark;
-    }
-
-    public void setRole_remark(String role_remark) {
-        this.role_remark = role_remark;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
+    
 }

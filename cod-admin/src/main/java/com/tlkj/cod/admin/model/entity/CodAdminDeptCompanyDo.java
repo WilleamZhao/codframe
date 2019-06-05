@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 部门公司关联表
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminDeptCompanyDo
  * @date 2019/1/7 10:13 PM
  */
-public class CodAdminDeptCompanyDo {
+@Getter
+@Setter
+public class CodAdminDeptCompanyDo extends CodCommonModelConvert implements Serializable {
 
     public static final String TABLE_NAME = "cod_sys_dept_company";
 

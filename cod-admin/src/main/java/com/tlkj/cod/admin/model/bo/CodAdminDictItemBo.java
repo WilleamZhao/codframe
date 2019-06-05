@@ -10,6 +10,9 @@
 
 package com.tlkj.cod.admin.model.bo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -20,6 +23,8 @@ import java.io.Serializable;
  * @className CodAdminDictItemBo
  * @date 2018/11/30 6:14 PM
  */
+@Getter
+@Setter
 public class CodAdminDictItemBo implements Serializable {
 
     public CodAdminDictItemBo() {
@@ -52,67 +57,4 @@ public class CodAdminDictItemBo implements Serializable {
 
     private String remark;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getEnglishName() {
-        return englishName;
-    }
-
-    public void setEnglishName(String englishName) {
-        this.englishName = englishName;
-    }
-
-    public String getAllPin() {
-        return allPin;
-    }
-
-    public void setAllPin(String allPin) {
-        this.allPin = allPin;
-    }
-
-    public String getSimplePin() {
-        return simplePin;
-    }
-
-    public void setSimplePin(String simplePin) {
-        this.simplePin = simplePin;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }

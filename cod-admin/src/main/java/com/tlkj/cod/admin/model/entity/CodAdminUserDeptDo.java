@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 用户部门表
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminUserDeptDo
  * @date 2019/1/7 11:26 PM
  */
-public class CodAdminUserDeptDo {
+@Getter
+@Setter
+public class CodAdminUserDeptDo extends CodCommonModelConvert implements Serializable {
 
     public static final String TABLE_NAME = "cod_sys_user_dept";
 
@@ -36,28 +44,4 @@ public class CodAdminUserDeptDo {
      * 部门id
      */
     private String dept_id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getDept_id() {
-        return dept_id;
-    }
-
-    public void setDept_id(String dept_id) {
-        this.dept_id = dept_id;
-    }
 }

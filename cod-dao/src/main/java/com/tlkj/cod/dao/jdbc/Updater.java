@@ -11,8 +11,7 @@
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
-import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
-import com.tlkj.cod.dao.util.DBConnectionPool;
+import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,7 +26,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -56,7 +54,7 @@ public class Updater {
      * @return
      */
     public Updater ds(String name) {
-        return new Updater(new JdbcTemplate(DBConnectionPool.getInstance().getDataSource(name)));
+        return new Updater(new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name)));
     }
 
     /**
@@ -65,7 +63,7 @@ public class Updater {
      * @return
      */
     void dsf(String name) {
-        this.jdbcTemplate = new JdbcTemplate(DBConnectionPool.getInstance().getDataSource(name));
+        this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
     }
 
     /**
@@ -91,7 +89,7 @@ public class Updater {
     }
 
     public Update insert(String table, String name) {
-        DataSource dataSource = DBConnectionPool.getInstance().getDataSource(name);
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
         if (dataSource == null){
             return null;
         }
@@ -113,7 +111,7 @@ public class Updater {
     }
 
     public Update delete(String table, String name) {
-        DataSource dataSource = DBConnectionPool.getInstance().getDataSource(name);
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
         if (dataSource == null){
             return null;
         }
@@ -126,7 +124,7 @@ public class Updater {
     }
 
     public Update update(String table, String name) {
-        DataSource dataSource = DBConnectionPool.getInstance().getDataSource(name);
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
         if (dataSource == null){
             return null;
         }

@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 角色权限中间表
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminRolePermissionDo
  * @date 2018/12/9 6:01 PM
  */
-public class CodAdminRolePermissionDo {
+@Getter
+@Setter
+public class CodAdminRolePermissionDo extends CodCommonModelConvert implements Serializable {
 
     public static String TABLE_NAME = "cod_sys_role_permission";
 
@@ -37,27 +45,4 @@ public class CodAdminRolePermissionDo {
      */
     private String permission_id;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getRole_id() {
-        return role_id;
-    }
-
-    public void setRole_id(String role_id) {
-        this.role_id = role_id;
-    }
-
-    public String getPermission_id() {
-        return permission_id;
-    }
-
-    public void setPermission_id(String permission_id) {
-        this.permission_id = permission_id;
-    }
 }
