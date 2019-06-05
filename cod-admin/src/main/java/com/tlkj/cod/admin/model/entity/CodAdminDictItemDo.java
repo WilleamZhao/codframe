@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 字典数据表
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminDictItemDo
  * @date 2018/11/8 下午9:35
  */
-public class CodAdminDictItemDo {
+@Getter
+@Setter
+public class CodAdminDictItemDo extends CodCommonModelConvert implements Serializable {
 
     public static String TABLE_NAME = "cod_sys_dict_item";
 
@@ -101,124 +109,4 @@ public class CodAdminDictItemDo {
      * 更新时间
      */
     private String update_time;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getType_id() {
-        return type_id;
-    }
-
-    public void setType_id(String type_id) {
-        this.type_id = type_id;
-    }
-
-    public String getItem_name() {
-        return item_name;
-    }
-
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
-    }
-
-    public String getItem_code() {
-        return item_code;
-    }
-
-    public void setItem_code(String item_code) {
-        this.item_code = item_code;
-    }
-
-    public String getItem_value() {
-        return item_value;
-    }
-
-    public void setItem_value(String item_value) {
-        this.item_value = item_value;
-    }
-
-    public String getIsfixed() {
-        return isfixed;
-    }
-
-    public void setIsfixed(String isfixed) {
-        this.isfixed = isfixed;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getEnglish_name() {
-        return english_name;
-    }
-
-    public void setEnglish_name(String english_name) {
-        this.english_name = english_name;
-    }
-
-    public String getAllpin() {
-        return allpin;
-    }
-
-    public void setAllpin(String allpin) {
-        this.allpin = allpin;
-    }
-
-    public String getSimplepin() {
-        return simplepin;
-    }
-
-    public void setSimplepin(String simplepin) {
-        this.simplepin = simplepin;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getUpdate_time() {
-        return update_time;
-    }
-
-    public void setUpdate_time(String update_time) {
-        this.update_time = update_time;
-    }
 }

@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 附件类型Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminAttachmentTypeDto
  * @date 2018/11/30 7:00 PM
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminAttachmentTypeDto {
 
@@ -43,35 +47,4 @@ public class CodAdminAttachmentTypeDto {
      */
     private String value;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
 }

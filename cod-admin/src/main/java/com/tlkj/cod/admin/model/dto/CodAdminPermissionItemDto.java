@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 权限Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminPermissionItemDto
  * @date 2018/12/13 9:06 PM
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminPermissionItemDto {
 
@@ -43,35 +47,4 @@ public class CodAdminPermissionItemDto {
      */
     private boolean state;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-    public boolean isState() {
-        return state;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
-    }
 }

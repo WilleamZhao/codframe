@@ -10,6 +10,10 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -20,7 +24,9 @@ import java.io.Serializable;
  * @className CodAdminCacheDo
  * @date 2019/2/12 10:52 AM
  */
-public class CodAdminCacheDo implements Serializable {
+@Getter
+@Setter
+public class CodAdminCacheDo extends CodCommonModelConvert implements Serializable {
 
     /**
      * 表名
@@ -69,67 +75,4 @@ public class CodAdminCacheDo implements Serializable {
      */
     private String update_time;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getK() {
-        return k;
-    }
-
-    public void setK(String k) {
-        this.k = k;
-    }
-
-    public String getV() {
-        return v;
-    }
-
-    public void setV(String v) {
-        this.v = v;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public int getDue() {
-        return due;
-    }
-
-    public void setDue(int due) {
-        this.due = due;
-    }
-
-    public String getIdle() {
-        return idle;
-    }
-
-    public void setIdle(String idle) {
-        this.idle = idle;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getUpdate_time() {
-        return update_time;
-    }
-
-    public void setUpdate_time(String update_time) {
-        this.update_time = update_time;
-    }
 }

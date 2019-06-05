@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 角色列表Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminRoleListDto
  * @date 2018/10/30 下午2:26
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminRoleListDto {
 
@@ -32,67 +36,4 @@ public class CodAdminRoleListDto {
     private String createTime;
     private String updateTime;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getRoleDesc() {
-        return roleDesc;
-    }
-
-    public void setRoleDesc(String roleDesc) {
-        this.roleDesc = roleDesc;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getRoleRemark() {
-        return roleRemark;
-    }
-
-    public void setRoleRemark(String roleRemark) {
-        this.roleRemark = roleRemark;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
 }

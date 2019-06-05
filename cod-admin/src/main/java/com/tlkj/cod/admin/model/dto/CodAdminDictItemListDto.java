@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 字典数据List Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminDictItemListDto
  * @date 2018/11/14 1:18 PM
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminDictItemListDto {
     private String id;
@@ -36,107 +40,4 @@ public class CodAdminDictItemListDto {
     private String sort;
     private String remark;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public String getItemCode() {
-        return itemCode;
-    }
-
-    public void setItemCode(String itemCode) {
-        this.itemCode = itemCode;
-    }
-
-    public String getItemValue() {
-        return itemValue;
-    }
-
-    public void setItemValue(String itemValue) {
-        this.itemValue = itemValue;
-    }
-
-    public String getItemStatus() {
-        return itemStatus;
-    }
-
-    public void setItemStatus(String itemStatus) {
-        this.itemStatus = itemStatus;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getIsFixed() {
-        return isFixed;
-    }
-
-    public void setIsFixed(String isFixed) {
-        this.isFixed = isFixed;
-    }
-
-    public String getEnglishName() {
-        return englishName;
-    }
-
-    public void setEnglishName(String englishName) {
-        this.englishName = englishName;
-    }
-
-    public String getAllPin() {
-        return allPin;
-    }
-
-    public void setAllPin(String allPin) {
-        this.allPin = allPin;
-    }
-
-    public String getSimplePin() {
-        return simplePin;
-    }
-
-    public void setSimplePin(String simplePin) {
-        this.simplePin = simplePin;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }

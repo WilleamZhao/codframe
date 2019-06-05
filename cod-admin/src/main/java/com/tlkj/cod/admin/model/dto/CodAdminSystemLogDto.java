@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 系统日志Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminSystemLogDto
  * @date 2018/12/7 12:51 PM
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminSystemLogDto {
 
@@ -34,83 +38,5 @@ public class CodAdminSystemLogDto {
     private String results;
     private String createTime;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
-
-    public String getOperationName() {
-        return operationName;
-    }
-
-    public void setOperationName(String operationName) {
-        this.operationName = operationName;
-    }
-
-    public String getOperationType() {
-        return operationType;
-    }
-
-    public void setOperationType(String operationType) {
-        this.operationType = operationType;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getParams() {
-        return params;
-    }
-
-    public void setParams(String params) {
-        this.params = params;
-    }
-
-    public String getResults() {
-        return results;
-    }
-
-    public void setResults(String results) {
-        this.results = results;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
 }

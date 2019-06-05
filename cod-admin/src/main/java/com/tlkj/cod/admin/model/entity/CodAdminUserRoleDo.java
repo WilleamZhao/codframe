@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 用户角色关联表Do
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminUserRoleDo
  * @date 2018/10/29 上午10:52
  */
-public class CodAdminUserRoleDo {
+@Getter
+@Setter
+public class CodAdminUserRoleDo extends CodCommonModelConvert implements Serializable {
 
     public static String TABLE_NAME = "cod_sys_user_role";
 
@@ -37,27 +45,4 @@ public class CodAdminUserRoleDo {
      */
     private String role_id;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getRole_id() {
-        return role_id;
-    }
-
-    public void setRole_id(String role_id) {
-        this.role_id = role_id;
-    }
 }

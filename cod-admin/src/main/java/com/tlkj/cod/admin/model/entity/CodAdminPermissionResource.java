@@ -10,6 +10,12 @@
 
 package com.tlkj.cod.admin.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
 /**
  * Desc 权限资源关联表Do
  *
@@ -18,7 +24,9 @@ package com.tlkj.cod.admin.model.entity;
  * @className CodAdminPermissionResource
  * @date 2018/10/30 下午3:12
  */
-public class CodAdminPermissionResource {
+@Getter
+@Setter
+public class CodAdminPermissionResource extends CodCommonModelConvert implements Serializable {
 
     public static String TABLE_NAME = "cod_sys_permission_resource";
 
@@ -37,27 +45,4 @@ public class CodAdminPermissionResource {
      */
     private String resource_id;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPermission_id() {
-        return permission_id;
-    }
-
-    public void setPermission_id(String permission_id) {
-        this.permission_id = permission_id;
-    }
-
-    public String getResource_id() {
-        return resource_id;
-    }
-
-    public void setResource_id(String resource_id) {
-        this.resource_id = resource_id;
-    }
 }

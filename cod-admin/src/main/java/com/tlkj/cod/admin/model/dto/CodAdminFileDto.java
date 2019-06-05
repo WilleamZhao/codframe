@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 文件Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminFileDto
  * @date 2018/12/2 1:09 AM
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminFileDto {
 
@@ -57,43 +61,4 @@ public class CodAdminFileDto {
      */
     private String fileUnit;
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getExtName() {
-        return extName;
-    }
-
-    public void setExtName(String extName) {
-        this.extName = extName;
-    }
-
-    public String getFileSize() {
-        return fileSize;
-    }
-
-    public void setFileSize(String fileSize) {
-        this.fileSize = fileSize;
-    }
-
-    public String getFileUnit() {
-        return fileUnit;
-    }
-
-    public void setFileUnit(String fileUnit) {
-        this.fileUnit = fileUnit;
-    }
 }

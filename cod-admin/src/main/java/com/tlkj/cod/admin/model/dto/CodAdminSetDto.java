@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Desc 系统设置Dto
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @className CodAdminSetDto
  * @date 2018/11/27 8:02 PM
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminSetDto {
 
@@ -31,59 +35,4 @@ public class CodAdminSetDto {
     private String userId;
     private String updateTime;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getSetName() {
-        return setName;
-    }
-
-    public void setSetName(String setName) {
-        this.setName = setName;
-    }
-
-    public String getSetCode() {
-        return setCode;
-    }
-
-    public void setSetCode(String setCode) {
-        this.setCode = setCode;
-    }
-
-    public String getSetValue() {
-        return setValue;
-    }
-
-    public void setSetValue(String setValue) {
-        this.setValue = setValue;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
 }

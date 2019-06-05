@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ import java.util.List;
  * @className CodFrameRoleTreeDto
  * @date 2018/12/9 5:36 PM
  */
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminPermissionTreeDto {
 
@@ -60,59 +64,4 @@ public class CodAdminPermissionTreeDto {
      */
     private List<CodAdminPermissionItemDto> permission;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public List<CodAdminPermissionItemDto> getPermission() {
-        return permission;
-    }
-
-    public void setPermission(List<CodAdminPermissionItemDto> permission) {
-        this.permission = permission;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
 }
