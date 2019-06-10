@@ -1,0 +1,2 @@
+* 配置类
+  集成spring @Value 注解。 获取data和数据库配置

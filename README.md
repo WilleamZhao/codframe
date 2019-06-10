@@ -82,3 +82,50 @@
   7. [x] 增加跨域清单功能
   8. [] finder不支持union
   
+
+* 框架缓存文件夹
+
+  .cod-temp
+  
+  默认隐藏
+  
+    codCache（缓存）
+    
+      - codEhcache
+      
+      - codFile
+      
+      - codJson
+      
+    codLogs
+    
+      yyyy
+        MM
+          dd
+          
+            debug.yyyy-MM-dd.log
+            debug.yyyy-MM-dd-001.log
+            debug.yyyy-MM-dd-002.log
+            info.yyyy-MM-dd.log
+            warn.yyyy-MM-dd.log
+            error.yyyy-MM-dd.log
+    codData
+    
+    codFile
+    
+      codVideo
+      codAudio
+      codAttachment
+      codOther
+      ...
+    codConfig
+    
+    codPackage
+    
+    codBackup
+    
+      codData(数据备份)
+      codApplication(应用备份)
+      
+    ...
+
