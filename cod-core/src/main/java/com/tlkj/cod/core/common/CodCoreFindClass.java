@@ -1,14 +1,13 @@
 /*
- * Copyright (c) 2018-2019.
- * Beijing sky blue technology co., LTD.
+ * Copyright (c) 2019.
+ * sourcod.com
  * All rights reserved
- *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://blog.sourcod.com
  */
 
-package com.tlkj.cod.common;
+package com.tlkj.cod.core.common;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,15 +24,14 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
- * Desc 查找所有class文件
+ * Desc
  *
  * @author sourcod
  * @version 1.0
  * @className CodCommonFindChildClass
  * @date 2019/4/26 8:49 AM
  */
-@Deprecated
-public class CodCommonFindChildClass {
+public class CodCoreFindClass {
 
     /**
      * 获取同一路径下所有子类或接口实现类

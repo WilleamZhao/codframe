@@ -5,7 +5,7 @@ import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
- * Desc
+ * Desc 初始化文件模块
  *
  * @author sourcod
  * @version 1.0

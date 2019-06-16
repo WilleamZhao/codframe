@@ -11,6 +11,7 @@
 package com.tlkj.cod.core.launcher;
 
 import com.tlkj.cod.common.CodCommonFindChildClass;
+import com.tlkj.cod.core.common.CodCoreFindClass;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.config.CodSpringConfiguration;
@@ -65,7 +66,7 @@ public class CodLauncher {
         // 插入排序
         List<Integer> list = new ArrayList<>();
         try {
-            for (Class<?> c : CodCommonFindChildClass.getAllAssignedClass(CodModuleInitialize.class, "com.tlkj.cod")) {
+            for (Class<?> c : CodCoreFindClass.getAllAssignedClass(CodModuleInitialize.class, "com.tlkj.cod")) {
                 codModuleInitialize = (CodModuleInitialize) c.newInstance();
                 int order = codModuleInitialize.order();
                 if (!CodModuleOrderEnum.isAvailable(order, c)){
