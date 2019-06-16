@@ -69,12 +69,6 @@
 
         <dependency>
             <groupId>com.tlkj</groupId>
-            <artifactId>cod-h2</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tlkj</groupId>
             <artifactId>cod-launch</artifactId>
             <version>${codframe.version}</version>
         </dependency>
