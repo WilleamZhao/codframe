@@ -84,11 +84,11 @@
             <artifactId>cod-mybatis</artifactId>
             <version>${codframe.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-package</artifactId>
             <version>${codframe.version}</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.tlkj</groupId>

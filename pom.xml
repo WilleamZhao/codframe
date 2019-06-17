@@ -127,7 +127,8 @@
         <!-- codFrame框架 -->
         <codframe.version>${project.version}</codframe.version>
         <codframe.nexus.releases.url>http://192.168.3.21:8081/repository/maven-releases/</codframe.nexus.releases.url>
-        <codframe.nexus.snapshots.url>http://192.168.3.21:8081/repository/maven-snapshots/</codframe.nexus.snapshots.url>
+        <codframe.nexus.snapshots.url>http://192.168.3.21:8081/repository/maven-snapshots/
+        </codframe.nexus.snapshots.url>
 
         <!-- mail -->
         <mail.version>1.6.2</mail.version>
@@ -437,7 +438,9 @@
                                         <excludes>
                                             <exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
                                         </excludes>
-                                        <message>Please consider using the maven-invoker-plugin (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
+                                        <message>Please consider using the maven-invoker-plugin
+                                            (http://maven.apache.org/plugins/maven-invoker-plugin/)!
+                                        </message>
                                     </bannedPlugins>
                                     <!--<requireMavenVersion>
                                         <message>maven版本太低</message>
@@ -464,7 +467,8 @@
                                         <property>project.version</property>
                                         <message>"Project version must be specified."</message>
                                         <regex>.*(\d|-SNAPSHOT)$</regex>
-                                        <regexMessage>"Project version must end in a number or -SNAPSHOT."</regexMessage>
+                                        <regexMessage>"Project version must end in a number or -SNAPSHOT."
+                                        </regexMessage>
                                     </requireProperty>
                                 </rules>
                                 <fail>true</fail>
@@ -500,6 +504,99 @@
                         <destDir>easy-delivery</destDir>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.version}</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.github.wvengen</groupId>
+                    <artifactId>proguard-maven-plugin</artifactId>
+                    <version>2.0.11</version>
+                    <executions>
+                        <execution>
+                            <!-- 混淆时刻，这里是打包的时候混淆-->
+                            <phase>package</phase>
+                            <goals>
+                                <!-- 使用插件的什么功能，当然是混淆-->
+                                <goal>proguard</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <proguardVersion>5.3.3</proguardVersion>
+                        <!-- 是否将生成的PG文件安装部署-->
+                        <attach>true</attach>
+                        <injar>${project.build.finalName}.jar</injar>
+                        <outjar>${project.build.finalName}.jar</outjar>
+                        <!-- 是否混淆-->
+                        <obfuscate>true</obfuscate>
+                        <!-- 指定生成文件分类 -->
+                        <attachArtifactClassifier>pg</attachArtifactClassifier>
+                        <options>
+                            <!-- JDK目标版本1.8-->
+                            <option>-target 1.8</option>
+                            <!-- 不做收缩（删除注释、未被引用代码）-->
+                            <!--<option>-dontshrink</option>-->
+                            <!-- 不做优化（变更代码实现逻辑）-->
+                            <!--<option>-dontoptimize</option>-->
+                            <!-- 不路过非公用类文件及成员-->
+                            <!--<option>-dontskipnonpubliclibraryclasses</option>-->
+                            <!--<option>-dontskipnonpubliclibraryclassmembers</option>-->
+                            <!--不用大小写混合类名机制-->
+                            <!--<option>-dontusemixedcaseclassnames</option>-->
+
+                            <!-- 优化时允许访问并修改有修饰符的类和类的成员 -->
+                            <!--<option>-allowaccessmodification</option>-->
+                            <!-- 确定统一的混淆类的成员名称来增加混淆-->
+                            <!--<option>-useuniqueclassmembernames</option>-->
+                            <!-- 不混淆所有包名-->
+                            <!--<option>-keeppackagenames</option>-->
+
+                            <!-- 需要保持的属性：异常，注解等-->
+                            <!--<option>-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod
+                          </option>-->
+                            <!-- 不混淆所有的set/get方法 -->
+                            <!--<option>-keepclassmembers public class * {void set*(***);*** get*();}</option>-->
+
+                            <!-- 不混淆包下的所有类名，且类中的方法也不混淆-->
+                            <!--<option>-keep class com.xxx.xxx.bboss.SystemConfig { <methods>; }</option>
+                            <option>-keep class com.xxx.xxx.framework.** { *; }</option>
+                            <option>-keep class com.xxx.xxx.xxx.controller.** { <methods>; }</option>
+                            <option>-keep class com.xxx.xxx.xxx.dao.** { <methods>; }</option>
+                            <option>-keep class com.xxx.xxx.xxx.exception { <methods>; }</option>
+                            <option>-keep class com.xxx.xxx.xxx.model.** { <methods>; }</option>-->
+
+                        </options>
+                        <!--class 混淆后输出的jar包-->
+                        <!--<outjar>${project.build.finalName}-pg.jar</outjar>-->
+                        <!-- 添加依赖，这里你可以按你的需要修改，这里测试只需要一个JRE的Runtime包就行了 -->
+                        <libs>
+                            <lib>${java.home}/lib/rt.jar</lib>
+                            <lib>${java.home}/lib/jce.jar</lib>
+                        </libs>
+                        <!-- 对什么东西进行加载，这里仅有classes成功，毕竟你也不可能对配置文件及JSP混淆吧-->
+                        <!--<injar>classes</injar>-->
+                        <!-- 输出目录-->
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.proguard</groupId>
+                            <artifactId>proguard-base</artifactId>
+                            <version>RELEASE</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+
             </plugins>
         </pluginManagement>
     </build>

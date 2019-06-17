@@ -29,7 +29,6 @@ import java.io.InputStreamReader;
  * @className LogoListener
  * @date 2018/6/30 下午5:18
  */
-@WebListener("this is demo")
 public class LogoListener implements ServletContextListener {
 
     private Logger logger = LoggerFactory.getLogger(LogoListener.class);
