@@ -11,11 +11,13 @@ package com.tlkj.cod.file.service.impl;
 
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.service.CodFileService;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * cod-file service
  */
+@Service
 public class CodFileServiceImpl implements CodFileService {
 
     @Override

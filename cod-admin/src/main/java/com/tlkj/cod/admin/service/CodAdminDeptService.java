@@ -28,6 +28,7 @@ public interface CodAdminDeptService {
 
     /**
      * 获取部门列表
+     *
      * @param deptname  部门名称
      * @param deptNo    部门编号
      * @param deptLevel 部门级别
@@ -39,6 +40,7 @@ public interface CodAdminDeptService {
 
     /**
      * 保存部门
+     *
      * @param deptId    部门Id
      * @param deptName  部门名称
      * @param deptNo    部门编号
@@ -54,6 +56,7 @@ public interface CodAdminDeptService {
 
     /**
      * 删除部门
+     *
      * @param deptId 部门Id
      * @return
      */
