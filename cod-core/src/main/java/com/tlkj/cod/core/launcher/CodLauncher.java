@@ -10,7 +10,6 @@
 
 package com.tlkj.cod.core.launcher;
 
-import com.tlkj.cod.common.CodCommonFindChildClass;
 import com.tlkj.cod.core.common.CodCoreFindClass;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
