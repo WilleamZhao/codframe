@@ -33,7 +33,7 @@ public class CodFrameCompanyListDto {
     private String companyEin;
     private String companyAddress;
     private String sort;
-    private String status;
+    private String state;
 
     public String getId() {
         return id;
@@ -115,11 +115,11 @@ public class CodFrameCompanyListDto {
         this.sort = sort;
     }
 
-    public String getStatus() {
-        return status;
+    public String getState() {
+        return state;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setState(String state) {
+        this.state = state;
     }
 }

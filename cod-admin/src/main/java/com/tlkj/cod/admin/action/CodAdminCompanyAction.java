@@ -43,17 +43,13 @@ public class CodAdminCompanyAction extends GeneralResponse {
      * 查询公司列表接口
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET})
-    public Response listCompany(HttpServletRequest request){
+    public Response listCompany(HttpServletRequest request) {
         String companyName = request.getParameter("companyName");
-        String companyNickName = request.getParameter("companyNickName");
         String companyNo = request.getParameter("companyNo");
-        String companyContact = request.getParameter("companyContact");
-        String companyFax = request.getParameter("companyFax");
-        String companyPhone = request.getParameter("companyPhone");
-        String companyEin = request.getParameter("companyEin");
-        String status = request.getParameter("status");
-        Page<List<CodFrameCompanyListDto>> listPage = codAdminCompanyService.listCompany(companyName, companyNickName, companyNo, companyContact, companyFax, companyPhone, companyEin, status);
-        if (listPage != null){
+        String page = request.getParameter("page");
+        String pageSize = request.getParameter("pageSize");
+        Page<List<CodFrameCompanyListDto>> listPage = codAdminCompanyService.listCompany(companyName, companyNo, page, pageSize);
+        if (listPage != null) {
             super.success(listPage);
         }
         return super.fail();
@@ -63,7 +59,7 @@ public class CodAdminCompanyAction extends GeneralResponse {
      * 保存公司接口
      */
     @RequestMapping(value = "save", method = {RequestMethod.POST})
-    public Response saveCompany(HttpServletRequest request){
+    public Response saveCompany(HttpServletRequest request) {
         String companyId = request.getParameter("companyId");
         String companyName = request.getParameter("companyName");
         String companyNickName = request.getParameter("companyNickName");
@@ -80,11 +76,12 @@ public class CodAdminCompanyAction extends GeneralResponse {
 
     /**
      * 获取公司信息接口
+     *
      * @param request
      * @return
      */
     @RequestMapping(value = "get", method = {RequestMethod.GET})
-    public Response getCompany(HttpServletRequest request){
+    public Response getCompany(HttpServletRequest request) {
         String id = request.getParameter("id");
         CodFrameCompanyDto codFrameCompanyDto = codAdminCompanyService.getCompanyById(id);
         return codFrameCompanyDto == null ? super.fail() : super.success(codFrameCompanyDto);
@@ -94,7 +91,7 @@ public class CodAdminCompanyAction extends GeneralResponse {
      * 删除公司信息接口
      */
     @RequestMapping(value = "del", method = {RequestMethod.GET})
-    public Response delCompany(HttpServletRequest request){
+    public Response delCompany(HttpServletRequest request) {
         String id = request.getParameter("ids");
         CodFrameCompanyDto codFrameCompanyDto = codAdminCompanyService.getCompanyById(id);
         return codFrameCompanyDto == null ? super.fail() : super.success(codFrameCompanyDto);

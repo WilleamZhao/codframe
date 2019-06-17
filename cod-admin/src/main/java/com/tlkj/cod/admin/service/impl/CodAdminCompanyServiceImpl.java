@@ -15,17 +15,20 @@ import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
+import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.model.system.dto.CodFrameCompanyDto;
 import com.tlkj.cod.model.system.dto.CodFrameCompanyListDto;
+import com.tlkj.cod.model.system.dto.CodFrameDeptListDto;
 import com.tlkj.cod.model.system.entity.CodFrameCompanyDo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +57,7 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
 
     /**
      * 保存公司信息
+     *
      * @param companyId       公司Id
      * @param companyName     公司名称
      * @param companyNickName 公司昵称
@@ -78,7 +82,7 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
         update = StringUtils.isNotBlank(companyFax) ? update.set("company_fax", companyFax) : update;
         update = StringUtils.isNotBlank(companyPhone) ? update.set("company_phone", companyPhone) : update;
         update = StringUtils.isNotBlank(companyEin) ? update.set("company_ein", companyEin) : update;
-        update = verifyStatus(status) ?  update.set("status", status) : update;
+        update = verifyStatus(status) ? update.set("status", status) : update;
         update = StringUtils.isNotBlank(status) ? update.set("dept_no", status) : update;
         int i = update.update();
         return i == 1 ? StatusCode.SUCCESS_CODE : StatusCode.FAIL_CODE;
@@ -86,26 +90,56 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
 
     /**
      * 查询公司列表
-     * @param companyName     公司名称
-     * @param companyNickName 公司昵称
-     * @param companyNo       公司编号
-     * @param companyContact  公司联系人
-     * @param companyFax      传真
-     * @param companyPhone    公司电话
-     * @param companyEin      税号
-     * @param status          状态
+     *
+     * @param companyName 公司名称
+     * @param companyNo   公司编号
+     * @param page
+     * @param pageSize
      * @return
      */
     @CodLog(name = "查询公司列表")
     @Override
-    public Page<List<CodFrameCompanyListDto>> listCompany(String companyName, String companyNickName, String companyNo, String companyContact, String companyFax, String companyPhone, String companyEin, String status) {
-        codLogService.info("这是一个测试日志, 1={}, 2={}", "one", "two");
-        codLogService.trace("这是一个测试数组日志, 1={}, 2={}", new Object[]{"one", "two"});
-        return null;
+    public Page<List<CodFrameCompanyListDto>> listCompany(String companyName, String companyNo, String page, String pageSize) {
+        Finder.Query query = finder.from(CodFrameCompanyDo.TABLE_NAME).not("state", "1").orderBy("sort");
+        query = StringUtils.isNotBlank(companyName) ? query.like("company_name", "%" + companyName + "%") : query;
+        query = StringUtils.isNotBlank(companyNo) ? query.like("company_no", "%" + companyNo + "%") : query;
+        int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
+        int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
+        Pagination<CodFrameCompanyDo> pagination;
+        try {
+            pagination = query.paginate(CodFrameCompanyDo.class, currentPage, perPage);
+        } catch (Exception e) {
+            codLogService.error("sql查询错误:={}", e.getMessage());
+            return null;
+        }
+        if (pagination == null) {
+            return new Page<>();
+        }
+
+        List<CodFrameCompanyDo> codFrameCompanyDos = pagination.getData();
+        List<CodFrameCompanyListDto> codFrameCompanyListDtos = new ArrayList<>();
+        for (CodFrameCompanyDo codFrameCompanyDo : codFrameCompanyDos) {
+            CodFrameCompanyListDto listDto = new CodFrameCompanyListDto();
+            listDto.setId(codFrameCompanyDo.getId());
+            listDto.setCompanyName(codFrameCompanyDo.getCompany_name());
+            listDto.setCompanyAddress(codFrameCompanyDo.getCompany_address());
+            listDto.setCompanyContact(codFrameCompanyDo.getCompany_contact());
+            listDto.setCompanyEin(codFrameCompanyDo.getCompany_ein());
+            listDto.setCompanyFax(codFrameCompanyDo.getCompany_fax());
+            listDto.setCompanyNickName(codFrameCompanyDo.getCompany_nickname());
+            listDto.setCompanyNo(codFrameCompanyDo.getCompany_no());
+            listDto.setCompanyPhone(codFrameCompanyDo.getCompany_phone());
+            listDto.setState(codFrameCompanyDo.getState());
+            listDto.setSort(codFrameCompanyDo.getSort());
+            codFrameCompanyListDtos.add(listDto);
+        }
+        Page<List<CodFrameCompanyListDto>> tempPage = new Page<>(codFrameCompanyListDtos, pagination);
+        return tempPage;
     }
 
     /**
      * 根据Id获取公司信息
+     *
      * @param id id
      * @return 公司信息
      */
@@ -113,7 +147,7 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
     @Override
     public CodFrameCompanyDto getCompanyById(String id) {
         CodFrameCompanyDo codFrameCompanyDo = finder.from(CodFrameCompanyDo.TABLE_NAME).where("id", id).first(CodFrameCompanyDo.class);
-        if (codFrameCompanyDo == null){
+        if (codFrameCompanyDo == null) {
             return null;
         }
         CodFrameCompanyDto codFrameCompanyDto = new CodFrameCompanyDto();
@@ -135,6 +169,7 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
 
     /**
      * 删除菜单
+     *
      * @param ids 主键
      * @return
      */
@@ -144,9 +179,9 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
         String[] menus = ids.split(",");
         int i = 0;
         try {
-            for (String menuid : menus){
+            for (String menuid : menus) {
                 String menuIdTrim = menuid.trim();
-                if (StringUtils.isNotBlank(menuIdTrim)){
+                if (StringUtils.isNotBlank(menuIdTrim)) {
                     // 删除本菜单
                     i = i + updater.delete(CodFrameCompanyDo.TABLE_NAME).where("id", menuIdTrim).update();
                     // 删除子菜单
@@ -154,11 +189,11 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
                     codLogService.info("删除菜单成功, 本菜单数量={}, 子菜单数量={}", menuIdTrim, childNum);
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             codLogService.error("删除菜单错误, {}", e.getMessage());
             return StatusCode.FAIL_CODE;
         }
-        if (i > 0){
+        if (i > 0) {
             return StatusCode.SUCCESS_CODE;
         }
         return StatusCode.FAIL_CODE;
@@ -166,10 +201,11 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
 
     /**
      * 判断状态码是否符合规则
+     *
      * @param status 状态码
      * @return 是否符合
      */
-    private boolean verifyStatus(String status){
+    private boolean verifyStatus(String status) {
         return StringUtils.isNotBlank(status) && ("1".equals(status) || "2".equals(status));
     }
 }

@@ -44,7 +44,7 @@ public class CodAdminDeptAction extends GeneralResponse {
      * 获取部门列表
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET})
-    public Response listDept(HttpServletRequest request){
+    public Response listDept(HttpServletRequest request) {
         String deptName = request.getParameter("deptName");
         String deptNo = request.getParameter("deptNo");
         String deptLevel = request.getParameter("deptLevel");
@@ -54,20 +54,12 @@ public class CodAdminDeptAction extends GeneralResponse {
         return listPage == null ? super.fail() : super.success(listPage);
     }
 
-    /**
-     * 获取部门信息
-     */
-    @RequestMapping(value = "get", method = {RequestMethod.GET})
-    public Response getDept(HttpServletRequest request){
-        String id = request.getParameter("deptId");
-        return super.success();
-    }
 
     /**
      * 保存部门
      */
     @RequestMapping(value = "save", method = {RequestMethod.POST})
-    public Response saveDept(HttpServletRequest request){
+    public Response saveDept(HttpServletRequest request) {
         String deptId = request.getParameter("deptId");
         String deptName = request.getParameter("deptName");
         String deptNo = request.getParameter("deptNo");
@@ -85,7 +77,7 @@ public class CodAdminDeptAction extends GeneralResponse {
      * 删除部门
      */
     @RequestMapping(value = "del", method = {RequestMethod.POST})
-    public Response delDept(HttpServletRequest request){
+    public Response delDept(HttpServletRequest request) {
         String deptId = request.getParameter("deptId");
         StatusCode statusCode = codAdminDeptService.delDept(deptId);
         return StatusCode.verifyStatusCode(statusCode) ? super.success(statusCode) : super.fail(statusCode);

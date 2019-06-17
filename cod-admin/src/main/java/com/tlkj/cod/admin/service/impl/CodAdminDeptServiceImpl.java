@@ -58,9 +58,9 @@ public class CodAdminDeptServiceImpl implements CodAdminDeptService {
     @Override
     public Page<List<CodFrameDeptListDto>> listDept(String deptName, String deptNo, String deptLevel, String page, String pageSize) {
         Finder.Query query = finder.from(CodFrameDeptDo.TABLE_NAME).not("state", "-1").orderBy("sort");
-        query = StringUtils.isNotBlank(deptName) ?  query.where("dept_name", deptName) : query;
-        query = StringUtils.isNotBlank(deptNo) ?  query.where("dept_no", deptNo) : query;
-        query = StringUtils.isNotBlank(deptLevel) ?  query.where("dept_level", deptLevel) : query;
+        query = StringUtils.isNotBlank(deptName) ? query.where("dept_name", deptName) : query;
+        query = StringUtils.isNotBlank(deptNo) ? query.where("dept_no", deptNo) : query;
+        query = StringUtils.isNotBlank(deptLevel) ? query.where("dept_level", deptLevel) : query;
         int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
         int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
         Pagination<CodFrameDeptDo> pagination;
@@ -76,7 +76,7 @@ public class CodAdminDeptServiceImpl implements CodAdminDeptService {
 
         List<CodFrameDeptDo> codFrameDeptDos = pagination.getData();
         List<CodFrameDeptListDto> codFrameDeptListDto = new ArrayList<>();
-        for (CodFrameDeptDo codFrameDeptDo : codFrameDeptDos){
+        for (CodFrameDeptDo codFrameDeptDo : codFrameDeptDos) {
             CodFrameDeptListDto listDto = new CodFrameDeptListDto();
             listDto.setDeptName(codFrameDeptDo.getDept_name());
             listDto.setDeptLevel(codFrameDeptDo.getDept_level());
@@ -96,6 +96,7 @@ public class CodAdminDeptServiceImpl implements CodAdminDeptService {
 
     /**
      * 保存部门信息
+     *
      * @param deptId    部门Id
      * @param deptName  部门名称
      * @param deptNo    部门编号
@@ -103,7 +104,7 @@ public class CodAdminDeptServiceImpl implements CodAdminDeptService {
      * @param deptAdmin 部门管理员
      * @param pId       父Id
      * @param companyId 公司Id
-     * @param state    状态
+     * @param state     状态
      * @param sort      排序
      * @return
      */
@@ -127,6 +128,7 @@ public class CodAdminDeptServiceImpl implements CodAdminDeptService {
 
     /**
      * 删除部门
+     *
      * @param deptId 部门Id
      * @return
      */
@@ -135,13 +137,13 @@ public class CodAdminDeptServiceImpl implements CodAdminDeptService {
     public StatusCode delDept(String deptId) {
         String[] deptIds = deptId.split(",");
         int i = 0;
-        for (String id : deptIds){
+        for (String id : deptIds) {
             i = i + updater.update(CodFrameDeptDo.TABLE_NAME).set("status", "-1").where("id", id.trim()).update();
         }
         return i == deptIds.length ? StatusCode.SUCCESS_CODE : StatusCode.FAIL_CODE;
     }
 
-    private boolean verifyStatus(String status){
+    private boolean verifyStatus(String status) {
         return StringUtils.isNotBlank(status) && ("1".equals(status) || "2".equals(status));
     }
 }

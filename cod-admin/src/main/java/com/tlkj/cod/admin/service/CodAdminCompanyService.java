@@ -29,6 +29,7 @@ public interface CodAdminCompanyService {
 
     /**
      * 保存公司信息
+     *
      * @param companyId       公司Id
      * @param companyName     公司名称
      * @param companyNickName 公司昵称
@@ -44,20 +45,18 @@ public interface CodAdminCompanyService {
 
     /**
      * 获取公司列表
-     * @param companyName     公司名称
-     * @param companyNickName 公司昵称
-     * @param companyNo       公司编号
-     * @param companyContact  公司联系人
-     * @param companyPhone    公司电话
-     * @param companyEin      税号
-     * @param companyFax      传真
-     * @param status          状态
+     *
+     * @param companyName 公司名称
+     * @param companyNo   公司编号
+     * @param page
+     * @param pageSize
      * @return
      */
-    Page<List<CodFrameCompanyListDto>> listCompany(String companyName, String companyNickName, String companyNo, String companyContact, String companyFax, String companyPhone, String companyEin, String status);
+    Page<List<CodFrameCompanyListDto>> listCompany(String companyName, String companyNo, String page, String pageSize);
 
     /**
      * 根据id获取公司信息
+     *
      * @param id id
      * @return 公司信息
      */
@@ -65,6 +64,7 @@ public interface CodAdminCompanyService {
 
     /**
      * 删除菜单
+     *
      * @param ids 主键
      * @return 成功/失败
      */
