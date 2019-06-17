@@ -35,7 +35,6 @@ public class InitConfig implements CodModuleInitialize {
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        System.out.println("开始初始化配置");
         AnnotationConfigWebApplicationContext applicationContext = codModuleLauncherModel.getSpring();
 
         // 支持placeholder
@@ -53,6 +52,6 @@ public class InitConfig implements CodModuleInitialize {
 
     @Override
     public void fail(Throwable e) {
-
+        System.out.println("停止服务");
     }
 }

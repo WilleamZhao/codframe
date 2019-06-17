@@ -61,11 +61,6 @@
         </dependency>
         <dependency>
             <groupId>com.tlkj</groupId>
-            <artifactId>cod-h2</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tlkj</groupId>
             <artifactId>cod-log</artifactId>
             <version>${codframe.version}</version>
         </dependency>
@@ -84,11 +79,11 @@
             <artifactId>cod-mybatis</artifactId>
             <version>${codframe.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-package</artifactId>
             <version>${codframe.version}</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.tlkj</groupId>

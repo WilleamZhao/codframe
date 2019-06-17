@@ -33,6 +33,12 @@
 
         <dependency>
             <groupId>com.tlkj</groupId>
+            <artifactId>cod-boot</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
             <artifactId>cod-cache</artifactId>
             <version>${codframe.version}</version>
         </dependency>
@@ -64,12 +70,6 @@
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-filter</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-h2</artifactId>
             <version>${codframe.version}</version>
         </dependency>
 
@@ -170,9 +170,9 @@
                     <forceCreation>true</forceCreation>
                     <archive>
                         <manifest>
-                            <mainClass>com.tlkj.cod.launcher.CodLaunchMain</mainClass>
+                            <mainClass>com.tlkj.cod.boot.CodBoot</mainClass>
                             <addClasspath>true</addClasspath>
-                            <classpathPrefix>webapp/WEB-INF/lib/</classpathPrefix>
+                            <classpathPrefix>/</classpathPrefix>
                         </manifest>
                     </archive>
                     <!--<includes>
@@ -219,7 +219,7 @@
                     </descriptorRefs>-->
                     <archive>
                         <manifest>
-                            <mainClass>com.tlkj.cod.launcher.CodLaunchMain</mainClass>
+                            <mainClass>com.tlkj.cod.boot.CodBoot</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>${project.build.finalName}</classpathPrefix>
                         </manifest>
