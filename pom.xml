@@ -44,7 +44,7 @@
         <module>cod-admin</module>
         <module>cod-data</module>
         <module>cod-file</module>
-        <module>com-email</module>
+        <module>cod-email</module>
         <module>cod-video</module>
     </modules>
 
