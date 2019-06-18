@@ -133,6 +133,12 @@
             <artifactId>cod-launch</artifactId>
             <version>${codframe.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.8.13</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

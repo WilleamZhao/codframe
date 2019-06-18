@@ -40,7 +40,7 @@ public class DataConnectBean {
      * druid;
      * HikariCP;
      */
-    @Value("${cod.database.source.type:}")
+    @Value("${cod.database.source.type:HikariCP}")
     private String type;
 
     /**
@@ -70,26 +70,26 @@ public class DataConnectBean {
     /**
      * 初始连接数
      */
-    @Value("${cod.database.initial.size:}")
-    private String initialSize;
+    @Value("${cod.database.initial.size:10}")
+    private int initialSize;
 
     /**
      * 最大连接数
      */
-    @Value("${cod.database.active.max:}")
-    private String maxActive = "10";
+    @Value("${cod.database.active.max:1000}")
+    private int maxActive;
 
     /**
      * 最大空闲
      */
-    @Value("${cod.database.idle.max:}")
-    private String maxIdle = "20";
+    @Value("${cod.database.idle.max:20}")
+    private int maxIdle;
 
     /**
      * 最小空闲
      */
-    @Value("${cod.database.idle.min:}")
-    private String minIdle = "1";
+    @Value("${cod.database.idle.min:1}")
+    private int minIdle;
 
     /**
      * 最大等待时长
@@ -120,6 +120,12 @@ public class DataConnectBean {
      */
     @Value("${cod.database.test:}")
     private String testQuery;
+
+    /**
+     * 是否默认提交
+     */
+    // @Value("${cod.database.autoCommit:false}")
+    private boolean autoCommit = false;
 
     public static void main(String[] args) {
 

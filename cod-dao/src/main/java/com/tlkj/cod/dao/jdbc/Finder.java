@@ -11,10 +11,12 @@
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
+import com.tlkj.cod.dao.annotation.CodDaoTable;
 import com.tlkj.cod.dao.exception.CodDataViewException;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
-import com.tlkj.cod.dao.view.CodDataView;
+import com.tlkj.cod.dao.view.CodDaoDataView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,7 +36,7 @@ import java.util.Map;
  * @author sourcod
  */
 @Repository
-public class Finder {
+public class Finder extends CodDao {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -47,7 +49,8 @@ public class Finder {
      */
     @PostConstruct
     public void init(){
-        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        DataSource dataSource = super.getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        // CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
         if (dataSource != null){
             this.jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -69,31 +72,51 @@ public class Finder {
     }
 
     /**
-     * 设置数据源
-     * @param name
-     * @return
-     */
-    public Query ds(String name) {
-        return new Query(new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name)));
-    }
-
-    /**
      * 设置默认数据源
-     * @param name
+     * @param name 数据源名称
      * @return
      */
-    public Finder dsf(String name) {
+    public Finder setDef(String name) {
         this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
         return this;
     }
 
     /**
-     * 查询后还原
-     * @param table
+     * 默认数据源查询
+     * @param zlass do类
+     * @return
+     */
+    public Query from(Class<CodDaoDo> zlass) {
+        String tableName = zlass.getAnnotation(CodDaoTable.class).name();
+        return from(tableName);
+    }
+
+    /**
+     * 默认数据源查询
+     * @param table 表名
      * @return
      */
     public Query from(String table) {
         return new Query(jdbcTemplate).from(table);
+    }
+
+    /**
+     * 指定数据源查询
+     * @param dataSourceName 数据源名称
+     * @return
+     */
+    public Query fromTo(String dataSourceName) {
+        return new Query(new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(dataSourceName)));
+    }
+
+    /**
+     * 指定数据源查询&设置默认数据源
+     * @param dataSourceName 数据源名称
+     * @return
+     */
+    public Query fromToDef(String dataSourceName) {
+        this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(dataSourceName));
+        return new Query(new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(dataSourceName)));
     }
 
     /**
@@ -115,7 +138,7 @@ public class Finder {
      * 查询视图
      * TODO 待完善
      */
-    public Query fromView(CodDataView view) {
+    public Query fromView(CodDaoDataView view) {
         Query query;
         String table = view.getTable();
         if (StringUtils.isBlank(table)) {

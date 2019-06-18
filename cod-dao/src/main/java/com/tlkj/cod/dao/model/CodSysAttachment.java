@@ -1,6 +1,6 @@
 package com.tlkj.cod.dao.model;
 
-import com.tlkj.cod.dao.annotation.Table;
+import com.tlkj.cod.dao.annotation.CodDaoViewTable;
 
 /**
  * Desc 附件表
@@ -10,7 +10,7 @@ import com.tlkj.cod.dao.annotation.Table;
  * @className CodSysAttachment
  * @date 2019/5/28 8:38 AM
  */
-@Table(name = "cod_sys_attachment")
+@CodDaoViewTable(name = "cod_sys_attachment")
 public class CodSysAttachment {
 
     private String id;

@@ -13,7 +13,7 @@ package com.tlkj.cod.server.model.config;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
- * Desc
+ * Desc cod-server 激活spring mvc
  *
  * @author sourcod
  * @version 1.0

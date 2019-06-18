@@ -10,12 +10,12 @@
 
 package com.tlkj.cod.model.system.dvo;
 
-import com.tlkj.cod.dao.annotation.Column;
-import com.tlkj.cod.dao.annotation.Join;
-import com.tlkj.cod.dao.annotation.Table;
-import com.tlkj.cod.dao.annotation.Where;
+import com.tlkj.cod.dao.annotation.CodDaoViewColumn;
+import com.tlkj.cod.dao.annotation.CodDaoViewJoin;
+import com.tlkj.cod.dao.annotation.CodDaoViewTable;
+import com.tlkj.cod.dao.annotation.CodDaoViewWhere;
 import com.tlkj.cod.dao.jdbc.Finder;
-import com.tlkj.cod.dao.view.CodDataView;
+import com.tlkj.cod.dao.view.CodDaoDataView;
 import com.tlkj.cod.model.system.entity.CodFrameDeptDo;
 import com.tlkj.cod.model.system.entity.CodFrameUserDeptDo;
 import com.tlkj.cod.model.system.entity.CodFrameUserDo;
@@ -25,11 +25,11 @@ import com.tlkj.cod.model.system.entity.CodFrameUserDo;
  *
  * @author sourcod
  * @version 1.0
- * @className CodFrameUserDeptDvo
+ * @className CodDaoFrameUserDeptDvo
  * @date 2019/1/4 7:21 PM
  */
-@Table(name = "cod_sys_user_dept")
-public class CodFrameUserDeptDvo extends CodDataView {
+@CodDaoViewTable(name = "cod_sys_user_dept")
+public class CodDaoFrameUserDeptDvo extends CodDaoDataView {
 
     /**
      * 部门表
@@ -51,34 +51,34 @@ public class CodFrameUserDeptDvo extends CodDataView {
      */
     public static final String VIEW_NAME = "dept_company";
 
-    @Join(join = "left join", table = DEPT_TABLE, on = {DEPT_TABLE + ".id", USER_DEPT_TABLE + ".dept_id"})
+    @CodDaoViewJoin(join = "left join", table = DEPT_TABLE, on = {DEPT_TABLE + ".id", USER_DEPT_TABLE + ".dept_id"})
     private void dept(){
 
     }
 
-    @Join(join = "left join", table = USER_TABLE, on = {USER_TABLE + ".id", USER_DEPT_TABLE + ".user_id"})
+    @CodDaoViewJoin(join = "left join", table = USER_TABLE, on = {USER_TABLE + ".id", USER_DEPT_TABLE + ".user_id"})
     private void user(){
 
     }
 
-    @Where(value = {"a = b"})
+    @CodDaoViewWhere(value = {"a = b"})
     private void where(){
 
     }
 
-    @Column(cName = "id", tName = USER_DEPT_TABLE, aliasName = "id")
+    @CodDaoViewColumn(cName = "id", tName = USER_DEPT_TABLE, aliasName = "id")
     private String id;
 
-    @Column(cName = "id", tName = DEPT_TABLE)
+    @CodDaoViewColumn(cName = "id", tName = DEPT_TABLE)
     private String deptId;
 
-    @Column(cName = "id", tName = USER_TABLE)
+    @CodDaoViewColumn(cName = "id", tName = USER_TABLE)
     private String userId;
 
-    @Column(cName = "dept_name", tName = DEPT_TABLE)
+    @CodDaoViewColumn(cName = "dept_name", tName = DEPT_TABLE)
     private String deptName;
 
-    @Column(cName = "user_name", tName = USER_TABLE)
+    @CodDaoViewColumn(cName = "user_name", tName = USER_TABLE)
     private String userName;
 
     public String getId() {
@@ -122,7 +122,7 @@ public class CodFrameUserDeptDvo extends CodDataView {
     }
 
     public static void main(String[] args) {
-        CodFrameUserDeptDvo dvo = new CodFrameUserDeptDvo();
+        CodDaoFrameUserDeptDvo dvo = new CodDaoFrameUserDeptDvo();
         /*TableModel tableModel = new TableModel();
         tableModel.setName("cod_sys_dept_company");
         tableModel.setAlias("deptCompany");

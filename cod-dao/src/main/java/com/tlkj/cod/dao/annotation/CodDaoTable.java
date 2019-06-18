@@ -11,37 +11,34 @@ import java.lang.annotation.Target;
  *
  * @author sourcod
  * @version 1.0
- * @className CodTable
+ * @className CodDaoTable
  * @date 2019/6/4 5:11 PM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
-public @interface CodTable {
+public @interface CodDaoTable {
 
     String name();
 
     /**
-     *
-     * @return
+     * 引擎
+     * 默认 INNODB
      */
     String engine() default "";
 
     /**
      * 编码方式
-     * @return
      */
     String charset() default "utf8";
 
     /**
      * 备注
-     * @return
      */
     String comment() default "";
 
     /**
-     * 是否删除
-     * @return
+     * 是否删除从建
      */
     boolean drop() default false;
 

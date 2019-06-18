@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019.
+ * Copyright (c) 2019.
  * Beijing sky blue technology co., LTD.
  * All rights reserved
  *
@@ -10,6 +10,8 @@
 
 package com.tlkj.cod.dao.annotation;
 
+import com.tlkj.cod.dao.model.CodDaoDo;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -17,25 +19,38 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Desc 表
+ * Desc cod-dao 列字段
  *
  * @author sourcod
  * @version 1.0
- * @className Table
- * @date 2019/1/7 9:14 PM
+ * @className CodDaoViewColumn
+ * @date 2019/1/4 8:06 PM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.TYPE})
-public @interface Table {
+@Target({ElementType.FIELD})
+public @interface CodDaoViewColumn {
 
     /**
-     * 表名
+     * 列名称
+     * 为空默认主表 model 字段
      */
-    String name();
+    String cName() default "";
+
+    /**
+     * 表名称
+     * 为空默认主表表名
+     */
+    String tName() default "";
+
+    /**
+     * Do 类
+     */
+    Class tClass() default Void.class;
 
     /**
      * 别名
      */
-    String alias() default "";
+    String aliasName() default "";
+
 }

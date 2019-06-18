@@ -44,6 +44,7 @@ public class InitServer implements CodModuleServerInitialize {
         // TODO 从配置模块里读取
         CodServerService codServerService = (CodServerService) codModuleLauncherModel.getSpring().getBean("codServerJetty");
         setCharacterEncodingFilter();
+        codServerService.support("");
         codModuleLauncherModel.setServer(CodServerModel.getInstance());
         codServerService.start(codModuleLauncherModel);
     }

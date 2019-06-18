@@ -1,13 +1,4 @@
-/*
- * Copyright (c) 2019.
- * sourcod.com
- * All rights reserved
- * author: sourcod
- * github: https://github.com/WilleamZhao
- * site：http://blog.sourcod.com
- */
-
-package com.tlkj.cod.file.service;
+package com.tlkj.cod.file.facade;
 
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.file.model.CodFileInfo;
@@ -18,12 +9,14 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * cod-file service
+ * Desc cod-file facade
+ *
  * @author sourcod
+ * @version 1.0
+ * @className CodFileFacade
+ * @date 2019/6/18 2:17 PM
  */
-public interface CodFileService {
-
-    CodFileTypeEnum support();
+public interface CodFileFacade {
 
     /**
      * 上传文件

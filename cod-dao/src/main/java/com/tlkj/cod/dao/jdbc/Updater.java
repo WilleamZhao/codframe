@@ -24,11 +24,14 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 更新工具类
@@ -40,30 +43,73 @@ import java.util.UUID;
  * @date 2018/7/8 下午9:05
  */
 @Repository
-public class Updater {
+public class Updater extends CodDao {
 
     private JdbcTemplate jdbcTemplate;
+
+    private Map<String, DataSource> map = new ConcurrentHashMap<>();
+
+    /**
+     * 默认自动提交
+     */
+    private boolean isAutoCommit = true;
 
     public Updater() {
 
     }
+
+    /*public Updater() {
+
+    }*/
+
+    /**
+     * 设置自动提交
+     * @param name 数据源名称
+     */
+    public void setNotAutoCommit(String name){
+        DataSource dataSource = getDatasource(name);
+        try {
+            dataSource.getConnection().setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 设置自动提交
+     */
+    public Updater setNotAutoCommit(){
+        this.isAutoCommit = false;
+        DataSource dataSource = this.getJdbcTemplate().getDataSource();
+        try {
+            dataSource.getConnection().setAutoCommit(isAutoCommit);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+
 
     /**
      * 设置数据源
      * @param name 数据源名称
      * @return
      */
-    public Updater ds(String name) {
-        return new Updater(new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name)));
+    public Updater to(String name) {
+        return to(getDataSource(name));
+    }
+
+    public Updater to(DataSource dataSource) {
+        return new Updater(dataSource);
     }
 
     /**
      * 设置默认数据源
      * @param name 数据源名称
-     * @return
      */
-    void dsf(String name) {
-        this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
+    void toDefault(String name) {
+        this.jdbcTemplate = new JdbcTemplate(getDataSource(name));
     }
 
     /**
@@ -84,8 +130,11 @@ public class Updater {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /**
+     * 插入
+     */
     public Update insert(String table) {
-        return new Update(jdbcTemplate, 1).from(table);
+        return new Update(getJdbcTemplate(), 1).from(table);
     }
 
     public Update insert(String table, String name) {
@@ -97,21 +146,23 @@ public class Updater {
         return new Update(jdbcTemplate, 1).from(table);
     }
 
-    // TODO 更新继承的类
     public Update insert(Object object) {
-        return new Update(jdbcTemplate, 1, object);
+        return new Update(getJdbcTemplate(), 1, object);
     }
 
     public Update insert(String table, Object object) {
-        return new Update(jdbcTemplate, 1, object).from(table);
+        return new Update(getJdbcTemplate(), 1, object).from(table);
     }
 
+    /**
+     * 删除
+     */
     public Update delete(String table) {
-        return new Update(jdbcTemplate, 2).from(table);
+        return new Update(getJdbcTemplate(), 2).from(table);
     }
 
     public Update delete(String table, String name) {
-        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
+        DataSource dataSource = getDataSource(name);
         if (dataSource == null){
             return null;
         }
@@ -119,12 +170,15 @@ public class Updater {
         return new Update(jdbcTemplate, 2).from(table);
     }
 
+    /**
+     * 更新
+     */
     public Update update(String table) {
-        return new Update(jdbcTemplate, 0).from(table);
+        return new Update(getJdbcTemplate(), 0).from(table);
     }
 
     public Update update(String table, String name) {
-        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
+        DataSource dataSource = getDataSource(name);
         if (dataSource == null){
             return null;
         }
@@ -133,39 +187,67 @@ public class Updater {
     }
 
     public Update update(Object object) {
-        return new Update(jdbcTemplate, 0, object);
+        return new Update(getJdbcTemplate(), 0, object);
     }
 
     public Update update(String table, Object object) {
-        return new Update(jdbcTemplate, 0, object).from(table);
+        return new Update(getJdbcTemplate(), 0, object).from(table);
     }
 
+    /**
+     * 执行更新
+     */
     private int update(String sql, Object[] params) {
-        return this.jdbcTemplate.update(sql, params);
+        return getJdbcTemplate().update(sql, params);
     }
 
     public int update(String sql, Object[] params, Integer[] types) {
-        return this.jdbcTemplate.update(sql, params, types);
+        return getJdbcTemplate().update(sql, params, types);
     }
 
+    /**
+     * 批量更新
+     */
     public int[] batchUpdate(String... sql) {
-        return this.jdbcTemplate.batchUpdate(sql);
+        return getJdbcTemplate().batchUpdate(sql);
     }
 
+    /**
+     * 批量更新
+     */
     public int[] batchUpdate(String sql, List<Object[]> batchArgs){
-        return this.jdbcTemplate.batchUpdate(sql, batchArgs);
+        return getJdbcTemplate().batchUpdate(sql, batchArgs);
     }
 
+    /**
+     * 批量更新
+     */
     public int[] batchUpdate(String sql, BatchPreparedStatementSetter statementSetter){
-        return this.jdbcTemplate.batchUpdate(sql, statementSetter);
+        return getJdbcTemplate().batchUpdate(sql, statementSetter);
     }
 
     public void execute(String sql, PreparedStatementCallback callback) {
-        jdbcTemplate.execute(sql, callback);
+        getJdbcTemplate().execute(sql, callback);
     }
 
     public void execute(String sql) {
-        jdbcTemplate.execute(sql);
+        getJdbcTemplate().execute(sql);
+    }
+
+    /**
+     * 获取默认JDBC模版
+     */
+    private JdbcTemplate getJdbcTemplate() {
+        return getJdbcTemplate("");
+    }
+
+    /**
+     * 获取指定JDBC模版
+     * @param name
+     * @return
+     */
+    private JdbcTemplate getJdbcTemplate(String name) {
+        return StringUtils.isNotBlank(name) ? new JdbcTemplate(getDatasource(name)) : jdbcTemplate;
     }
 
     /**
@@ -570,6 +652,8 @@ public class Updater {
         private Integer rowCount;
         private int prefix;
 
+        private boolean autoCommit = true;
+
         public Update(JdbcTemplate jdbcTemplate, int prefix) {
             this.jdbcTemplate = jdbcTemplate;
             this.prefix = prefix;
@@ -802,6 +886,15 @@ public class Updater {
             return this;
         }
 
+        /**
+         * 关闭自动提交
+         * @return
+         */
+        public Update closeAutoCommit(){
+            this.autoCommit = false;
+            return this;
+        }
+
         public int update() {
             checkValid();
             return doUpdate(createGenerator());
@@ -811,7 +904,67 @@ public class Updater {
             if (dev) {
                 System.out.println(g.toSQL());
             }
-            return jdbcTemplate.update(g.toSQL(), g.getParameters());
+            int rows = jdbcTemplate.update(g.toSQL(), g.getParameters());
+            if (autoCommit){
+                Connection connection = null;
+                try {
+                    connection = getConnection();
+                    connection.commit();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (connection != null) {
+                            connection.close();
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return rows;
+        }
+
+        /**
+         * 提交
+         */
+        public void commit() {
+            try {
+                getConnection().commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException();
+            }
+        }
+
+        /**
+         * 回滚
+         */
+        public void rollback() {
+            try {
+                getConnection().rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException();
+            }
+        }
+
+        /**
+         * 关闭
+         */
+        public void close() {
+            try {
+                getConnection().close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * 获取连接
+         */
+        private Connection getConnection() throws SQLException {
+            return this.jdbcTemplate.getDataSource().getConnection();
         }
 
         /**

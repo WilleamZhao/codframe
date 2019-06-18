@@ -21,13 +21,13 @@ import java.lang.annotation.Target;
  *
  * @author sourcod
  * @version 1.0
- * @className View
+ * @className CodDaoView
  * @date 2019/1/4 7:27 PM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface View {
+public @interface CodDaoView {
 
     /**
      * 视图名称

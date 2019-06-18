@@ -9,9 +9,11 @@
 
 package com.tlkj.cod.file.model.config;
 
+import com.tlkj.cod.config.model.config.CodCoreConfig;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
@@ -23,7 +25,8 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class CodFileConfig implements Serializable {
+@Component
+public class CodFileConfig extends CodCoreConfig implements Serializable {
 
     /**
      * 上传文件类型
@@ -33,41 +36,7 @@ public class CodFileConfig implements Serializable {
 
     private String value;
 
-    /**
-     * oss endpoint
-     */
-    @Value("${cod.file.alioss.endpoint:http://oss-cn-beijing.aliyuncs.com}")
-    private String endpoint;
 
-    /**
-     * oss accessKeyId
-     */
-    @Value("${cod.file.alioss.accessKeyId:LTAIK0L9vMXtT3xs}")
-    private String accessKeyId;
-
-    /**
-     * oss accessKeySecret
-     */
-    @Value("${cod.file.alioss.accessKeySecret:ZYRrh37nY2w6JooVgwc7qhqJdLVgAp}")
-    private String accessKeySecret;
-
-    /**
-     * oss bucketName
-     */
-    @Value("${cod.file.alioss.bucket:codframe}")
-    private String bucketName;
-
-    /**
-     * qiniu accessKey
-     */
-    @Value("${cod.file.qiniu.accessKey:LTAIK0L9vMXtT3xs}")
-    private String accessKey;
-
-    /**
-     * qiniu secretKey
-     */
-    @Value("${cod.file.qiniu.secretKey:ZYRrh37nY2w6JooVgwc7qhqJdLVgAp}")
-    private String secretKey;
 
 
 

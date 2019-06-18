@@ -18,12 +18,7 @@ public enum CodDaoDatasourceTypeEnum {
     /**
      * 默认数据源
      */
-    DEFAULT,
-
-    /**
-     * 业务数据源
-     */
-    BIZ;
+    DEFAULT;
 
     CodDaoDatasourceTypeEnum(){
 

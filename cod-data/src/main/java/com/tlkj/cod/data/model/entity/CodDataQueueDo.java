@@ -1,7 +1,7 @@
 package com.tlkj.cod.data.model.entity;
 
-import com.tlkj.cod.dao.annotation.CodField;
-import com.tlkj.cod.dao.annotation.CodTable;
+import com.tlkj.cod.dao.annotation.CodDaoColumn;
+import com.tlkj.cod.dao.annotation.CodDaoTable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@CodTable(name = "cod_core_queue", comment = "队列表")
+@CodDaoTable(name = "cod_core_queue", comment = "队列表")
 public class CodDataQueueDo implements Serializable {
 
     public static final String TABLE_NAME = "cod_core_queue";
@@ -25,7 +25,7 @@ public class CodDataQueueDo implements Serializable {
     /**
      * 主键
      */
-    @CodField(type = "varchar(32)", isNull = false, comment = "主键")
+    @CodDaoColumn(type = "varchar(32)", isNull = false, comment = "主键")
     private String id;
 
     /**
@@ -34,7 +34,7 @@ public class CodDataQueueDo implements Serializable {
      * 2: 被占用(正在处理)
      * 3: 处理完毕
      */
-    @CodField(type = "tinyint(1)", isNull = false, comment = "状态")
+    @CodDaoColumn(type = "tinyint(1)", isNull = false, comment = "状态")
     private String state;
 
     /**
@@ -44,39 +44,39 @@ public class CodDataQueueDo implements Serializable {
      * 3: 消费失败，等待下次消费
      * 4: 作废
      */
-    @CodField(type = "tinyint(1)", comment = "消费状态")
+    @CodDaoColumn(type = "tinyint(1)", comment = "消费状态")
     private String consume_state;
 
     /**
      * 消费次数
      */
-    @CodField(type = "int", comment = "消费次数")
+    @CodDaoColumn(type = "int", comment = "消费次数")
     private int consume_count;
 
     /**
      * 创建时间
      */
-    @CodField(type = "timestamp", def = "CURRENT_TIMESTAMP", isNull = false, comment = "创建时间")
+    @CodDaoColumn(type = "timestamp", def = "CURRENT_TIMESTAMP", isNull = false, comment = "创建时间")
     private String create_time;
 
     /**
      * 更新时间
      */
-    @CodField(type = "datetime", comment = "更新时间")
+    @CodDaoColumn(type = "datetime", comment = "更新时间")
     private String update_time;
 
     /**
      * 最后一次消费时间
      *
      */
-    @CodField(type = "datetime", comment = "最后一次消费时间")
+    @CodDaoColumn(type = "datetime", comment = "最后一次消费时间")
     private String last_consume_time;
 
     /**
      * 下一次消费时间
      * 可消费开始时间
      */
-    @CodField(type = "datetime", comment = "可消费开始时间")
+    @CodDaoColumn(type = "datetime", comment = "可消费开始时间")
     private String next_consume_time;
 
 
@@ -85,7 +85,7 @@ public class CodDataQueueDo implements Serializable {
      * 数据信息
      * json格式
      */
-    @CodField(type = "text", comment = "数据信息")
+    @CodDaoColumn(type = "text", comment = "数据信息")
     private String data;
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019.
+ * Copyright (c) 2018-2019.
  * Beijing sky blue technology co., LTD.
  * All rights reserved
  *
@@ -17,31 +17,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Desc 列字段
+ * Desc 条件
  *
  * @author sourcod
  * @version 1.0
- * @className Column
- * @date 2019/1/4 8:06 PM
+ * @className CodDaoViewWhere
+ * @date 2019/1/7 6:18 PM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
-public @interface Column {
+@Target({ElementType.FIELD, ElementType.TYPE, ElementType.METHOD})
+public @interface CodDaoViewWhere {
 
-    /**
-     * 列名称
-     */
-    String cName() default "";
-
-    /**
-     * 表名称
-     */
-    String tName() default "";
-
-    /**
-     * 别名
-     */
-    String aliasName() default "";
-
+    String[] value();
 }

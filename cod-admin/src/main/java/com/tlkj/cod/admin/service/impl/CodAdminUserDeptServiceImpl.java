@@ -14,7 +14,7 @@ import com.tlkj.cod.admin.service.CodAdminUserDeptService;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.system.dto.CodFrameUserDeptListDto;
-import com.tlkj.cod.model.system.dvo.CodFrameUserDeptDvo;
+import com.tlkj.cod.model.system.dvo.CodDaoFrameUserDeptDvo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,13 +46,13 @@ public class CodAdminUserDeptServiceImpl implements CodAdminUserDeptService {
      */
     @Override
     public List<CodFrameUserDeptListDto> listDeptByUserId(String userId) {
-        CodFrameUserDeptDvo dvo = new CodFrameUserDeptDvo();
+        CodDaoFrameUserDeptDvo dvo = new CodDaoFrameUserDeptDvo();
         Finder.Query query = finder.fromView(dvo);
-        query.where(CodFrameUserDeptDvo.USER_TABLE + ".id", userId);
-        List<CodFrameUserDeptDvo> deptDvos = query.all(CodFrameUserDeptDvo.class);
+        query.where(CodDaoFrameUserDeptDvo.USER_TABLE + ".id", userId);
+        List<CodDaoFrameUserDeptDvo> deptDvos = query.all(CodDaoFrameUserDeptDvo.class);
 
         List<CodFrameUserDeptListDto> dtos = new ArrayList<>();
-        for (CodFrameUserDeptDvo deptDvo : deptDvos){
+        for (CodDaoFrameUserDeptDvo deptDvo : deptDvos){
             CodFrameUserDeptListDto dto = new CodFrameUserDeptListDto();
             dto.setId(deptDvo.getId());
             dto.setDeptId(deptDvo.getDeptId());

@@ -11,15 +11,15 @@
 package com.tlkj.cod.dao.view;
 
 /**
- * Desc Cod视图接口
+ * Desc cod-dao 逻辑视图接口
  * 逻辑视图
  *
  * @author sourcod
  * @version 1.0
- * @className CodDataView
+ * @className CodDaoDataView
  * @date 2019/1/7 4:41 PM
  */
-public class CodDataView extends AbstractDataView {
+public class CodDaoDataView extends AbstractDataView {
 
     /**
      * 主表

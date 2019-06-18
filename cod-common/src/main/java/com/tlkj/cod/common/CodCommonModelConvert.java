@@ -23,6 +23,8 @@ import java.lang.reflect.Modifier;
 
 /**
  * Desc model转换类
+ * 下划线转驼峰
+ * 目标转换类字段必须包括被转换类字段
  *
  * @author sourcod
  * @version 1.0
@@ -34,29 +36,44 @@ public abstract class CodCommonModelConvert {
     private static Logger logger = LoggerFactory.getLogger(CodCommonModelConvert.class);
 
     /**
-     * Do转Dto
+     * 下划线转驼峰
      * BigDecimal 类型需要写下划线
-     * @param zlass Dto类
+     * @param zlass 目标类
      * @param <T>   Dto
      * @return Dto
      */
     public <T> T toDto(Class<T> zlass){
+        return to(zlass, ConvertType.toDto);
+    }
+
+    /**
+     * 驼峰转下划线
+     * BigDecimal 类型需要写下划线
+     * @param zlass 目标类
+     * @param <T>   Do
+     * @return Do
+     */
+    public <T> T toDo(Class<T> zlass){
+        return to(zlass, ConvertType.toDo);
+    }
+
+    private <T> T to(Class<T> zlass, ConvertType type){
         if (!this.getClass().getSuperclass().getName().equals(CodCommonModelConvert.class.getName())){
             logger.error("不是子类. 不可转换！请继承 {} 类", CodCommonModelConvert.class.getName());
         }
 
-        // 1. 获取Do字段
+        // 1. 获取字段
         Field[] fields = this.getClass().getDeclaredFields();
-        // 2. 创建Dto实例
+        // 2. 创建实例
         T tempT = null;
         try {
             tempT = zlass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
-            System.err.println("创建Dto失败");
+            System.err.println("创建实例失败");
             return null;
         }
-        // 3. 设置Dto值
+        // 3. 设置值
         for (Field field : fields) {
             // 4. 私有的 && 非static && 非final
             if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
@@ -65,8 +82,8 @@ public abstract class CodCommonModelConvert {
                     if (value == null){
                         continue;
                     }
-                    // 下划线转驼峰
-                    String dtoSetName = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, field.getName());
+                    // 驼峰转下划线
+                    String dtoSetName = getSetName(field.getName(), type);
                     PropertyDescriptor pd = new PropertyDescriptor(dtoSetName, zlass);
                     Method wM = pd.getWriteMethod();
                     wM.invoke(tempT, value);
@@ -82,6 +99,27 @@ public abstract class CodCommonModelConvert {
     }
 
     /**
+     * 获取set方法名
+     * @param name 字段名
+     * @param type 转换方式
+     * @return
+     */
+    private String getSetName(String name, ConvertType type){
+        String setName = "";
+        switch (type){
+            case toDo:
+                setName = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name);
+                return setName;
+            case toDto:
+                setName = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name);
+                return setName;
+            default:
+                break;
+        }
+        return setName;
+    }
+
+    /**
      * 根据属性名获取属性值
      */
     private Object getFieldValueByName(String fieldName, Object o) {
@@ -93,5 +131,21 @@ public abstract class CodCommonModelConvert {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * 转换类型
+     */
+    public enum ConvertType{
+
+        /**
+         * 驼峰转下划线
+         */
+        toDo,
+
+        /**
+         * 下划线转驼峰
+         */
+        toDto
     }
 }

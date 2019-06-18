@@ -11,10 +11,10 @@
 package com.tlkj.cod.dao.view;
 
 import com.google.common.base.CaseFormat;
-import com.tlkj.cod.dao.annotation.Column;
-import com.tlkj.cod.dao.annotation.Join;
-import com.tlkj.cod.dao.annotation.Table;
-import com.tlkj.cod.dao.annotation.Where;
+import com.tlkj.cod.dao.annotation.CodDaoViewColumn;
+import com.tlkj.cod.dao.annotation.CodDaoViewJoin;
+import com.tlkj.cod.dao.annotation.CodDaoViewTable;
+import com.tlkj.cod.dao.annotation.CodDaoViewWhere;
 import com.tlkj.cod.dao.exception.CodDataViewException;
 import com.tlkj.cod.dao.jdbc.Finder;
 import org.apache.commons.lang3.StringUtils;
@@ -42,13 +42,13 @@ public abstract class AbstractDataView {
      * @return
      */
     public String getTable() {
-        Table table = this.getClass().getDeclaredAnnotation(Table.class);
+        CodDaoViewTable codDaoViewTable = this.getClass().getDeclaredAnnotation(CodDaoViewTable.class);
         Field tempField = null;
-        if (table == null){
+        if (codDaoViewTable == null){
             Field[] fields = this.getClass().getDeclaredFields();
             for (Field field : fields){
-                table = field.getAnnotation(Table.class);
-                if (table != null){
+                codDaoViewTable = field.getAnnotation(CodDaoViewTable.class);
+                if (codDaoViewTable != null){
                     tempField = field;
                     break;
                 }
@@ -57,9 +57,9 @@ public abstract class AbstractDataView {
         String tableStr = "";
         String name = "";
         // String alias = "";
-        if (table != null){
-            name = table.name();
-            alias = StringUtils.isNotBlank(table.alias()) ? table.alias() : getTableAlias(name);
+        if (codDaoViewTable != null){
+            name = codDaoViewTable.name();
+            alias = StringUtils.isNotBlank(codDaoViewTable.alias()) ? codDaoViewTable.alias() : getTableAlias(name);
             try {
                 if (tempField != null && StringUtils.isBlank(name)){
                     String value = tempField.get(this).toString();
@@ -73,14 +73,14 @@ public abstract class AbstractDataView {
             tableStr = name + " " + alias;
         }
 
-        CodDataView codDataView = null;
+        CodDaoDataView codDaoDataView = null;
         if (StringUtils.isBlank(tableStr)){
-            codDataView = (CodDataView) this;
+            codDaoDataView = (CodDaoDataView) this;
         }
-        return StringUtils.isBlank(tableStr) ? getTableByModel(codDataView) : tableStr;
+        return StringUtils.isBlank(tableStr) ? getTableByModel(codDaoDataView) : tableStr;
     }
 
-    private String getTableByModel(CodDataView view){
+    private String getTableByModel(CodDaoDataView view){
         return view.getTableModel().getName() + " " + view.getTableModel().getAlias();
     }
 
@@ -92,12 +92,12 @@ public abstract class AbstractDataView {
         Field[] fields = this.getClass().getDeclaredFields();
 
         for (Field field : fields){
-            Join join = field.getAnnotation(Join.class);
-            if (join != null){
-                String table = join.table();
-                String alias = join.alias();
-                String joinStr = join.join();
-                String[] ons = join.on();
+            CodDaoViewJoin codDaoViewJoin = field.getAnnotation(CodDaoViewJoin.class);
+            if (codDaoViewJoin != null){
+                String table = codDaoViewJoin.table();
+                String alias = codDaoViewJoin.alias();
+                String joinStr = codDaoViewJoin.join();
+                String[] ons = codDaoViewJoin.on();
                 // 判断on是否规范
                 if (!isOn(ons)){
                     throw new CodDataViewException();
@@ -112,12 +112,12 @@ public abstract class AbstractDataView {
         Method[] methods = this.getClass().getDeclaredMethods();
 
         for (Method method : methods){
-            Join join = method.getAnnotation(Join.class);
-            if (join != null){
-                String table = join.table();
-                String alias = join.alias();
-                String joinStr = join.join();
-                String[] ons = join.on();
+            CodDaoViewJoin codDaoViewJoin = method.getAnnotation(CodDaoViewJoin.class);
+            if (codDaoViewJoin != null){
+                String table = codDaoViewJoin.table();
+                String alias = codDaoViewJoin.alias();
+                String joinStr = codDaoViewJoin.join();
+                String[] ons = codDaoViewJoin.on();
                 // 判断on是否规范
                 if (!isOn(ons)){
                     throw new CodDataViewException();
@@ -134,7 +134,7 @@ public abstract class AbstractDataView {
     /**
      * 根据Model获取joins
      */
-    public String getJoinsByModel(CodDataView view) {
+    public String getJoinsByModel(CodDaoDataView view) {
         StringBuilder sb = new StringBuilder();
         for (JoinModel joinModel : view.getJoinModels()){
             String[] ons =  joinModel.getOn();
@@ -153,31 +153,31 @@ public abstract class AbstractDataView {
         Field[] fields = this.getClass().getDeclaredFields();
         StringBuilder sb = new StringBuilder();
         for (Field field : fields){
-            Column column = field.getAnnotation(Column.class);
-            if (column != null){
-                sb.append(getTableAlias(column.tName()))
+            CodDaoViewColumn codDaoViewColumn = field.getAnnotation(CodDaoViewColumn.class);
+            if (codDaoViewColumn != null){
+                sb.append(getTableAlias(codDaoViewColumn.tName()))
                         .append(".")
-                        .append(column.cName())
+                        .append(codDaoViewColumn.cName())
                         .append(" as ")
-                        .append(StringUtils.isNotBlank(column.aliasName()) ? column.aliasName() : field.getName());
+                        .append(StringUtils.isNotBlank(codDaoViewColumn.aliasName()) ? codDaoViewColumn.aliasName() : field.getName());
                 query.select(sb.toString());
                 sb.setLength(0);
             }
         }
     }
 
-    public void getSelectByModel(Finder.Query query, CodDataView view){
+    public void getSelectByModel(Finder.Query query, CodDaoDataView view){
         Field[] fields = view.getClass().getDeclaredFields();
 
         StringBuffer stringBuffer = new StringBuffer();
         for (Field field : fields){
-            Column column = field.getAnnotation(Column.class);
-            if (column!=null){
-                stringBuffer.append(getTableAlias(column.tName()))
+            CodDaoViewColumn codDaoViewColumn = field.getAnnotation(CodDaoViewColumn.class);
+            if (codDaoViewColumn !=null){
+                stringBuffer.append(getTableAlias(codDaoViewColumn.tName()))
                         .append(".")
-                        .append(column.cName())
+                        .append(codDaoViewColumn.cName())
                         .append(" as ")
-                        .append(StringUtils.isNotBlank(column.aliasName()) ? column.aliasName() : field.getName());
+                        .append(StringUtils.isNotBlank(codDaoViewColumn.aliasName()) ? codDaoViewColumn.aliasName() : field.getName());
                 query.select(stringBuffer.toString());
                 stringBuffer.setLength(0);
             }
@@ -190,9 +190,9 @@ public abstract class AbstractDataView {
     public void getWhere(Finder.Query query){
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field field : fields){
-            Where where = field.getAnnotation(Where.class);
-            if (where != null){
-                for (String s : where.value()){
+            CodDaoViewWhere codDaoViewWhere = field.getAnnotation(CodDaoViewWhere.class);
+            if (codDaoViewWhere != null){
+                for (String s : codDaoViewWhere.value()){
                     query.where(s);
                 }
             }

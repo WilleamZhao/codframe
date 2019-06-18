@@ -11,6 +11,7 @@
 package com.tlkj.cod.server.service;
 
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.launcher.service.CodCoreServiceManagement;
 
 /**
  * Desc 抽象web服务
@@ -20,7 +21,7 @@ import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
  * @className AbstractCodWebServer
  * @date 2019/3/28 5:20 PM
  */
-public interface CodServerService {
+public interface CodServerService extends CodCoreServiceManagement {
 
     /**
      * 启动

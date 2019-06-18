@@ -34,25 +34,11 @@ public class CodDataServiceImpl implements CodDataService {
     @Autowired
     Updater updater;
 
-    @PostConstruct
-    public void inita(){
-        CodDataConfig codDataConfig = new CodDataConfig();
-        DataConnectBean dataConnectBean = new DataConnectBean();
-        dataConnectBean.setCharacterEncoding(codDataConfig.getEncoding());
-        dataConnectBean.setDriverClass(codDataConfig.getDriver());
-        dataConnectBean.setUrl(codDataConfig.getUrl());
-        dataConnectBean.setUsername(codDataConfig.getUsername());
-        dataConnectBean.setPassword(codDataConfig.getPassword());
-        dataConnectBean.setName(CodDaoDatasourceTypeEnum.DATA.name());
-        CodDaoConnectionPool.getInstance().setDataSource(dataConnectBean);
-        finder.dsf(CodDaoDatasourceTypeEnum.DATA.name());
-    }
-
     /**
      * 初始化
      */
-    @Override
-    public void init() {
+    @PostConstruct
+    public void init(){
         CodDataConfig codDataConfig = new CodDataConfig();
         DataConnectBean dataConnectBean = new DataConnectBean();
         dataConnectBean.setCharacterEncoding(codDataConfig.getEncoding());
@@ -61,24 +47,15 @@ public class CodDataServiceImpl implements CodDataService {
         dataConnectBean.setUsername(codDataConfig.getUsername());
         dataConnectBean.setPassword(codDataConfig.getPassword());
         dataConnectBean.setName(CodDaoDatasourceTypeEnum.DATA.name());
-        CodDaoConnectionPool.getInstance().setDataSource(dataConnectBean);
-        if (finder == null){
-            // finder.dsf(CodDaoDatasourceTypeEnum.DATA.name());
-            finder = new Finder(CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
-        }
-
-        if (updater == null){
-            updater = new Updater(CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
-        }
+        CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), dataConnectBean);
+        finder = new Finder(CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
+        updater = new Updater(CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
 
         // config
         if (verifyExists(CodDataConfigDo.TABLE_NAME)){
             String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);
             updater.execute(sql);
         }
-
-        /*int num = finder.from("all_tables").where("table_name", CodDataConfigDo.TABLE_NAME).select("count(*)").firstForObject(Integer.class);
-        */
     }
 
     /**
@@ -124,6 +101,7 @@ public class CodDataServiceImpl implements CodDataService {
     }
 
     public static void main(String[] args) {
-        CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);
+        String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);
+        System.out.println(sql);
     }
 }

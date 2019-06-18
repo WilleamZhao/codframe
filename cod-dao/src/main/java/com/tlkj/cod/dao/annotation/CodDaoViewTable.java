@@ -17,17 +17,25 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Desc 条件
+ * Desc 表
  *
  * @author sourcod
  * @version 1.0
- * @className Where
- * @date 2019/1/7 6:18 PM
+ * @className CodDaoViewTable
+ * @date 2019/1/7 9:14 PM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.TYPE, ElementType.METHOD})
-public @interface Where {
+@Target({ElementType.FIELD, ElementType.TYPE})
+public @interface CodDaoViewTable {
 
-    String[] value();
+    /**
+     * 表名
+     */
+    String name();
+
+    /**
+     * 别名
+     */
+    String alias() default "";
 }

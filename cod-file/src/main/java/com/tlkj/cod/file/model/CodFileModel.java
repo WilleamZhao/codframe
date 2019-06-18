@@ -9,11 +9,13 @@
 
 package com.tlkj.cod.file.model;
 
+import com.tlkj.cod.file.model.enums.CodFileStatusCode;
+import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 文件model
+ * 文件 model
  * @author sourcod
  * @date 2019年6月16日 15点40分
  */
@@ -28,27 +30,27 @@ public class CodFileModel {
     private String fileName;
 
     /**
-     * 上传后文件相对路径
+     * 上传后文件路径
      */
-    private String url;
-
-    /**
-     * 扩展名
-     */
-    private String extName;
+    private String path;
 
     /**
      * 文件大小
      */
-    private String fileSize;
+    private long fileSize;
 
     /**
-     * 文件大小单位
+     * 上传文件类型
      */
-    private String fileUnit;
+    private CodFileTypeEnum fileType;
 
     /**
-     * 文件类型
+     * 状态码
      */
-    private String fileType;
+    private String code;
+
+    /**
+     * 第三方返回状态码
+     */
+    private CodFileStatusCode codFileStatusCode;
 }

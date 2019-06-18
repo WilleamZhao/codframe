@@ -12,9 +12,10 @@ import java.beans.PropertyVetoException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 数据库连接池
@@ -49,8 +50,15 @@ public class CodDaoConnectionPool {
 
     /**
      * 连接缓存
+     * 线程安全
      */
-    private Map<String, DataSource> map = new HashMap<>();
+    private Map<String, LinkedList<DataSource>> map = new ConcurrentHashMap<>();
+
+    /**
+     * 第几个数据源
+     * 序号
+     */
+    private Map<String, Integer> mapNo = new ConcurrentHashMap<>();
 
     /**
      * 数据库序号 从1开始
@@ -78,7 +86,7 @@ public class CodDaoConnectionPool {
      */
     public CodDaoConnectionPool(DataConnectBean dataConnectBean) {
         this.dataSource = setDataSource(dataConnectBean);
-        this.map.put(dataConnectBean.getName(), this.dataSource);
+        setDataSource(dataConnectBean.getName(), this.dataSource);
         /*
         number = getValueByKey("datasource.number");
         type = getValueByKey("datasource.type");
@@ -94,7 +102,7 @@ public class CodDaoConnectionPool {
     /**
      * 获取数据源
      * @param name 数据源名称
-     * @return
+     * @return datasource
      */
     public DataSource getDataSource(String name){
         return getDataSource(name, null);
@@ -103,16 +111,22 @@ public class CodDaoConnectionPool {
     /**
      * 获取数据源
      * @param dataConnectBean 数据源信息
-     * @return
+     * @return datasource
      */
     public DataSource getDataSource(DataConnectBean dataConnectBean){
         return getDataSource("", dataConnectBean);
     }
 
+    /**
+     * 获取数据源
+     * @param name            数据源名称
+     * @param dataConnectBean 数据源信息
+     * @return datasource
+     */
     public DataSource getDataSource(String name, DataConnectBean dataConnectBean){
         DataSource dataSource = null;
         if (StringUtils.isNotBlank(name)){
-            dataSource = this.map.get(name);
+            dataSource = dynamicGetDataSource(name);
         }
         if (dataSource == null && dataConnectBean != null){
             dataSource = setDataSource(name, dataConnectBean);
@@ -122,14 +136,14 @@ public class CodDaoConnectionPool {
 
 
     /**
-     * 获取数据库源
+     * 设置数据源
      */
     public synchronized DataSource setDataSource(DataConnectBean dataConnectBean){
         return setDataSource(dataConnectBean.getName(), dataConnectBean);
     }
 
     /**
-     * 获取数据库源
+     * 设置数据库源
      */
     public synchronized DataSource setDataSource(String name, DataConnectBean dataConnectBean){
         if (dataConnectBean == null){
@@ -163,12 +177,23 @@ public class CodDaoConnectionPool {
         }
         if (dataSource != null){
             if (StringUtils.isNotBlank(name)){
-                this.map.put(name, dataSource);
+                setDataSource(name, dataSource);
             } else {
-                this.map.put(dataConnectBean.getName(), dataSource);
+                setDataSource(name, dataSource);
             }
         }
         return dataSource;
+    }
+
+    /**
+     * 设置数据源
+     */
+    public synchronized void setDataSource(String name, DataSource dataSource){
+        if (dataSource != null){
+            if (StringUtils.isNotBlank(name)){
+                setDataSource(name, this.dataSource);
+            }
+        }
     }
 
     /**
@@ -198,16 +223,16 @@ public class CodDaoConnectionPool {
      * Hikari 数据源
      * @return Hikari 数据源
      */
-    public DataSource getHikariDataSource(DataConnectBean dataConnectBean){
+    private DataSource getHikariDataSource(DataConnectBean dataConnectBean){
         HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         hikariDataSource.setUsername(dataConnectBean.getUsername());
         hikariDataSource.setPassword(dataConnectBean.getPassword());
         hikariDataSource.setJdbcUrl(dataConnectBean.getUrl());
-        hikariDataSource.setMaximumPoolSize(Integer.parseInt(dataConnectBean.getMaxActive()));
-        hikariDataSource.setMinimumIdle(Integer.parseInt(dataConnectBean.getMinIdle()));
+        hikariDataSource.setMaximumPoolSize(dataConnectBean.getMaxActive());
+        hikariDataSource.setMinimumIdle(dataConnectBean.getMinIdle());
         hikariDataSource.setConnectionTestQuery(dataConnectBean.getTestQuery());
-        hikariDataSource.setAutoCommit(true);
+        hikariDataSource.setAutoCommit(dataConnectBean.isAutoCommit());
         // 设置编码
         if (StringUtils.isNotBlank(dataConnectBean.getUseUnicode())){
             hikariDataSource.addDataSourceProperty("useUnicode", dataConnectBean.getUseUnicode());
@@ -217,9 +242,8 @@ public class CodDaoConnectionPool {
         }
         // 初始化Sql
         if (StringUtils.isNotBlank(dataConnectBean.getInitSql())){
-            hikariDataSource.setConnectionInitSql(dataConnectBean.getInitialSize());
+            hikariDataSource.setConnectionInitSql(dataConnectBean.getInitSql());
         }
-        // dataSource = hikariDataSource;
         return hikariDataSource;
     }
 
@@ -227,14 +251,15 @@ public class CodDaoConnectionPool {
      * dbcp 数据源
      * @return dbcp数据源
      */
-    public DataSource getBasicDataSource(DataConnectBean dataConnectBean){
+    private DataSource getBasicDataSource(DataConnectBean dataConnectBean){
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         basicDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         basicDataSource.setUsername(dataConnectBean.getUsername());
         basicDataSource.setPassword(dataConnectBean.getPassword());
         basicDataSource.setUrl(dataConnectBean.getUrl());
-
+        basicDataSource.setInitialSize(dataConnectBean.getInitialSize());
+        basicDataSource.setDefaultAutoCommit(dataConnectBean.isAutoCommit());
         // 设置初始化Sql, ";"分割
         if (StringUtils.isNotBlank(dataConnectBean.getInitSql())){
             String[] initSqls = dataConnectBean.getInitSql().split(";");
@@ -248,19 +273,21 @@ public class CodDaoConnectionPool {
      * c3p0 数据源
      * @return c3p0数据源
      */
-    public DataSource getComboPooledDataSource(DataConnectBean dataConnectBean){
+    private DataSource getComboPooledDataSource(DataConnectBean dataConnectBean){
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
         try {
             comboPooledDataSource.setDriverClass(dataConnectBean.getDriverClass());
         } catch (PropertyVetoException e) {
             System.out.println("找不到驱动异常 " + e.getMessage());
+            return null;
         }
         comboPooledDataSource.setUser(dataConnectBean.getUsername());
         comboPooledDataSource.setPassword(dataConnectBean.getPassword());
         comboPooledDataSource.setJdbcUrl(dataConnectBean.getUrl());
-        comboPooledDataSource.setInitialPoolSize(Integer.parseInt(dataConnectBean.getInitialSize()));
-        comboPooledDataSource.setMaxPoolSize(Integer.parseInt(dataConnectBean.getMaxActive()));
-        comboPooledDataSource.setMaxIdleTime(Integer.parseInt(dataConnectBean.getMaxIdle()));
+        comboPooledDataSource.setInitialPoolSize(dataConnectBean.getInitialSize());
+        comboPooledDataSource.setMaxPoolSize(dataConnectBean.getMaxActive());
+        comboPooledDataSource.setMaxIdleTime(dataConnectBean.getMaxIdle());
+        comboPooledDataSource.setAutoCommitOnClose(dataConnectBean.isAutoCommit());
         return comboPooledDataSource;
     }
 
@@ -268,17 +295,18 @@ public class CodDaoConnectionPool {
      * druid 数据源
      * @return druid 数据源
      */
-    public DataSource getDruidDataSource(DataConnectBean dataConnectBean){
+    private DataSource getDruidDataSource(DataConnectBean dataConnectBean){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         druidDataSource.setUsername(dataConnectBean.getUsername());
         druidDataSource.setPassword(dataConnectBean.getPassword());
         druidDataSource.setUrl(dataConnectBean.getUrl());
-        druidDataSource.setInitialSize(Integer.parseInt(dataConnectBean.getInitialSize()));
-        druidDataSource.setMaxActive(Integer.parseInt(dataConnectBean.getMaxActive()));
-        druidDataSource.setMinIdle(Integer.parseInt(dataConnectBean.getMinIdle()));
+        druidDataSource.setInitialSize(dataConnectBean.getInitialSize());
+        druidDataSource.setMaxActive(dataConnectBean.getMaxActive());
+        druidDataSource.setMinIdle(dataConnectBean.getMinIdle());
         druidDataSource.setValidationQuery(dataConnectBean.getTestQuery());
         druidDataSource.setMaxWait(Integer.parseInt(dataConnectBean.getMaxWait()));
+        druidDataSource.setDefaultAutoCommit(dataConnectBean.isAutoCommit());
         // 设置初始化Sql, ";"分割
         if (StringUtils.isNotBlank(dataConnectBean.getInitSql())){
             String[] initSqls = dataConnectBean.getInitSql().split(";");
@@ -289,48 +317,62 @@ public class CodDaoConnectionPool {
     }
 
     /**
-     * 设置DataConnectBean数据库连接类
+     * 添加多重数据源
+     * @param name       名称
+     * @param dataSource 多重数据源
      */
-    /*private void setDataConnectBean(){
-        dataConnectBean.setDriverClass(getValueByKey("datasource" + dataSourceNo + ".driverClass"));
-        dataConnectBean.setUrl(getValueByKey("datasource" + dataSourceNo + ".url"));
-        dataConnectBean.setUsername(getValueByKey("datasource" + dataSourceNo + ".username"));
-        dataConnectBean.setPassword(getValueByKey("datasource" + dataSourceNo + ".password"));
-        dataConnectBean.setInitialSize(getValueByKey("datasource" + dataSourceNo + ".initialSize"));
-        dataConnectBean.setMaxActive(getValueByKey("datasource" + dataSourceNo + ".maxActive"));
-        dataConnectBean.setMaxIdle(getValueByKey("datasource" + dataSourceNo + ".maxIdle"));
-        dataConnectBean.setMinIdle(getValueByKey("datasource" + dataSourceNo + ".minIdle"));
-        dataConnectBean.setMaxWait(getValueByKey("datasource" + dataSourceNo + ".maxWait"));
-        dataConnectBean.setTestQuery(getValueByKey("datasource" + dataSourceNo + ".testQuery"));
-        dataConnectBean.setUseUnicode(getValueByKey("datasource" + dataSourceNo + ".useUnicode"));
-        dataConnectBean.setCharacterEncoding(getValueByKey("datasource" + dataSourceNo + ".characterEncoding"));
-        dataConnectBean.setInitSql(getValueByKey("datasource" + dataSourceNo + ".initSql"));
-    }*/
+    private void setDataSource(String name, DataSource... dataSource){
+        LinkedList<DataSource> linkedList = map.get(name);
+        if (linkedList.isEmpty()){
+            linkedList = new LinkedList<>();
+            linkedList.addAll(Arrays.asList(dataSource));
+        } else {
+            linkedList.addAll(Arrays.asList(dataSource));
+        }
+        map.put(name, linkedList);
+    }
 
     /**
-     * 获取数据库配置
-     * @param key
+     * 动态获取数据源
+     * @param name 数据源名称
      * @return
      */
-    public static String getValueByKey(String key) {
-        /*if (StringUtils.isEmpty(key)){
-            return null;
-        }
-        String propKey = prop.getProperty(key);
-        if (StringUtils.isNotEmpty(propKey)){
-            return propKey;
-        }
-        String[] strings = key.split("\\.");
-        Map tempMap = map;
-        for (int i = 0; i < strings.length; i++){
-            if (i < strings.length - 1){
-                tempMap = (Map) tempMap.get(strings[i]);
-            } else {
-                propKey = tempMap.get(strings[i]) != null ? tempMap.get(strings[i]).toString() : "";
-            }
-        }
-        return propKey;*/
-        return "";
+    private DataSource dynamicGetDataSource(String name){
+        return dynamicGetDataSource(name, 0);
     }
+
+    /**
+     * 动态获取数据源
+     * 第一个连不上, 取第二个
+     * @param name 数据源名称
+     * @param num  序号
+     * @return
+     */
+    private DataSource dynamicGetDataSource(String name, int num){
+        // 设置数据源
+        Integer no = this.mapNo.get(name);
+        DataSource dataSource;
+        if (no != null){
+            num = no+1;
+        }
+
+        // 判断是否超过已有数据源
+        if (num < getDataSourceSize(name)){
+            this.mapNo.put(name, num);
+            dataSource = this.map.get(name).get(num);
+            return dataSource;
+        }
+        return null;
+    }
+
+    /**
+     * 获取数据源大小
+     * @return
+     */
+    private int getDataSourceSize(String name){
+        List list = this.map.get(name);
+        return list == null ? 0 : list.size();
+    }
+
 
 }

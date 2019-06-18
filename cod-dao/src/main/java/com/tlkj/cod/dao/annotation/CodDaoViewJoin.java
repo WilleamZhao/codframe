@@ -21,13 +21,13 @@ import java.lang.annotation.Target;
  *
  * @author sourcod
  * @version 1.0
- * @className Join
+ * @className CodDaoViewJoin
  * @date 2019/1/7 8:26 PM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})
-public @interface Join {
+public @interface CodDaoViewJoin {
 
     String join();
 

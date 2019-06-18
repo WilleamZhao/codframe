@@ -1,12 +1,11 @@
 package com.tlkj.cod.dao.util;
 
 import com.sun.jna.platform.win32.Netapi32Util;
-import com.tlkj.cod.dao.annotation.CodField;
-import com.tlkj.cod.dao.annotation.CodTable;
+import com.tlkj.cod.dao.annotation.CodDaoColumn;
+import com.tlkj.cod.dao.annotation.CodDaoId;
+import com.tlkj.cod.dao.annotation.CodDaoTable;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -50,19 +49,19 @@ public class CreateTable {
     public static String createTable(Class obj, String tableName){
         StringBuilder sb = new StringBuilder();
 
-        CodTable codTable = obj.getClass().getAnnotation(CodTable.class);
+        CodDaoTable codDaoTable = obj.getClass().getAnnotation(CodDaoTable.class);
         String tableCharset = "";
         String tableComment = "";
         String tableEngine = "";
         boolean isDrop = false;
-        if (codTable != null){
+        if (codDaoTable != null){
             if (StringUtils.isBlank(tableName)) {
-                tableName = codTable.name();
+                tableName = codDaoTable.name();
             }
-            tableCharset = codTable.charset();
-            tableComment = codTable.comment();
-            tableEngine = codTable.engine();
-            isDrop = codTable.drop();
+            tableCharset = codDaoTable.charset();
+            tableComment = codDaoTable.comment();
+            tableEngine = codDaoTable.engine();
+            isDrop = codDaoTable.drop();
         }
 
         // 未传表明默认用类名
@@ -80,8 +79,10 @@ public class CreateTable {
         sb.append("create table ").append(tableName).append(" ( ").append(line);
 
         Field[] fields = obj.getDeclaredFields();
-        boolean firstId = true;
+        boolean firstId = obj.getAnnotationsByType(CodDaoId.class).length == 0;
 
+        // 是否设置过ID, 验证多个ID
+        boolean isSetId = false;
         for (Field f : fields) {
 
             // 参数
@@ -101,13 +102,22 @@ public class CreateTable {
                 continue;
             }
 
-            CodField codField = f.getAnnotation(CodField.class);
-            if (codField != null){
-                param = codField.type();
-                column = codField.name();
-                isNull = codField.isNull();
-                defaultValue = codField.def();
-                comment = codField.comment();
+            CodDaoColumn codDaoColumn = f.getAnnotation(CodDaoColumn.class);
+            CodDaoId codDaoId = f.getAnnotation(CodDaoId.class);
+            if (codDaoColumn != null){
+                param = codDaoColumn.type();
+                if (codDaoId != null){
+                    if (!isSetId){
+                        column = codDaoId.name();
+                        firstId = true;
+                        isSetId = true;
+                    }
+                } else {
+                    column = codDaoColumn.name();
+                }
+                isNull = codDaoColumn.isNull();
+                defaultValue = codDaoColumn.def();
+                comment = codDaoColumn.comment();
             }
             sb.append(" ");
             if (StringUtils.isBlank(column)){
@@ -132,7 +142,6 @@ public class CreateTable {
 
             sb.append(" ");
 
-
             if (StringUtils.isNotBlank(defaultValue)){
                 sb.append("default").append(" ").append(defaultValue).append(" ");
             }
@@ -145,7 +154,6 @@ public class CreateTable {
                 sb.append(" comment ").append("'").append(comment).append("'");
             }
 
-            //类型转换
             if (firstId) {
                 sb.append(" PRIMARY KEY");
                 firstId = false;
@@ -172,23 +180,7 @@ public class CreateTable {
 
         System.out.println(sb.toString());
 
-        //复制到剪切板
-        // WindowUtil.setSysClipboardText(sql);
-        // ToastMessage.toast("复制到剪切板",2000, Color.blue);
         return sb.toString();
-        /*file = new File("WebContent/createTable/建表.txt");
-        if (!file.getParentFile().exists()) {
-            if (!file.getParentFile().mkdirs()) {
-            }
-        }
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        System.out.println("文件路径:"+file.getAbsolutePath());
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true)));
-        out.write(sql) ;
-        out.flush();
-        out.close() ;*/
     }
 
     public static void main(String[] args) {
