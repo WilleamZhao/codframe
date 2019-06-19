@@ -135,7 +135,10 @@ public class CodDaoFrameUserDeptDvo extends CodDaoDataView {
         joinModel.setOn(new String[]{"a", "b"});
         dvo.setJoinModels(new JoinModel[]{joinModel});*/
         Finder finder = new Finder();
-        Finder.Query query = finder.fromView(dvo);
+        Finder.Query query = finder.from(dvo).dev(true);
+        query.where("id", "1");
+        query.where("deptId", "2");
+        query.all();
 
     }
 

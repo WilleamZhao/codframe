@@ -47,7 +47,7 @@ public class CodAdminUserDeptServiceImpl implements CodAdminUserDeptService {
     @Override
     public List<CodFrameUserDeptListDto> listDeptByUserId(String userId) {
         CodDaoFrameUserDeptDvo dvo = new CodDaoFrameUserDeptDvo();
-        Finder.Query query = finder.fromView(dvo);
+        Finder.Query query = finder.from(dvo);
         query.where(CodDaoFrameUserDeptDvo.USER_TABLE + ".id", userId);
         List<CodDaoFrameUserDeptDvo> deptDvos = query.all(CodDaoFrameUserDeptDvo.class);
 

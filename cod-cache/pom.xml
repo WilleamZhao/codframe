@@ -110,4 +110,18 @@
             <url>${codframe.nexus.snapshots.url</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-keep class com.tlkj.cod.cache.**</option>
+                    </options>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

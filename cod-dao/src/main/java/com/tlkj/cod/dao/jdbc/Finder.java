@@ -11,11 +11,12 @@
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
+import com.tlkj.cod.common.CodCommonField;
 import com.tlkj.cod.dao.annotation.CodDaoTable;
+import com.tlkj.cod.dao.annotation.CodDaoViewColumn;
 import com.tlkj.cod.dao.exception.CodDataViewException;
 import com.tlkj.cod.dao.model.CodDaoDo;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
-import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.dao.view.CodDaoDataView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,29 +58,12 @@ public class Finder extends CodDao {
         }
     }
 
-    /*
-    @Autowired
-    public Finder(CodDaoConnectionPool dbConnectionPool) {
-        jdbcTemplate = new JdbcTemplate(dbConnectionPool.getDataSource());
-    }
-    */
-
     public Finder(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public Finder(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
-    /**
-     * 设置默认数据源
-     * @param name 数据源名称
-     * @return
-     */
-    public Finder setDef(String name) {
-        this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
-        return this;
     }
 
     /**
@@ -105,8 +90,12 @@ public class Finder extends CodDao {
      * @param dataSourceName 数据源名称
      * @return
      */
-    public Query fromTo(String dataSourceName) {
-        return new Query(new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(dataSourceName)));
+    public Finder to(String dataSourceName) {
+        return to(getDataSource(dataSourceName));
+    }
+
+    public Finder to(DataSource dataSource) {
+        return new Finder(dataSource);
     }
 
     /**
@@ -114,9 +103,9 @@ public class Finder extends CodDao {
      * @param dataSourceName 数据源名称
      * @return
      */
-    public Query fromToDef(String dataSourceName) {
-        this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(dataSourceName));
-        return new Query(new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(dataSourceName)));
+    public Finder toDefault(String dataSourceName) {
+        this.jdbcTemplate = new JdbcTemplate(getDataSource(dataSourceName));
+        return this;
     }
 
     /**
@@ -126,11 +115,7 @@ public class Finder extends CodDao {
      * @return
      */
     public Query from(String table, String name) {
-        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
-        if (dataSource == null){
-            return null;
-        }
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        JdbcTemplate jdbcTemplate = getJdbcTemplate(name);
         return new Query(jdbcTemplate).from(table);
     }
 
@@ -138,20 +123,11 @@ public class Finder extends CodDao {
      * 查询视图
      * TODO 待完善
      */
-    public Query fromView(CodDaoDataView view) {
-        Query query;
-        String table = view.getTable();
-        if (StringUtils.isBlank(table)) {
-            throw new CodDataViewException();
-        }
-
-        query = new Query(jdbcTemplate, 1).from(table);
+    public Query from(CodDaoDataView view) {
+        Query query = new Query(getJdbcTemplate(), 1).from(view);
         view.getJoins(query);
         view.getSelect(query);
         view.getWhere(query);
-        if (query.dev) {
-            System.out.println(query.createGenerator().toSQL());
-        }
         return query;
     }
 
@@ -478,6 +454,11 @@ public class Finder extends CodDao {
         private Integer rowCount;
 
         /**
+         * 逻辑视图
+         */
+        private CodDaoDataView view;
+
+        /**
          * 1: 查询
          */
         private int prefix;
@@ -488,15 +469,6 @@ public class Finder extends CodDao {
          */
         public Query(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;
-        }
-
-        public Query(String name) {
-            this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
-        }
-
-        public Query(String name, int prefix) {
-            this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
-            this.prefix = prefix;
         }
 
         /**
@@ -517,6 +489,12 @@ public class Finder extends CodDao {
 
         public Query from(String table) {
             this.table = table;
+            return this;
+        }
+
+        public Query from(CodDaoDataView view){
+            this.view = view;
+            this.table = view.getTable();
             return this;
         }
 
@@ -610,12 +588,26 @@ public class Finder extends CodDao {
          * @param name 表名
          * @return 转换后表名
          */
-        private String getViewName(String name) {
+        private String getTableAndViewName(String name) {
             if (prefix == 1) {
                 String[] fileds = name.split("\\.");
+                // 有点自己拼接 && 无点取注解配置
                 if (fileds.length == 2) {
                     String filed = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, fileds[0]);
                     return filed + "." + fileds[1];
+                } else {
+                    Field[] fields = view.getClass().getFields();
+                    for (Field field : fields){
+                        if (CodCommonField.isModel(field)){
+                            CodDaoViewColumn column = field.getAnnotation(CodDaoViewColumn.class);
+                            if (column != null){
+                                // @CodDaoViewColumn(cName = "id", tName = USER_DEPT_TABLE, aliasName = "id")
+                                String cName = column.cName();
+                                String tName = column.tName();
+                                return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, tName) + "." + cName;
+                            }
+                        }
+                    }
                 }
             }
             return name;
@@ -626,7 +618,7 @@ public class Finder extends CodDao {
         }
 
         public Query where(String name, Object value) {
-            where(new Condition(ConditionType.EQ, getViewName(name), value));
+            where(new Condition(ConditionType.EQ, getTableAndViewName(name), value));
             return this;
         }
 
@@ -635,7 +627,7 @@ public class Finder extends CodDao {
                 throw new IllegalArgumentException(
                         "nameValues.length % 2 must be 0");
             }
-            where(new Condition(ConditionType.EQ, getViewName(name), value));
+            where(new Condition(ConditionType.EQ, getTableAndViewName(name), value));
             for (int i = 0; i < nameValues.length; i = i + 2) {
                 where(new Condition(ConditionType.EQ, (String) nameValues[i],
                         nameValues[i + 1]));
@@ -645,70 +637,70 @@ public class Finder extends CodDao {
 
         public Query where(Map<String, Object> params) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
-                where(new Condition(ConditionType.EQ, getViewName(entry.getKey()),
+                where(new Condition(ConditionType.EQ, getTableAndViewName(entry.getKey()),
                         entry.getValue()));
             }
             return this;
         }
 
         public Query not(String name, Object value) {
-            return where(new Condition(ConditionType.NOT_EQ, getViewName(name), value));
+            return where(new Condition(ConditionType.NOT_EQ, getTableAndViewName(name), value));
         }
 
         public Query in(String name, Object... values) {
             if (values.length == 0) {
                 throw new IllegalArgumentException("values can't be empty");
             }
-            return where(new Condition(ConditionType.IN, getViewName(name), values));
+            return where(new Condition(ConditionType.IN, getTableAndViewName(name), values));
         }
 
         public Query notIn(String name, Object... values) {
             if (values.length == 0) {
                 throw new IllegalArgumentException("values can't be empty");
             }
-            return where(new Condition(ConditionType.NOT_IN, getViewName(name), values));
+            return where(new Condition(ConditionType.NOT_IN, getTableAndViewName(name), values));
         }
 
         public Query like(String name, Object value) {
-            return where(new Condition(ConditionType.LIKE, getViewName(name), value));
+            return where(new Condition(ConditionType.LIKE, getTableAndViewName(name), value));
         }
 
         public Query notLike(String name, Object value) {
-            return where(new Condition(ConditionType.NOT_LIKE, getViewName(name), value));
+            return where(new Condition(ConditionType.NOT_LIKE, getTableAndViewName(name), value));
         }
 
         public Query between(String name, Object from, Object to) {
-            return where(new Condition(ConditionType.BETWEEN, getViewName(name),
+            return where(new Condition(ConditionType.BETWEEN, getTableAndViewName(name),
                     new Object[]{from, to}));
         }
 
         public Query notBetween(String name, Object from, Object to) {
-            return where(new Condition(ConditionType.NOT_BETWEEN, getViewName(name),
+            return where(new Condition(ConditionType.NOT_BETWEEN, getTableAndViewName(name),
                     new Object[]{from, to}));
         }
 
         public Query less(String name, Object value) {
-            return where(new Condition(ConditionType.LESS, getViewName(name), value));
+            return where(new Condition(ConditionType.LESS, getTableAndViewName(name), value));
         }
 
         public Query lessOrEquals(String name, Object value) {
-            return where(new Condition(ConditionType.LE, getViewName(name), value));
+            return where(new Condition(ConditionType.LE, getTableAndViewName(name), value));
         }
 
         public Query great(String name, Object value) {
-            return where(new Condition(ConditionType.GREAT, getViewName(name), value));
+            return where(new Condition(ConditionType.GREAT, getTableAndViewName(name), value));
         }
 
         public Query greatOrEquals(String name, Object value) {
-            return where(new Condition(ConditionType.GE, getViewName(name), value));
+            return where(new Condition(ConditionType.GE, getTableAndViewName(name), value));
         }
 
         public Query isNull(String name, Object value) {
-            return where(new Condition(ConditionType.NULL, getViewName(name), value));
+            return where(new Condition(ConditionType.NULL, getTableAndViewName(name), value));
         }
 
         public Query isNotNull(String name, Object value) {
-            return where(new Condition(ConditionType.NOT_NULL, getViewName(name), value));
+            return where(new Condition(ConditionType.NOT_NULL, getTableAndViewName(name), value));
         }
 
         public <T> Pagination<T> paginate(Class<T> klass, int page) {
@@ -800,9 +792,8 @@ public class Finder extends CodDao {
             if (dev) {
                 System.out.println(g.toSQL());
             }
-            List<T> data = jdbcTemplate.query(g.toSQL(), g.getParameters(),
-                    mapper);
-            return data;
+            //List<T> data = jdbcTemplate.query(g.toSQL(), g.getParameters(), mapper);
+            return null;
         }
 
         public Generator createGenerator() {
@@ -816,6 +807,22 @@ public class Finder extends CodDao {
             g.limit(offset, rowCount);
             return g;
         }
+    }
+
+    /**
+     * 获取默认JDBC模版
+     */
+    private JdbcTemplate getJdbcTemplate() {
+        return getJdbcTemplate("");
+    }
+
+    /**
+     * 获取指定JDBC模版
+     * @param name
+     * @return
+     */
+    private JdbcTemplate getJdbcTemplate(String name) {
+        return StringUtils.isNotBlank(name) ? new JdbcTemplate(getDatasource(name)) : jdbcTemplate;
     }
 
 

@@ -44,11 +44,6 @@ public @interface CodDaoViewColumn {
     String tName() default "";
 
     /**
-     * Do 类
-     */
-    Class tClass() default Void.class;
-
-    /**
      * 别名
      */
     String aliasName() default "";

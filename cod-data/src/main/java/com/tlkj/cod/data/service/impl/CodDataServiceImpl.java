@@ -38,6 +38,7 @@ public class CodDataServiceImpl implements CodDataService {
      * 初始化
      */
     @PostConstruct
+    @Override
     public void init(){
         CodDataConfig codDataConfig = new CodDataConfig();
         DataConnectBean dataConnectBean = new DataConnectBean();

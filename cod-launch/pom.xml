@@ -86,6 +86,16 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-keep class com.tlkj.cod.launcher.**</option>
+                    </options>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

@@ -33,55 +33,47 @@ import java.lang.reflect.Method;
 public abstract class AbstractDataView {
 
     /**
-     * 别名
-     */
-    private static String alias = "";
-
-    /**
      * 获取表名
      * @return
      */
     public String getTable() {
         CodDaoViewTable codDaoViewTable = this.getClass().getDeclaredAnnotation(CodDaoViewTable.class);
-        Field tempField = null;
-        if (codDaoViewTable == null){
-            Field[] fields = this.getClass().getDeclaredFields();
-            for (Field field : fields){
-                codDaoViewTable = field.getAnnotation(CodDaoViewTable.class);
-                if (codDaoViewTable != null){
-                    tempField = field;
-                    break;
-                }
-            }
-        }
-        String tableStr = "";
+
+        // 表名
         String name = "";
-        // String alias = "";
+        // 别名
+        String alias = "";
+        // 表名
+        String tableStr = "";
+
+        // 注解为空取类名
+        if (codDaoViewTable == null){
+            name = getTableByModel(this.getClass());
+            alias = getTableAlias(name);
+        }
+
         if (codDaoViewTable != null){
             name = codDaoViewTable.name();
-            alias = StringUtils.isNotBlank(codDaoViewTable.alias()) ? codDaoViewTable.alias() : getTableAlias(name);
-            try {
-                if (tempField != null && StringUtils.isBlank(name)){
-                    String value = tempField.get(this).toString();
-                    if (StringUtils.isNotBlank(value)){
-                        name = value;
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            tableStr = name + " " + alias;
-        }
 
-        CodDaoDataView codDaoDataView = null;
-        if (StringUtils.isBlank(tableStr)){
-            codDaoDataView = (CodDaoDataView) this;
+            if (StringUtils.isBlank(name)){
+                String value = getTableByModel(this.getClass());
+                if (StringUtils.isNotBlank(value)){
+                    name = value;
+                }
+            }
+            alias = StringUtils.isNotBlank(codDaoViewTable.alias()) ? codDaoViewTable.alias() : getTableAlias(name);
         }
-        return StringUtils.isBlank(tableStr) ? getTableByModel(codDaoDataView) : tableStr;
+        tableStr = name + " " + alias;
+        return tableStr;
     }
 
-    private String getTableByModel(CodDaoDataView view){
-        return view.getTableModel().getName() + " " + view.getTableModel().getAlias();
+    /**
+     * 根据类名映射表名
+     * @param
+     * @return
+     */
+    private String getTableByModel(Class zlsss){
+        return zlsss.getSimpleName();
     }
 
     /**

@@ -11,6 +11,7 @@
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
+import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -18,6 +19,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -53,6 +55,18 @@ public class Updater extends CodDao {
      * 默认自动提交
      */
     private boolean isAutoCommit = true;
+
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    public void init(){
+        DataSource dataSource = super.getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        // CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        if (dataSource != null){
+            this.jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+    }
 
     public Updater() {
 
@@ -108,8 +122,9 @@ public class Updater extends CodDao {
      * 设置默认数据源
      * @param name 数据源名称
      */
-    void toDefault(String name) {
+    public Updater toDefault(String name) {
         this.jdbcTemplate = new JdbcTemplate(getDataSource(name));
+        return this;
     }
 
     /**
