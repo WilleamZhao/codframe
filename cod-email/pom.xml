@@ -57,7 +57,7 @@
                 <artifactId>proguard-maven-plugin</artifactId>
                 <configuration>
                     <options>
-                        <option>-keep class com.tlkj.cod.common.**</option>
+                        <option>-keep class com.tlkj.cod.email.**</option>
                     </options>
                 </configuration>
             </plugin>

@@ -104,7 +104,7 @@
                 <artifactId>proguard-maven-plugin</artifactId>
                 <configuration>
                     <options>
-                        <option>-keep class com.tlkj.cod.launcher.**</option>
+                        <option>-keep class com.tlkj.cod.log.**</option>
                     </options>
                 </configuration>
             </plugin>
