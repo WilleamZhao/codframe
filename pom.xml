@@ -127,8 +127,14 @@
 
         <!-- codFrame框架 -->
         <codframe.version>${project.version}</codframe.version>
+
+        <!--
         <codframe.nexus.releases.url>http://192.168.3.21:8081/repository/maven-releases/</codframe.nexus.releases.url>
         <codframe.nexus.snapshots.url>http://192.168.3.21:8081/repository/maven-snapshots/</codframe.nexus.snapshots.url>
+        -->
+
+        <codframe.nexus.releases.url>https://nexus.sourcod.com/repository/maven-releases/</codframe.nexus.releases.url>
+        <codframe.nexus.snapshots.url>https://nexus.sourcod.com/repository/maven-snapshots/</codframe.nexus.snapshots.url>
 
         <!-- mail -->
         <mail.version>1.6.2</mail.version>
@@ -309,12 +315,12 @@
         <repository>
             <id>tlkj-releases</id>
             <name>tlkj-releases</name>
-            <url>http://192.168.3.21:8081/repository/maven-releases/</url>
+            <url>${codframe.nexus.releases.url}</url>
         </repository>
         <snapshotRepository>
             <id>tlkj-snapshots</id>
             <name>tlkj-snapshots</name>
-            <url>http://192.168.3.21:8081/repository/maven-snapshots/</url>
+            <url>${codframe.nexus.snapshots.url</url>
         </snapshotRepository>
     </distributionManagement>
 
