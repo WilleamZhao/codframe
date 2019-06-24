@@ -12,7 +12,6 @@ package com.tlkj.cod.log.service.impl;
 
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.log.service.CodLogAspectService;
-import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.common.SystemResponse;
 import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.log.service.CodLogService;
@@ -43,9 +42,6 @@ public class CodLogAspectServiceImpl implements CodLogAspectService {
         }
         return null;
     }
-
-    @Autowired
-    Updater updater;
 
     /**
      * 注解打印方法开始日志

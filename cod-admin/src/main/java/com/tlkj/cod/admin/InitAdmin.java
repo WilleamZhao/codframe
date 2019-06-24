@@ -33,7 +33,8 @@ public class InitAdmin implements CodModuleInitialize {
         bean.setUsername(databaseConfig.getUsername());
         bean.setDriverClass(databaseConfig.getDriver());
         bean.setUrl(databaseConfig.getUrl());
-*/
+        */
+        codModuleLauncherModel.getSpring().register();
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);
         System.out.println("初始化成功");
         codModuleLauncherModel.finish();

@@ -50,8 +50,10 @@ public class CodCodLogServiceImpl implements CodLogService {
         return "clog";
     }
 
+    /*
     @Autowired
     Finder finder;
+    */
 
     private static String setValue = "";
 
@@ -195,7 +197,8 @@ public class CodCodLogServiceImpl implements CodLogService {
      * @return 设置值
      */
     private String getSetValue(String setCode) {
-        CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", setCode).first(CodFrameSetDo.class);
-        return setDo.getSet_value();
+        // CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", setCode).first(CodFrameSetDo.class);
+        // return setDo.getSet_value();
+        return "";
     }
 }

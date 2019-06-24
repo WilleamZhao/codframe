@@ -80,7 +80,7 @@ public class CodServerServiceJettyImpl implements CodServerService {
         // set Dispatcher
         ServletHolder servletHolder = new ServletHolder(dispatcherServlet);
         ServletContextHandler context = new ServletContextHandler();
-         context.addServlet(servletHolder, "/*");
+        context.addServlet(servletHolder, "/codframe/*");
 
         // TODO 初始化
         // context.setInitParameter("contextInitializerClasses", CodInitializer.class.getName());

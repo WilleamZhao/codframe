@@ -10,10 +10,9 @@
 
 package com.tlkj.cod.log.service.impl;
 
-import com.tlkj.cod.dao.jdbc.Finder;
+import com.tlkj.cod.log.model.config.CodLogConfig;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.model.system.entity.CodFrameSetDo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -40,7 +39,7 @@ public class CodLogServiceImpl implements CodLogService {
     List<CodLogService> codLogServices;
 
     @Autowired
-    Finder finder;
+    CodLogConfig codLogConfig;
 
     private static String setValue = "";
 
@@ -57,7 +56,7 @@ public class CodLogServiceImpl implements CodLogService {
         if (model.getLog() != null && StringUtils.isNotBlank(model.getLog().getType())){
             setValue = model.getLog().getType();
         } else {
-            setValue = getSetValue("clog");
+            setValue = codLogConfig.getType();
         }
         for (CodLogService f : codLogServices){
             if (f.getSupportType().equals(setValue)){
@@ -82,8 +81,9 @@ public class CodLogServiceImpl implements CodLogService {
      * @return 设置值
      */
     private String getSetValue(String setCode) {
-        CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", setCode).first(CodFrameSetDo.class);
-        return setDo.getSet_value();
+        // CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", setCode).first(CodFrameSetDo.class);
+        // return setDo.getSet_value();
+        return "";
     }
 
     @Override

@@ -12,6 +12,14 @@
     <artifactId>cod-data</artifactId>
 
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.197</version>
+        </dependency>
+
         <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-model</artifactId>

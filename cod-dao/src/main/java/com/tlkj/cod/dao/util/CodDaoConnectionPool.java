@@ -191,7 +191,7 @@ public class CodDaoConnectionPool {
     public synchronized void setDataSource(String name, DataSource dataSource){
         if (dataSource != null){
             if (StringUtils.isNotBlank(name)){
-                setDataSource(name, this.dataSource);
+                this.setDataSources(name, dataSource);
             }
         }
     }
@@ -321,9 +321,9 @@ public class CodDaoConnectionPool {
      * @param name       名称
      * @param dataSource 多重数据源
      */
-    private void setDataSource(String name, DataSource... dataSource){
+    private void setDataSources(String name, DataSource... dataSource){
         LinkedList<DataSource> linkedList = map.get(name);
-        if (linkedList.isEmpty()){
+        if (linkedList == null || linkedList.isEmpty()){
             linkedList = new LinkedList<>();
             linkedList.addAll(Arrays.asList(dataSource));
         } else {
