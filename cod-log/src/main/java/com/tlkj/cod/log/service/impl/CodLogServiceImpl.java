@@ -110,4 +110,14 @@ public class CodLogServiceImpl implements CodLogService {
     public void warn(String msg, Object... objects) {
         getLog().warn(msg, objects);
     }
+
+    public static void main(String[] args) {
+        String a = "/home/apache-tomcat-bbs-7.0.85/webapps/ROOT/r/cms/www/blue";
+        String b = "/home/apache-tomcat-bbs-7.0.85/webapps/ROOT/";
+        System.out.println(a.substring(b.length()));
+        String c = "/Users/sourcod/workspace/IdeaProjects/mczoo/jeebbs4-src/out/artifacts/jeebbs4_src_Web_exploded/r/cms/www/blue";
+        String d = "/Users/sourcod/workspace/IdeaProjects/mczoo/jeebbs4-src/out/artifacts/jeebbs4_src_Web_exploded/";
+        System.out.println(c.substring(d.length()));
+
+    }
 }
