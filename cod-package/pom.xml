@@ -22,6 +22,7 @@
     <artifactId>cod-package</artifactId>
 
     <description>部署模块</description>
+    <url>http://codframe.sourcod.com</url>
 
     <dependencies>
 
@@ -140,19 +141,6 @@
         </dependency>
 
     </dependencies>
-
-    <distributionManagement>
-        <repository>
-            <id>tlkj-releases</id>
-            <name>tlkj-releases</name>
-            <url>${codframe.nexus.releases.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>tlkj-snapshots</id>
-            <name>tlkj-snapshots</name>
-            <url>${codframe.nexus.snapshots.url</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <build>
         <defaultGoal>compile</defaultGoal>
@@ -296,4 +284,19 @@
             </resource>
         </resources>
     </build>
+
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

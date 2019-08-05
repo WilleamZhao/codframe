@@ -22,7 +22,13 @@
     <artifactId>cod-message</artifactId>
 
     <name>cod-message</name>
-    <url>http://codframe.tianlankeji.com</url>
+    <url>http://codframe.sourcod.com</url>
+
+    <properties>
+        <qcloudsms.version>1.0.6</qcloudsms.version>
+        <aliyun.sdk.core.version>3.7.0</aliyun.sdk.core.version>
+        <aliyun.sdk.dysmsapi.version>1.0.0</aliyun.sdk.dysmsapi.version>
+    </properties>
 
     <dependencies>
 
@@ -32,19 +38,20 @@
         <dependency>
             <groupId>com.github.qcloudsms</groupId>
             <artifactId>qcloudsms</artifactId>
-            <version>1.0.6</version>
+            <version>${qcloudsms.version}</version>
         </dependency>
 
         <!-- 阿里云短信 -->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>3.7.0</version>
+            <version>${aliyun.sdk.core.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-            <version>1.0.0</version>
+            <version>${aliyun.sdk.dysmsapi.version}</version>
         </dependency>
 
         <!-- cod -->
@@ -66,19 +73,6 @@
 
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>tlkj-releases</id>
-            <name>tlkj-releases</name>
-            <url>${codframe.nexus.releases.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>tlkj-snapshots</id>
-            <name>tlkj-snapshots</name>
-            <url>${codframe.nexus.snapshots.url</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -88,7 +82,7 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${project.build.sourceEncoding</encoding>
                 </configuration>
             </plugin>
 
@@ -103,4 +97,18 @@
             </plugin>-->
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

@@ -13,10 +13,10 @@ import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
  *
  * @author sourcod
  * @version 1.0
- * @className InitModuleData
+ * @className InitData
  * @date 2019/5/28 11:06 AM
  */
-public class InitModuleData implements CodModuleDataInitialize {
+public class InitData implements CodModuleDataInitialize {
 
     @Override
     public int order() {
@@ -35,29 +35,6 @@ public class InitModuleData implements CodModuleDataInitialize {
         bean.setUrl(codDataConfig.getUrl());
         bean.setName(CodDaoDatasourceTypeEnum.DATA.name());
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), bean);
-
-        // new 配置
-        // CodDataService codDataService = new CodDataServiceImpl();
-
-        // 执行初始化方法
-        // codDataService.init();
-
-        /*DataConnectBean dataConnectBean = new DataConnectBean();
-        dataConnectBean.setCharacterEncoding("utf-8");
-        dataConnectBean.setDriverClass("org.h2.Driver");
-        // dataConnectBean.setMaxActive();
-        dataConnectBean.setUrl("jdbc:h2:./codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL");
-        dataConnectBean.setUsername("codframe");
-        dataConnectBean.setPassword("123456");
-        CodDaoConnectionPool dbConnectionPool = new CodDaoConnectionPool();
-        DataSource dataSource = dbConnectionPool.getHikariDataSource(dataConnectBean);
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        Finder finder = new Finder(jdbcTemplate);
-        Updater updater = new Updater(jdbcTemplate);
-        CodDaoBean codDaoBean = new CodDaoBean();
-        codDaoBean.setFinder(finder);
-        codDaoBean.setUpdater(updater);*/
-        // codModuleLauncherModel.setCodData();
     }
 
     @Override

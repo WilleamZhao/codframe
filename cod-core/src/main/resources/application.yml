@@ -23,7 +23,7 @@ log:
   # 有配置文件使用配置文件没有使用数据库在没有默认clog
   type: log4j
   # 路径必须以 /  结尾
-  href: ./logs/
+  href: .cod-temp/codLog/
   # 按日期拆文件夹 不设置默认 yyyy/MM/dd 格式
   pattern: yyyy/MM/dd
   # 是否按日志级别拆分文件夹

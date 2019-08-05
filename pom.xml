@@ -50,7 +50,7 @@
     </modules>
 
     <name>codframe</name>
-    <url>http://codframe.tianlankeji.com</url>
+    <url>http://codframe.sourcod.com</url>
 
     <properties>
         <!-- 编码 -->
@@ -60,6 +60,7 @@
         <maven.compiler.version>3.8.0</maven.compiler.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
         <jdk.version>1.8</jdk.version>
 
         <maven.jar.plugin.version>2.4</maven.jar.plugin.version>
@@ -151,10 +152,6 @@
 
         <!-- lombok -->
         <lombok.version>1.16.20</lombok.version>
-
-        <h2.version>1.4.197</h2.version>
-
-        <tomcat-embed.version>8.5.23</tomcat-embed.version>
 
     </properties>
 
@@ -310,19 +307,6 @@
         </dependency>
 
     </dependencies>
-
-    <distributionManagement>
-        <repository>
-            <id>tlkj-releases</id>
-            <name>tlkj-releases</name>
-            <url>${codframe.nexus.releases.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>tlkj-snapshots</id>
-            <name>tlkj-snapshots</name>
-            <url>${codframe.nexus.snapshots.url</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <profiles>
         <!-- 开发环境 -->
@@ -515,9 +499,9 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven.compiler.version}</version>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                        <encoding>UTF-8</encoding>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <encoding>${project.build.sourceEncoding</encoding>
                     </configuration>
                 </plugin>
 
@@ -606,4 +590,17 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

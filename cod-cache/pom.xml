@@ -21,6 +21,7 @@
 
     <artifactId>cod-cache</artifactId>
 
+    <description>缓存模块</description>
 
     <properties>
 
@@ -70,11 +71,6 @@
             <artifactId>cod-log</artifactId>
             <version>${codframe.version}</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-util</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>-->
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-common</artifactId>
@@ -83,33 +79,15 @@
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-config</artifactId>
-            <version>1.0.3</version>
+            <version>${codframe.version}</version>
         </dependency>
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-launch</artifactId>
             <version>${codframe.version}</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-model</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>-->
 
     </dependencies>
-
-    <distributionManagement>
-        <repository>
-            <id>tlkj-releases</id>
-            <name>tlkj-releases</name>
-            <url>${codframe.nexus.releases.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>tlkj-snapshots</id>
-            <name>tlkj-snapshots</name>
-            <url>${codframe.nexus.snapshots.url</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <build>
         <plugins>
@@ -118,9 +96,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <!--<plugin>
@@ -134,4 +112,17 @@
             </plugin>-->
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

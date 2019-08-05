@@ -24,7 +24,7 @@
     <artifactId>cod-common</artifactId>
 
     <name>cod-common</name>
-    <url>http://codframe.tianlankeji.com</url>
+    <url>http://codframe.sourcod.com</url>
 
     <properties>
         <zxing.version>3.3.3</zxing.version>
@@ -108,19 +108,6 @@
 
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>tlkj-releases</id>
-            <name>tlkj-releases</name>
-            <url>${codframe.nexus.releases.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>tlkj-snapshots</id>
-            <name>tlkj-snapshots</name>
-            <url>${codframe.nexus.snapshots.url</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -128,9 +115,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -146,11 +133,23 @@
                         <groupId>net.sf.proguard</groupId>
                         <artifactId>proguard-base</artifactId>
                         <version>6.0.2</version>
-                        <!--<scope>runtime</scope>-->
                     </dependency>
                 </dependencies>
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

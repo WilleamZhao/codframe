@@ -11,6 +11,10 @@
 package com.tlkj.cod.cache.model;
 
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.io.File;
 
 /**
  * Desc codFrame Ehcache缓存配置model
@@ -20,6 +24,7 @@ package com.tlkj.cod.cache.model;
  * @className CodCacheEhcacheModel
  * @date 2019/2/11 9:20 PM
  */
+@Component
 public class CodCacheEhcacheModel {
 
     /**
@@ -30,7 +35,8 @@ public class CodCacheEhcacheModel {
     /**
      * 缓存目录
      */
-    private String rootDirectory = "codCache/ehcache";
+    @Value(value = "${cod.cache.ehcache.url:.cod-temp/codCache/ehcache}")
+    private String rootDirectory;
 
     /**
      * key类型

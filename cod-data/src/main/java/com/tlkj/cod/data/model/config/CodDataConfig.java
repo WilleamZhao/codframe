@@ -31,7 +31,7 @@ public class CodDataConfig {
     /**
      * 默认地址
      */
-    private String url = "jdbc:h2:./.codConfigDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL";
+    private String url = "jdbc:h2:./.cod-temp/codData/.codDataDB;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL";
 
     /**
      * 用户名

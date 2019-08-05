@@ -12,6 +12,9 @@
 
     <artifactId>cod-framework-bom</artifactId>
 
+    <description>使用框架模块</description>
+    <url>http://codframe.sourcod.com</url>
+
     <dependencies>
         <dependency>
             <groupId>com.tlkj</groupId>
@@ -28,12 +31,44 @@
             <artifactId>cod-server</artifactId>
             <version>${codframe.version}</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-core</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>-->
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-keep class com.tlkj.cod.filter.**</option>
+                    </options>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

@@ -41,17 +41,6 @@ public class CodDataServiceImpl implements CodDataService {
     @PostConstruct
     @Override
     public void init(){
-        /*CodDataConfig codDataConfig = new CodDataConfig();
-        DataConnectBean dataConnectBean = new DataConnectBean();
-        dataConnectBean.setCharacterEncoding(codDataConfig.getEncoding());
-        dataConnectBean.setDriverClass(codDataConfig.getDriver());
-        dataConnectBean.setUrl(codDataConfig.getUrl());
-        dataConnectBean.setUsername(codDataConfig.getUsername());
-        dataConnectBean.setPassword(codDataConfig.getPassword());
-        dataConnectBean.setName(CodDaoDatasourceTypeEnum.DATA.name());
-
-        CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), dataConnectBean);*/
-
         DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name());
 
         finder = new Finder(dataSource);
