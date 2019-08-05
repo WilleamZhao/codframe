@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.exception.NoSupportDataSourceException;
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang3.StringUtils;
@@ -105,7 +106,7 @@ public class CodDaoConnectionPool {
      * @return datasource
      */
     public DataSource getDataSource(String name){
-        return getDataSource(name, null);
+        return CodDaoConnectionPool.getInstance().getDataSource(name, null);
     }
 
     /**
@@ -114,7 +115,7 @@ public class CodDaoConnectionPool {
      * @return datasource
      */
     public DataSource getDataSource(DataConnectBean dataConnectBean){
-        return getDataSource("", dataConnectBean);
+        return CodDaoConnectionPool.getInstance().getDataSource("", dataConnectBean);
     }
 
     /**
@@ -224,15 +225,26 @@ public class CodDaoConnectionPool {
      * @return Hikari 数据源
      */
     private DataSource getHikariDataSource(DataConnectBean dataConnectBean){
-        HikariDataSource hikariDataSource = new HikariDataSource();
-        hikariDataSource.setDriverClassName(dataConnectBean.getDriverClass());
+        HikariConfig jdbcConfig = new HikariConfig();
+        jdbcConfig.setPoolName(getClass().getName());
+        jdbcConfig.setDriverClassName(dataConnectBean.getDriverClass());
+        jdbcConfig.setJdbcUrl(dataConnectBean.getUrl());
+        jdbcConfig.setUsername(dataConnectBean.getUsername());
+        jdbcConfig.setPassword(dataConnectBean.getPassword());
+        jdbcConfig.setMaximumPoolSize(dataConnectBean.getMaxActive());
+        jdbcConfig.setAutoCommit(dataConnectBean.isAutoCommit());
+
+        HikariDataSource hikariDataSource = new HikariDataSource(jdbcConfig);
+
+        /*hikariDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         hikariDataSource.setUsername(dataConnectBean.getUsername());
         hikariDataSource.setPassword(dataConnectBean.getPassword());
         hikariDataSource.setJdbcUrl(dataConnectBean.getUrl());
+
         hikariDataSource.setMaximumPoolSize(dataConnectBean.getMaxActive());
         hikariDataSource.setMinimumIdle(dataConnectBean.getMinIdle());
         hikariDataSource.setConnectionTestQuery(dataConnectBean.getTestQuery());
-        hikariDataSource.setAutoCommit(dataConnectBean.isAutoCommit());
+        hikariDataSource.setAutoCommit(dataConnectBean.isAutoCommit());*/
         // 设置编码
         if (StringUtils.isNotBlank(dataConnectBean.getUseUnicode())){
             hikariDataSource.addDataSourceProperty("useUnicode", dataConnectBean.getUseUnicode());
@@ -338,7 +350,23 @@ public class CodDaoConnectionPool {
      * @return
      */
     private DataSource dynamicGetDataSource(String name){
-        return dynamicGetDataSource(name, 0);
+
+        // 设置数据源 (获取数据源序号)
+        Integer num = this.mapNo.get(name) == null ? 0 : this.mapNo.get(name);
+        DataSource dataSource;
+
+        // 判断是否超过已有数据源
+        if (num < getDataSourceSize(name)){
+            dataSource = this.map.get(name).get(num);
+            // 下一次数据源(取下一个数据源)
+            if (dataSource == null){
+                // 设置下次数据源序号
+                this.mapNo.put(name, num + 1);
+                dataSource = dynamicGetDataSource(name);
+            }
+            return dataSource;
+        }
+        return null;
     }
 
     /**
@@ -352,14 +380,23 @@ public class CodDaoConnectionPool {
         // 设置数据源
         Integer no = this.mapNo.get(name);
         DataSource dataSource;
+
         if (no != null){
             num = no+1;
         }
 
+        if (no == null){
+            num = 0;
+        }
+
         // 判断是否超过已有数据源
         if (num < getDataSourceSize(name)){
-            this.mapNo.put(name, num);
             dataSource = this.map.get(name).get(num);
+            // 下一次数据源(取下一个数据源)
+            if (dataSource == null){
+                this.mapNo.put(name, num);
+                dataSource = dynamicGetDataSource(name, num);
+            }
             return dataSource;
         }
         return null;

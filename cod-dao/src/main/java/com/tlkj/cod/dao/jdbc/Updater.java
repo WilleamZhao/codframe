@@ -45,7 +45,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2018/7/8 下午9:05
  */
 @Repository
-public class Updater extends CodDao {
+public class Updater {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -61,9 +61,9 @@ public class Updater extends CodDao {
      */
     @PostConstruct
     public void init(){
-        DataSource dataSource = super.getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
         // CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
-        if (dataSource != null){
+        if (dataSource != null) {
             this.jdbcTemplate = new JdbcTemplate(dataSource);
         }
     }
@@ -81,7 +81,7 @@ public class Updater extends CodDao {
      * @param name 数据源名称
      */
     public void setNotAutoCommit(String name){
-        DataSource dataSource = getDatasource(name);
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
         try {
             dataSource.getConnection().setAutoCommit(false);
         } catch (SQLException e) {
@@ -111,7 +111,7 @@ public class Updater extends CodDao {
      * @return
      */
     public Updater to(String name) {
-        return to(getDataSource(name));
+        return to(CodDaoConnectionPool.getInstance().getDataSource(name));
     }
 
     public Updater to(DataSource dataSource) {
@@ -123,7 +123,7 @@ public class Updater extends CodDao {
      * @param name 数据源名称
      */
     public Updater toDefault(String name) {
-        this.jdbcTemplate = new JdbcTemplate(getDataSource(name));
+        this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
         return this;
     }
 
@@ -177,7 +177,7 @@ public class Updater extends CodDao {
     }
 
     public Update delete(String table, String name) {
-        DataSource dataSource = getDataSource(name);
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
         if (dataSource == null){
             return null;
         }
@@ -193,7 +193,7 @@ public class Updater extends CodDao {
     }
 
     public Update update(String table, String name) {
-        DataSource dataSource = getDataSource(name);
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
         if (dataSource == null){
             return null;
         }
@@ -262,7 +262,7 @@ public class Updater extends CodDao {
      * @return
      */
     private JdbcTemplate getJdbcTemplate(String name) {
-        return StringUtils.isNotBlank(name) ? new JdbcTemplate(getDatasource(name)) : jdbcTemplate;
+        return StringUtils.isNotBlank(name) ? new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name)) : jdbcTemplate;
     }
 
     /**

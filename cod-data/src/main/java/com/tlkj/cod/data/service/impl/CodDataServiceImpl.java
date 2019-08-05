@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,11 +29,11 @@ import java.util.stream.Collectors;
 @Service
 public class CodDataServiceImpl implements CodDataService {
 
-    @Autowired
-    Finder finder;
+    // @Autowired
+    private Finder finder;
 
-    @Autowired
-    Updater updater;
+    // @Autowired
+    private Updater updater;
 
     /**
      * 初始化
@@ -40,7 +41,7 @@ public class CodDataServiceImpl implements CodDataService {
     @PostConstruct
     @Override
     public void init(){
-        CodDataConfig codDataConfig = new CodDataConfig();
+        /*CodDataConfig codDataConfig = new CodDataConfig();
         DataConnectBean dataConnectBean = new DataConnectBean();
         dataConnectBean.setCharacterEncoding(codDataConfig.getEncoding());
         dataConnectBean.setDriverClass(codDataConfig.getDriver());
@@ -48,9 +49,13 @@ public class CodDataServiceImpl implements CodDataService {
         dataConnectBean.setUsername(codDataConfig.getUsername());
         dataConnectBean.setPassword(codDataConfig.getPassword());
         dataConnectBean.setName(CodDaoDatasourceTypeEnum.DATA.name());
-        CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), dataConnectBean);
-        finder = new Finder(CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
-        updater = new Updater(CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name()));
+
+        CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), dataConnectBean);*/
+
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name());
+
+        finder = new Finder(dataSource);
+        updater = new Updater(dataSource);
 
         // config
         if (verifyExists(CodDataConfigDo.TABLE_NAME)){

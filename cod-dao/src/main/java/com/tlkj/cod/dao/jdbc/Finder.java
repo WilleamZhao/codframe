@@ -12,11 +12,13 @@ package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
 import com.tlkj.cod.common.CodCommonField;
+import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.dao.annotation.CodDaoTable;
 import com.tlkj.cod.dao.annotation.CodDaoViewColumn;
 import com.tlkj.cod.dao.exception.CodDataViewException;
 import com.tlkj.cod.dao.model.CodDaoDo;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
+import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.dao.view.CodDaoDataView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -51,8 +53,7 @@ public class Finder extends CodDao {
      */
     @PostConstruct
     public void init(){
-        DataSource dataSource = super.getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
-        // CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
         if (dataSource != null){
             this.jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -792,8 +793,11 @@ public class Finder extends CodDao {
             if (dev) {
                 System.out.println(g.toSQL());
             }
-            //List<T> data = jdbcTemplate.query(g.toSQL(), g.getParameters(), mapper);
-            return null;
+            List<T> data = jdbcTemplate.query(g.toSQL(), g.getParameters(), mapper);
+            if (dev) {
+                System.out.println(CodCommonJson.dump(data));
+            }
+            return data;
         }
 
         public Generator createGenerator() {

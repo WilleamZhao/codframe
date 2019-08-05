@@ -63,7 +63,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>com.github.wvengen</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
                 <configuration>
@@ -71,7 +71,7 @@
                         <option>-keep class com.tlkj.cod.test.**</option>
                     </options>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

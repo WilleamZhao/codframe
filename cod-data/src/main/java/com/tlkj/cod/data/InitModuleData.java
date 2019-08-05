@@ -28,11 +28,12 @@ public class InitModuleData implements CodModuleDataInitialize {
         // 设置 CodData 数据库连接信息 H2
         DataConnectBean bean = new DataConnectBean();
         CodDataConfig codDataConfig = new CodDataConfig();
-        bean.setPassword(codDataConfig.getPassword());
-        bean.setUsername(codDataConfig.getUsername());
-        bean.setDriverClass(codDataConfig.getDriver());
-        bean.setUrl(codDataConfig.getUrl());
         bean.setCharacterEncoding(codDataConfig.getEncoding());
+        bean.setDriverClass(codDataConfig.getDriver());
+        bean.setUsername(codDataConfig.getUsername());
+        bean.setPassword(codDataConfig.getPassword());
+        bean.setUrl(codDataConfig.getUrl());
+        bean.setName(CodDaoDatasourceTypeEnum.DATA.name());
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), bean);
 
         // new 配置

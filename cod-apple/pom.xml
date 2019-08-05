@@ -59,15 +59,21 @@
 
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.github.wvengen</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
-                <configuration>
-                    <options>
-                        <option>-keep class com.tlkj.cod.apple.**</option>
-                    </options>
-                </configuration>
-            </plugin>
+                <version>2.1.1</version>
+                <executions>
+                    <execution>
+                        &lt;!&ndash; 混淆时刻，这里是打包的时候混淆&ndash;&gt;
+                        <phase>package</phase>
+                        <goals>
+                            &lt;!&ndash; 使用插件的什么功能，当然是混淆&ndash;&gt;
+                            <goal>proguard</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
 </project>

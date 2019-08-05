@@ -2,10 +2,13 @@ package com.tlkj.cod.admin;
 
 import com.tlkj.cod.admin.model.config.CodAdminDatabaseConfig;
 import com.tlkj.cod.dao.bean.DataConnectBean;
+import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+
+import javax.sql.DataSource;
 
 /**
  * Desc 初始化管理模块
@@ -24,18 +27,19 @@ public class InitAdmin implements CodModuleInitialize {
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        // codModuleLauncherModel.getSpring().refresh();
-
         DataConnectBean bean = new DataConnectBean();
 
-        /*CodAdminDatabaseConfig databaseConfig = (CodAdminDatabaseConfig) codModuleLauncherModel.getSpring().getBean("codAdminDatabaseConfig");
+        /*CodAdminDatabaseConfig databaseConfig = (CodAdminDatabaseConfig) codModuleLauncherModel.getSpring().getBean("CodAdminDatabaseConfig");
         bean.setPassword(databaseConfig.getPassword());
         bean.setUsername(databaseConfig.getUsername());
         bean.setDriverClass(databaseConfig.getDriver());
         bean.setUrl(databaseConfig.getUrl());
-        */
-        codModuleLauncherModel.getSpring().register();
-        CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);
+
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name());
+        Finder finder = new Finder(dataSource);
+        finder.from();
+
+        CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);*/
         System.out.println("初始化成功");
         codModuleLauncherModel.finish();
 

@@ -524,7 +524,7 @@
                 <plugin>
                     <groupId>com.github.wvengen</groupId>
                     <artifactId>proguard-maven-plugin</artifactId>
-                    <version>2.0.11</version>
+                    <version>2.1.1</version>
                     <executions>
                         <execution>
                             <!-- 混淆时刻，这里是打包的时候混淆-->
@@ -549,35 +549,35 @@
                             <!-- JDK目标版本1.8-->
                             <option>-target 1.8</option>
                             <!-- 不做收缩（删除注释、未被引用代码）-->
-                            <!--<option>-dontshrink</option>-->
+                            <option>-dontshrink</option>
                             <!-- 不做优化（变更代码实现逻辑）-->
-                            <!--<option>-dontoptimize</option>-->
+                            <option>-dontoptimize</option>
                             <!-- 不路过非公用类文件及成员-->
-                            <!--<option>-dontskipnonpubliclibraryclasses</option>-->
-                            <!--<option>-dontskipnonpubliclibraryclassmembers</option>-->
+                            <option>-dontskipnonpubliclibraryclasses</option>
+                            <option>-dontskipnonpubliclibraryclassmembers</option>
                             <!--不用大小写混合类名机制-->
-                            <!--<option>-dontusemixedcaseclassnames</option>-->
+                            <option>-dontusemixedcaseclassnames</option>
 
                             <!-- 优化时允许访问并修改有修饰符的类和类的成员 -->
-                            <!--<option>-allowaccessmodification</option>-->
+                            <option>-allowaccessmodification</option>
                             <!-- 确定统一的混淆类的成员名称来增加混淆-->
-                            <!--<option>-useuniqueclassmembernames</option>-->
+                            <option>-useuniqueclassmembernames</option>
                             <!-- 不混淆所有包名-->
-                            <!--<option>-keeppackagenames</option>-->
+                            <option>-keeppackagenames</option>
 
                             <!-- 需要保持的属性：异常，注解等-->
                             <!--<option>-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod
                           </option>-->
                             <!-- 不混淆所有的set/get方法 -->
-                            <!--<option>-keepclassmembers public class * {void set*(***);*** get*();}</option>-->
+                            <option>-keepclassmembers public class * {void set*(***);*** get*();}</option>
 
                             <!-- 不混淆包下的所有类名，且类中的方法也不混淆-->
-                            <!--<option>-keep class com.xxx.xxx.bboss.SystemConfig { <methods>; }</option>
-                            <option>-keep class com.xxx.xxx.framework.** { *; }</option>
-                            <option>-keep class com.xxx.xxx.xxx.controller.** { <methods>; }</option>
-                            <option>-keep class com.xxx.xxx.xxx.dao.** { <methods>; }</option>
-                            <option>-keep class com.xxx.xxx.xxx.exception { <methods>; }</option>
-                            <option>-keep class com.xxx.xxx.xxx.model.** { <methods>; }</option>-->
+                            <!--<option>-keep class com.tlkj.cod.bboss.SystemConfig { <methods>; }</option>
+                            <option>-keep class com.tlkj.cod.framework.** { *; }</option>
+                            <option>-keep class com.tlkj.cod.controller.** { <methods>; }</option>
+                            <option>-keep class com.tlkj.cod.dao.** { <methods>; }</option>
+                            <option>-keep class com.tlkj.cod.exception { <methods>; }</option>
+                            <option>-keep class com.tlkj.cod.model.** { <methods>; }</option>-->
 
                         </options>
                         <!--class 混淆后输出的jar包-->
@@ -588,7 +588,7 @@
                             <lib>${java.home}/lib/jce.jar</lib>
                         </libs>
                         <!-- 对什么东西进行加载，这里仅有classes成功，毕竟你也不可能对配置文件及JSP混淆吧-->
-                        <!--<injar>classes</injar>-->
+                        <injar>classes</injar>
                         <!-- 输出目录-->
                         <outputDirectory>${project.build.directory}</outputDirectory>
                     </configuration>
@@ -596,7 +596,8 @@
                         <dependency>
                             <groupId>net.sf.proguard</groupId>
                             <artifactId>proguard-base</artifactId>
-                            <version>RELEASE</version>
+                            <version>6.0.2</version>
+                            <!--<scope>runtime</scope>-->
                         </dependency>
                     </dependencies>
                 </plugin>

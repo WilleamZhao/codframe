@@ -138,7 +138,7 @@
 
         <plugins>
             <!-- 配置jdk版本 -->
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
@@ -147,7 +147,7 @@
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
-            </plugin>-->
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -189,7 +189,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>com.github.wvengen</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
                 <configuration>
@@ -197,7 +197,7 @@
                         <option>-keep class com.tlkj.cod.boot.**</option>
                     </options>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
             <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
