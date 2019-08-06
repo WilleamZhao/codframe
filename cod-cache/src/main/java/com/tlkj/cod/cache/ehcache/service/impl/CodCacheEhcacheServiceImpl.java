@@ -32,6 +32,7 @@ import org.ehcache.config.units.MemoryUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -57,7 +58,8 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
 
     private static CacheManager cacheManager = null;
 
-    private static CodCacheEhcacheModel codCacheEhcacheModel = new CodCacheEhcacheModel();
+    // @Autowired
+    private CodCacheEhcacheModel codCacheEhcacheModel;
 
     @Autowired
     CodLogService codLogService;
@@ -66,12 +68,13 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
      * 构造方法初始化 cacheManager
      */
     public CodCacheEhcacheServiceImpl(){
-        new CodCacheEhcacheServiceImpl(codCacheEhcacheModel);
+        // new CodCacheEhcacheServiceImpl(codCacheEhcacheModel);
     }
 
     /**
      * TODO 错误
      */
+    @Autowired
     public CodCacheEhcacheServiceImpl(CodCacheEhcacheModel codCacheEhcacheModel){
         // CacheManager管理缓存
         if (cacheManager == null){

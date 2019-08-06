@@ -14,8 +14,6 @@ package com.tlkj.cod.cache.model;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-
 /**
  * Desc codFrame Ehcache缓存配置model
  *

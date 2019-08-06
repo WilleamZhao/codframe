@@ -15,13 +15,19 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOP</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <packaging>maven-plugin</packaging>
 
     <artifactId>cod-boot</artifactId>
 
     <description>codFrame框架启动模块</description>
+
+    <properties>
+        <maven.plugin.version>3.6.0</maven.plugin.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -126,6 +132,16 @@
             <artifactId>cod-admin</artifactId>
             <version>${codframe.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.6.0</version>
+        </dependency>
 
     </dependencies>
 
@@ -206,6 +222,11 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.6.0</version>
+            </plugin>
         </plugins>
 
         <!--<resources>

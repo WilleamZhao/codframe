@@ -53,7 +53,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
     /**
      * 日志路径
      */
-    private static String logHref = systemSetLog != null && StringUtils.isNotBlank(systemSetLog.getHref()) ? systemSetLog.getHref() : "./logs/";
+    private static String logHref = systemSetLog != null && StringUtils.isNotBlank(systemSetLog.getHref()) ? systemSetLog.getHref() : "./.cod-temp/codLog/";
 
     /**
      * 日期路径

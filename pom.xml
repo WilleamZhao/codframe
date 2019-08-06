@@ -17,7 +17,7 @@
     <groupId>com.tlkj</groupId>
     <artifactId>tlkj.codframe</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOP</version>
     <modules>
         <module>cod-dao</module>
         <module>cod-model</module>
@@ -47,6 +47,7 @@
         <module>cod-email</module>
         <module>cod-video</module>
         <module>cod-framework-bom</module>
+        <module>cod-maven</module>
     </modules>
 
     <name>codframe</name>
@@ -153,6 +154,9 @@
         <!-- lombok -->
         <lombok.version>1.16.20</lombok.version>
 
+        <!-- httl -->
+        <httl.version>1.0.11</httl.version>
+
     </properties>
 
 
@@ -214,6 +218,13 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.version}</version>
         </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.github.httl/httl -->
+        <dependency>
+            <groupId>com.github.httl</groupId>
+            <artifactId>httl</artifactId>
+            <version>${httl.version}</version>
+        </dependency>
 
         <!-- json -->
         <dependency>
@@ -501,7 +512,7 @@
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
-                        <encoding>${project.build.sourceEncoding</encoding>
+                        <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
 
@@ -586,6 +597,17 @@
                     </dependencies>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>3.6.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.tlkj</groupId>
+                    <artifactId>cod-maven-plugin</artifactId>
+                    <version>1.0.4-SNAPSHOT</version>
+                </plugin>
 
             </plugins>
         </pluginManagement>

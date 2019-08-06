@@ -48,7 +48,7 @@ public class SystemSetLog {
     /**
      * 日志等级
      */
-    private String level = "debug";
+    private String level = "info";
 
     /**
      * 是否打印控制台日志

@@ -112,6 +112,10 @@ public class CodCommonIO {
         if (!createPath(path)){
             return;
         }
+        if (path.contains("com.tlkj.cod.core.launcher")){
+            System.out.println(path);
+
+        }
         if (!fileName.startsWith("/")){
             fileName = "/" + fileName;
         }
