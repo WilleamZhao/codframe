@@ -46,7 +46,7 @@ import java.util.LinkedList;
  */
 @Primary
 @Component(value = "codServerJetty")
-public class CodServerServiceJettyImpl implements CodServerService {
+public class CodServerServiceJettyImpl implements CodServerService, Runnable {
 
     private static Server server = null;
     private static CodServerModel startModel = CodServerModel.getInstance();
@@ -55,14 +55,12 @@ public class CodServerServiceJettyImpl implements CodServerService {
     private static final String CONTEXT_PATH = "/";
     private static final String MAPPING_URL = "/*";
 
-    private CodModuleLauncherModel codModuleLauncherModel;
+    private static CodModuleLauncherModel codModuleLauncherModel;
 
     @Override
-    public void start(CodModuleLauncherModel codModuleLauncherModel) {
-        this.codModuleLauncherModel = codModuleLauncherModel;
-        // 设置服务信息
-        setServerInfo();
-        CodServerModel codServerModel = (CodServerModel) this.codModuleLauncherModel.getServer();
+    public void run() {
+
+        CodServerModel codServerModel = (CodServerModel) CodServerServiceJettyImpl.codModuleLauncherModel.getServer();
         codServerModel = codServerModel == null ? new CodServerJettyModel() : codServerModel;
         AnnotationConfigWebApplicationContext applicationContext = (AnnotationConfigWebApplicationContext) codModuleLauncherModel.getSpring();
 
@@ -81,9 +79,6 @@ public class CodServerServiceJettyImpl implements CodServerService {
         ServletHolder servletHolder = new ServletHolder(dispatcherServlet);
         ServletContextHandler context = new ServletContextHandler();
         context.addServlet(servletHolder, "/codframe/*");
-
-        // TODO 初始化
-        // context.setInitParameter("contextInitializerClasses", CodInitializer.class.getName());
 
         LinkedList<CodServerFilterModel> filters = codServerModel.getFilters();
         // 动态添加filter
@@ -118,10 +113,6 @@ public class CodServerServiceJettyImpl implements CodServerService {
                 context.addEventListener(listener);
             }
         }
-
-        // context.addEventListener(new ContextLoaderListener(annotationConfigWebApplicationContext));
-        // context.addEventListener(new RequestContextListener());
-
         server = new Server();
 
         server.setHandler(context);
@@ -146,6 +137,31 @@ public class CodServerServiceJettyImpl implements CodServerService {
             System.err.println("启动jetty服务失败");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void start(CodModuleLauncherModel codModuleLauncherModel) {
+        CodServerServiceJettyImpl.codModuleLauncherModel = codModuleLauncherModel;
+        // 设置服务信息
+        setServerInfo();
+
+        Thread thread = new Thread(new CodServerServiceJettyImpl());
+        thread.start();
+
+
+        // TODO 初始化
+        // context.setInitParameter("contextInitializerClasses", CodInitializer.class.getName());
+
+
+
+        // context.addEventListener(new ContextLoaderListener(annotationConfigWebApplicationContext));
+        // context.addEventListener(new RequestContextListener());
+
+
+    }
+
+    class JettyJoin extends Thread{
+
     }
 
     private void setServerInfo(){

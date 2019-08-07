@@ -227,6 +227,13 @@
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.6.0</version>
             </plugin>
+
+            <plugin>
+                <groupId>com.tlkj</groupId>
+                <artifactId>cod-maven-plugin</artifactId>
+                <version>1.0.4-SNAPSHOP</version>
+            </plugin>
+
         </plugins>
 
         <!--<resources>

@@ -25,6 +25,11 @@ import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 public class InitModuleServlet implements CodModuleServletInitialize {
 
     @Override
+    public String name() {
+        return "servlet";
+    }
+
+    @Override
     public int order() {
         return CodModuleOrderEnum.SERVLET.getOrder();
     }
@@ -32,11 +37,11 @@ public class InitModuleServlet implements CodModuleServletInitialize {
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
 
-        System.out.println("初始化servlet");
+        // System.out.println("初始化servlet");
     }
 
     @Override
     public void fail(Throwable e) {
-        System.out.println("初始化servlet失败");
+        // System.out.println("初始化servlet失败");
     }
 }

@@ -10,6 +10,7 @@
 
 package com.tlkj.cod.core.launcher;
 
+import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.core.common.CodCoreFindClass;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.core.env.MapPropertySource;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,6 +57,8 @@ public class CodLauncher {
      */
     public static void main(String[] args) {
         System.out.println("开始启动codFrame");
+        Date startDate = CodCommonDate.now();
+
         if (LAUNCHER_MODEL.isStart()){
             return;
         }
@@ -138,7 +142,10 @@ public class CodLauncher {
             i++;
         }
         System.out.println("启动模块数量:" + list.size());
+        Date endDate = CodCommonDate.now();
         System.out.println("codFrame框架 启动完成.");
+        String diffTime =CodCommonDate.getTimeDifference(startDate, endDate);
+        System.out.println("启动时间: " + CodCommonDate.formatDate(CodCommonDate.parseDate(diffTime, CodCommonDate.PATTERN_DIFF), "mm分:ss秒"));
     }
 
     private void orderModule(int order, LinkedList list, CodModuleInitialize codModuleInitialize){
