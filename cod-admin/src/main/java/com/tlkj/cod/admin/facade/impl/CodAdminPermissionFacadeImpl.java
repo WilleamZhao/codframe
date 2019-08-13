@@ -5,17 +5,17 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade.impl;
 
 import com.tlkj.cod.admin.facade.CodAdminPermissionFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionTreeDto;
+import com.tlkj.cod.admin.model.dto.CodAdminRoleListDto;
 import com.tlkj.cod.admin.service.CodAdminPermissionService;
 import com.tlkj.cod.admin.service.CodAdminUserRoleService;
 import com.tlkj.cod.admin.service.CodAdminUserService;
-import com.tlkj.cod.model.system.dto.CodFramePermissionTreeDto;
-import com.tlkj.cod.model.system.dto.CodFrameRoleListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,15 +48,15 @@ public class CodAdminPermissionFacadeImpl implements CodAdminPermissionFacade {
      * @return 权限列表
      */
     @Override
-    public List<CodFramePermissionTreeDto> getPermissionTreeByUserId(String userId) {
-        List<CodFrameRoleListDto> dtos = codAdminUserRoleService.listRole(userId);
-        String roleIds = dtos.stream().map(CodFrameRoleListDto::getId).collect(Collectors.joining(","));
+    public List<CodAdminPermissionTreeDto> getPermissionTreeByUserId(String userId) {
+        List<CodAdminRoleListDto> dtos = codAdminUserRoleService.listRole(userId);
+        String roleIds = dtos.stream().map(CodAdminRoleListDto::getId).collect(Collectors.joining(","));
         return codAdminPermissionService.getPermissionTree(roleIds);
     }
 
     @Override
-    public CodFramePermissionTreeDto getResource() {
-        CodFrameRoleListDto dto = new CodFrameRoleListDto();
+    public CodAdminPermissionTreeDto getResource() {
+        CodAdminRoleListDto dto = new CodAdminRoleListDto();
 
         return null;
     }

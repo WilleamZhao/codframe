@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CodFileLocalConfig {
 
-    @Value("${cod.file.local.url}")
+    @Value("${cod.file.config.local.url:./.cod-temp/codFile/}")
     private String url;
 
 

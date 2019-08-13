@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.security.realm;
@@ -15,9 +15,6 @@ import com.tlkj.cod.common.CodCommonUUID;
 import com.tlkj.cod.core.facade.LoginUserFacade;
 import com.tlkj.cod.core.security.token.StatelessToken;
 import com.tlkj.cod.core.service.LoginUserService;
-import com.tlkj.cod.model.system.dto.CodFramePermissionItemDto;
-import com.tlkj.cod.model.system.dto.CodFramePermissionTreeDto;
-import com.tlkj.cod.model.system.entity.CodFrameUserDo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -39,7 +36,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -90,48 +86,7 @@ public class CodRealm extends AuthorizingRealm {
 
         StatelessToken statelessToken = (StatelessToken) authenticationToken;
 
-        // 获取用户名
-        String username = statelessToken.getUsername();
-        CodFrameUserDo dto = userService.getUserByUsername(username);
-
-        /*
-         * 检测是否有此用户
-         */
-        if(dto == null){
-            //没有找到账号异常
-            throw new UnknownAccountException();
-        }
-
-        /*
-         * 检验账号是否被锁定
-         */
-        if("0".equals(dto.getState())){
-            //抛出账号锁定异常
-            throw new LockedAccountException();
-        }
-        String password = statelessToken.getClientDigest();
-        SimpleAuthenticationInfo info = null;
-        if (StringUtils.isNotBlank(password)){
-            String token = CodCommonUUID.getUUID();
-            info = new SimpleAuthenticationInfo(dto, password, token);
-            Subject o = SecurityUtils.getSubject();
-            codCacheManager.set(token, dto);
-        } else {
-            throw new CredentialsException();
-        }
-/*
-        authenticationToken.getPrincipal();
-        StatelessToken statelessToken = (StatelessToken) authenticationToken;
-
-        String username = statelessToken.getUsername();
-        //根据用户名获取密钥（和客户端的一样）
-        String key = getKey(username);
-        //在服务器端生成客户端参数消息摘要
-        // String serverDigest = Jwt.createJavaWebToken(statelessToken.getParams());
-        String password = statelessToken.getClientDigest();
-        //然后进行客户端消息摘要和服务器端消息摘要的匹配
-        return new SimpleAuthenticationInfo(username, password, getName());*/
-        return info;
+        return null;
     }
 
     public CodRealm() {
@@ -150,25 +105,8 @@ public class CodRealm extends AuthorizingRealm {
         while (iterator.hasNext()){
             token = iterator.next().toString();
         }
-        CodFrameUserDo codFrameUserDo = (CodFrameUserDo) codCacheManager.get(token);
-        // CodFrameUserDo codFrameUserDo = (CodFrameUserDo) subject.getPrincipals().getPrimaryPrincipal();
-
         SimpleAuthorizationInfo authorizationInfo =  new SimpleAuthorizationInfo();
 
-        if (codFrameUserDo != null){
-            // 角色
-            List<CodFramePermissionTreeDto> list = loginUserFacade.getPermission(codFrameUserDo.getId());
-            if (list == null){
-                return null;
-            }
-            // 权限
-            List<CodFramePermissionItemDto> permissionItemDtos = new ArrayList<>();
-            list.forEach(item -> {
-                permissionItemDtos.addAll(item.getPermission());
-            });
-            codCacheManager.set(token + "permission", list);
-            codCacheManager.set(token + "user", codFrameUserDo);
-        }
         return authorizationInfo;
     }
 

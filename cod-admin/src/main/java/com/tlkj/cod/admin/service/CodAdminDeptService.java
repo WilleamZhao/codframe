@@ -5,14 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminDeptListDto;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameDeptListDto;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public interface CodAdminDeptService {
      * @param pageSize  每页显示条数
      * @return 部门列表
      */
-    Page<List<CodFrameDeptListDto>> listDept(String deptname, String deptNo, String deptLevel, String page, String pageSize);
+    Page<List<CodAdminDeptListDto>> listDept(String deptname, String deptNo, String deptLevel, String page, String pageSize);
 
     /**
      * 保存部门

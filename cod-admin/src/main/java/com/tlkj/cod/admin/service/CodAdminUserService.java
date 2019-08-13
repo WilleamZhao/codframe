@@ -5,14 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminUserDto;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameUserDto;
 
 import java.util.List;
 
@@ -31,21 +31,21 @@ public interface CodAdminUserService {
      * @param userDto 用户信息Dto
      * @return 状态码
      */
-    StatusCode addUser(CodFrameUserDto userDto);
+    StatusCode addUser(CodAdminUserDto userDto);
 
     /**
      * 获取用户信息
      * @param id 主键
      * @return 状态码
      */
-    CodFrameUserDto getUser(String id);
+    CodAdminUserDto getUser(String id);
 
     /**
      * 从缓存中获取token
      * @param token token
      * @return 在缓存中获取token
      */
-    CodFrameUserDto getUserByCache(String token);
+    CodAdminUserDto getUserByCache(String token);
 
     /**
      * 根据登录账号获取用户信息
@@ -59,7 +59,7 @@ public interface CodAdminUserService {
      * @param pageSize 页数大小
      * @return 状态码
      */
-    Page<List<CodFrameUserDto>> listUser(String page, String pageSize, String userName, String loginAccount, String userPhone, String userSex, String state);
+    Page<List<CodAdminUserDto>> listUser(String page, String pageSize, String userName, String loginAccount, String userPhone, String userSex, String state);
 
     /**
      * 保存用户

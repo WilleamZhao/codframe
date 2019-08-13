@@ -1,15 +1,12 @@
 package com.tlkj.cod.data.service.impl;
 
-import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.dao.util.CreateTable;
-import com.tlkj.cod.data.model.config.CodDataConfig;
 import com.tlkj.cod.data.model.entity.CodDataConfigDo;
 import com.tlkj.cod.data.service.CodDataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -29,10 +26,8 @@ import java.util.stream.Collectors;
 @Service
 public class CodDataServiceImpl implements CodDataService {
 
-    // @Autowired
     private Finder finder;
 
-    // @Autowired
     private Updater updater;
 
     /**
@@ -51,6 +46,86 @@ public class CodDataServiceImpl implements CodDataService {
             String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);
             updater.execute(sql);
         }
+
+        // 执行初始化数据
+        int num = finder.from(CodDataConfigDo.TABLE_NAME).select("count(*)").firstForObject(Integer.class);
+        if (num == 0){
+            initDataSql();
+        }
+    }
+
+    /**
+     * 执行初始化数据
+     * @return
+     */
+    private void initDataSql(){
+        // 文件
+        setData("cod.file.config.type", "local");
+        // 本地
+        setData("cod.file.config.local.url", "./.cod-temp/codFile/");
+        // oss
+        setData("cod.file.config.alioss.endPoint", "http://oss-cn-beijing.aliyuncs.com");
+        setData("cod.file.config.alioss.accessKeyId", "accessKeyId");
+        setData("cod.file.config.alioss.accessKeySecret", "accessKeySecret");
+        setData("cod.file.config.alioss.bucketName", "codframe");
+        setData("cod.file.config.alioss.maxConnections", "200");
+        setData("cod.file.config.alioss.socketTimeout", "1000");
+        setData("cod.file.config.alioss.maxErrorRetry", "3");
+        setData("cod.file.config.alioss.projectName", "codframe");
+        setData("cod.file.config.alioss.headUrl", "https://codframe.oss-cn-beijing.aliyuncs.com/");
+        // qiniu
+        setData("cod.file.config.qiniu.accessKey", "accessKey");
+        setData("cod.file.config.qiniu.secretKey", "secretKey");
+
+        // 日志
+        setData("cod.log.config.type", "clog");
+        setData("cod.log.config.href", ".cod-temp/codLog/");
+        setData("cod.log.config.pattern", "yyyy/MM/dd");
+        setData("cod.log.config.split", "true");
+        setData("cod.log.config.size", "10M");
+        setData("cod.log.config.level", "info");
+        setData("cod.log.config.console", "true");
+
+        // 缓存
+        setData("cod.cache.config.type", "codCacheEhcache");
+        setData("cod.cache.config.isOpen", "1");
+        setData("cod.cache.config.isGlobal", "0");
+        setData("cod.cache.config.expire", "30");
+        setData("cod.cache.config.last", "true");
+        // memcached
+        setData("cod.cache.config.memcache.host", "127.0.0.1");
+        setData("cod.cache.config.memcache.port", "8000");
+        setData("cod.cache.config.memcache.username", "codCacheMemcache");
+        setData("cod.cache.config.memcache.password", "123456");
+        setData("cod.cache.config.memcache.due", "1000");
+        // redis
+        setData("cod.cache.config.redis.host", "127.0.0.1");
+        setData("cod.cache.config.redis.port", "6379");
+        setData("cod.cache.config.redis.password", "123456");
+        setData("cod.cache.config.redis.maxTotal", "1000");
+        setData("cod.cache.config.redis.maxIdle", "1000");
+        setData("cod.cache.config.redis.maxWaitMillis", "1000");
+        setData("cod.cache.config.redis.testOnBorrow", "false");
+        setData("cod.cache.config.redis.due", "1000");
+        // ehcache
+        setData("cod.cache.config.ehcache.url", ".cod-temp/codCache/ehcache");
+        setData("cod.cache.config.ehcache.name", "defaultCodEhcache");
+        setData("cod.cache.config.ehcache.heap", "10000");
+        setData("cod.cache.config.ehcache.offHeap", "30");
+        setData("cod.cache.config.ehcache.disk", "500");
+        setData("cod.cache.config.ehcache.isDisk", "false");
+        setData("cod.cache.config.ehcache.timeToLiveSeconds", "21600");
+        setData("cod.cache.config.ehcache.timeToIdleSeconds", "21600");
+        // json
+        setData("cod.cache.config.json.url", ".cod-temp/codCache/json");
+        setData("cod.cache.config.json.name", "defaultCodJsonCache");
+        setData("cod.cache.config.json.heap", "10000");
+        setData("cod.cache.config.json.disk", "500");
+        setData("cod.cache.config.json.timeToLiveSeconds", "21600");
+        setData("cod.cache.config.json.timeToIdleSeconds", "21600");
+
+
+
     }
 
     /**
@@ -80,9 +155,11 @@ public class CodDataServiceImpl implements CodDataService {
      */
     @Override
     public String getData(String key) {
-        List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
-        Map<String, String> map = dataConfigDos.stream().collect(Collectors.toMap(CodDataConfigDo::getC_key, CodDataConfigDo::getC_value));
-        return map.get(key);
+        CodDataConfigDo dataConfigDo = finder.from(CodDataConfigDo.TABLE_NAME).where("c_key", key).first(CodDataConfigDo.class);
+        if (dataConfigDo == null){
+            return "";
+        }
+        return dataConfigDo.getC_value();
     }
 
     /**

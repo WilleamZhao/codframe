@@ -5,6 +5,8 @@ import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import com.tlkj.cod.server.model.CodServerFilterModel;
 import com.tlkj.cod.server.model.server.CodServerModel;
 
+import javax.servlet.DispatcherType;
+
 /**
  * Desc
  *
@@ -14,16 +16,17 @@ import com.tlkj.cod.server.model.server.CodServerModel;
  * @date 2019/6/5 2:24 PM
  */
 public class InitFilter implements CodModuleInitialize {
+
     @Override
     public int order() {
-        return 0;
+        return 30;
     }
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
         CodServerModel codServer = CodServerModel.getInstance();
         setCors(codServer);
-        setJwt(codServer);
+        // setJwt(codServer);
         setParamConvert(codServer);
     }
 
@@ -41,18 +44,20 @@ public class InitFilter implements CodModuleInitialize {
         codServerFilterModel.setMapping("/*");
         codServerFilterModel.setFilter(new CodFilterCORS());
         codServerFilterModel.setName("cors");
+        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
     }
 
     /**
-     * 设置cors
+     * 设置黑白名单
      * @param codServer
      */
     private void setAllowDisable(CodServerModel codServer){
         CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
         codServerFilterModel.setMapping("/*");
         codServerFilterModel.setFilter(new CodFilterCORS());
-        codServerFilterModel.setName("cors");
+        codServerFilterModel.setName("allowDisable");
+        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
     }
 
@@ -64,7 +69,8 @@ public class InitFilter implements CodModuleInitialize {
         CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
         codServerFilterModel.setMapping("/*");
         codServerFilterModel.setFilter(new CodFilterJWT());
-        codServerFilterModel.setName("cors");
+        codServerFilterModel.setName("token");
+        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
     }
 
@@ -74,8 +80,9 @@ public class InitFilter implements CodModuleInitialize {
     private void setParamConvert(CodServerModel codServer){
         CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
         codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterJWT());
-        codServerFilterModel.setName("cors");
+        codServerFilterModel.setFilter(new CodFilterRequestParamConvert());
+        codServerFilterModel.setName("param");
+        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
     }
 }

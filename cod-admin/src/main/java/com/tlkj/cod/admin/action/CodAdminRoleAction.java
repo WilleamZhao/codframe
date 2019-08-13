@@ -5,18 +5,18 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.admin.facade.CodAdminRoleFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminRoleListDto;
 import com.tlkj.cod.admin.service.CodAdminRoleService;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameRoleListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,7 +68,7 @@ public class CodAdminRoleAction extends GeneralResponse {
         String roleName = request.getParameter("roleName");
         String roleDesc = request.getParameter("roleDesc");
         String status = request.getParameter("status");
-        Page<List<CodFrameRoleListDto>> listPage = codAdminRoleService.listRole(page, pageSize, roleName, roleDesc, status);
+        Page<List<CodAdminRoleListDto>> listPage = codAdminRoleService.listRole(page, pageSize, roleName, roleDesc, status);
         if (listPage != null){
             return super.success(listPage);
         }

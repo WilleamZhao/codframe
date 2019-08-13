@@ -5,19 +5,19 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.model.dto.CodAdminDictItemListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminDictTypeListDto;
 import com.tlkj.cod.admin.service.CodAdminDictService;
 import com.tlkj.cod.core.annotation.CodParamVerify;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameDictItemListDto;
-import com.tlkj.cod.model.system.dto.CodFrameDictTypeListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +56,7 @@ public class CodAdminDictAction extends GeneralResponse {
         String typeStatus = request.getParameter("typeStatus");
         String page = request.getParameter("page");
         String pageSize = request.getParameter("pageSize");
-        Page<List<CodFrameDictTypeListDto>> listPage = codAdminDictService.listDictType(typeName, typeCode, allpin, typeStatus, page, pageSize);
+        Page<List<CodAdminDictTypeListDto>> listPage = codAdminDictService.listDictType(typeName, typeCode, allpin, typeStatus, page, pageSize);
         return listPage == null ? super.fail() : super.success(listPage);
     }
 
@@ -73,7 +73,7 @@ public class CodAdminDictAction extends GeneralResponse {
         String itemCode = request.getParameter("itemCode");
         String itemStatus = request.getParameter("itemStatus");
         String simplePin = request.getParameter("simplepin");
-        Page<List<CodFrameDictItemListDto>> listPage = codAdminDictService.listDictItem(typeId, page, pageSize, allpin, itemName, itemCode, itemStatus, simplePin);
+        Page<List<CodAdminDictItemListDto>> listPage = codAdminDictService.listDictItem(typeId, page, pageSize, allpin, itemName, itemCode, itemStatus, simplePin);
         return listPage == null ? super.fail() : super.success(listPage);
     }
 

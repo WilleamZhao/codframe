@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.filter;
@@ -38,7 +38,7 @@ public class AllowDisableFilter extends GeneralResponse implements Filter {
     /**
      * 黑名单list
      */
-    //private static List<CodFrameDictItemBo> blackList = null;
+    //private static List<CodAdminDictItemBo> blackList = null;
 
     private static String[] excludedPageArray;
 
@@ -70,8 +70,8 @@ public class AllowDisableFilter extends GeneralResponse implements Filter {
 
         if (allowDisable == null){
             allowDisable = new SystemSetAllowDisable();
-            allowDisable.setWhiteList(dictService.getItemByType("white-set").stream().map(CodFrameDictItemBo::getValue).collect(Collectors.toList()));
-            allowDisable.setBlackList(dictService.getItemByType("black-set").stream().map(CodFrameDictItemBo::getValue).collect(Collectors.toList()));
+            allowDisable.setWhiteList(dictService.getItemByType("white-set").stream().map(CodAdminDictItemBo::getValue).collect(Collectors.toList()));
+            allowDisable.setBlackList(dictService.getItemByType("black-set").stream().map(CodAdminDictItemBo::getValue).collect(Collectors.toList()));
             allowDisable.setAllowDisable(systemSetService.getSetValue("allow_disable"));
             SystemModel.getInstance().setAllowDisable(allowDisable);
         }*/

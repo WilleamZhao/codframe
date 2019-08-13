@@ -5,13 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminRoleListDto;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameRoleListDto;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public interface CodAdminUserRoleService {
      * 根据用户查询角色
      * @param userId 用户id
      */
-    List<CodFrameRoleListDto> listRole(String userId);
+    List<CodAdminRoleListDto> listRole(String userId);
 
     /**
      * 添加用户角色

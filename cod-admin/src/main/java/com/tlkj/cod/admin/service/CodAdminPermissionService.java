@@ -5,15 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionItemDto;
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionTreeDto;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFramePermissionItemDto;
-import com.tlkj.cod.model.system.dto.CodFramePermissionTreeDto;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public interface CodAdminPermissionService {
      * @param roleIds 角色ids
      * @return 权限列表
      */
-    List<CodFramePermissionTreeDto> getPermissionTree(String roleIds);
+    List<CodAdminPermissionTreeDto> getPermissionTree(String roleIds);
 
     /**
      * 获取权限列表
@@ -43,7 +43,7 @@ public interface CodAdminPermissionService {
      * @param desc     权限描述
      * @return 权限列表
      */
-    Page<List<CodFramePermissionTreeDto>> listPermission(String page, String pageSize, String name, String code, String desc);
+    Page<List<CodAdminPermissionTreeDto>> listPermission(String page, String pageSize, String name, String code, String desc);
 
     /**
      * 保存权限
@@ -68,7 +68,7 @@ public interface CodAdminPermissionService {
      * 根据id获取权限
      * @return 权限列表
      */
-    List<CodFramePermissionItemDto> getPermission(String id);
+    List<CodAdminPermissionItemDto> getPermission(String id);
 
     /**
      * 验证权限代码是否重复

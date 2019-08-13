@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.annotation.aop;
@@ -66,7 +66,7 @@ public class CodSystemLogAspect {
         Object[] args = joinPoint.getArgs();
 
         CodSystemLog log = method.getAnnotation(CodSystemLog.class);
-        String token = request.getHeader("access_token");
+        String token = request.getHeader("cod_admin_token");
 
         /*String username =(String) session.getAttribute("username");
         if(StringUtils.isBlank("username")){

@@ -5,12 +5,12 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade;
 
-import com.tlkj.cod.model.system.dto.CodFramePermissionTreeDto;
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionTreeDto;
 
 import java.util.List;
 
@@ -29,11 +29,11 @@ public interface CodAdminPermissionFacade {
      * @param userId 用户id
      * @return 权限列表
      */
-    List<CodFramePermissionTreeDto> getPermissionTreeByUserId(String userId);
+    List<CodAdminPermissionTreeDto> getPermissionTreeByUserId(String userId);
 
     /**
      * 获取资源
      * @return 资源列表
      */
-    CodFramePermissionTreeDto getResource();
+    CodAdminPermissionTreeDto getResource();
 }

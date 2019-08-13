@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.filter;
@@ -54,7 +54,7 @@ public class CodFilterCORS implements Filter {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, x-requested-with, Authorization, access_token");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, x-requested-with, Authorization, cod_admin_token");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         // TODO 动态返回服务版本
         response.setHeader("server", "codFrame v1.0.2");

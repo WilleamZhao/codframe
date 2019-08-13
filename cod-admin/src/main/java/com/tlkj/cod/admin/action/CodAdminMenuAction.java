@@ -5,20 +5,20 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.admin.facade.CodAdminMenuFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminMenuDto;
+import com.tlkj.cod.admin.model.dto.CodAdminMenuListDto;
 import com.tlkj.cod.admin.service.CodAdminMenuService;
 import com.tlkj.cod.core.annotation.CodParamVerify;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameMenuDto;
-import com.tlkj.cod.model.system.dto.CodFrameMenuListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,8 +50,8 @@ public class CodAdminMenuAction extends GeneralResponse {
      */
     @RequestMapping(value = "getMenu", method = {RequestMethod.GET, RequestMethod.OPTIONS})
     public Response getMenu(HttpServletRequest request){
-        String token = request.getParameter("access_token");
-        List<CodFrameMenuDto> menuDtoList = codAdminMenuFacade.getMenu(token);
+        String token = request.getParameter("cod_admin_token");
+        List<CodAdminMenuDto> menuDtoList = codAdminMenuFacade.getMenu(token);
         return menuDtoList == null ? super.fail(StatusCode.LOGIN_FAIL_CODE) : menuDtoList.size() == 0 ? super.fail() : super.success(menuDtoList);
     }
 
@@ -116,7 +116,7 @@ public class CodAdminMenuAction extends GeneralResponse {
     @RequestMapping(value = "getOneMenu", method = {RequestMethod.GET, RequestMethod.OPTIONS})
     public Response getOneMenu(HttpServletRequest request){
         String menuId = request.getParameter("menuId");
-        CodFrameMenuListDto menuDtoList = codAdminMenuService.getOneMenu(menuId);
+        CodAdminMenuListDto menuDtoList = codAdminMenuService.getOneMenu(menuId);
         return menuDtoList == null ? super.fail() : super.success(menuDtoList);
     }
 }

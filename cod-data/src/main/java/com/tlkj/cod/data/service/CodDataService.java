@@ -15,11 +15,11 @@ public interface CodDataService {
     /**
      * 初始化
      */
-    public void init();
+    void init();
 
     /**
      * 获取配置
-     * @return 配置
+     * @return 全部配置
      */
     Map<String, String> getConfig();
 
@@ -31,6 +31,8 @@ public interface CodDataService {
 
     /**
      * 设置数据
+     * @param key key
+     * @param value value
      */
     void setData(String key, String value);
 

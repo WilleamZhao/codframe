@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>tlkj.codframe</artifactId>
+        <groupId>com.tlkj</groupId>
+        <version>1.0.4-SNAPSHOP</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cod-i18n</artifactId>
+
+    <description>国际化模块</description>
+    <name>cod-filter</name>
+    <url>http://codframe.sourcod.com</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-keep class com.tlkj.cod.filter.**</option>
+                    </options>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

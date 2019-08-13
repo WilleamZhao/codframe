@@ -5,14 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminRoleListDto;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameRoleListDto;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public interface CodAdminRoleService {
      * @param state    状态
      * @return
      */
-    Page<List<CodFrameRoleListDto>> listRole(String page, String pageSize, String roleName, String roleDesc, String state);
+    Page<List<CodAdminRoleListDto>> listRole(String page, String pageSize, String roleName, String roleDesc, String state);
 
     /**
      * 保存角色

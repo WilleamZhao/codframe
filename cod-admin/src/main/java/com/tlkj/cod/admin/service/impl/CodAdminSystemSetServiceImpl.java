@@ -5,11 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminSetDto;
+import com.tlkj.cod.admin.model.entity.CodAdminSetDo;
 import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
@@ -18,8 +20,6 @@ import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.model.system.dto.CodFrameSetDto;
-import com.tlkj.cod.model.system.entity.CodFrameSetDo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -65,8 +65,8 @@ public class CodAdminSystemSetServiceImpl implements CodAdminSystemSetService {
      */
     @Override
     public StatusCode saveSet(String id, String setName, String setCode, String setValue, String userId) {
-        int num = finder.from(CodFrameSetDo.TABLE_NAME).where("id", id).select("count(*)").firstForObject(Integer.class);
-        Updater.Update update = num == 0 ? updater.insert(CodFrameSetDo.TABLE_NAME) : updater.update(CodFrameSetDo.TABLE_NAME).where("id", id);
+        int num = finder.from(CodAdminSetDo.TABLE_NAME).where("id", id).select("count(*)").firstForObject(Integer.class);
+        Updater.Update update = num == 0 ? updater.insert(CodAdminSetDo.TABLE_NAME) : updater.update(CodAdminSetDo.TABLE_NAME).where("id", id);
 
         if (StringUtils.isNotBlank(setName)){
             update.set("set_name", setName);
@@ -92,9 +92,9 @@ public class CodAdminSystemSetServiceImpl implements CodAdminSystemSetService {
      * @return
      */
     @Override
-    public CodFrameSetDto getSet(String id) {
-        CodFrameSetDo codFrameSetDo = finder.from(CodFrameSetDo.TABLE_NAME).where("id", id).first(CodFrameSetDo.class);
-        return convert(codFrameSetDo);
+    public CodAdminSetDto getSet(String id) {
+        CodAdminSetDo codAdminSetDo = finder.from(CodAdminSetDo.TABLE_NAME).where("id", id).first(CodAdminSetDo.class);
+        return convert(codAdminSetDo);
     }
 
     /**
@@ -104,14 +104,14 @@ public class CodAdminSystemSetServiceImpl implements CodAdminSystemSetService {
      */
     @Override
     public String getSetValue(String setCode) {
-        CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", setCode).first(CodFrameSetDo.class);
+        CodAdminSetDo setDo = finder.from(CodAdminSetDo.TABLE_NAME).where("set_code", setCode).first(CodAdminSetDo.class);
         return setDo.getSet_value();
     }
 
     @Override
-    public Page<List<CodFrameSetDto>> listSet() {
-        Pagination<CodFrameSetDo> pagination = finder.from(CodFrameSetDo.TABLE_NAME).paginate(CodFrameSetDo.class, 1, 100);
-        List<CodFrameSetDto> list = new ArrayList<>();
+    public Page<List<CodAdminSetDto>> listSet() {
+        Pagination<CodAdminSetDo> pagination = finder.from(CodAdminSetDo.TABLE_NAME).paginate(CodAdminSetDo.class, 1, 100);
+        List<CodAdminSetDto> list = new ArrayList<>();
         pagination.getData().forEach(item -> {
             list.add(convert(item));
         });
@@ -134,15 +134,15 @@ public class CodAdminSystemSetServiceImpl implements CodAdminSystemSetService {
     /**
      * 转换Do to Dto
      */
-    private CodFrameSetDto convert(CodFrameSetDo codFrameSetDo){
-        CodFrameSetDto dto = new CodFrameSetDto();
-        dto.setId(codFrameSetDo.getId());
-        dto.setSetCode(codFrameSetDo.getSet_code());
-        dto.setSetName(codFrameSetDo.getSet_name());
-        dto.setSetValue(codFrameSetDo.getSet_value());
-        dto.setSort(codFrameSetDo.getSort());
-        dto.setUserId(codFrameSetDo.getUser_id());
-        dto.setUpdateTime(codFrameSetDo.getUpdate_time());
+    private CodAdminSetDto convert(CodAdminSetDo codAdminSetDo){
+        CodAdminSetDto dto = new CodAdminSetDto();
+        dto.setId(codAdminSetDo.getId());
+        dto.setSetCode(codAdminSetDo.getSet_code());
+        dto.setSetName(codAdminSetDo.getSet_name());
+        dto.setSetValue(codAdminSetDo.getSet_value());
+        dto.setSort(codAdminSetDo.getSort());
+        dto.setUserId(codAdminSetDo.getUser_id());
+        dto.setUpdateTime(codAdminSetDo.getUpdate_time());
         return dto;
     }
 }

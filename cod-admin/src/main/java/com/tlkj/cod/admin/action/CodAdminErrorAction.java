@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
@@ -37,7 +37,6 @@ public class CodAdminErrorAction extends GeneralResponse {
     private static Logger logger = LoggerFactory.getLogger(CodAdminErrorAction.class);
 
     @Autowired
-    @Qualifier("clogImpl")
     CodLogService codLogService;
 
     @RequestMapping(value = "nullPointer", method = {RequestMethod.GET})

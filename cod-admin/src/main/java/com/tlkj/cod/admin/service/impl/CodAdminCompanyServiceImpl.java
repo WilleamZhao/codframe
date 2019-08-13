@@ -5,11 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminCompanyDto;
+import com.tlkj.cod.admin.model.dto.CodAdminCompanyListDto;
+import com.tlkj.cod.admin.model.entity.CodAdminCompanyDo;
 import com.tlkj.cod.admin.service.CodAdminCompanyService;
 import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.common.CodCommonDate;
@@ -20,10 +23,6 @@ import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameCompanyDto;
-import com.tlkj.cod.model.system.dto.CodFrameCompanyListDto;
-import com.tlkj.cod.model.system.dto.CodFrameDeptListDto;
-import com.tlkj.cod.model.system.entity.CodFrameCompanyDo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,9 +71,9 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
     @CodLog(name = "保存公司信息")
     @Override
     public StatusCode saveCompany(String companyId, String companyName, String companyNickName, String companyNo, String companyContact, String companyFax, String companyPhone, String companyEin, String status) {
-        Updater.Update update = StringUtils.isNotBlank(companyId) ? updater.update(CodFrameCompanyDo.TABLE_NAME)
+        Updater.Update update = StringUtils.isNotBlank(companyId) ? updater.update(CodAdminCompanyDo.TABLE_NAME)
                 .set("update_time", CodCommonDate.getDate(CodCommonDate.PATTERN_YMDHMS))
-                .where("id", companyId) : updater.insert(CodFrameCompanyDo.TABLE_NAME).setId();
+                .where("id", companyId) : updater.insert(CodAdminCompanyDo.TABLE_NAME).setId();
         update = StringUtils.isNotBlank(companyName) ? update.set("dept_name", companyName) : update;
         update = StringUtils.isNotBlank(companyNo) ? update.set("dept_no", companyNo) : update;
         update = StringUtils.isNotBlank(companyNickName) ? update.set("dept_no", companyNickName) : update;
@@ -99,15 +98,15 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
      */
     @CodLog(name = "查询公司列表")
     @Override
-    public Page<List<CodFrameCompanyListDto>> listCompany(String companyName, String companyNo, String page, String pageSize) {
-        Finder.Query query = finder.from(CodFrameCompanyDo.TABLE_NAME).not("state", "1").orderBy("sort");
+    public Page<List<CodAdminCompanyListDto>> listCompany(String companyName, String companyNo, String page, String pageSize) {
+        Finder.Query query = finder.from(CodAdminCompanyDo.TABLE_NAME).not("state", "1").orderBy("sort");
         query = StringUtils.isNotBlank(companyName) ? query.like("company_name", "%" + companyName + "%") : query;
         query = StringUtils.isNotBlank(companyNo) ? query.like("company_no", "%" + companyNo + "%") : query;
         int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
         int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
-        Pagination<CodFrameCompanyDo> pagination;
+        Pagination<CodAdminCompanyDo> pagination;
         try {
-            pagination = query.paginate(CodFrameCompanyDo.class, currentPage, perPage);
+            pagination = query.paginate(CodAdminCompanyDo.class, currentPage, perPage);
         } catch (Exception e) {
             codLogService.error("sql查询错误:={}", e.getMessage());
             return null;
@@ -116,24 +115,24 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
             return new Page<>();
         }
 
-        List<CodFrameCompanyDo> codFrameCompanyDos = pagination.getData();
-        List<CodFrameCompanyListDto> codFrameCompanyListDtos = new ArrayList<>();
-        for (CodFrameCompanyDo codFrameCompanyDo : codFrameCompanyDos) {
-            CodFrameCompanyListDto listDto = new CodFrameCompanyListDto();
-            listDto.setId(codFrameCompanyDo.getId());
-            listDto.setCompanyName(codFrameCompanyDo.getCompany_name());
-            listDto.setCompanyAddress(codFrameCompanyDo.getCompany_address());
-            listDto.setCompanyContact(codFrameCompanyDo.getCompany_contact());
-            listDto.setCompanyEin(codFrameCompanyDo.getCompany_ein());
-            listDto.setCompanyFax(codFrameCompanyDo.getCompany_fax());
-            listDto.setCompanyNickName(codFrameCompanyDo.getCompany_nickname());
-            listDto.setCompanyNo(codFrameCompanyDo.getCompany_no());
-            listDto.setCompanyPhone(codFrameCompanyDo.getCompany_phone());
-            listDto.setState(codFrameCompanyDo.getState());
-            listDto.setSort(codFrameCompanyDo.getSort());
-            codFrameCompanyListDtos.add(listDto);
+        List<CodAdminCompanyDo> codAdminCompanyDos = pagination.getData();
+        List<CodAdminCompanyListDto> codAdminCompanyListDtos = new ArrayList<>();
+        for (CodAdminCompanyDo codAdminCompanyDo : codAdminCompanyDos) {
+            CodAdminCompanyListDto listDto = new CodAdminCompanyListDto();
+            listDto.setId(codAdminCompanyDo.getId());
+            listDto.setCompanyName(codAdminCompanyDo.getCompany_name());
+            listDto.setCompanyAddress(codAdminCompanyDo.getCompany_address());
+            listDto.setCompanyContact(codAdminCompanyDo.getCompany_contact());
+            listDto.setCompanyEin(codAdminCompanyDo.getCompany_ein());
+            listDto.setCompanyFax(codAdminCompanyDo.getCompany_fax());
+            listDto.setCompanyNickName(codAdminCompanyDo.getCompany_nickname());
+            listDto.setCompanyNo(codAdminCompanyDo.getCompany_no());
+            listDto.setCompanyPhone(codAdminCompanyDo.getCompany_phone());
+            listDto.setState(codAdminCompanyDo.getState());
+            listDto.setSort(codAdminCompanyDo.getSort());
+            codAdminCompanyListDtos.add(listDto);
         }
-        Page<List<CodFrameCompanyListDto>> tempPage = new Page<>(codFrameCompanyListDtos, pagination);
+        Page<List<CodAdminCompanyListDto>> tempPage = new Page<>(codAdminCompanyListDtos, pagination);
         return tempPage;
     }
 
@@ -145,26 +144,26 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
      */
     @CodLog(name = "根据id获取公司信息")
     @Override
-    public CodFrameCompanyDto getCompanyById(String id) {
-        CodFrameCompanyDo codFrameCompanyDo = finder.from(CodFrameCompanyDo.TABLE_NAME).where("id", id).first(CodFrameCompanyDo.class);
-        if (codFrameCompanyDo == null) {
+    public CodAdminCompanyDto getCompanyById(String id) {
+        CodAdminCompanyDo codAdminCompanyDo = finder.from(CodAdminCompanyDo.TABLE_NAME).where("id", id).first(CodAdminCompanyDo.class);
+        if (codAdminCompanyDo == null) {
             return null;
         }
-        CodFrameCompanyDto codFrameCompanyDto = new CodFrameCompanyDto();
-        codFrameCompanyDto.setId(codFrameCompanyDo.getId());
-        codFrameCompanyDto.setCompanyName(codFrameCompanyDo.getCompany_name());
-        codFrameCompanyDto.setCompanyAddress(codFrameCompanyDo.getCompany_address());
-        codFrameCompanyDto.setCompanyContact(codFrameCompanyDo.getCompany_contact());
-        codFrameCompanyDto.setCompanyEin(codFrameCompanyDo.getCompany_ein());
-        codFrameCompanyDto.setCompanyFax(codFrameCompanyDo.getCompany_fax());
-        codFrameCompanyDto.setCompanyNickName(codFrameCompanyDo.getCompany_nickname());
-        codFrameCompanyDto.setCompanyNo(codFrameCompanyDo.getCompany_no());
-        codFrameCompanyDto.setCompanyPhone(codFrameCompanyDo.getCompany_phone());
-        codFrameCompanyDto.setState(codFrameCompanyDo.getState());
-        codFrameCompanyDto.setSort(codFrameCompanyDo.getSort());
-        codFrameCompanyDto.setCreateTime(codFrameCompanyDo.getCreate_time());
-        codFrameCompanyDto.setUpdateTime(codFrameCompanyDo.getUpdate_time());
-        return codFrameCompanyDto;
+        CodAdminCompanyDto codAdminCompanyDto = new CodAdminCompanyDto();
+        codAdminCompanyDto.setId(codAdminCompanyDo.getId());
+        codAdminCompanyDto.setCompanyName(codAdminCompanyDo.getCompany_name());
+        codAdminCompanyDto.setCompanyAddress(codAdminCompanyDo.getCompany_address());
+        codAdminCompanyDto.setCompanyContact(codAdminCompanyDo.getCompany_contact());
+        codAdminCompanyDto.setCompanyEin(codAdminCompanyDo.getCompany_ein());
+        codAdminCompanyDto.setCompanyFax(codAdminCompanyDo.getCompany_fax());
+        codAdminCompanyDto.setCompanyNickName(codAdminCompanyDo.getCompany_nickname());
+        codAdminCompanyDto.setCompanyNo(codAdminCompanyDo.getCompany_no());
+        codAdminCompanyDto.setCompanyPhone(codAdminCompanyDo.getCompany_phone());
+        codAdminCompanyDto.setState(codAdminCompanyDo.getState());
+        codAdminCompanyDto.setSort(codAdminCompanyDo.getSort());
+        codAdminCompanyDto.setCreateTime(codAdminCompanyDo.getCreate_time());
+        codAdminCompanyDto.setUpdateTime(codAdminCompanyDo.getUpdate_time());
+        return codAdminCompanyDto;
     }
 
     /**
@@ -183,9 +182,9 @@ public class CodAdminCompanyServiceImpl implements CodAdminCompanyService {
                 String menuIdTrim = menuid.trim();
                 if (StringUtils.isNotBlank(menuIdTrim)) {
                     // 删除本菜单
-                    i = i + updater.delete(CodFrameCompanyDo.TABLE_NAME).where("id", menuIdTrim).update();
+                    i = i + updater.delete(CodAdminCompanyDo.TABLE_NAME).where("id", menuIdTrim).update();
                     // 删除子菜单
-                    int childNum = updater.delete(CodFrameCompanyDo.TABLE_NAME).where("p_id", menuIdTrim).update();
+                    int childNum = updater.delete(CodAdminCompanyDo.TABLE_NAME).where("p_id", menuIdTrim).update();
                     codLogService.info("删除菜单成功, 本菜单数量={}, 子菜单数量={}", menuIdTrim, childNum);
                 }
             }

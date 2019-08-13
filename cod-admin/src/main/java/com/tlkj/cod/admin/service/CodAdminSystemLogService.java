@@ -5,13 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminSystemLogDto;
 import com.tlkj.cod.dao.bean.Page;
-import com.tlkj.cod.model.system.dto.CodFrameSystemLogDto;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public interface CodAdminSystemLogService {
      * @param endDate   结束时间
      * @return 日志列表
      */
-    Page<List<CodFrameSystemLogDto>> listLog(String ip, String username, String startDate, String endDate, String page, String pageSize);
+    Page<List<CodAdminSystemLogDto>> listLog(String ip, String username, String startDate, String endDate, String page, String pageSize);
 
 
     /**
@@ -41,5 +41,5 @@ public interface CodAdminSystemLogService {
      * @param id
      * @return
      */
-    CodFrameSystemLogDto getLog(String id);
+    CodAdminSystemLogDto getLog(String id);
 }

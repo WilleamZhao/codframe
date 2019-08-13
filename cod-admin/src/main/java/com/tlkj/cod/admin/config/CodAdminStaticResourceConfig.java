@@ -1,7 +1,5 @@
 package com.tlkj.cod.admin.config;
 
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
-
 /**
  * Desc
  *

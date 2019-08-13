@@ -37,7 +37,6 @@ public class CodDataConfigDo implements Serializable {
     /**
      * 配置值
      */
-    /*@CodDaoId*/
     @CodDaoColumn(type = "varchar(2000)", comment = "配置值")
     private String c_value;
 

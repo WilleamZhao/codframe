@@ -5,15 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminAttachmentListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminAttachmentTypeDto;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameAttachmentListDto;
-import com.tlkj.cod.model.system.dto.CodFrameAttachmentTypeDto;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public interface CodAdminAttachmentService {
      * @param pageSize 每页显示几条
      * @return 附件列表
      */
-    Page<List<CodFrameAttachmentListDto>> listAttachment(String fileName, String userName, String extName, String size, String ip, String page, String pageSize);
+    Page<List<CodAdminAttachmentListDto>> listAttachment(String fileName, String userName, String extName, String size, String ip, String page, String pageSize);
 
 
 
@@ -68,6 +68,6 @@ public interface CodAdminAttachmentService {
      * 在字典表里获取附件分类
      * @return
      */
-    List<CodFrameAttachmentTypeDto> getType();
+    List<CodAdminAttachmentTypeDto> getType();
 
 }

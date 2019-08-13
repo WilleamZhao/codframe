@@ -5,11 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminMenuDto;
+import com.tlkj.cod.admin.model.dto.CodAdminMenuListDto;
+import com.tlkj.cod.admin.model.entity.CodAdminMenuDo;
 import com.tlkj.cod.admin.service.CodAdminMenuService;
 import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.common.CodCommonJson;
@@ -19,9 +22,6 @@ import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameMenuDto;
-import com.tlkj.cod.model.system.dto.CodFrameMenuListDto;
-import com.tlkj.cod.model.system.entity.CodFrameMenuDo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +56,8 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
      */
     @CodLog(name = "获取左侧菜单")
     @Override
-    public List<CodFrameMenuDto> getMenu(String menuIds) {
-        Finder.Query query = finder.from(CodFrameMenuDo.TABLE_NAME).where("status", "1").orderBy("sort");
+    public List<CodAdminMenuDto> getMenu(String menuIds) {
+        Finder.Query query = finder.from(CodAdminMenuDo.TABLE_NAME).where("status", "1").orderBy("sort");
 
         /*
          * 菜单id不为空用菜单id
@@ -66,9 +66,9 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
         if (StringUtils.isNotBlank(menuIds)){
             query.in("id", menuIds.split(","));
         }
-        List<CodFrameMenuDo> menuDoList = query.all(CodFrameMenuDo.class);
+        List<CodAdminMenuDo> menuDoList = query.all(CodAdminMenuDo.class);
         // 1级list
-        List<CodFrameMenuDto> menuDtoList = null;
+        List<CodAdminMenuDto> menuDtoList = null;
 
         menuDtoList =  this.getMenuLevel(1, menuDoList, "");
         setService.getLog().info("获取左侧菜单成功, 树={}", CodCommonJson.dump(menuDtoList));
@@ -87,7 +87,7 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
      */
     @CodLog(name = "获取菜单列表")
     @Override
-    public Page<List<CodFrameMenuListDto>> listMenu(String page, String limit, String menuName, String menuTitle, String level, String status) {
+    public Page<List<CodAdminMenuListDto>> listMenu(String page, String limit, String menuName, String menuTitle, String level, String status) {
         Finder.Query query = finder.from("cod_sys_menu").orderBy("").orderBy("sort");
         if (StringUtils.isNotBlank(menuName)){
             query.like("menu_name", "%" + menuName + "%");
@@ -105,17 +105,17 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
             query.where("status", status);
         }
 
-        Pagination<CodFrameMenuDo> pagination = null;
+        Pagination<CodAdminMenuDo> pagination = null;
         if (StringUtils.isNotBlank(page)){
             if (StringUtils.isNotBlank(limit)){
-                pagination = query.paginate(CodFrameMenuDo.class, Integer.parseInt(page), Integer.parseInt(limit));
+                pagination = query.paginate(CodAdminMenuDo.class, Integer.parseInt(page), Integer.parseInt(limit));
             } else {
-                pagination = query.paginate(CodFrameMenuDo.class, Integer.parseInt(page), Pagination.DEFAULT_PER_PAGE);
+                pagination = query.paginate(CodAdminMenuDo.class, Integer.parseInt(page), Pagination.DEFAULT_PER_PAGE);
             }
 
         }
 
-        List<CodFrameMenuDo> menuDoList = null;
+        List<CodAdminMenuDo> menuDoList = null;
         if (pagination == null){
             return null;
         }
@@ -126,24 +126,24 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
         if (menuDoList == null){
             return null;
         }
-        List<CodFrameMenuListDto> menuListDtos = new ArrayList<>();
+        List<CodAdminMenuListDto> menuListDtos = new ArrayList<>();
         // 查询所有遍历用
-        List<CodFrameMenuDo> list = finder.from(CodFrameMenuDo.TABLE_NAME).all(CodFrameMenuDo.class);
-        for (CodFrameMenuDo menuDo : menuDoList){
-            CodFrameMenuListDto menuListDto = new CodFrameMenuListDto();
+        List<CodAdminMenuDo> list = finder.from(CodAdminMenuDo.TABLE_NAME).all(CodAdminMenuDo.class);
+        for (CodAdminMenuDo menuDo : menuDoList){
+            CodAdminMenuListDto menuListDto = new CodAdminMenuListDto();
             menuListDto.setId(menuDo.getId());
             menuListDto.setIcon(menuDo.getIcon());
             menuListDto.setJump(menuDo.getJump());
             String prevMenu = menuDo.getP_id();
             if (StringUtils.isNotBlank(prevMenu)){
-                for (CodFrameMenuDo menuDo1 : list){
+                for (CodAdminMenuDo menuDo1 : list){
                     if (prevMenu.equals(menuDo1.getId())){
                         prevMenu = menuDo1.getMenu_title();
                         break;
                     }
                 }
             }
-            menuListDto.setpId(menuDo.getP_id());
+            menuListDto.setPId(menuDo.getP_id());
             menuListDto.setPrevMenuName(prevMenu);
             menuListDto.setLevel(menuDo.getLevel());
             menuListDto.setMenuName(menuDo.getMenu_name());
@@ -155,27 +155,27 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
 
             menuListDtos.add(menuListDto);
         }
-        Page<List<CodFrameMenuListDto>> tempPage = new Page<>(pagination);
+        Page<List<CodAdminMenuListDto>> tempPage = new Page<>(pagination);
         tempPage.setData(menuListDtos);
         return tempPage;
     }
 
     @Override
-    public List<CodFrameMenuListDto> listMenu(String menuIds) {
-        Finder.Query query = finder.from(CodFrameMenuDo.TABLE_NAME);
+    public List<CodAdminMenuListDto> listMenu(String menuIds) {
+        Finder.Query query = finder.from(CodAdminMenuDo.TABLE_NAME);
         if (StringUtils.isNotBlank(menuIds)){
             query.in("id", menuIds.split(","));
         }
-        List<CodFrameMenuDo> codFrameMenuDos = query.all(CodFrameMenuDo.class);
-        List<CodFrameMenuListDto> codFrameMenuListDtos = new ArrayList<>();
-        codFrameMenuDos.forEach(item -> {
-            CodFrameMenuListDto dto = new CodFrameMenuListDto();
+        List<CodAdminMenuDo> codAdminMenuDos = query.all(CodAdminMenuDo.class);
+        List<CodAdminMenuListDto> codAdminMenuListDtos = new ArrayList<>();
+        codAdminMenuDos.forEach(item -> {
+            CodAdminMenuListDto dto = new CodAdminMenuListDto();
             dto.setId(item.getId());
             dto.setMenuName(item.getMenu_name());
             dto.setMenuTitle(item.getMenu_title());
-            codFrameMenuListDtos.add(dto);
+            codAdminMenuListDtos.add(dto);
         });
-        return codFrameMenuListDtos;
+        return codAdminMenuListDtos;
     }
 
     /**
@@ -199,7 +199,7 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
         }
 
         // 有主键更新，没有新增
-        Updater.Update update = StringUtils.isBlank(menuId) ? updater.insert(CodFrameMenuDo.TABLE_NAME) : updater.update(CodFrameMenuDo.TABLE_NAME);
+        Updater.Update update = StringUtils.isBlank(menuId) ? updater.insert(CodAdminMenuDo.TABLE_NAME) : updater.update(CodAdminMenuDo.TABLE_NAME);
 
         update.set("menu_name", menuName)
                 .set("menu_title", menuTitle)
@@ -246,9 +246,9 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
                 String menuIdTrim = menuid.trim();
                 if (StringUtils.isNotBlank(menuIdTrim)){
                     // 删除本菜单
-                    i = i + updater.delete(CodFrameMenuDo.TABLE_NAME).where("id", menuIdTrim).update();
+                    i = i + updater.delete(CodAdminMenuDo.TABLE_NAME).where("id", menuIdTrim).update();
                     // 删除子菜单
-                    int childNum = updater.delete(CodFrameMenuDo.TABLE_NAME).where("p_id", menuIdTrim).update();
+                    int childNum = updater.delete(CodAdminMenuDo.TABLE_NAME).where("p_id", menuIdTrim).update();
                     setService.getLog().info("删除菜单成功, 本菜单数量={}, 子菜单数量={}", menuIdTrim, childNum);
                 }
             }
@@ -270,7 +270,7 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
     @CodLog(name = "验证菜单名称是否重复")
     @Override
     public StatusCode verifyMenuName(String menuName) {
-        int i = finder.from(CodFrameMenuDo.TABLE_NAME).where("menu_name", menuName).all().size();
+        int i = finder.from(CodAdminMenuDo.TABLE_NAME).where("menu_name", menuName).all().size();
         if (i == 0){
             return StatusCode.FAIL_CODE;
         }
@@ -284,22 +284,22 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
      */
     @CodLog(name = "根据菜单Id获取菜单信息")
     @Override
-    public CodFrameMenuListDto getOneMenu(String menuId) {
-        CodFrameMenuListDto codFrameMenuListDto = finder.from(CodFrameMenuDo.TABLE_NAME).where("id", menuId).first(CodFrameMenuListDto.class);
-        return codFrameMenuListDto;
+    public CodAdminMenuListDto getOneMenu(String menuId) {
+        CodAdminMenuListDto codAdminMenuListDto = finder.from(CodAdminMenuDo.TABLE_NAME).where("id", menuId).first(CodAdminMenuListDto.class);
+        return codAdminMenuListDto;
     }
 
     /**
      * 获取菜单级别
      * @return
      */
-    private List<CodFrameMenuDto> getMenuLevel(int level, List<CodFrameMenuDo> menuDoList, String id){
-        List<CodFrameMenuDto> tempMenuDtoList = new ArrayList<>();
+    private List<CodAdminMenuDto> getMenuLevel(int level, List<CodAdminMenuDo> menuDoList, String id){
+        List<CodAdminMenuDto> tempMenuDtoList = new ArrayList<>();
 
-        for (CodFrameMenuDo menuDo : menuDoList) {
+        for (CodAdminMenuDo menuDo : menuDoList) {
             if (StringUtils.isNotBlank(menuDo.getLevel())){
                 if (level == Integer.parseInt(menuDo.getLevel())) {
-                    CodFrameMenuDto menuDto = new CodFrameMenuDto();
+                    CodAdminMenuDto menuDto = new CodAdminMenuDto();
                     if (level == 1){
                         menuDto = setMenuDto(level, menuDoList, menuDto, menuDo);
                     }
@@ -316,13 +316,13 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
         return tempMenuDtoList;
     }
 
-    private CodFrameMenuDto setMenuDto(int level, List<CodFrameMenuDo> menuDoList, CodFrameMenuDto menuDto, CodFrameMenuDo menuDo){
+    private CodAdminMenuDto setMenuDto(int level, List<CodAdminMenuDo> menuDoList, CodAdminMenuDto menuDto, CodAdminMenuDo menuDo){
         menuDto.setId(menuDo.getId());
         menuDto.setIcon(menuDo.getIcon());
         menuDto.setJump(menuDo.getJump());
         menuDto.setMenuName(menuDo.getMenu_name());
         menuDto.setMenuTitle(menuDo.getMenu_title());
-        List<CodFrameMenuDto> menuDtos = this.getMenuLevel(level + 1, menuDoList, menuDto.getId());
+        List<CodAdminMenuDto> menuDtos = this.getMenuLevel(level + 1, menuDoList, menuDto.getId());
         menuDto.setMenuDtoList(menuDtos);
         return menuDto;
     }

@@ -5,14 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache.memcached.service.impl;
 
 import com.tlkj.cod.cache.CodCacheManager;
 import com.tlkj.cod.cache.memcached.service.CodCacheMemcachedService;
-import com.tlkj.cod.cache.model.CodCacheMemcachedModel;
+import com.tlkj.cod.cache.model.config.CodCacheConfigMemcached;
 import com.tlkj.cod.log.service.CodLogService;
 import net.spy.memcached.AddrUtil;
 import net.spy.memcached.ConnectionFactoryBuilder;
@@ -53,14 +53,14 @@ public class CodCacheMemcachedServiceImpl implements CodCacheMemcachedService, C
         try {
             //int DEFAULT_TIMEOUT = CodCacheMemcachedModel.getInstance().getTimeout();
             //TimeUnit DEFAULT_TIMEUNIT = TimeUnit.SECONDS;
-            String password = CodCacheMemcachedModel.getInstance().getPassword();
-            String username = CodCacheMemcachedModel.getInstance().getUsername();
+            String password = CodCacheConfigMemcached.getInstance().getPassword();
+            String username = CodCacheConfigMemcached.getInstance().getUsername();
             AuthDescriptor ad = new AuthDescriptor(new String[] { "PLAIN" }, new PlainCallbackHandler(username, password));
             if (mcc == null) {
                 synchronized (CodCacheMemcachedServiceImpl.class){
                     if (mcc == null){
-                        String host = CodCacheMemcachedModel.getInstance().getHost();
-                        String port = CodCacheMemcachedModel.getInstance().getPort();
+                        String host = CodCacheConfigMemcached.getInstance().getHost();
+                        String port = CodCacheConfigMemcached.getInstance().getPort();
                         mcc = new MemcachedClient(
                                 new ConnectionFactoryBuilder().setProtocol(ConnectionFactoryBuilder.Protocol.BINARY).setAuthDescriptor(ad).build(),
                                 AddrUtil.getAddresses(host + ":" + port));

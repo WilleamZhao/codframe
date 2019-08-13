@@ -5,14 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionListDto;
 import com.tlkj.cod.admin.service.CodAdminResourceService;
 import com.tlkj.cod.core.security.util.PermissionUtil;
-import com.tlkj.cod.model.system.dto.CodFramePermissionListDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,10 +33,10 @@ public class CodAdminResourceServiceImpl implements CodAdminResourceService {
      * 获取资源列表
      */
     @Override
-    public List<CodFramePermissionListDto> listResource() {
-        List<CodFramePermissionListDto> dtos = new ArrayList<>();
+    public List<CodAdminPermissionListDto> listResource() {
+        List<CodAdminPermissionListDto> dtos = new ArrayList<>();
         PermissionUtil.getAllPermission().forEach(item -> {
-            CodFramePermissionListDto dto = new CodFramePermissionListDto();
+            CodAdminPermissionListDto dto = new CodAdminPermissionListDto();
             dto.setName(item.getName());
             dto.setPermission(item.getNum());
             dtos.add(dto);

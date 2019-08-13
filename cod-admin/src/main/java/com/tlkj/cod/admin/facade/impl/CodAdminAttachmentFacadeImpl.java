@@ -5,13 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade.impl;
 
 import com.tlkj.cod.admin.facade.CodAdminAttachmentFacade;
 import com.tlkj.cod.admin.facade.CodAdminFileFacade;
+import com.tlkj.cod.admin.model.bo.CodAdminDictItemBo;
+import com.tlkj.cod.admin.model.dto.CodAdminFileDto;
 import com.tlkj.cod.admin.service.CodAdminAttachmentService;
 import com.tlkj.cod.admin.service.CodAdminDictService;
 import com.tlkj.cod.admin.service.CodAdminSystemSetService;
@@ -19,8 +21,6 @@ import com.tlkj.cod.common.CodCommonNetWork;
 import com.tlkj.cod.core.annotation.CodParamVerify;
 import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.bo.CodFrameDictItemBo;
-import com.tlkj.cod.model.system.dto.CodFrameFileDto;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ public class CodAdminAttachmentFacadeImpl implements CodAdminAttachmentFacade {
         String set = codAdminSystemSetService.getSetValue(systemSet);
         InputStream io = null;
         String ip = "";
-        CodFrameDictItemBo bo = codAdminDictService.getItem(systemSet + ":" + set);
+        CodAdminDictItemBo bo = codAdminDictService.getItem(systemSet + ":" + set);
         try {
             ip = CodCommonNetWork.getIpAddress(request);
         } catch (IOException e) {
@@ -99,7 +99,7 @@ public class CodAdminAttachmentFacadeImpl implements CodAdminAttachmentFacade {
         String set = codAdminSystemSetService.getSetValue(systemSet);
         InputStream io = null;
         String ip = "";
-        CodFrameDictItemBo bo = codAdminDictService.getItem(systemSet + ":" + set);
+        CodAdminDictItemBo bo = codAdminDictService.getItem(systemSet + ":" + set);
         try {
             io = file.getInputStream();
             ip = CodCommonNetWork.getIpAddress(request);
@@ -112,16 +112,16 @@ public class CodAdminAttachmentFacadeImpl implements CodAdminAttachmentFacade {
             return null;
         }
 
-        CodFrameFileDto codFrameFileDto = codAdminFileFacade.upload(file, "");
-        if (codFrameFileDto == null){
+        CodAdminFileDto codAdminFileDto = codAdminFileFacade.upload(file, "");
+        if (codAdminFileDto == null){
             return StatusCode.FAIL_CODE;
         }
 
-        fileName = StringUtils.isNotBlank(fileName) ? fileName : codFrameFileDto.getFileName();
-        String fileSize = codFrameFileDto.getFileSize();
-        String fileUnit = codFrameFileDto.getFileUnit();
-        String extName = codFrameFileDto.getExtName();
-        String url = codFrameFileDto.getUrl();
+        fileName = StringUtils.isNotBlank(fileName) ? fileName : codAdminFileDto.getFileName();
+        String fileSize = codAdminFileDto.getFileSize();
+        String fileUnit = codAdminFileDto.getFileUnit();
+        String extName = codAdminFileDto.getExtName();
+        String url = codAdminFileDto.getUrl();
         return codAdminAttachmentService.saveFile(id, fileName, bo.getCode(), fileType, fileSize, fileUnit, userId, ip, extName, "0", url);
     }
 }

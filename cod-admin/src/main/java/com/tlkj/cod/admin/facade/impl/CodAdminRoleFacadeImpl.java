@@ -5,17 +5,17 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade.impl;
 
 import com.tlkj.cod.admin.facade.CodAdminRoleFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminMenuListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionTreeDto;
 import com.tlkj.cod.admin.service.CodAdminMenuService;
 import com.tlkj.cod.admin.service.CodAdminPermissionService;
 import com.tlkj.cod.admin.service.CodAdminRoleMenuService;
-import com.tlkj.cod.model.system.dto.CodFrameMenuListDto;
-import com.tlkj.cod.model.system.dto.CodFramePermissionTreeDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,17 +56,17 @@ public class CodAdminRoleFacadeImpl implements CodAdminRoleFacade {
     @Override
     public List getPermission(String roleIds) {
         // 1. 获取全部权限
-        List<CodFramePermissionTreeDto> dtoAll = codAdminPermissionService.listPermission("1", "999", "", "", "").getData();
+        List<CodAdminPermissionTreeDto> dtoAll = codAdminPermissionService.listPermission("1", "999", "", "", "").getData();
 
         // 2. 获取角色权限
-        List<CodFramePermissionTreeDto> dtos = codAdminPermissionService.getPermissionTree(roleIds);
+        List<CodAdminPermissionTreeDto> dtos = codAdminPermissionService.getPermissionTree(roleIds);
         // id字符串
-        String tempDtoIds = dtos.stream().map(CodFramePermissionTreeDto::getId).collect(Collectors.joining(","));
+        String tempDtoIds = dtos.stream().map(CodAdminPermissionTreeDto::getId).collect(Collectors.joining(","));
 
-        List<List<CodFramePermissionTreeDto>> lists = new ArrayList<>();
+        List<List<CodAdminPermissionTreeDto>> lists = new ArrayList<>();
 
         // 差集
-        List<CodFramePermissionTreeDto> temp = dtoAll.stream().filter(d -> !tempDtoIds.contains(d.getId())).collect(Collectors.toList());
+        List<CodAdminPermissionTreeDto> temp = dtoAll.stream().filter(d -> !tempDtoIds.contains(d.getId())).collect(Collectors.toList());
 
         lists.add(temp);
         lists.add(dtos);
@@ -82,18 +82,18 @@ public class CodAdminRoleFacadeImpl implements CodAdminRoleFacade {
     public List editMenu(String roleIds) {
         // 1. 根据角色获取菜单
         String menuIds = codAdminRoleMenuService.getMenuIds(roleIds);
-        List<CodFrameMenuListDto> menuListDtos = new ArrayList<>();
+        List<CodAdminMenuListDto> menuListDtos = new ArrayList<>();
         if (StringUtils.isNotBlank(menuIds)){
             menuListDtos = codAdminMenuService.listMenu(menuIds);
         }
 
         // 2. 获取全部菜单
-        List<CodFrameMenuListDto> codFrameMenuListDtos = codAdminMenuService.listMenu("");
+        List<CodAdminMenuListDto> codAdminMenuListDtos = codAdminMenuService.listMenu("");
 
         // 3. 取差集
-        codFrameMenuListDtos = codFrameMenuListDtos.stream().filter(d -> !menuIds.contains(d.getId())).collect(Collectors.toList());
-        List<List<CodFrameMenuListDto>> lists = new ArrayList<>();
-        lists.add(codFrameMenuListDtos);
+        codAdminMenuListDtos = codAdminMenuListDtos.stream().filter(d -> !menuIds.contains(d.getId())).collect(Collectors.toList());
+        List<List<CodAdminMenuListDto>> lists = new ArrayList<>();
+        lists.add(codAdminMenuListDtos);
         lists.add(menuListDtos);
         return lists;
     }

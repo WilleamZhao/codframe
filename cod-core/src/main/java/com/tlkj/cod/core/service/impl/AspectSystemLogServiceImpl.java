@@ -5,16 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.service.impl;
 
 import com.tlkj.cod.common.CodCommonJson;
+import com.tlkj.cod.core.model.entity.CodCoreLogDo;
 import com.tlkj.cod.core.service.AspectSystemLogService;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.entity.CodFrameLogDo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,7 @@ public class AspectSystemLogServiceImpl implements AspectSystemLogService {
      */
     @Override
     public StatusCode saveSystemLog(String methodName, String content, String ip, String username, String operationName, String operationType, Object[] params, Object[] values, Object o) {
-        Updater.Update update = updater.insert(CodFrameLogDo.TABLE_NAME).setId();
+        Updater.Update update = updater.insert(CodCoreLogDo.TABLE_NAME).setId();
         update.set("method_name", methodName);
         update.set("content", content);
         update.set("ip", ip);

@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.launcher.model;
@@ -19,4 +19,5 @@ package com.tlkj.cod.launcher.model;
  * @date 2019/4/28 6:26 PM
  */
 public abstract class CodModuleServerModel {
+
 }

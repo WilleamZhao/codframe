@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.log.service.impl;
@@ -81,7 +81,7 @@ public class CodLogServiceImpl implements CodLogService {
      * @return 设置值
      */
     private String getSetValue(String setCode) {
-        // CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", setCode).first(CodFrameSetDo.class);
+        // CodAdminSetDo setDo = finder.from(CodAdminSetDo.TABLE_NAME).where("set_code", setCode).first(CodAdminSetDo.class);
         // return setDo.getSet_value();
         return "";
     }

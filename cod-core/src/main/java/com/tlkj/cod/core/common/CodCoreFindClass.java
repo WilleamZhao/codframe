@@ -24,7 +24,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
- * Desc
+ * Desc 获取class url
  *
  * @author sourcod
  * @version 1.0

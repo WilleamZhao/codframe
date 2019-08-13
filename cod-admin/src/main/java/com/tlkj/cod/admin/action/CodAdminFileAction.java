@@ -5,16 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.admin.facade.CodAdminFileFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminFileDto;
+import com.tlkj.cod.admin.model.dto.CodAdminFileUrlDto;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
-import com.tlkj.cod.model.system.dto.CodFrameFileDto;
-import com.tlkj.cod.model.system.dto.CodFrameFileUrlDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +44,7 @@ public class CodAdminFileAction extends GeneralResponse {
      */
     @RequestMapping(value = "upload", method = {RequestMethod.PUT, RequestMethod.POST})
     public Response upload(@RequestParam("file") MultipartFile file, String type){
-        CodFrameFileDto filePath = codAdminFileFacade.upload(file, type);
+        CodAdminFileDto filePath = codAdminFileFacade.upload(file, type);
         return super.output(filePath);
     }
 
@@ -54,7 +54,7 @@ public class CodAdminFileAction extends GeneralResponse {
     @RequestMapping(value = "getUrl", method = {RequestMethod.GET})
     public Response getUrl(HttpServletRequest request){
         String type = request.getParameter("type");
-        CodFrameFileUrlDto dto = codAdminFileFacade.getFileUrl(type);
+        CodAdminFileUrlDto dto = codAdminFileFacade.getFileUrl(type);
         return dto == null ? super.fail() : super.success(dto);
     }
 }

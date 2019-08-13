@@ -5,16 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminUserDeptListDto;
+import com.tlkj.cod.admin.model.dvo.CodAdminUserDeptDvo;
 import com.tlkj.cod.admin.service.CodAdminUserDeptService;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
-import com.tlkj.cod.model.system.dto.CodFrameUserDeptListDto;
-import com.tlkj.cod.model.system.dvo.CodDaoFrameUserDeptDvo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,15 +45,15 @@ public class CodAdminUserDeptServiceImpl implements CodAdminUserDeptService {
      * @return 部门列表
      */
     @Override
-    public List<CodFrameUserDeptListDto> listDeptByUserId(String userId) {
-        CodDaoFrameUserDeptDvo dvo = new CodDaoFrameUserDeptDvo();
+    public List<CodAdminUserDeptListDto> listDeptByUserId(String userId) {
+        CodAdminUserDeptDvo dvo = new CodAdminUserDeptDvo();
         Finder.Query query = finder.from(dvo);
-        query.where(CodDaoFrameUserDeptDvo.USER_TABLE + ".id", userId);
-        List<CodDaoFrameUserDeptDvo> deptDvos = query.all(CodDaoFrameUserDeptDvo.class);
+        query.where(CodAdminUserDeptDvo.USER_TABLE + ".id", userId);
+        List<CodAdminUserDeptDvo> deptDvos = query.all(CodAdminUserDeptDvo.class);
 
-        List<CodFrameUserDeptListDto> dtos = new ArrayList<>();
-        for (CodDaoFrameUserDeptDvo deptDvo : deptDvos){
-            CodFrameUserDeptListDto dto = new CodFrameUserDeptListDto();
+        List<CodAdminUserDeptListDto> dtos = new ArrayList<>();
+        for (CodAdminUserDeptDvo deptDvo : deptDvos){
+            CodAdminUserDeptListDto dto = new CodAdminUserDeptListDto();
             dto.setId(deptDvo.getId());
             dto.setDeptId(deptDvo.getDeptId());
             dto.setDeptName(deptDvo.getDeptName());

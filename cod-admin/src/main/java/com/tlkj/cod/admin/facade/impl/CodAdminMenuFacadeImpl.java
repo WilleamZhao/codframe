@@ -5,18 +5,18 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade.impl;
 
 import com.tlkj.cod.admin.facade.CodAdminMenuFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminMenuDto;
+import com.tlkj.cod.admin.model.dto.CodAdminUserDto;
 import com.tlkj.cod.admin.service.CodAdminMenuService;
 import com.tlkj.cod.admin.service.CodAdminUserRoleService;
 import com.tlkj.cod.admin.service.CodAdminRoleMenuService;
 import com.tlkj.cod.admin.service.CodAdminUserService;
-import com.tlkj.cod.model.system.dto.CodFrameMenuDto;
-import com.tlkj.cod.model.system.dto.CodFrameUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,9 +55,9 @@ public class CodAdminMenuFacadeImpl implements CodAdminMenuFacade {
      * @return 左侧菜单
      */
     @Override
-    public List<CodFrameMenuDto> getMenu(String token) {
+    public List<CodAdminMenuDto> getMenu(String token) {
         // 1. 获取用户信息
-        CodFrameUserDto dto = codAdminUserService.getUserByCache(token);
+        CodAdminUserDto dto = codAdminUserService.getUserByCache(token);
         if (dto == null){
             return null;
         }

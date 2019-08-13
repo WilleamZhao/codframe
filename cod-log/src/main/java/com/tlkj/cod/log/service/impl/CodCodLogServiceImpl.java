@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.log.service.impl;
@@ -15,15 +15,13 @@ import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonUUID;
 import com.tlkj.cod.common.constant.CodCommonAnsiConstant;
-import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.log.service.model.CodLogMessageModel;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.model.system.entity.CodFrameSetDo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -36,7 +34,6 @@ import java.util.Arrays;
  * @className CodCodLogServiceImpl
  * @date 2018/12/5 1:19 PM
  */
-// @Primary
 @Service("clogImpl")
 public class CodCodLogServiceImpl implements CodLogService {
 /*
@@ -197,7 +194,7 @@ public class CodCodLogServiceImpl implements CodLogService {
      * @return 设置值
      */
     private String getSetValue(String setCode) {
-        // CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", setCode).first(CodFrameSetDo.class);
+        // CodAdminSetDo setDo = finder.from(CodAdminSetDo.TABLE_NAME).where("set_code", setCode).first(CodAdminSetDo.class);
         // return setDo.getSet_value();
         return "";
     }

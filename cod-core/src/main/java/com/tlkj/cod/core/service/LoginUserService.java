@@ -5,12 +5,10 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.service;
-
-import com.tlkj.cod.model.system.entity.CodFrameUserDo;
 
 /**
  * Desc 用户Service
@@ -27,7 +25,7 @@ public interface LoginUserService {
      * @param username 用户名
      * @return 用户信息
      */
-    CodFrameUserDo getUserByUsername(String username);
+    // CodAdminUserDo getUserByUsername(String username);
 
 
 }

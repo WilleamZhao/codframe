@@ -5,12 +5,12 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
-import com.tlkj.cod.model.system.dto.CodFramePermissionListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionListDto;
 
 import java.util.List;
 
@@ -24,5 +24,5 @@ import java.util.List;
  */
 public interface CodAdminResourceService {
 
-    List<CodFramePermissionListDto> listResource();
+    List<CodAdminPermissionListDto> listResource();
 }

@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package org.slf4j.impl;
@@ -18,7 +18,6 @@ import com.tlkj.cod.common.CodCommonIO;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonUUID;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.MarkerIgnoringBase;
 import org.slf4j.helpers.MessageFormatter;
@@ -26,7 +25,6 @@ import org.slf4j.spi.LocationAwareLogger;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URL;
 import java.util.Date;
 
 /**
@@ -38,6 +36,8 @@ import java.util.Date;
  * @date 2018/12/4 8:42 PM
  */
 public final class CodLoggerAdapter extends MarkerIgnoringBase implements LocationAwareLogger, Serializable {
+
+    private static final long serialVersionUID = -6560271005436328378L;
 
     private long nextCheck = System.currentTimeMillis () - 1;
     private static Date now = new Date();

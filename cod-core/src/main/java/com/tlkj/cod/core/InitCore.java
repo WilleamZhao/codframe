@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core;
@@ -25,12 +25,12 @@ public class InitCore implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 2;
+        return 20;
     }
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        // WebApplicationContextUtils.getWebApplicationContext(servletContext);
+
     }
 
     @Override

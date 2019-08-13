@@ -5,13 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade;
 
-import com.tlkj.cod.model.system.dto.CodFrameFileDto;
-import com.tlkj.cod.model.system.dto.CodFrameFileUrlDto;
+import com.tlkj.cod.admin.model.dto.CodAdminFileDto;
+import com.tlkj.cod.admin.model.dto.CodAdminFileUrlDto;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -31,7 +31,7 @@ public interface CodAdminFileFacade {
      * @param type   指定上传类型; 2019-03-07 add
      * @return
      */
-    CodFrameFileDto upload(MultipartFile file, String type, String... prefix);
+    CodAdminFileDto upload(MultipartFile file, String type, String... prefix);
 
     /**
      * 删除文件
@@ -44,5 +44,5 @@ public interface CodAdminFileFacade {
      * 获取文件头url
      * @return 文件url
      */
-    CodFrameFileUrlDto getFileUrl(String type);
+    CodAdminFileUrlDto getFileUrl(String type);
 }

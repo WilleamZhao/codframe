@@ -5,15 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminSetDto;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameSetDto;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public interface CodAdminSystemSetService {
      * 获取系统设置
      * @param id       主键
      */
-    CodFrameSetDto getSet(String id);
+    CodAdminSetDto getSet(String id);
 
     /**
      * 获取设置值
@@ -55,7 +55,7 @@ public interface CodAdminSystemSetService {
     /**
      * 获取全部设置
      */
-    Page<List<CodFrameSetDto>> listSet();
+    Page<List<CodAdminSetDto>> listSet();
 
     /**
      * 获取日志设置

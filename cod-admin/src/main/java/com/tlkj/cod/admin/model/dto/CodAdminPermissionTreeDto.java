@@ -5,12 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.tlkj.cod.core.model.dto.CodCorePermissionItemDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -62,6 +63,6 @@ public class CodAdminPermissionTreeDto {
     /**
      * 权限
      */
-    private List<CodAdminPermissionItemDto> permission;
+    private List<CodCorePermissionItemDto> permission;
 
 }

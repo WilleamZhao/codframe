@@ -5,12 +5,12 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
-import com.tlkj.cod.model.system.dto.CodFrameUserDeptListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminUserDeptListDto;
 
 import java.util.List;
 
@@ -28,5 +28,5 @@ public interface CodAdminUserDeptService {
      * 根据用户id获取部门列表
      * @param userId 用户id
      */
-    List<CodFrameUserDeptListDto> listDeptByUserId(String userId);
+    List<CodAdminUserDeptListDto> listDeptByUserId(String userId);
 }

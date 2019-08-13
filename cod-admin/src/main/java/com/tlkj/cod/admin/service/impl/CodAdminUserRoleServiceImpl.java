@@ -5,18 +5,18 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminRoleListDto;
+import com.tlkj.cod.admin.model.entity.CodAdminRoleDo;
+import com.tlkj.cod.admin.model.entity.CodAdminUserRoleDo;
 import com.tlkj.cod.admin.service.CodAdminUserRoleService;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameRoleListDto;
-import com.tlkj.cod.model.system.entity.CodFrameRoleDo;
-import com.tlkj.cod.model.system.entity.CodFrameUserRoleDo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,8 +49,8 @@ public class CodAdminUserRoleServiceImpl implements CodAdminUserRoleService {
      */
     @Override
     public String getRoleIds(String userId) {
-        String roleIds = finder.from(CodFrameUserRoleDo.TABLE_NAME).where("user_id", userId).all(CodFrameUserRoleDo.class).stream()
-                .map(CodFrameUserRoleDo::getRole_id).collect(Collectors.joining(","));
+        String roleIds = finder.from(CodAdminUserRoleDo.TABLE_NAME).where("user_id", userId).all(CodAdminUserRoleDo.class).stream()
+                .map(CodAdminUserRoleDo::getRole_id).collect(Collectors.joining(","));
         return roleIds;
     }
 
@@ -60,12 +60,12 @@ public class CodAdminUserRoleServiceImpl implements CodAdminUserRoleService {
      * @return
      */
     @Override
-    public List<CodFrameRoleListDto> listRole(String userId) {
-        Finder.Query query = finder.from(CodFrameUserRoleDo.TABLE_NAME + " userRole").join(" join " + CodFrameRoleDo.TABLE_NAME + " role on userRole.role_id = userRole.user_id");
-        List<CodFrameRoleDo> dos = query.where("user_id", userId).all(CodFrameRoleDo.class);
-        List<CodFrameRoleListDto> dtos = new ArrayList<>();
+    public List<CodAdminRoleListDto> listRole(String userId) {
+        Finder.Query query = finder.from(CodAdminUserRoleDo.TABLE_NAME + " userRole").join(" join " + CodAdminRoleDo.TABLE_NAME + " role on userRole.role_id = userRole.user_id");
+        List<CodAdminRoleDo> dos = query.where("user_id", userId).all(CodAdminRoleDo.class);
+        List<CodAdminRoleListDto> dtos = new ArrayList<>();
         dos.forEach(item -> {
-            CodFrameRoleListDto dto = new CodFrameRoleListDto();
+            CodAdminRoleListDto dto = new CodAdminRoleListDto();
             dto.setId(item.getId());
             dto.setSort(item.getSort());
             dto.setStatus(item.getState());
@@ -88,11 +88,11 @@ public class CodAdminUserRoleServiceImpl implements CodAdminUserRoleService {
     public StatusCode addUserRole(String userId, String roleIds) {
         String[] roles = roleIds.split(",");
         // 1. 删除该用户下所有角色
-        updater.delete(CodFrameUserRoleDo.TABLE_NAME).where("user_id", userId).update();
+        updater.delete(CodAdminUserRoleDo.TABLE_NAME).where("user_id", userId).update();
         // 2. 新增角色
         int i = 0;
         for (String roleId : roles){
-            i += updater.insert(CodFrameUserRoleDo.TABLE_NAME).setId().set("user_id", userId).set("role_id", roleId).update();
+            i += updater.insert(CodAdminUserRoleDo.TABLE_NAME).setId().set("user_id", userId).set("role_id", roleId).update();
         }
         if (i == roles.length){
             return StatusCode.SUCCESS_CODE;
@@ -110,7 +110,7 @@ public class CodAdminUserRoleServiceImpl implements CodAdminUserRoleService {
         String[] tempIds = ids.split(",");
         int i = 0;
         for (String id : tempIds){
-            i += updater.delete(CodFrameUserRoleDo.TABLE_NAME).where("id", id).update();
+            i += updater.delete(CodAdminUserRoleDo.TABLE_NAME).where("id", id).update();
         }
         if (i == tempIds.length){
             return StatusCode.SUCCESS_CODE;
@@ -125,6 +125,6 @@ public class CodAdminUserRoleServiceImpl implements CodAdminUserRoleService {
      */
     @Override
     public StatusCode delUserRoleByUserId(String userId) {
-        return updater.delete(CodFrameUserRoleDo.TABLE_NAME).where("user_id", userId).update() == 1 ? StatusCode.SUCCESS_CODE : StatusCode.FAIL_CODE;
+        return updater.delete(CodAdminUserRoleDo.TABLE_NAME).where("user_id", userId).update() == 1 ? StatusCode.SUCCESS_CODE : StatusCode.FAIL_CODE;
     }
 }

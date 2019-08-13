@@ -5,17 +5,17 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.model.dto.CodAdminDeptListDto;
 import com.tlkj.cod.admin.service.CodAdminDeptService;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameDeptListDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +50,7 @@ public class CodAdminDeptAction extends GeneralResponse {
         String deptLevel = request.getParameter("deptLevel");
         String page = request.getParameter("page");
         String pageSize = request.getParameter("pageSize");
-        Page<List<CodFrameDeptListDto>> listPage = codAdminDeptService.listDept(deptName, deptNo, deptLevel, page, pageSize);
+        Page<List<CodAdminDeptListDto>> listPage = codAdminDeptService.listDept(deptName, deptNo, deptLevel, page, pageSize);
         return listPage == null ? super.fail() : super.success(listPage);
     }
 

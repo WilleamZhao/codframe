@@ -1,14 +1,8 @@
 package com.tlkj.cod.admin;
 
-import com.tlkj.cod.admin.model.config.CodAdminDatabaseConfig;
 import com.tlkj.cod.dao.bean.DataConnectBean;
-import com.tlkj.cod.dao.jdbc.Finder;
-import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
-import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
-
-import javax.sql.DataSource;
 
 /**
  * Desc 初始化管理模块

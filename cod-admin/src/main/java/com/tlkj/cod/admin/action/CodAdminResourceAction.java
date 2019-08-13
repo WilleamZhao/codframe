@@ -5,15 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionListDto;
 import com.tlkj.cod.admin.service.CodAdminResourceService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
-import com.tlkj.cod.model.system.dto.CodFramePermissionListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,7 +42,7 @@ public class CodAdminResourceAction extends GeneralResponse {
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET})
     public Response listResource(HttpServletRequest request){
-        List<CodFramePermissionListDto> maps = codAdminResourceService.listResource();
+        List<CodAdminPermissionListDto> maps = codAdminResourceService.listResource();
         return maps != null ? super.success(maps) : super.fail();
     }
 }

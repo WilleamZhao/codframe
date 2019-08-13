@@ -5,22 +5,22 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminUserDto;
+import com.tlkj.cod.admin.model.entity.CodAdminUserDo;
 import com.tlkj.cod.admin.service.CodAdminUserService;
 import com.tlkj.cod.cache.CodCacheManager;
 import com.tlkj.cod.common.CodCommonJson;
-import com.tlkj.cod.core.service.LoginUserService;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
+import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameUserDto;
-import com.tlkj.cod.model.system.entity.CodFrameUserDo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ import java.util.List;
  * @date 2018/10/29 上午11:19
  */
 @Service
-public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserService {
+public class CodAdminUserServiceImpl implements CodAdminUserService {
 
     private static Logger logger = LoggerFactory.getLogger(CodAdminUserServiceImpl.class);
 
@@ -53,6 +53,9 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
     @Autowired
     CodCacheManager codCacheManager;
 
+    @Autowired
+    CodLogService codLogService;
+
 
     /**
      * 添加用户
@@ -60,15 +63,15 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
      * @return
      */
     @Override
-    public StatusCode addUser(CodFrameUserDto userDto) {
+    public StatusCode addUser(CodAdminUserDto userDto) {
         logger.info("添加用户接口, 参数={}", CodCommonJson.dump(userDto));
         return null;
     }
 
     @Override
-    public CodFrameUserDto getUser(String id) {
-        CodFrameUserDo userDo = finder.from(CodFrameUserDo.TABLE_NAME).where("id", id).first(CodFrameUserDo.class);
-        CodFrameUserDto dto = new CodFrameUserDto();
+    public CodAdminUserDto getUser(String id) {
+        CodAdminUserDo userDo = finder.from(CodAdminUserDo.TABLE_NAME).where("id", id).first(CodAdminUserDo.class);
+        CodAdminUserDto dto = new CodAdminUserDto();
         doToDto(userDo, dto);
         return dto;
     }
@@ -79,13 +82,22 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
      * @return 用户信息
      */
     @Override
-    public CodFrameUserDto getUserByCache(String token) {
-        CodFrameUserDo codFrameUserDo = (CodFrameUserDo) codCacheManager.get(token);
-        if (codFrameUserDo == null){
+    public CodAdminUserDto getUserByCache(String token) {
+        CodAdminUserDo codAdminUserDo;
+
+        try {
+            codAdminUserDo = (CodAdminUserDo) codCacheManager.get(token);
+        } catch (Exception e){
+            codLogService.error("从缓存中获取用户信息失败", e);
             return null;
         }
-        CodFrameUserDto dto = new CodFrameUserDto();
-        doToDto(codFrameUserDo, dto);
+
+        if (codAdminUserDo == null){
+            return null;
+        }
+
+        CodAdminUserDto dto = new CodAdminUserDto();
+        doToDto(codAdminUserDo, dto);
         return dto;
     }
 
@@ -101,10 +113,10 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
      * @return
      */
     @Override
-    public Page<List<CodFrameUserDto>> listUser(String page, String pageSize, String userName, String loginAccount, String userPhone, String userSex, String state) {
+    public Page<List<CodAdminUserDto>> listUser(String page, String pageSize, String userName, String loginAccount, String userPhone, String userSex, String state) {
         logger.info("获取全部用户接口, 参数:page={}, pageSize={}", page, pageSize);
 
-        List<CodFrameUserDo> userDoList;
+        List<CodAdminUserDo> userDoList;
         Finder.Query query = finder.from("cod_sys_user");
 
         if (StringUtils.isNotBlank(userName)){
@@ -129,23 +141,23 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
             query.where("state", "1");
         }
 
-        Pagination<CodFrameUserDo> pagination;
+        Pagination<CodAdminUserDo> pagination;
         if (StringUtils.isNotBlank(pageSize)){
-            pagination = query.paginate(CodFrameUserDo.class, Integer.parseInt(page), Integer.parseInt(pageSize));
+            pagination = query.paginate(CodAdminUserDo.class, Integer.parseInt(page), Integer.parseInt(pageSize));
         } else {
-            pagination = query.paginate(CodFrameUserDo.class, Integer.parseInt(page));
+            pagination = query.paginate(CodAdminUserDo.class, Integer.parseInt(page));
         }
 
         userDoList = pagination.getData();
-        List<CodFrameUserDto> userDtoList = new ArrayList<>();
+        List<CodAdminUserDto> userDtoList = new ArrayList<>();
         if (userDoList != null && userDoList.size() != 0){
             userDoList.forEach(userDo -> {
-                CodFrameUserDto userDto = new CodFrameUserDto();
+                CodAdminUserDto userDto = new CodAdminUserDto();
                 doToDto(userDo, userDto);
                 userDtoList.add(userDto);
             });
         }
-        Page<List<CodFrameUserDto>> tempPage = new Page<>(userDtoList, pagination);
+        Page<List<CodAdminUserDto>> tempPage = new Page<>(userDtoList, pagination);
         return tempPage;
     }
 
@@ -162,7 +174,7 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
      */
     @Override
     public StatusCode saveUser(String id, String userName, String loginAccount, String userHead, String userPhone, String userEmail, String userSex, String state) {
-        Updater.Update update = StringUtils.isNotBlank(id) ? updater.update(CodFrameUserDo.TABLE_NAME).where("id", id) : updater.insert(CodFrameUserDo.TABLE_NAME).setId();
+        Updater.Update update = StringUtils.isNotBlank(id) ? updater.update(CodAdminUserDo.TABLE_NAME).where("id", id) : updater.insert(CodAdminUserDo.TABLE_NAME).setId();
         if (StringUtils.isNotBlank(userName)){
             update.set("user_name", userName);
         }
@@ -196,7 +208,7 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
 
     @Override
     public Boolean verifyLoginAccount(String loginAccount) {
-        int i = finder.from(CodFrameUserDo.TABLE_NAME).where("login_account", loginAccount).select("count(*)").firstForObject(Integer.class);
+        int i = finder.from(CodAdminUserDo.TABLE_NAME).where("login_account", loginAccount).select("count(*)").firstForObject(Integer.class);
         if (i == 0){
             return true;
         }
@@ -211,14 +223,14 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
      */
     @Override
     public StatusCode updatePassword(String id, String password) {
-        int i = updater.update(CodFrameUserDo.TABLE_NAME).set("login_pass", password).where("id", id).update();
+        int i = updater.update(CodAdminUserDo.TABLE_NAME).set("login_pass", password).where("id", id).update();
         return i == 1 ? StatusCode.SUCCESS_CODE : StatusCode.FAIL_CODE;
     }
 
-    @Override
-    public CodFrameUserDo getUserByUsername(String username) {
-        CodFrameUserDo codFrameUserDo = finder.from(CodFrameUserDo.TABLE_NAME).where("login_account", username).first(CodFrameUserDo.class);
-        return codFrameUserDo;
+    // @Override
+    public CodAdminUserDo getUserByUsername(String username) {
+        CodAdminUserDo codAdminUserDo = finder.from(CodAdminUserDo.TABLE_NAME).where("login_account", username).first(CodAdminUserDo.class);
+        return codAdminUserDo;
     }
 
     /**
@@ -226,7 +238,7 @@ public class CodAdminUserServiceImpl implements CodAdminUserService, LoginUserSe
      * @param userDo  do
      * @param userDto dto
      */
-    private void doToDto(CodFrameUserDo userDo, CodFrameUserDto userDto){
+    private void doToDto(CodAdminUserDo userDo, CodAdminUserDto userDto){
         userDto.setId(userDo.getId());
         userDto.setCompanyId(userDo.getCompany_id());
         userDto.setDeptId(userDo.getDept_id());

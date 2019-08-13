@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.model.dto;
@@ -37,6 +37,6 @@ public class CodAdminCompanyListDto {
     private String companyEin;
     private String companyAddress;
     private String sort;
-    private String status;
+    private String state;
 
 }

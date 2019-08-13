@@ -5,15 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.api;
 
+import com.tlkj.cod.admin.model.dto.CodAdminUserDto;
 import com.tlkj.cod.admin.service.CodAdminUserService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
-import com.tlkj.cod.model.system.dto.CodFrameUserDto;
 import com.tlkj.cod.model.wechat.entity.WxUserDo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +46,7 @@ public class UserApi extends GeneralResponse {
     @RequestMapping(value = "getUser", method = {RequestMethod.GET})
     public Response getUserByCache(HttpServletRequest request){
         String token = request.getParameter("token");
-        CodFrameUserDto dto = codAdminUserService.getUserByCache(token);
+        CodAdminUserDto dto = codAdminUserService.getUserByCache(token);
         return dto == null ? super.fail() : super.success(dto);
     }
 

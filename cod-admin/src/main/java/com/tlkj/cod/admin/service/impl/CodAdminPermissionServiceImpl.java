@@ -5,22 +5,24 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionItemDto;
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionTreeDto;
+import com.tlkj.cod.admin.model.entity.CodAdminPermissionDo;
+import com.tlkj.cod.admin.model.entity.CodAdminRolePermissionDo;
 import com.tlkj.cod.admin.service.CodAdminPermissionService;
+import com.tlkj.cod.core.model.dto.CodCorePermissionItemDto;
 import com.tlkj.cod.core.security.util.PermissionUtil;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFramePermissionItemDto;
-import com.tlkj.cod.model.system.dto.CodFramePermissionTreeDto;
-import com.tlkj.cod.model.system.entity.CodFramePermissionDo;
-import com.tlkj.cod.model.system.entity.CodFrameRolePermissionDo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,14 +51,14 @@ public class CodAdminPermissionServiceImpl implements CodAdminPermissionService 
      * 获取权限树
      */
     @Override
-    public List<CodFramePermissionTreeDto> getPermissionTree(String roleIds) {
+    public List<CodAdminPermissionTreeDto> getPermissionTree(String roleIds) {
         // 查询权限
-        Finder.Query query = finder.from(CodFramePermissionDo.TABLE_NAME);
+        Finder.Query query = finder.from(CodAdminPermissionDo.TABLE_NAME);
         if (StringUtils.isNotBlank(roleIds)){
             // 根据角色查询权限ID
             Object[] roles = roleIds.split(",");
-            Object[] permissionId = finder.from(CodFrameRolePermissionDo.TABLE_NAME).in("role_id", roles).all(CodFrameRolePermissionDo.class)
-                    .stream().map(CodFrameRolePermissionDo::getPermission_id).toArray();
+            Object[] permissionId = finder.from(CodAdminRolePermissionDo.TABLE_NAME).in("role_id", roles).all(CodAdminRolePermissionDo.class)
+                    .stream().map(CodAdminRolePermissionDo::getPermission_id).toArray();
             if (permissionId != null && permissionId.length > 0){
                 query.in("id", permissionId);
             } else {
@@ -64,10 +66,10 @@ public class CodAdminPermissionServiceImpl implements CodAdminPermissionService 
             }
         }
 
-        List<CodFramePermissionDo> permissionDoList = query.all(CodFramePermissionDo.class);
-        List<CodFramePermissionTreeDto> dtos = new ArrayList<>();
+        List<CodAdminPermissionDo> permissionDoList = query.all(CodAdminPermissionDo.class);
+        List<CodAdminPermissionTreeDto> dtos = new ArrayList<>();
         permissionDoList.forEach( item -> {
-            CodFramePermissionTreeDto dto = new CodFramePermissionTreeDto();
+            CodAdminPermissionTreeDto dto = new CodAdminPermissionTreeDto();
             dto.setId(item.getId());
             dto.setCode(item.getPermission_code());
             dto.setName(item.getPermission_name());
@@ -87,8 +89,8 @@ public class CodAdminPermissionServiceImpl implements CodAdminPermissionService 
      * @return 权限列表
      */
     @Override
-    public Page<List<CodFramePermissionTreeDto>> listPermission(String page, String pageSize, String name, String code, String desc) {
-        Finder.Query query = finder.from(CodFramePermissionDo.TABLE_NAME);
+    public Page<List<CodAdminPermissionTreeDto>> listPermission(String page, String pageSize, String name, String code, String desc) {
+        Finder.Query query = finder.from(CodAdminPermissionDo.TABLE_NAME);
         if (StringUtils.isNotBlank(name)){
             query.like("permission_name", "%" + name + "%");
         }
@@ -103,11 +105,11 @@ public class CodAdminPermissionServiceImpl implements CodAdminPermissionService 
 
         int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
         int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
-        Pagination<CodFramePermissionDo> pagination = query.paginate(CodFramePermissionDo.class, currentPage, perPage);
-        List<CodFramePermissionDo> list = pagination.getData();
-        List<CodFramePermissionTreeDto> dtos = new ArrayList<>();
+        Pagination<CodAdminPermissionDo> pagination = query.paginate(CodAdminPermissionDo.class, currentPage, perPage);
+        List<CodAdminPermissionDo> list = pagination.getData();
+        List<CodAdminPermissionTreeDto> dtos = new ArrayList<>();
         list.forEach(item -> {
-            CodFramePermissionTreeDto dto = new CodFramePermissionTreeDto();
+            CodAdminPermissionTreeDto dto = new CodAdminPermissionTreeDto();
             dto.setId(item.getId());
             dto.setPermission(PermissionUtil.convertPermission(item.getPermission()));
             dto.setName(item.getPermission_name());
@@ -131,7 +133,7 @@ public class CodAdminPermissionServiceImpl implements CodAdminPermissionService 
      */
     @Override
     public StatusCode savePermission(String id, String name, String code, String desc, String state, String num) {
-        Updater.Update update = StringUtils.isNotBlank(id) ? updater.update(CodFramePermissionDo.TABLE_NAME).where("id", id) : updater.insert(CodFramePermissionDo.TABLE_NAME).setId();
+        Updater.Update update = StringUtils.isNotBlank(id) ? updater.update(CodAdminPermissionDo.TABLE_NAME).where("id", id) : updater.insert(CodAdminPermissionDo.TABLE_NAME).setId();
 
         if (StringUtils.isNotBlank(name)){
             update.set("permission_name", name);
@@ -162,7 +164,7 @@ public class CodAdminPermissionServiceImpl implements CodAdminPermissionService 
 
     @Override
     public StatusCode delPermission(String id) {
-        return updater.delete(CodFramePermissionDo.TABLE_NAME).where("id", id).update() == 1 ? StatusCode.SUCCESS_CODE : StatusCode.FAIL_CODE;
+        return updater.delete(CodAdminPermissionDo.TABLE_NAME).where("id", id).update() == 1 ? StatusCode.SUCCESS_CODE : StatusCode.FAIL_CODE;
     }
 
     /**
@@ -170,12 +172,22 @@ public class CodAdminPermissionServiceImpl implements CodAdminPermissionService 
      * @return 全部权限
      */
     @Override
-    public List<CodFramePermissionItemDto> getPermission(String id) {
-        CodFramePermissionDo codFramePermissionDo = null;
+    public List<CodAdminPermissionItemDto> getPermission(String id) {
+        CodAdminPermissionDo codAdminPermissionDo = null;
         if (StringUtils.isNotBlank(id)){
-            codFramePermissionDo = finder.from(CodFramePermissionDo.TABLE_NAME).where("id", id).first(CodFramePermissionDo.class);
+            codAdminPermissionDo = finder.from(CodAdminPermissionDo.TABLE_NAME).where("id", id).first(CodAdminPermissionDo.class);
         }
-        return PermissionUtil.convertPermission(codFramePermissionDo != null ? codFramePermissionDo.getPermission() : 0);
+        List<CodCorePermissionItemDto> dtoList = PermissionUtil.convertPermission(codAdminPermissionDo != null ? codAdminPermissionDo.getPermission() : 0);
+        List<CodAdminPermissionItemDto> list = new ArrayList<>();
+        for (CodCorePermissionItemDto corePermissionItemDto : dtoList){
+            CodAdminPermissionItemDto dto = new CodAdminPermissionItemDto();
+            dto.setCode(corePermissionItemDto.getCode());
+            dto.setName(corePermissionItemDto.getName());
+            dto.setNum(corePermissionItemDto.getNum());
+            dto.setState(corePermissionItemDto.isState());
+            list.add(dto);
+        }
+        return list;
     }
 
     /**
@@ -185,7 +197,7 @@ public class CodAdminPermissionServiceImpl implements CodAdminPermissionService 
      */
     @Override
     public boolean verifyPermissionCode(String code) {
-        int i = finder.from(CodFramePermissionDo.TABLE_NAME).where("permission_code", code).select("count(*)").firstForObject(Integer.class);
+        int i = finder.from(CodAdminPermissionDo.TABLE_NAME).where("permission_code", code).select("count(*)").firstForObject(Integer.class);
         if (i == 0){
             return true;
         }

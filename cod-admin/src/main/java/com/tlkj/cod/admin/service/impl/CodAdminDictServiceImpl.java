@@ -5,11 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.bo.CodAdminDictItemBo;
+import com.tlkj.cod.admin.model.dto.CodAdminDictItemListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminDictTypeListDto;
+import com.tlkj.cod.admin.model.entity.CodAdminDictItemDo;
+import com.tlkj.cod.admin.model.entity.CodAdminDictTypeDo;
 import com.tlkj.cod.admin.service.CodAdminDictService;
 import com.tlkj.cod.common.CodCommonPinyin;
 import com.tlkj.cod.core.annotation.CodSystemLog;
@@ -20,11 +25,6 @@ import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.bo.CodFrameDictItemBo;
-import com.tlkj.cod.model.system.dto.CodFrameDictItemListDto;
-import com.tlkj.cod.model.system.dto.CodFrameDictTypeListDto;
-import com.tlkj.cod.model.system.entity.CodFrameDictItemDo;
-import com.tlkj.cod.model.system.entity.CodFrameDictTypeDo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,10 +65,10 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
         Finder.Query query = null;
         switch (type){
             case "1":
-                query = finder.from(CodFrameDictTypeDo.TABLE_NAME).where("type_code", code);
+                query = finder.from(CodAdminDictTypeDo.TABLE_NAME).where("type_code", code);
                 break;
             case "2":
-                query = finder.from(CodFrameDictItemDo.TABLE_NAME).where("item_code", code);
+                query = finder.from(CodAdminDictItemDo.TABLE_NAME).where("item_code", code);
                 break;
             default:
 
@@ -95,8 +95,8 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
      */
     @CodLog(name = "获取字典类型列表")
     @Override
-    public Page<List<CodFrameDictTypeListDto>> listDictType(String typeName, String typeCode, String allpin, String typeStatus, String page, String pageSize) {
-        Finder.Query query = finder.from(CodFrameDictTypeDo.TABLE_NAME).not("state", "-1").orderBy("sort");
+    public Page<List<CodAdminDictTypeListDto>> listDictType(String typeName, String typeCode, String allpin, String typeStatus, String page, String pageSize) {
+        Finder.Query query = finder.from(CodAdminDictTypeDo.TABLE_NAME).not("state", "-1").orderBy("sort");
         if (StringUtils.isNotBlank(typeCode)){
             query.like("type_code", "%" + typeCode + "%");
         }
@@ -115,9 +115,9 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
 
         int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
         int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
-        Pagination<CodFrameDictTypeDo> pagination;
+        Pagination<CodAdminDictTypeDo> pagination;
         try {
-            pagination = query.paginate(CodFrameDictTypeDo.class, currentPage, perPage);
+            pagination = query.paginate(CodAdminDictTypeDo.class, currentPage, perPage);
         } catch (Exception e) {
             logger.error("sql查询错误:={}", e.getMessage());
             return null;
@@ -126,10 +126,10 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
             return new Page<>();
         }
 
-        List<CodFrameDictTypeDo> list = pagination.getData();
-        List<CodFrameDictTypeListDto> listDtos = new ArrayList<>();
+        List<CodAdminDictTypeDo> list = pagination.getData();
+        List<CodAdminDictTypeListDto> listDtos = new ArrayList<>();
         list.forEach( dictTypeDo -> {
-            CodFrameDictTypeListDto dictTypeListDto = new CodFrameDictTypeListDto();
+            CodAdminDictTypeListDto dictTypeListDto = new CodAdminDictTypeListDto();
             dictTypeListDto.setAllPin(dictTypeDo.getAllpin());
             dictTypeListDto.setEnglishName(dictTypeDo.getEnglish_name());
             dictTypeListDto.setId(dictTypeDo.getId());
@@ -141,7 +141,7 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
             listDtos.add(dictTypeListDto);
         });
 
-        Page<List<CodFrameDictTypeListDto>> tempPage = new Page<>(listDtos, pagination);
+        Page<List<CodAdminDictTypeListDto>> tempPage = new Page<>(listDtos, pagination);
         return tempPage;
     }
 
@@ -158,8 +158,8 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
      */
     @CodLog(name = "获取字典数据")
     @Override
-    public Page<List<CodFrameDictItemListDto>> listDictItem(String typeId, String page, String pageSize, String allPin, String itemName, String itemCode, String itemStatus, String simplePin) {
-        Finder.Query query = finder.from(CodFrameDictItemDo.TABLE_NAME).not("state", "-1").orderBy("sort");
+    public Page<List<CodAdminDictItemListDto>> listDictItem(String typeId, String page, String pageSize, String allPin, String itemName, String itemCode, String itemStatus, String simplePin) {
+        Finder.Query query = finder.from(CodAdminDictItemDo.TABLE_NAME).not("state", "-1").orderBy("sort");
 
         query = StringUtils.isNotBlank(typeId) ?  query.where("type_id", typeId) : query;
         if (StringUtils.isNotBlank(allPin)){
@@ -184,9 +184,9 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
 
         int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
         int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
-        Pagination<CodFrameDictItemDo> pagination;
+        Pagination<CodAdminDictItemDo> pagination;
         try {
-            pagination = query.paginate(CodFrameDictItemDo.class, currentPage, perPage);
+            pagination = query.paginate(CodAdminDictItemDo.class, currentPage, perPage);
         } catch (Exception e) {
             logger.error("sql查询错误:={}", e.getMessage());
             return null;
@@ -194,11 +194,11 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
         if (pagination == null) {
             return new Page<>();
         }
-        List<CodFrameDictItemDo> codFrameDictItemDoList = pagination.getData();
-        List<CodFrameDictItemListDto> dtoList = new ArrayList<>();
+        List<CodAdminDictItemDo> codAdminDictItemDoList = pagination.getData();
+        List<CodAdminDictItemListDto> dtoList = new ArrayList<>();
 
-        codFrameDictItemDoList.forEach( dictItemDo -> {
-            CodFrameDictItemListDto dto = new CodFrameDictItemListDto();
+        codAdminDictItemDoList.forEach( dictItemDo -> {
+            CodAdminDictItemListDto dto = new CodAdminDictItemListDto();
             dto.setId(dictItemDo.getId());
             dto.setAllPin(dictItemDo.getAllpin());
             dto.setIsFixed(dictItemDo.getIsfixed());
@@ -216,7 +216,7 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
             dtoList.add(dto);
         });
 
-        Page<List<CodFrameDictItemListDto>> tempPage = new Page<>(dtoList, pagination);
+        Page<List<CodAdminDictItemListDto>> tempPage = new Page<>(dtoList, pagination);
         return tempPage;
     }
 
@@ -237,7 +237,7 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
     @Override
     public StatusCode saveDictItem(String itemId, String typeId, String itemCode, String itemName, String itemValue, String isFixed, String itemStatus, String englishName, String sort, String remark) {
         // 有主键更新，没有新增
-        Updater.Update update = StringUtils.isBlank(itemId) ? updater.insert(CodFrameDictItemDo.TABLE_NAME).setId() : updater.update(CodFrameDictItemDo.TABLE_NAME).where("id", itemId);
+        Updater.Update update = StringUtils.isBlank(itemId) ? updater.insert(CodAdminDictItemDo.TABLE_NAME).setId() : updater.update(CodAdminDictItemDo.TABLE_NAME).where("id", itemId);
         update.set("item_name", itemName)
                 .set("type_id", typeId)
                 .set("item_code", itemCode)
@@ -285,7 +285,7 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
     public StatusCode saveDictType(String dictId, String typeCode, String typeName, String englishName, String typeStatus, String remark) {
 
         // 有主键更新，没有新增
-        Updater.Update update = StringUtils.isBlank(dictId) ? updater.insert(CodFrameDictTypeDo.TABLE_NAME).setId() : updater.update(CodFrameDictTypeDo.TABLE_NAME).where("id", dictId);
+        Updater.Update update = StringUtils.isBlank(dictId) ? updater.insert(CodAdminDictTypeDo.TABLE_NAME).setId() : updater.update(CodAdminDictTypeDo.TABLE_NAME).where("id", dictId);
         update.set("type_name", typeName)
                 .set("type_code", typeCode)
                 .set("english_name", englishName);
@@ -313,38 +313,38 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
     @CodParamVerify(parameter = "code")
     @CodLog(name = "根据code获取字典数据")
     @Override
-    public List<CodFrameDictItemBo> getItemByType(String code) {
-        List<CodFrameDictItemDo> codFrameDictItemDo = null;
+    public List<CodAdminDictItemBo> getItemByType(String code) {
+        List<CodAdminDictItemDo> codAdminDictItemDo = null;
         try {
-            codFrameDictItemDo = finder.from(CodFrameDictItemDo.TABLE_NAME + " item")
-                    .join("join " + CodFrameDictTypeDo.TABLE_NAME + " type on item.type_id = type.id ")
+            codAdminDictItemDo = finder.from(CodAdminDictItemDo.TABLE_NAME + " item")
+                    .join("join " + CodAdminDictTypeDo.TABLE_NAME + " type on item.type_id = type.id ")
                     .where("type.type_code", code).where("item.state", "1")
                     .select("item.id", "item.item_name", "item.item_code", "item.isFixed", "item.english_name", "item.allpin", "item.simplepin", "item.remark", "item.item_value")
-                    .all(CodFrameDictItemDo.class);
+                    .all(CodAdminDictItemDo.class);
         } catch (Exception e){
             logger.error("获取item, sql异常, {}", e.getMessage());
             return null;
         }
 
-        if (codFrameDictItemDo == null){
+        if (codAdminDictItemDo == null){
             return new ArrayList<>();
         }
 
-        List<CodFrameDictItemBo> codFrameDictItemBos = new ArrayList<>();
-        codFrameDictItemDo.forEach(item -> {
-            CodFrameDictItemBo codFrameDictItemBo = new CodFrameDictItemBo();
-            codFrameDictItemBo.setId(item.getId());
-            codFrameDictItemBo.setAllPin(item.getAllpin());
-            codFrameDictItemBo.setCode(item.getItem_code());
-            codFrameDictItemBo.setEnglishName(item.getEnglish_name());
-            codFrameDictItemBo.setName(item.getItem_name());
-            codFrameDictItemBo.setRemark(item.getRemark());
-            codFrameDictItemBo.setSimplePin(item.getSimplepin());
-            codFrameDictItemBo.setValue(item.getItem_value());
-            codFrameDictItemBos.add(codFrameDictItemBo);
+        List<CodAdminDictItemBo> codAdminDictItemBos = new ArrayList<>();
+        codAdminDictItemDo.forEach(item -> {
+            CodAdminDictItemBo codAdminDictItemBo = new CodAdminDictItemBo();
+            codAdminDictItemBo.setId(item.getId());
+            codAdminDictItemBo.setAllPin(item.getAllpin());
+            codAdminDictItemBo.setCode(item.getItem_code());
+            codAdminDictItemBo.setEnglishName(item.getEnglish_name());
+            codAdminDictItemBo.setName(item.getItem_name());
+            codAdminDictItemBo.setRemark(item.getRemark());
+            codAdminDictItemBo.setSimplePin(item.getSimplepin());
+            codAdminDictItemBo.setValue(item.getItem_value());
+            codAdminDictItemBos.add(codAdminDictItemBo);
         });
 
-        return codFrameDictItemBos;
+        return codAdminDictItemBos;
     }
 
     /**
@@ -356,21 +356,21 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
      */
     @CodParamVerify(parameter = "code")
     @Override
-    public CodFrameDictItemBo getItem(String code) {
+    public CodAdminDictItemBo getItem(String code) {
         String[] codes = code.split(":");
         String itemCode;
-        Finder.Query query = finder.from(CodFrameDictItemDo.TABLE_NAME + " item");
+        Finder.Query query = finder.from(CodAdminDictItemDo.TABLE_NAME + " item");
         if (codes.length == 2){
             String typeCode = codes[0];
-            query.join("join " + CodFrameDictTypeDo.TABLE_NAME + " type on item.type_id = type.id ").where("type.type_code", typeCode);
+            query.join("join " + CodAdminDictTypeDo.TABLE_NAME + " type on item.type_id = type.id ").where("type.type_code", typeCode);
             query.select("item.id", "item.item_name", "item.item_code", "item.isFixed", "item.english_name", "item.allpin", "item.simplepin", "item.remark", "item.item_value");
             itemCode = codes[1];
         } else {
             itemCode = code;
         }
         query.where("item.item_code", itemCode).where("item.state", "1");
-        CodFrameDictItemDo dictItemDo = query.first(CodFrameDictItemDo.class);
-        CodFrameDictItemBo bo = new CodFrameDictItemBo();
+        CodAdminDictItemDo dictItemDo = query.first(CodAdminDictItemDo.class);
+        CodAdminDictItemBo bo = new CodAdminDictItemBo();
         if (dictItemDo == null){
             return bo;
         }
@@ -393,7 +393,7 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
     @CodLog(name = "删除字典数据")
     @Override
     public StatusCode delDictItem(String id) {
-        int i = updater.update(CodFrameDictItemDo.TABLE_NAME).set("state", "-1").where("id", id).not("type", "0").update();
+        int i = updater.update(CodAdminDictItemDo.TABLE_NAME).set("state", "-1").where("id", id).not("type", "0").update();
         if (i == 1) {
             return StatusCode.SUCCESS_CODE;
         }
@@ -403,8 +403,8 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
     @CodLog(name = "删除字典类型")
     @Override
     public StatusCode delDictType(String id) {
-        int i = updater.update(CodFrameDictTypeDo.TABLE_NAME).set("state", "-1").where("id", id).not("type", "0").update();
-        int i1 = updater.update(CodFrameDictItemDo.TABLE_NAME).set("state", "-1").where("type_id", id).not("type", "0").update();
+        int i = updater.update(CodAdminDictTypeDo.TABLE_NAME).set("state", "-1").where("id", id).not("type", "0").update();
+        int i1 = updater.update(CodAdminDictItemDo.TABLE_NAME).set("state", "-1").where("type_id", id).not("type", "0").update();
         if (i == 1) {
             return StatusCode.SUCCESS_CODE;
         }

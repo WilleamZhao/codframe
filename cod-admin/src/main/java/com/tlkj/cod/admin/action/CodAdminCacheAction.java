@@ -5,16 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.model.bo.CodAdminDictItemBo;
 import com.tlkj.cod.admin.service.CodAdminDictService;
 import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
-import com.tlkj.cod.model.system.bo.CodFrameDictItemBo;
 import com.tlkj.cod.model.system.core.SystemModel;
 import com.tlkj.cod.model.system.core.SystemSetAllowDisable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,8 @@ public class CodAdminCacheAction extends GeneralResponse {
      */
     @RequestMapping(value = "allowDisable", method = {RequestMethod.GET})
     public Response allowDisable(HttpServletRequest request){
-        List<String> blackList = codAdminDictService.getItemByType("black-set").stream().map(CodFrameDictItemBo::getValue).collect(Collectors.toList());
-        List<String> whiteList = codAdminDictService.getItemByType("white-set").stream().map(CodFrameDictItemBo::getValue).collect(Collectors.toList());
+        List<String> blackList = codAdminDictService.getItemByType("black-set").stream().map(CodAdminDictItemBo::getValue).collect(Collectors.toList());
+        List<String> whiteList = codAdminDictService.getItemByType("white-set").stream().map(CodAdminDictItemBo::getValue).collect(Collectors.toList());
         SystemSetAllowDisable systemSetAllowDisable = new SystemSetAllowDisable();
         systemSetAllowDisable.setAllowDisable(codAdminSystemSetService.getSetValue("allow_disable"));
         systemSetAllowDisable.setBlackList(blackList);

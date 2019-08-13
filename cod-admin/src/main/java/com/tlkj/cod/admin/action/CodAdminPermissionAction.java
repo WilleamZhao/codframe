@@ -5,19 +5,19 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.admin.facade.CodAdminPermissionFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionItemDto;
+import com.tlkj.cod.admin.model.dto.CodAdminPermissionTreeDto;
 import com.tlkj.cod.admin.service.CodAdminPermissionService;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFramePermissionItemDto;
-import com.tlkj.cod.model.system.dto.CodFramePermissionTreeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,7 +54,7 @@ public class CodAdminPermissionAction extends GeneralResponse {
         String name = request.getParameter("name");
         String code = request.getParameter("code");
         String desc = request.getParameter("desc");
-        Page<List<CodFramePermissionTreeDto>> dtoList = codAdminPermissionService.listPermission(page, pageSize, name, code, desc);
+        Page<List<CodAdminPermissionTreeDto>> dtoList = codAdminPermissionService.listPermission(page, pageSize, name, code, desc);
         return dtoList == null ? super.fail() : super.success(dtoList);
     }
 
@@ -64,7 +64,7 @@ public class CodAdminPermissionAction extends GeneralResponse {
     @RequestMapping(value = "listTree", method = {RequestMethod.GET})
     public Response getPermission(HttpServletRequest request){
         String roleId = request.getParameter("roleId");
-        List<CodFramePermissionTreeDto> dtoList = codAdminPermissionService.getPermissionTree(roleId);
+        List<CodAdminPermissionTreeDto> dtoList = codAdminPermissionService.getPermissionTree(roleId);
         return dtoList == null ? super.fail() : super.success(dtoList);
     }
 
@@ -99,7 +99,7 @@ public class CodAdminPermissionAction extends GeneralResponse {
     @RequestMapping(value = "getPermission", method = {RequestMethod.GET})
     public Response getAllPermission(HttpServletRequest request){
         String id = request.getParameter("id");
-        List<CodFramePermissionItemDto> dto = codAdminPermissionService.getPermission(id);
+        List<CodAdminPermissionItemDto> dto = codAdminPermissionService.getPermission(id);
         return super.success(dto);
     }
 

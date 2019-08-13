@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.model.entity;
@@ -21,7 +21,7 @@ import java.io.Serializable;
  *
  * @author sourcod
  * @version 1.0
- * @className CodAdminLogDo
+ * @className CodCoreLogDo
  * @date 2018/12/6 4:44 PM
  */
 @Getter

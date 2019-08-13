@@ -5,12 +5,17 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade.impl;
 
 import com.tlkj.cod.admin.facade.CodAdminFileFacade;
+import com.tlkj.cod.admin.model.bo.CodAdminDictItemBo;
+import com.tlkj.cod.admin.model.dto.CodAdminFileDto;
+import com.tlkj.cod.admin.model.dto.CodAdminFileUrlDto;
+import com.tlkj.cod.admin.model.entity.CodAdminTempFileDo;
+import com.tlkj.cod.admin.model.enums.SystemCodeSet;
 import com.tlkj.cod.admin.service.CodAdminDictService;
 import com.tlkj.cod.admin.service.CodAdminFileService;
 import com.tlkj.cod.admin.service.CodAdminSystemSetService;
@@ -19,12 +24,7 @@ import com.tlkj.cod.common.CodCommonFile;
 import com.tlkj.cod.common.CodCommonFileSizeConverter;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.service.CodLogService;
-import com.tlkj.cod.model.system.bo.CodFrameDictItemBo;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.model.system.dto.CodFrameFileDto;
-import com.tlkj.cod.model.system.dto.CodFrameFileUrlDto;
-import com.tlkj.cod.model.system.entity.CodFrameTempFileDo;
-import com.tlkj.cod.model.system.enums.SystemCodeSet;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -122,7 +122,7 @@ public class CodAdminFileFacadeImpl implements CodAdminFileFacade {
      * @return
      */
     @Override
-    public CodFrameFileDto upload(MultipartFile file, String type, String... prefix){
+    public CodAdminFileDto upload(MultipartFile file, String type, String... prefix){
 
         type = getType(type);
 
@@ -133,7 +133,7 @@ public class CodAdminFileFacadeImpl implements CodAdminFileFacade {
             return null;
         }
         InputStream io;
-        CodFrameDictItemBo bo = codAdminDictService.getItem(SYSTEM_ATTACHMENT_SET + ":" +type);
+        CodAdminDictItemBo bo = codAdminDictService.getItem(SYSTEM_ATTACHMENT_SET + ":" +type);
         try {
             io = file.getInputStream();
         } catch (IOException e) {
@@ -160,24 +160,24 @@ public class CodAdminFileFacadeImpl implements CodAdminFileFacade {
         }
         url += path;
         boolean isok = codAdminFileService.uploadFile(url, fileName, io);
-        CodFrameFileDto codFrameFileDto = new CodFrameFileDto();
+        CodAdminFileDto codAdminFileDto = new CodAdminFileDto();
         if (isok){
-            codFrameFileDto.setExtName(ext);
+            codAdminFileDto.setExtName(ext);
             String mbAll = CodCommonFileSizeConverter.BTrim.convert(file.getSize());
             String mb = CodCommonFileSizeConverter.ArbitraryTrim.convert(file.getSize());
             String unit = mbAll.substring(mb.length());
-            codFrameFileDto.setFileName(CodCommonFile.getPrefix(file.getOriginalFilename()));
-            codFrameFileDto.setFileSize(mb);
-            codFrameFileDto.setUrl(path + fileName);
-            codFrameFileDto.setFileUnit(unit);
-            return codFrameFileDto;
+            codAdminFileDto.setFileName(CodCommonFile.getPrefix(file.getOriginalFilename()));
+            codAdminFileDto.setFileSize(mb);
+            codAdminFileDto.setUrl(path + fileName);
+            codAdminFileDto.setFileUnit(unit);
+            return codAdminFileDto;
         }
         return null;
     }
 
     @Override
     public boolean delete(String id) {
-        int i = updater.update(CodFrameTempFileDo.TABLE_NAME).set("status", "-1").where("id", id).update();
+        int i = updater.update(CodAdminTempFileDo.TABLE_NAME).set("status", "-1").where("id", id).update();
         if (i == 1){
             return true;
         }
@@ -189,12 +189,12 @@ public class CodAdminFileFacadeImpl implements CodAdminFileFacade {
      * 获取文件路径
      */
     @Override
-    public CodFrameFileUrlDto getFileUrl(String type) {
+    public CodAdminFileUrlDto getFileUrl(String type) {
         if (StringUtils.isBlank(type)){
             type = codAdminSystemSetService.getSetValue(SYSTEM_ATTACHMENT_SET);
         }
         String url = codAdminDictService.getItem(SYSTEM_ATTACHMENT_SET + ":" +type+"-url").getValue();
-        CodFrameFileUrlDto dto = new CodFrameFileUrlDto();
+        CodAdminFileUrlDto dto = new CodAdminFileUrlDto();
         dto.setType(type);
         dto.setUrl(url);
         return dto;

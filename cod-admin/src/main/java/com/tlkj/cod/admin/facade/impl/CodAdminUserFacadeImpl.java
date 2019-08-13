@@ -5,12 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade.impl;
 
 import com.tlkj.cod.admin.facade.CodAdminUserFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminDeptListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminRoleListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminUserDeptListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminUserDto;
 import com.tlkj.cod.admin.service.CodAdminDeptService;
 import com.tlkj.cod.admin.service.CodAdminPermissionService;
 import com.tlkj.cod.admin.service.CodAdminRolePermissionService;
@@ -20,12 +24,7 @@ import com.tlkj.cod.admin.service.CodAdminUserRoleService;
 import com.tlkj.cod.admin.service.CodAdminUserService;
 import com.tlkj.cod.core.facade.LoginUserFacade;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameDeptListDto;
-import com.tlkj.cod.model.system.dto.CodFrameRoleListDto;
-import com.tlkj.cod.model.system.dto.CodFrameUserDeptListDto;
-import com.tlkj.cod.model.system.dto.CodFrameUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,7 +55,6 @@ public class CodAdminUserFacadeImpl implements CodAdminUserFacade, LoginUserFaca
     CodAdminUserRoleService codAdminUserRoleService;
 
     @Autowired
-    // @Qualifier("userServiceImpl")
     CodAdminUserService codAdminUserService;
 
     @Autowired
@@ -68,18 +66,18 @@ public class CodAdminUserFacadeImpl implements CodAdminUserFacade, LoginUserFaca
     @Override
     public List getRole(String userId) {
         // 1. 获取全部角色
-        List<CodFrameRoleListDto> allRole = codAdminRoleService.listRole("1", "999", "", "", "").getData();
+        List<CodAdminRoleListDto> allRole = codAdminRoleService.listRole("1", "999", "", "", "").getData();
 
         // 2. 获取用户角色
-        List<CodFrameRoleListDto> userRole = codAdminUserRoleService.listRole(userId);
+        List<CodAdminRoleListDto> userRole = codAdminUserRoleService.listRole(userId);
 
         // id字符串
-        String tempDtoIds = userRole.stream().map(CodFrameRoleListDto::getId).collect(Collectors.joining(","));
+        String tempDtoIds = userRole.stream().map(CodAdminRoleListDto::getId).collect(Collectors.joining(","));
 
         // 差集
-        List<CodFrameRoleListDto> temp = allRole.stream().filter(d -> !tempDtoIds.contains(d.getId())).collect(Collectors.toList());
+        List<CodAdminRoleListDto> temp = allRole.stream().filter(d -> !tempDtoIds.contains(d.getId())).collect(Collectors.toList());
 
-        List<List<CodFrameRoleListDto>> lists = new ArrayList<>();
+        List<List<CodAdminRoleListDto>> lists = new ArrayList<>();
         lists.add(temp);
         lists.add(userRole);
         return lists;
@@ -88,16 +86,16 @@ public class CodAdminUserFacadeImpl implements CodAdminUserFacade, LoginUserFaca
     @Override
     public List editDept(String userId) {
         // 1. 获取全部部门
-        List<CodFrameDeptListDto> deptListDtos = codAdminDeptService.listDept("", "", "", "1", "999").getData();
+        List<CodAdminDeptListDto> deptListDtos = codAdminDeptService.listDept("", "", "", "1", "999").getData();
 
         // 2. 获取用户部门
-        List<CodFrameUserDeptListDto> userDeptListDtos = codAdminUserDeptService.listDeptByUserId(userId);
+        List<CodAdminUserDeptListDto> userDeptListDtos = codAdminUserDeptService.listDeptByUserId(userId);
 
         // id字符串
-        String tempDeptIds = userDeptListDtos.stream().map(CodFrameUserDeptListDto::getDeptId).collect(Collectors.joining(","));
+        String tempDeptIds = userDeptListDtos.stream().map(CodAdminUserDeptListDto::getDeptId).collect(Collectors.joining(","));
 
         // 差集
-        List<CodFrameDeptListDto> temp = deptListDtos.stream().filter(d -> !tempDeptIds.contains(d.getId())).collect(Collectors.toList());
+        List<CodAdminDeptListDto> temp = deptListDtos.stream().filter(d -> !tempDeptIds.contains(d.getId())).collect(Collectors.toList());
 
         List lists = new ArrayList<>();
         lists.add(temp);
@@ -113,21 +111,21 @@ public class CodAdminUserFacadeImpl implements CodAdminUserFacade, LoginUserFaca
      */
     @Override
     public StatusCode updatePassword(String token, String oldPassword, String newPassword) {
-        CodFrameUserDto codFrameUserDto = codAdminUserService.getUserByCache(token);
-        if (codFrameUserDto == null){
+        CodAdminUserDto codAdminUserDto = codAdminUserService.getUserByCache(token);
+        if (codAdminUserDto == null){
             return StatusCode.LOGIN_FAIL_CODE;
         }
         StatusCode statusCode = StatusCode.FAIL_CODE;
-        if (codFrameUserDto.getLoginPass().equals(oldPassword)){
-            statusCode = codAdminUserService.updatePassword(codFrameUserDto.getId(), newPassword);
+        if (codAdminUserDto.getLoginPass().equals(oldPassword)){
+            statusCode = codAdminUserService.updatePassword(codAdminUserDto.getId(), newPassword);
         }
         return statusCode;
     }
 
     @Override
     public List getPermission(String id) {
-        List<CodFrameRoleListDto> dtos = codAdminUserRoleService.listRole(id);
-        String roleIds = dtos.stream().map(CodFrameRoleListDto::getId).collect(Collectors.joining(","));
+        List<CodAdminRoleListDto> dtos = codAdminUserRoleService.listRole(id);
+        String roleIds = dtos.stream().map(CodAdminRoleListDto::getId).collect(Collectors.joining(","));
         return codAdminPermissionService.getPermissionTree(roleIds);
     }
 }

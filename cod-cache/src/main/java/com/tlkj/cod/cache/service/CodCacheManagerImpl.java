@@ -5,15 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache.service;
 
 import com.tlkj.cod.cache.CodCacheManager;
 import com.tlkj.cod.dao.jdbc.Finder;
+import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.model.system.core.SystemModel;
-import com.tlkj.cod.model.system.entity.CodFrameSetDo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -43,17 +43,18 @@ public class CodCacheManagerImpl implements CodCacheManager {
     @Autowired
     Finder finder;
 
+    @Autowired
+    CodDataService codDataService;
+
 
     /**
      * 获取 CodCacheManager
      */
     private CodCacheManager getCodCache(){
         SystemModel model = SystemModel.getInstance();
-        String setValue;
+        String setValue = codDataService.getData("cod.cache.config.type");
         if (model.getCache() != null && StringUtils.isNotBlank(model.getCache().getType())){
             setValue = model.getCache().getType();
-        } else {
-            setValue = getSetValue();
         }
 
         for (CodCacheManager f : codCacheManagers){
@@ -189,14 +190,5 @@ public class CodCacheManagerImpl implements CodCacheManager {
     @Override
     public boolean clear() {
         return getCodCache() != null && getCodCache().clear();
-    }
-
-    /**
-     * 获取设置Value
-     * @return 设置值
-     */
-    private String getSetValue() {
-        CodFrameSetDo setDo = finder.from(CodFrameSetDo.TABLE_NAME).where("set_code", "cache").first(CodFrameSetDo.class);
-        return setDo.getSet_value();
     }
 }

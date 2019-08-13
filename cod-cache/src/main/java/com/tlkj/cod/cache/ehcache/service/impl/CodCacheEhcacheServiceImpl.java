@@ -5,14 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache.ehcache.service.impl;
 
 import com.tlkj.cod.cache.CodCacheManager;
 import com.tlkj.cod.cache.ehcache.service.CodCacheEhcacheService;
-import com.tlkj.cod.cache.model.CodCacheEhcacheModel;
+import com.tlkj.cod.cache.model.config.CodCacheConfigEhcache;
 import com.tlkj.cod.cache.model.CodCacheFormatType;
 import com.tlkj.cod.cache.model.CodCacheModel;
 import com.tlkj.cod.common.CodCommonJson;
@@ -32,7 +32,6 @@ import org.ehcache.config.units.MemoryUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -58,8 +57,8 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
 
     private static CacheManager cacheManager = null;
 
-    // @Autowired
-    private CodCacheEhcacheModel codCacheEhcacheModel;
+    @Autowired
+    private CodCacheConfigEhcache codCacheConfigEhcache;
 
     @Autowired
     CodLogService codLogService;
@@ -68,22 +67,22 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
      * 构造方法初始化 cacheManager
      */
     public CodCacheEhcacheServiceImpl(){
-        // new CodCacheEhcacheServiceImpl(codCacheEhcacheModel);
+        // new CodCacheEhcacheServiceImpl(codCacheConfigEhcache);
     }
 
     /**
      * TODO 错误
      */
     @Autowired
-    public CodCacheEhcacheServiceImpl(CodCacheEhcacheModel codCacheEhcacheModel){
+    public CodCacheEhcacheServiceImpl(CodCacheConfigEhcache codCacheConfigEhcache){
         // CacheManager管理缓存
         if (cacheManager == null){
             try {
                 cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
                         // 硬盘持久化地址
-                        .with(CacheManagerBuilder.persistence(codCacheEhcacheModel.getRootDirectory()))
+                        .with(CacheManagerBuilder.persistence(codCacheConfigEhcache.getRootDirectory()))
                         // 设置一个默认缓存配置
-                        .withCache(codCacheEhcacheModel.getName(), getCacheConfiguration(codCacheEhcacheModel))
+                        .withCache(codCacheConfigEhcache.getName(), getCacheConfiguration(codCacheConfigEhcache))
                         //创建之后立即初始化
                         .build(true);
             } catch (StateTransitionException e){
@@ -98,7 +97,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
      * @return 默认配置
      */
     private CacheConfiguration<?, ?> getCacheConfiguration(){
-        return getCacheConfiguration(codCacheEhcacheModel, codCacheEhcacheModel.getKeyType(), codCacheEhcacheModel.getValueType());
+        return getCacheConfiguration(codCacheConfigEhcache, codCacheConfigEhcache.getKeyType(), codCacheConfigEhcache.getValueType());
     }
 
     /**
@@ -106,23 +105,23 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
      * @return 默认配置
      */
     private CacheConfiguration<?, ?> getCacheConfiguration(Class<?> keyType, Class<?> valueType){
-        return getCacheConfiguration(codCacheEhcacheModel, keyType, valueType);
+        return getCacheConfiguration(codCacheConfigEhcache, keyType, valueType);
     }
 
     /**
      * 获取配置
      * @return 默认配置
      */
-    private CacheConfiguration<?, ?> getCacheConfiguration(CodCacheEhcacheModel codCacheEhcacheModel){
-        return getCacheConfiguration(codCacheEhcacheModel, codCacheEhcacheModel.getKeyType(), codCacheEhcacheModel.getValueType());
+    private CacheConfiguration<?, ?> getCacheConfiguration(CodCacheConfigEhcache codCacheConfigEhcache){
+        return getCacheConfiguration(codCacheConfigEhcache, codCacheConfigEhcache.getKeyType(), codCacheConfigEhcache.getValueType());
     }
 
     /**
      * 获取配置
-     * @param codCacheEhcacheModel Ehcache配置Model
+     * @param codCacheConfigEhcache Ehcache配置Model
      * @return 配置
      */
-    private CacheConfiguration<?, ?> getCacheConfiguration(CodCacheEhcacheModel codCacheEhcacheModel, Class<?> keyType, Class<?> valueType){
+    private CacheConfiguration<?, ?> getCacheConfiguration(CodCacheConfigEhcache codCacheConfigEhcache, Class<?> keyType, Class<?> valueType){
         // 配置默认缓存属性
         return CacheConfigurationBuilder.newCacheConfigurationBuilder(
                 // 缓存数据K和V的数值类型
@@ -130,15 +129,15 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
                 keyType, valueType,
                 ResourcePoolsBuilder.newResourcePoolsBuilder()
                         //设置缓存堆容纳元素个数(JVM内存空间)超出个数后会存到offHeap中
-                        .heap(codCacheEhcacheModel.getHeap(),EntryUnit.ENTRIES)
+                        .heap(codCacheConfigEhcache.getHeap(),EntryUnit.ENTRIES)
                         //设置堆外储存大小(内存存储) 超出offheap的大小会淘汰规则被淘汰
-                        .offheap(codCacheEhcacheModel.getOffHeap(), MemoryUnit.MB)
+                        .offheap(codCacheConfigEhcache.getOffHeap(), MemoryUnit.MB)
                         //配置磁盘持久化储存(硬盘存储)用来持久化到磁盘,这里设置为false不启用
-                        .disk(codCacheEhcacheModel.getDisk(), MemoryUnit.MB,true))
+                        .disk(codCacheConfigEhcache.getDisk(), MemoryUnit.MB,true))
                 //设置缓存过期时间
-                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.of(codCacheEhcacheModel.getTimeToLiveSeconds(), ChronoUnit.SECONDS)))
+                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.of(codCacheConfigEhcache.getTimeToLiveSeconds(), ChronoUnit.SECONDS)))
                 //设置被访问后过期时间(同时设置和TTL和TTI之后会被覆盖,这里TTI生效,之前版本xml配置后是两个配置了都会生效)
-                .withExpiry(ExpiryPolicyBuilder.timeToIdleExpiration(Duration.of(codCacheEhcacheModel.getTimeToIdleSeconds(), ChronoUnit.SECONDS)))
+                .withExpiry(ExpiryPolicyBuilder.timeToIdleExpiration(Duration.of(codCacheConfigEhcache.getTimeToIdleSeconds(), ChronoUnit.SECONDS)))
                 // 缓存淘汰策略 默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）。
                 // .withEvictionAdvisor((s, s2) -> s.length() > 10)
                 .build();
@@ -154,7 +153,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
      */
     private Cache getOrAddCache(String cacheName, Class<?> keyType, Class<?> valueType) {
         if (cacheManager == null){
-            new CodCacheEhcacheServiceImpl(codCacheEhcacheModel);
+            new CodCacheEhcacheServiceImpl(codCacheConfigEhcache);
         }
         Cache cache = cacheManager.getCache(cacheName, keyType, valueType);
         if (cache == null) {
@@ -170,17 +169,17 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
     }
 
     private Cache getCache(){
-        return getCache(codCacheEhcacheModel.getName());
+        return getCache(codCacheConfigEhcache.getName());
     }
 
     @Override
     public Cache getCache(String name) {
-        return getCache(name, codCacheEhcacheModel.getKeyType(), codCacheEhcacheModel.getValueType());
+        return getCache(name, codCacheConfigEhcache.getKeyType(), codCacheConfigEhcache.getValueType());
     }
 
     @Override
     public Cache getCache(Class<?> keyType, Class<?> valueType) {
-        return getCache(codCacheEhcacheModel.getName(), codCacheEhcacheModel.getKeyType(), codCacheEhcacheModel.getValueType());
+        return getCache(codCacheConfigEhcache.getName(), codCacheConfigEhcache.getKeyType(), codCacheConfigEhcache.getValueType());
     }
 
     @Override
@@ -355,7 +354,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try{
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.STRING, value).getCache());
         } catch (Exception e){
-            System.err.println("设置错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -366,7 +365,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.MAP, value).getCache());
         } catch (Exception e){
-            System.err.println("设置错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -377,7 +376,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.LIST, value).getCache());
         } catch (Exception e){
-            System.err.println("设置错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -388,7 +387,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.SET, value).getCache());
         } catch (Exception e){
-            System.err.println("设置错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -416,7 +415,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
                 // return false;
             }
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -428,7 +427,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.STRING, value, time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -440,7 +439,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.MAP, value, time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -452,7 +451,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.LIST, value, time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -464,7 +463,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.SET, value, time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -476,7 +475,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.OBJECT, CodCommonSerializable.serialize(value), time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -487,7 +486,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.STRING, value).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -498,7 +497,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.MAP, value).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -509,7 +508,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.LIST, value).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -520,7 +519,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.SET, value).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -531,13 +530,13 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             if (!(value instanceof Serializable)){
                 //未实现序列化
-                System.out.println("对象未序列化");
+                codLogService.error("codCacheEhcache 缓存 set 失败");
                 return false;
             }
             //说明实现的序列化
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.OBJECT, CodCommonSerializable.serialize(value)).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -549,7 +548,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.STRING, value, time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -561,7 +560,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.MAP, value, time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -573,7 +572,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.LIST, value, time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -585,7 +584,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.SET, value, time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -597,7 +596,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().put(key, new CodCacheModel<>(CodCacheFormatType.OBJECT, CodCommonSerializable.serialize(value), time).getCache());
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -608,7 +607,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().remove(key);
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;
@@ -619,7 +618,7 @@ public class CodCacheEhcacheServiceImpl implements CodCacheEhcacheService, CodCa
         try {
             getCache().clear();
         } catch (Exception e){
-            System.err.println("缓存set错误");
+            codLogService.error("codCacheEhcache 缓存 set 失败");
             return false;
         }
         return true;

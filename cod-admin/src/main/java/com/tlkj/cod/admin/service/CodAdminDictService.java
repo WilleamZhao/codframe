@@ -5,16 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.bo.CodAdminDictItemBo;
+import com.tlkj.cod.admin.model.dto.CodAdminDictItemListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminDictTypeListDto;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.bo.CodFrameDictItemBo;
-import com.tlkj.cod.model.system.dto.CodFrameDictItemListDto;
-import com.tlkj.cod.model.system.dto.CodFrameDictTypeListDto;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public interface CodAdminDictService {
      * @param pageSize   一页几条
      * @return
      */
-    Page<List<CodFrameDictTypeListDto>> listDictType(String typeName, String typeCode, String allpin, String typeStatus, String page, String pageSize);
+    Page<List<CodAdminDictTypeListDto>> listDictType(String typeName, String typeCode, String allpin, String typeStatus, String page, String pageSize);
 
     /**
      * 根据字典码获取全部字典数据
@@ -60,7 +60,7 @@ public interface CodAdminDictService {
      * @param simplePin   简拼
      * @return
      */
-    Page<List<CodFrameDictItemListDto>> listDictItem(String typeId, String page, String pageSize, String allPin, String itemName, String itemCode, String itemStatus, String simplePin);
+    Page<List<CodAdminDictItemListDto>> listDictItem(String typeId, String page, String pageSize, String allPin, String itemName, String itemCode, String itemStatus, String simplePin);
 
     /**
      * 保存字典数据
@@ -79,14 +79,14 @@ public interface CodAdminDictService {
      * @param code typeCode
      * @return
      */
-    List<CodFrameDictItemBo> getItemByType(String code);
+    List<CodAdminDictItemBo> getItemByType(String code);
 
     /**
      * 根据数据code 获取item
      * @param code itemCode
      * @return
      */
-    CodFrameDictItemBo getItem(String code);
+    CodAdminDictItemBo getItem(String code);
 
     /**
      * 删除字典数据

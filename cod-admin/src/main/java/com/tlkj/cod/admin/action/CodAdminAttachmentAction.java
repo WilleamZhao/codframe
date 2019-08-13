@@ -5,12 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.admin.facade.CodAdminAttachmentFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminAttachmentListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminAttachmentTypeDto;
 import com.tlkj.cod.admin.service.CodAdminAttachmentService;
 import com.tlkj.cod.admin.service.CodAdminUserService;
 import com.tlkj.cod.dao.bean.Page;
@@ -18,8 +20,6 @@ import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameAttachmentListDto;
-import com.tlkj.cod.model.system.dto.CodFrameAttachmentTypeDto;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class CodAdminAttachmentAction extends GeneralResponse {
         String ip = request.getParameter("ip");
         String page = request.getParameter("page");
         String limit = request.getParameter("limit");
-        Page<List<CodFrameAttachmentListDto>> listPage = codAdminAttachmentService.listAttachment(fileName, userName, extName, size, ip, page, limit);
+        Page<List<CodAdminAttachmentListDto>> listPage = codAdminAttachmentService.listAttachment(fileName, userName, extName, size, ip, page, limit);
         return listPage == null ? super.fail() : super.success(listPage);
     }
 
@@ -80,7 +80,7 @@ public class CodAdminAttachmentAction extends GeneralResponse {
     @RequestMapping(value = "save", method = {RequestMethod.POST})
     public Response uploadAttachment(@RequestParam("file") MultipartFile file, HttpServletRequest request){
         String id = request.getParameter("id");
-        String token = request.getParameter("access_token");
+        String token = request.getParameter("cod_admin_token");
         String userId = codAdminUserService.getUserByCache(token).getId();
         String status = request.getParameter("status");
         String fileType = request.getParameter("fileType");
@@ -95,7 +95,7 @@ public class CodAdminAttachmentAction extends GeneralResponse {
     @RequestMapping(value = "del", method = {RequestMethod.POST})
     public Response deleteAttachment(HttpServletRequest request){
         String id = request.getParameter("id");
-        String token = request.getParameter("access_token");
+        String token = request.getParameter("cod_admin_token");
         String userId = codAdminUserService.getUserByCache(token).getId();
         String status = request.getParameter("status");
 
@@ -109,7 +109,7 @@ public class CodAdminAttachmentAction extends GeneralResponse {
      */
     @RequestMapping(value = "gettype", method = {RequestMethod.GET})
     public Response getType(){
-        List<CodFrameAttachmentTypeDto> list = codAdminAttachmentService.getType();
+        List<CodAdminAttachmentTypeDto> list = codAdminAttachmentService.getType();
         return list == null ? super.fail() : super.success(list);
     }
 }

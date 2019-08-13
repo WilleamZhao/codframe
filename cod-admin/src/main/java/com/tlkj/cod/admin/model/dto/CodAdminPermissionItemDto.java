@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.model.dto;
@@ -19,7 +19,7 @@ import lombok.Setter;
  *
  * @author sourcod
  * @version 1.0
- * @className CodAdminPermissionItemDto
+ * @className CodCorePermissionItemDto
  * @date 2018/12/13 9:06 PM
  */
 @Getter

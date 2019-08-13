@@ -5,11 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminAttachmentListDto;
+import com.tlkj.cod.admin.model.dto.CodAdminAttachmentTypeDto;
+import com.tlkj.cod.admin.model.entity.CodAdminAttachmentDo;
 import com.tlkj.cod.admin.service.CodAdminAttachmentService;
 import com.tlkj.cod.admin.service.CodAdminDictService;
 import com.tlkj.cod.dao.bean.Page;
@@ -18,10 +21,6 @@ import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameAttachmentListDto;
-import com.tlkj.cod.model.system.dto.CodFrameAttachmentTypeDto;
-import com.tlkj.cod.model.system.entity.CodFrameAttachmentDo;
-
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -67,8 +66,8 @@ public class CodAdminAttachmentServiceImpl implements CodAdminAttachmentService 
      */
     @CodLog(name = "查询附件列表")
     @Override
-    public Page<List<CodFrameAttachmentListDto>> listAttachment(String fileName, String userName, String extName, String size, String ip, String page, String pageSize) {
-        Finder.Query query = finder.from(CodFrameAttachmentDo.TABLE_NAME);
+    public Page<List<CodAdminAttachmentListDto>> listAttachment(String fileName, String userName, String extName, String size, String ip, String page, String pageSize) {
+        Finder.Query query = finder.from(CodAdminAttachmentDo.TABLE_NAME);
         if (StringUtils.isNotBlank(fileName)){
             query.where("file_name", fileName);
         }
@@ -92,9 +91,9 @@ public class CodAdminAttachmentServiceImpl implements CodAdminAttachmentService 
         int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
         int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
 
-        Pagination<CodFrameAttachmentDo> pagination;
+        Pagination<CodAdminAttachmentDo> pagination;
         try {
-            pagination = query.paginate(CodFrameAttachmentDo.class, currentPage, perPage);
+            pagination = query.paginate(CodAdminAttachmentDo.class, currentPage, perPage);
         } catch (Exception e) {
             logger.error("sql查询错误:={}", e.getMessage());
             return null;
@@ -103,11 +102,11 @@ public class CodAdminAttachmentServiceImpl implements CodAdminAttachmentService 
         if (pagination == null) {
             return new Page<>();
         }
-        List<CodFrameAttachmentDo> attachmentDos = pagination.getData();
-        List<CodFrameAttachmentListDto> dtoList = new ArrayList<>();
+        List<CodAdminAttachmentDo> attachmentDos = pagination.getData();
+        List<CodAdminAttachmentListDto> dtoList = new ArrayList<>();
 
         attachmentDos.forEach(item -> {
-            CodFrameAttachmentListDto attachmentListDto = new CodFrameAttachmentListDto();
+            CodAdminAttachmentListDto attachmentListDto = new CodAdminAttachmentListDto();
             attachmentListDto.setId(item.getId());
             attachmentListDto.setCreateTime(item.getCreate_time());
             attachmentListDto.setExtName(item.getFile_extname());
@@ -135,7 +134,7 @@ public class CodAdminAttachmentServiceImpl implements CodAdminAttachmentService 
     @CodLog(name = "删除文件")
     @Override
     public StatusCode deleteFile(String id, String userId, String status) {
-        Updater.Update update = updater.update(CodFrameAttachmentDo.TABLE_NAME)
+        Updater.Update update = updater.update(CodAdminAttachmentDo.TABLE_NAME)
                 .set("user_id", userId).set("update_time", "now()", Void.class);
         update = StringUtils.isBlank(status) ? update.set("status", "0") : "0".equals(status) ? update.set("status", "-1") : update;
         update.where("id", id);
@@ -161,8 +160,8 @@ public class CodAdminAttachmentServiceImpl implements CodAdminAttachmentService 
      */
     @Override
     public StatusCode saveFile(String id, String fileName, String code, String fileType, String fileSize, String fileUnit, String userId, String ip, String extName, String sort, String url) {
-        int num = finder.from(CodFrameAttachmentDo.TABLE_NAME).where("id", id).select("count(*)").firstForObject(Integer.class);
-        Updater.Update update = num == 0 ? updater.insert(CodFrameAttachmentDo.TABLE_NAME).setId() : updater.update(CodFrameAttachmentDo.TABLE_NAME).where("id", id);
+        int num = finder.from(CodAdminAttachmentDo.TABLE_NAME).where("id", id).select("count(*)").firstForObject(Integer.class);
+        Updater.Update update = num == 0 ? updater.insert(CodAdminAttachmentDo.TABLE_NAME).setId() : updater.update(CodAdminAttachmentDo.TABLE_NAME).where("id", id);
 
         if (StringUtils.isNotBlank(fileName)){
             update.set("file_name", fileName);
@@ -218,11 +217,11 @@ public class CodAdminAttachmentServiceImpl implements CodAdminAttachmentService 
      * @return
      */
     @Override
-    public List<CodFrameAttachmentTypeDto> getType() {
-        List<CodFrameAttachmentTypeDto> list = new ArrayList<>();
+    public List<CodAdminAttachmentTypeDto> getType() {
+        List<CodAdminAttachmentTypeDto> list = new ArrayList<>();
 
         codAdminDictService.getItemByType("attachment-type").forEach(item ->{
-            CodFrameAttachmentTypeDto typeDto = new CodFrameAttachmentTypeDto();
+            CodAdminAttachmentTypeDto typeDto = new CodAdminAttachmentTypeDto();
             typeDto.setId(item.getId());
             typeDto.setCode(item.getCode());
             typeDto.setName(item.getName());

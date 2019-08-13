@@ -5,16 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.entity.CodAdminRoleMenuDo;
 import com.tlkj.cod.admin.service.CodAdminRoleMenuService;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.entity.CodFrameRoleMenuDo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,11 +49,11 @@ public class CodAdminRoleMenuServiceImpl implements CodAdminRoleMenuService {
         String[] strings = menuIds.split(",");
 
         // 删除现有菜单
-        updater.delete(CodFrameRoleMenuDo.TABLE_NAME).update();
+        updater.delete(CodAdminRoleMenuDo.TABLE_NAME).update();
 
         int i = 0;
         for (String s : strings){
-            Updater.Update update = updater.insert(CodFrameRoleMenuDo.TABLE_NAME).set("role_id", roleId).setId();
+            Updater.Update update = updater.insert(CodAdminRoleMenuDo.TABLE_NAME).set("role_id", roleId).setId();
             update.set("menu_id", s);
             i += update.update();
         }
@@ -72,8 +72,8 @@ public class CodAdminRoleMenuServiceImpl implements CodAdminRoleMenuService {
     @Override
     public String getMenuIds(String roleIds) {
         Object[] strings = roleIds.split(",");
-        List<CodFrameRoleMenuDo> roleMenuDo = finder.from(CodFrameRoleMenuDo.TABLE_NAME).in("role_id", strings).all(CodFrameRoleMenuDo.class);
-        String menuIds = roleMenuDo.stream().map(CodFrameRoleMenuDo::getMenu_id).distinct().collect(Collectors.joining(","));
+        List<CodAdminRoleMenuDo> roleMenuDo = finder.from(CodAdminRoleMenuDo.TABLE_NAME).in("role_id", strings).all(CodAdminRoleMenuDo.class);
+        String menuIds = roleMenuDo.stream().map(CodAdminRoleMenuDo::getMenu_id).distinct().collect(Collectors.joining(","));
         return menuIds;
     }
 }

@@ -5,12 +5,12 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade;
 
-import com.tlkj.cod.model.system.dto.CodFrameMenuDto;
+import com.tlkj.cod.admin.model.dto.CodAdminMenuDto;
 
 import java.util.List;
 
@@ -29,5 +29,5 @@ public interface CodAdminMenuFacade {
      * @param token token
      * @return 左侧菜单树
      */
-    List<CodFrameMenuDto> getMenu(String token);
+    List<CodAdminMenuDto> getMenu(String token);
 }

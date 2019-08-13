@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.server.service.impl;
@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.DispatcherType;
 import java.lang.management.ManagementFactory;
 import java.util.EnumSet;
 import java.util.EventListener;
@@ -81,6 +82,9 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         context.addServlet(servletHolder, "/codframe/*");
 
         LinkedList<CodServerFilterModel> filters = codServerModel.getFilters();
+
+        // FilterHolder corsFilter = context.addFilter(CorsFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
+
         // 动态添加filter
         if (filters != null && filters.size() != 0){
             for (CodServerFilterModel codServerFilterModel : filters){

@@ -5,15 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminMenuDto;
+import com.tlkj.cod.admin.model.dto.CodAdminMenuListDto;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameMenuDto;
-import com.tlkj.cod.model.system.dto.CodFrameMenuListDto;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public interface CodAdminMenuService {
      * @param menuIds 菜单ids
      * @return 菜单json
      */
-    List<CodFrameMenuDto> getMenu(String menuIds);
+    List<CodAdminMenuDto> getMenu(String menuIds);
 
     /**
      * 获取菜单列表接口
@@ -44,7 +44,7 @@ public interface CodAdminMenuService {
      * @param status 菜单状态
      * @return 菜单列表
      */
-    Page<List<CodFrameMenuListDto>> listMenu(String page, String limit, String menuName, String menuTitle, String level, String status);
+    Page<List<CodAdminMenuListDto>> listMenu(String page, String limit, String menuName, String menuTitle, String level, String status);
 
 
     /**
@@ -52,7 +52,7 @@ public interface CodAdminMenuService {
      * @param menuIds 菜单ids
      * @return 菜单列表
      */
-    List<CodFrameMenuListDto> listMenu(String menuIds);
+    List<CodAdminMenuListDto> listMenu(String menuIds);
 
 
 
@@ -82,7 +82,7 @@ public interface CodAdminMenuService {
      * @param menuId 菜单Id
      * @return
      */
-    CodFrameMenuListDto getOneMenu(String menuId);
+    CodAdminMenuListDto getOneMenu(String menuId);
 
     /**
      * 删除菜单

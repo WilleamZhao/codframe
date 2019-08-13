@@ -5,16 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.model.dto.CodAdminSystemLogDto;
 import com.tlkj.cod.admin.service.CodAdminSystemLogService;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
-import com.tlkj.cod.model.system.dto.CodFrameSystemLogDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +49,7 @@ public class CodAdminLogAction extends GeneralResponse {
         String endDate = request.getParameter("endDate");
         String page = request.getParameter("page");
         String pageSize = request.getParameter("limit");
-        Page<List<CodFrameSystemLogDto>> listPage = codAdminSystemLogService.listLog(ip, username, startDate, endDate, page, pageSize);
+        Page<List<CodAdminSystemLogDto>> listPage = codAdminSystemLogService.listLog(ip, username, startDate, endDate, page, pageSize);
         if (listPage != null){
             return super.success(listPage);
         }
@@ -62,7 +62,7 @@ public class CodAdminLogAction extends GeneralResponse {
     @RequestMapping("get")
     public Response getLog(HttpServletRequest request){
         String ip = request.getParameter("id");
-        CodFrameSystemLogDto listPage = codAdminSystemLogService.getLog(ip);
+        CodAdminSystemLogDto listPage = codAdminSystemLogService.getLog(ip);
         if (listPage == null){
             return super.fail();
         }

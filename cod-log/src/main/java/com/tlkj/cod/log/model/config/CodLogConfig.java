@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CodLogConfig {
 
-    @Value("${cod.log.type:cLog}")
+    @Value("${cod.log.config.type:clog}")
     private String type;
 
 

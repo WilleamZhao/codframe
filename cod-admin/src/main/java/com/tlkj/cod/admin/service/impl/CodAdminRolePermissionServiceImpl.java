@@ -5,16 +5,16 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.entity.CodAdminRolePermissionDo;
 import com.tlkj.cod.admin.service.CodAdminRolePermissionService;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.entity.CodFrameRolePermissionDo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,8 +45,8 @@ public class CodAdminRolePermissionServiceImpl implements CodAdminRolePermission
     @Override
     public List getRolePermission(String roleIds) {
         String[] roleIdss = roleIds.split(",");
-        List<CodFrameRolePermissionDo> codFrameRolePermissionDo = finder.from(CodFrameRolePermissionDo.TABLE_NAME).in("role_id", roleIdss).all(CodFrameRolePermissionDo.class);
-        return codFrameRolePermissionDo;
+        List<CodAdminRolePermissionDo> codAdminRolePermissionDo = finder.from(CodAdminRolePermissionDo.TABLE_NAME).in("role_id", roleIdss).all(CodAdminRolePermissionDo.class);
+        return codAdminRolePermissionDo;
     }
 
     /**
@@ -59,14 +59,14 @@ public class CodAdminRolePermissionServiceImpl implements CodAdminRolePermission
     public StatusCode saveRolePermission(String roleId, String permissionIds) {
         String[] permissionId = permissionIds.split(",");
         // 1. 删除该角色下所有权限
-        updater.delete(CodFrameRolePermissionDo.TABLE_NAME).where("role_id", roleId).update();
+        updater.delete(CodAdminRolePermissionDo.TABLE_NAME).where("role_id", roleId).update();
 
         // 2. 新增权限
         int i = 0;
         for (String perId : permissionId){
-            int num = finder.from(CodFrameRolePermissionDo.TABLE_NAME).where("role_id", roleId).where("permission_id", perId).select("count(*)").firstForObject(Integer.class);
+            int num = finder.from(CodAdminRolePermissionDo.TABLE_NAME).where("role_id", roleId).where("permission_id", perId).select("count(*)").firstForObject(Integer.class);
             if (num == 0){
-                i += updater.insert(CodFrameRolePermissionDo.TABLE_NAME).setId().set("role_id", roleId).set("permission_id", perId).update();
+                i += updater.insert(CodAdminRolePermissionDo.TABLE_NAME).setId().set("role_id", roleId).set("permission_id", perId).update();
             }
         }
         if (i <= permissionId.length){

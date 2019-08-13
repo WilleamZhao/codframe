@@ -22,12 +22,12 @@ public class CodFileQiniuConfig extends CodFileConfig{
     /**
      * qiniu accessKey
      */
-    @Value("${cod.file.qiniu.accessKey:LTAIK0L9vMXtT3xs}")
+    @Value("${cod.file.config.qiniu.accessKey:LTAIK0L9vMXtT3xs}")
     private String accessKey;
 
     /**
      * qiniu secretKey
      */
-    @Value("${cod.file.qiniu.secretKey:ZYRrh37nY2w6JooVgwc7qhqJdLVgAp}")
+    @Value("${cod.file.config.qiniu.secretKey:ZYRrh37nY2w6JooVgwc7qhqJdLVgAp}")
     private String secretKey;
 }

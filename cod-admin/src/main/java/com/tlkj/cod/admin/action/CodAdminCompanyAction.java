@@ -5,17 +5,17 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.model.dto.CodAdminCompanyDto;
+import com.tlkj.cod.admin.model.dto.CodAdminCompanyListDto;
 import com.tlkj.cod.admin.service.CodAdminCompanyService;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
-import com.tlkj.cod.model.system.dto.CodFrameCompanyDto;
-import com.tlkj.cod.model.system.dto.CodFrameCompanyListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +48,7 @@ public class CodAdminCompanyAction extends GeneralResponse {
         String companyNo = request.getParameter("companyNo");
         String page = request.getParameter("page");
         String pageSize = request.getParameter("pageSize");
-        Page<List<CodFrameCompanyListDto>> listPage = codAdminCompanyService.listCompany(companyName, companyNo, page, pageSize);
+        Page<List<CodAdminCompanyListDto>> listPage = codAdminCompanyService.listCompany(companyName, companyNo, page, pageSize);
         if (listPage != null) {
             super.success(listPage);
         }
@@ -83,8 +83,8 @@ public class CodAdminCompanyAction extends GeneralResponse {
     @RequestMapping(value = "get", method = {RequestMethod.GET})
     public Response getCompany(HttpServletRequest request) {
         String id = request.getParameter("id");
-        CodFrameCompanyDto codFrameCompanyDto = codAdminCompanyService.getCompanyById(id);
-        return codFrameCompanyDto == null ? super.fail() : super.success(codFrameCompanyDto);
+        CodAdminCompanyDto codAdminCompanyDto = codAdminCompanyService.getCompanyById(id);
+        return codAdminCompanyDto == null ? super.fail() : super.success(codAdminCompanyDto);
     }
 
     /**
@@ -93,7 +93,7 @@ public class CodAdminCompanyAction extends GeneralResponse {
     @RequestMapping(value = "del", method = {RequestMethod.GET})
     public Response delCompany(HttpServletRequest request) {
         String id = request.getParameter("ids");
-        CodFrameCompanyDto codFrameCompanyDto = codAdminCompanyService.getCompanyById(id);
-        return codFrameCompanyDto == null ? super.fail() : super.success(codFrameCompanyDto);
+        CodAdminCompanyDto codAdminCompanyDto = codAdminCompanyService.getCompanyById(id);
+        return codAdminCompanyDto == null ? super.fail() : super.success(codAdminCompanyDto);
     }
 }

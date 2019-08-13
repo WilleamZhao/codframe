@@ -5,17 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.model.bo;
 
-import org.eclipse.jetty.util.PathWatcher;
-
 import java.io.Serializable;
 import java.util.EventListener;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Filter;
 
 /**

@@ -5,15 +5,15 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.facade.impl;
 
 import com.tlkj.cod.admin.facade.CodAdminRoleMenuFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminMenuListDto;
 import com.tlkj.cod.admin.service.CodAdminMenuService;
 import com.tlkj.cod.admin.service.CodAdminRoleMenuService;
-import com.tlkj.cod.model.system.dto.CodFrameMenuListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,16 +58,16 @@ public class CodAdminRoleMenuFacadeImpl implements CodAdminRoleMenuFacade {
     public List listAuthorization(String roleIds) {
         // 1. 根据角色获取菜单
         String menuIds = codAdminRoleMenuService.getMenuIds(roleIds);
-        List<CodFrameMenuListDto> menuListDtos = codAdminMenuService.listMenu(menuIds);
+        List<CodAdminMenuListDto> menuListDtos = codAdminMenuService.listMenu(menuIds);
 
         // 2. 获取全部菜单
-        List<CodFrameMenuListDto> codFrameMenuListDtos = codAdminMenuService.listMenu("1", "999", "", "", "", "").getData();
+        List<CodAdminMenuListDto> codAdminMenuListDtos = codAdminMenuService.listMenu("1", "999", "", "", "", "").getData();
 
         // 3. 取差集
-        codFrameMenuListDtos = codFrameMenuListDtos.stream().filter(d -> !menuIds.contains(d.getId())).collect(Collectors.toList());
-        List<List<CodFrameMenuListDto>> lists = new ArrayList<>();
+        codAdminMenuListDtos = codAdminMenuListDtos.stream().filter(d -> !menuIds.contains(d.getId())).collect(Collectors.toList());
+        List<List<CodAdminMenuListDto>> lists = new ArrayList<>();
         lists.add(menuListDtos);
-        lists.add(codFrameMenuListDtos);
+        lists.add(codAdminMenuListDtos);
         return lists;
     }
 }

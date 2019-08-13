@@ -5,12 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.admin.facade.CodAdminUserFacade;
+import com.tlkj.cod.admin.model.dto.CodAdminUserDto;
 import com.tlkj.cod.admin.service.CodAdminUserRoleService;
 import com.tlkj.cod.admin.service.CodAdminUserService;
 import com.tlkj.cod.core.annotation.CodParamVerify;
@@ -19,7 +20,6 @@ import com.tlkj.cod.log.annotation.CodLog;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.dto.CodFrameUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,8 +54,8 @@ public class CodAdminUserAction extends GeneralResponse {
      */
     @RequestMapping(value = "getUser", method = {RequestMethod.GET})
     public Response getUserByCache(HttpServletRequest request){
-        String token = request.getParameter("access_token");
-        CodFrameUserDto dto = codAdminUserService.getUserByCache(token);
+        String token = request.getParameter("cod_admin_token");
+        CodAdminUserDto dto = codAdminUserService.getUserByCache(token);
         return dto == null ? super.fail(StatusCode.LOGIN_FAIL_CODE) : super.success(dto);
     }
 
@@ -66,7 +66,7 @@ public class CodAdminUserAction extends GeneralResponse {
     @RequestMapping(value = "get", method = {RequestMethod.GET})
     public Response getUser(HttpServletRequest request){
         String id = request.getParameter("id");
-        CodFrameUserDto userDto = codAdminUserService.getUser(id);
+        CodAdminUserDto userDto = codAdminUserService.getUser(id);
         return super.success(userDto);
     }
 
@@ -84,7 +84,7 @@ public class CodAdminUserAction extends GeneralResponse {
         String userPhone = request.getParameter("userPhone");
         String userSex = request.getParameter("userSex");
         String state = request.getParameter("state");
-        Page<List<CodFrameUserDto>> listPage = codAdminUserService.listUser(page, pageSize, userName, loginAccount, userPhone, userSex, state);
+        Page<List<CodAdminUserDto>> listPage = codAdminUserService.listUser(page, pageSize, userName, loginAccount, userPhone, userSex, state);
         return super.success(listPage);
     }
 

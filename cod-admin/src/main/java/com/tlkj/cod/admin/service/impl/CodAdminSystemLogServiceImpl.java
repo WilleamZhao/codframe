@@ -5,18 +5,18 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminSystemLogDto;
+import com.tlkj.cod.admin.model.entity.CodAdminLogDo;
 import com.tlkj.cod.admin.service.CodAdminSystemLogService;
 import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;
-import com.tlkj.cod.model.system.dto.CodFrameSystemLogDto;
-import com.tlkj.cod.model.system.entity.CodFrameLogDo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,8 @@ public class CodAdminSystemLogServiceImpl implements CodAdminSystemLogService {
      * @return
      */
     @Override
-    public Page<List<CodFrameSystemLogDto>> listLog(String ip, String username, String startDate, String endDate, String page, String pageSize) {
-        Finder.Query query = finder.from(CodFrameLogDo.TABLE_NAME);
+    public Page<List<CodAdminSystemLogDto>> listLog(String ip, String username, String startDate, String endDate, String page, String pageSize) {
+        Finder.Query query = finder.from(CodAdminLogDo.TABLE_NAME);
         if (StringUtils.isNotBlank(ip)){
             query.like("ip", "%" + ip + "%");
         }
@@ -67,17 +67,17 @@ public class CodAdminSystemLogServiceImpl implements CodAdminSystemLogService {
         int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
         int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
 
-        Pagination<CodFrameLogDo> pagination = query.paginate(CodFrameLogDo.class, currentPage, perPage);
-        List<CodFrameLogDo> codFrameLogDos = null;
+        Pagination<CodAdminLogDo> pagination = query.paginate(CodAdminLogDo.class, currentPage, perPage);
+        List<CodAdminLogDo> codAdminLogDos = null;
         if (pagination != null){
-            codFrameLogDos = pagination.getData();
+            codAdminLogDos = pagination.getData();
         }
-        if (codFrameLogDos == null){
+        if (codAdminLogDos == null){
             return null;
         }
-        List<CodFrameSystemLogDto> logDtos = new ArrayList<>();
-        codFrameLogDos.forEach(item -> {
-            CodFrameSystemLogDto dto = new CodFrameSystemLogDto();
+        List<CodAdminSystemLogDto> logDtos = new ArrayList<>();
+        codAdminLogDos.forEach(item -> {
+            CodAdminSystemLogDto dto = new CodAdminSystemLogDto();
             dto.setContent(item.getContent());
             dto.setCreateTime(CodCommonDate.formatDate(item.getCreate_time()));
             dto.setId(item.getId());
@@ -100,19 +100,19 @@ public class CodAdminSystemLogServiceImpl implements CodAdminSystemLogService {
      * @return
      */
     @Override
-    public CodFrameSystemLogDto getLog(String id) {
-        CodFrameLogDo codFrameLogDo = finder.from(CodFrameLogDo.TABLE_NAME).where("id", id).first(CodFrameLogDo.class);
-        CodFrameSystemLogDto dto = new CodFrameSystemLogDto();
-        dto.setId(codFrameLogDo.getId());
-        dto.setContent(codFrameLogDo.getContent());
-        dto.setParams(codFrameLogDo.getParams());
-        dto.setOperationType(codFrameLogDo.getOperation_type());
-        dto.setOperationName(codFrameLogDo.getOperation_name());
-        dto.setMethodName(codFrameLogDo.getMethod_name());
-        dto.setIp(codFrameLogDo.getIp());
-        dto.setResults(codFrameLogDo.getResults());
-        dto.setCreateTime(codFrameLogDo.getCreate_time());
-        dto.setUsername(codFrameLogDo.getUsername());
+    public CodAdminSystemLogDto getLog(String id) {
+        CodAdminLogDo codAdminLogDo = finder.from(CodAdminLogDo.TABLE_NAME).where("id", id).first(CodAdminLogDo.class);
+        CodAdminSystemLogDto dto = new CodAdminSystemLogDto();
+        dto.setId(codAdminLogDo.getId());
+        dto.setContent(codAdminLogDo.getContent());
+        dto.setParams(codAdminLogDo.getParams());
+        dto.setOperationType(codAdminLogDo.getOperation_type());
+        dto.setOperationName(codAdminLogDo.getOperation_name());
+        dto.setMethodName(codAdminLogDo.getMethod_name());
+        dto.setIp(codAdminLogDo.getIp());
+        dto.setResults(codAdminLogDo.getResults());
+        dto.setCreateTime(codAdminLogDo.getCreate_time());
+        dto.setUsername(codAdminLogDo.getUsername());
         return dto;
     }
 }

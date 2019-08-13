@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.admin.model.entity;
@@ -44,6 +44,14 @@ public class CodAdminUserDo extends CodCommonModelConvert implements Serializabl
      * 登录密码
      */
     private String login_pass;
+
+    /**
+     * 加密类型
+     * 1: MD5
+     * 2: RSA
+     * 3: SHA256
+     */
+    private int encry_type;
 
     /**
      * 用户名
@@ -114,5 +122,25 @@ public class CodAdminUserDo extends CodCommonModelConvert implements Serializabl
      * 更新时间
      */
     private String update_time;
+
+    /**
+     * 私钥id
+     */
+    private String private_key_id;
+
+    /**
+     * 公钥id
+     */
+    private String public_key_id;
+
+    /**
+     * 是否记住我
+     */
+    private String is_remeber;
+
+    /**
+     * token
+     */
+    private String token;
 
 }
