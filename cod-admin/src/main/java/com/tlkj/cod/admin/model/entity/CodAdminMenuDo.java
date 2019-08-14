@@ -28,6 +28,8 @@ import java.io.Serializable;
 @Setter
 public class CodAdminMenuDo extends CodCommonModelConvert implements Serializable {
 
+    private static final long serialVersionUID = -7890711379967874689L;
+
     public static String TABLE_NAME = "cod_sys_menu";
 
     /**

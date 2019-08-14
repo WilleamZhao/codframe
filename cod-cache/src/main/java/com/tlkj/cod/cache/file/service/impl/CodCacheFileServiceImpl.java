@@ -30,6 +30,11 @@ import java.util.Set;
 public class CodCacheFileServiceImpl implements CodCacheFileService, CodCacheManager {
 
     @Override
+    public String getSupportType() {
+        return "codCacheFile";
+    }
+
+    @Override
     public Object get(String key) {
         return null;
     }

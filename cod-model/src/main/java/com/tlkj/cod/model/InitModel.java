@@ -24,6 +24,7 @@ public class InitModel implements CodModuleInitialize {
         System.out.println(CodCommonJson.dump(o));
         o = codModuleLauncherModel.getSpring().getBean(CodCoreConfig.class);
         System.out.println(CodCommonJson.dump(o));*/
+        codModuleLauncherModel.finish();
     }
 
     @Override

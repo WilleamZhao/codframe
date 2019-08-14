@@ -8,9 +8,9 @@ import org.springframework.core.env.EnumerablePropertySource;
 import java.util.Set;
 
 /**
- * Property source wrapper for Config
+ * 配置 配置源
  *
- * @author Jason Song(song_s@ctrip.com)
+ * @author sourcod
  */
 public class ConfigPropertySource extends EnumerablePropertySource<CodConfigService> {
     private static final String[] EMPTY_ARRAY = new String[0];
@@ -30,7 +30,9 @@ public class ConfigPropertySource extends EnumerablePropertySource<CodConfigServ
 
     @Override
     public Object getProperty(String name) {
-        return this.source.getProperty(name, null);
+        String key = name.split(":")[0];
+        String defaultValue = name.indexOf(":") > 0 ? name.substring(key.length() + 1) : "";
+        return this.source.getProperty(key, defaultValue);
     }
 
 

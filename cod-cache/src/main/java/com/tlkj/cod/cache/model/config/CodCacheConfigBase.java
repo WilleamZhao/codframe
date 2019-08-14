@@ -24,7 +24,7 @@ public class CodCacheConfigBase implements Serializable {
     /**
      * 过期时间 默认30分钟
      */
-    private long due = 1000 * 60 * 30;
+    private Integer due = 1000 * 60 * 30;
 
     /**
      * 缓存类型
@@ -36,10 +36,10 @@ public class CodCacheConfigBase implements Serializable {
      * 缓存个数
      * -1 无限制
      */
-    private int heap = -1;
+    private Integer heap = -1;
 
     /**
      * 硬盘持久化大小
      */
-    private int disk = 500;
+    private Integer disk = 500;
 }

@@ -17,7 +17,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Desc 表
+ * Desc 表视图
  *
  * @author sourcod
  * @version 1.0

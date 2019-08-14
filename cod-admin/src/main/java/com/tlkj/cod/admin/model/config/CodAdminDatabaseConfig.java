@@ -24,16 +24,16 @@ import javax.annotation.PostConstruct;
 @Component
 public class CodAdminDatabaseConfig {
 
-    @Value("${cod.admin.driver:com.mysql.jdbc.Driver}")
+    @Value("${cod.admin.database.config.driver:com.mysql.jdbc.Driver}")
     private String driver;
 
-    @Value("${cod.admin.url:jdbc:mysql://rm-2ze073417o2rogq4dyo.mysql.rds.aliyuncs.com:3306/codframe}")
+    @Value("${cod.admin.database.config.url:jdbc:mysql://rm-2ze073417o2rogq4dyo.mysql.rds.aliyuncs.com:3306/codframe}")
     private String url;
 
-    @Value("${cod.admin.username:codframe}")
+    @Value("${cod.admin.database.config.username:codframe}")
     private String username;
 
-    @Value("${cod.admin.password:codframep@ssw0rd}")
+    @Value("${cod.admin.database.config.password:codframep@ssw0rd}")
     private String password;
 
     @Autowired
@@ -45,6 +45,7 @@ public class CodAdminDatabaseConfig {
         bean.setUsername(this.getUsername());
         bean.setDriverClass(this.getDriver());
         bean.setUrl(this.getUrl());
+        bean.setAutoCommit(true);
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);
     }
 

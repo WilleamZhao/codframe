@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +24,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CodAdminAttachmentDo extends CodCommonModelConvert {
+public class CodAdminAttachmentDo extends CodDaoDo {
 
     public static final String TABLE_NAME = "cod_sys_attachment";
 

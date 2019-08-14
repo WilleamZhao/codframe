@@ -34,7 +34,7 @@ public class CodCacheConfigRedis extends CodCacheConfigBase {
      * 缓存生存时间
      */
     @Value("${cod.cache.config.redis.due:1000}")
-    private String due;
+    private Integer due;
 
     /**
      * 地址

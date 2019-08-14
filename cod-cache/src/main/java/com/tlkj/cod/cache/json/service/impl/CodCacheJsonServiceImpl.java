@@ -10,6 +10,7 @@
 
 package com.tlkj.cod.cache.json.service.impl;
 
+import com.tlkj.cod.cache.CodCacheManager;
 import com.tlkj.cod.cache.json.service.CodCacheJsonService;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,27 @@ import java.util.Set;
  * @date 2019/2/13 10:55 AM
  */
 @Service("codCacheJson")
-public class CodCacheJsonServiceImpl implements CodCacheJsonService {
+public class CodCacheJsonServiceImpl implements CodCacheJsonService, CodCacheManager {
+
+    @Override
+    public String getSupportType() {
+        return "codCacheJson";
+    }
+
+    @Override
+    public Object get(String key) {
+        return null;
+    }
+
+    @Override
+    public <T> T get(String key, Class<T> klass) {
+        return null;
+    }
+
+    @Override
+    public Map getAll(Set key) {
+        return null;
+    }
 
     @Override
     public boolean set(String key, String value) {
@@ -92,6 +113,66 @@ public class CodCacheJsonServiceImpl implements CodCacheJsonService {
 
     @Override
     public boolean set(String key, Object value, int expire) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, String value) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, Map value) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, List value) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, Set value) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, Object value) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, String value, int expire) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, Map value, int expire) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, List value, int expire) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, Set value, int expire) {
+        return false;
+    }
+
+    @Override
+    public boolean replace(String key, Object value, int expire) {
+        return false;
+    }
+
+    @Override
+    public boolean del(String key) {
+        return false;
+    }
+
+    @Override
+    public boolean clear() {
         return false;
     }
 }

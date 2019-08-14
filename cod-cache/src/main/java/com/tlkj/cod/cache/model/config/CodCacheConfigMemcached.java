@@ -78,6 +78,6 @@ public class CodCacheConfigMemcached extends CodCacheConfigBase{
      * due
      */
     @Value("${cod.cache.config.memcached.due:}")
-    private String due;
+    private Integer due;
 
 }

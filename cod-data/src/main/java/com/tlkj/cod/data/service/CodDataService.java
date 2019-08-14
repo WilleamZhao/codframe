@@ -1,5 +1,8 @@
 package com.tlkj.cod.data.service;
 
+import com.tlkj.cod.data.model.dto.CodDataConfigDto;
+import com.tlkj.cod.data.model.entity.CodDataConfigDo;
+
 import java.util.Map;
 
 /**
@@ -26,7 +29,14 @@ public interface CodDataService {
     /**
      * 获取数据
      */
-    String getData(String key);
+    String getDataValue(String key);
+
+    /**
+     *
+     * @param key
+     * @return
+     */
+    CodDataConfigDto getData(String key);
 
 
     /**
@@ -35,6 +45,23 @@ public interface CodDataService {
      * @param value value
      */
     void setData(String key, String value);
+
+    /**
+     * 设置数据
+     * @param key   key
+     * @param value value
+     * @param name  配置名称
+     */
+    void setData(String key, String value, String name);
+
+    /**
+     * 设置数据
+     * @param key   key
+     * @param value value
+     * @param name  配置名称
+     * @param sort  序号
+     */
+    void setData(String key, String value, String name, String sort);
 
 }
 

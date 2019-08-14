@@ -35,7 +35,7 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.github.wvengen</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
                 <configuration>
@@ -43,7 +43,7 @@
                         <option>-keep class com.tlkj.cod.filter.**</option>
                     </options>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

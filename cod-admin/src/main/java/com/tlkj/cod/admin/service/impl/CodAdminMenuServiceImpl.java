@@ -14,13 +14,13 @@ import com.tlkj.cod.admin.model.dto.CodAdminMenuDto;
 import com.tlkj.cod.admin.model.dto.CodAdminMenuListDto;
 import com.tlkj.cod.admin.model.entity.CodAdminMenuDo;
 import com.tlkj.cod.admin.service.CodAdminMenuService;
-import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.log.annotation.CodLog;
+import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.enums.StatusCode;
 
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +48,7 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
     Updater updater;
 
     @Autowired
-    CodAdminSystemSetService setService;
+    CodLogService codLogService;
 
     /**
      * 获取左侧菜单接口
@@ -71,7 +71,7 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
         List<CodAdminMenuDto> menuDtoList = null;
 
         menuDtoList =  this.getMenuLevel(1, menuDoList, "");
-        setService.getLog().info("获取左侧菜单成功, 树={}", CodCommonJson.dump(menuDtoList));
+        codLogService.info("获取左侧菜单成功, 树={}", CodCommonJson.dump(menuDtoList));
         return menuDtoList;
     }
 
@@ -249,11 +249,11 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
                     i = i + updater.delete(CodAdminMenuDo.TABLE_NAME).where("id", menuIdTrim).update();
                     // 删除子菜单
                     int childNum = updater.delete(CodAdminMenuDo.TABLE_NAME).where("p_id", menuIdTrim).update();
-                    setService.getLog().info("删除菜单成功, 本菜单数量={}, 子菜单数量={}", menuIdTrim, childNum);
+                    codLogService.info("删除菜单成功, 本菜单数量={}, 子菜单数量={}", menuIdTrim, childNum);
                 }
             }
         } catch (Exception e){
-            setService.getLog().error("删除菜单错误, {}", e);
+            codLogService.error("删除菜单错误, {}", e);
             return StatusCode.FAIL_CODE;
         }
         if (i > 0){

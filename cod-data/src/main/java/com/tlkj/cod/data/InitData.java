@@ -34,6 +34,7 @@ public class InitData implements CodModuleDataInitialize {
         bean.setPassword(codDataConfig.getPassword());
         bean.setUrl(codDataConfig.getUrl());
         bean.setName(CodDaoDatasourceTypeEnum.DATA.name());
+        bean.setAutoCommit(true);
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), bean);
     }
 

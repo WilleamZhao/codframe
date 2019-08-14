@@ -52,7 +52,7 @@ public class CodCacheManagerImpl implements CodCacheManager {
      */
     private CodCacheManager getCodCache(){
         SystemModel model = SystemModel.getInstance();
-        String setValue = codDataService.getData("cod.cache.config.type");
+        String setValue = codDataService.getDataValue("cod.cache.config.type");
         if (model.getCache() != null && StringUtils.isNotBlank(model.getCache().getType())){
             setValue = model.getCache().getType();
         }

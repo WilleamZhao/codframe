@@ -83,6 +83,7 @@ public class CodConfigFacadeImpl implements CodConfigFacade {
     @Override
     public String getProperty(String key, String defaultValue) {
         if (list.isEmpty()){
+            init();
             load();
         }
         System.out.println(CodCommonJson.dump(list));

@@ -32,7 +32,7 @@ public class CodCacheConfigDatabase extends CodCacheConfigBase {
     /**
      * 默认过期时间
      */
-    private String due;
+    private Integer due;
 
 
 }

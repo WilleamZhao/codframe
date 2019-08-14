@@ -1,5 +1,6 @@
 package com.tlkj.cod.data.model.entity;
 
+import com.tlkj.cod.common.CodCommonModelConvert;
 import com.tlkj.cod.dao.annotation.CodDaoColumn;
 import com.tlkj.cod.dao.annotation.CodDaoTable;
 import lombok.Getter;
@@ -18,9 +19,11 @@ import java.io.Serializable;
 @Getter
 @Setter
 @CodDaoTable(name = "cod_core_config", comment = "核心配置表")
-public class CodDataConfigDo implements Serializable {
+public class CodDataConfigDo extends CodCommonModelConvert implements Serializable {
 
     public static final String TABLE_NAME = "cod_core_config";
+
+    private static final long serialVersionUID = 3767337007397383595L;
 
     /**
      * 配置ID

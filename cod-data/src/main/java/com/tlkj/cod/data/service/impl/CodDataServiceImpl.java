@@ -5,6 +5,7 @@ import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.dao.util.CreateTable;
+import com.tlkj.cod.data.model.dto.CodDataConfigDto;
 import com.tlkj.cod.data.model.entity.CodDataConfigDo;
 import com.tlkj.cod.data.service.CodDataService;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,9 @@ public class CodDataServiceImpl implements CodDataService {
         if (num == 0){
             initDataSql();
         }
+
+        List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
+        System.out.println(dataConfigDos.size());
     }
 
     /**
@@ -59,6 +63,21 @@ public class CodDataServiceImpl implements CodDataService {
      * @return
      */
     private void initDataSql(){
+
+        // 项目相关
+        setData("cod.core.config.project.name", "codframe");
+        setData("cod.core.config.project.desc", "codframe框架");
+
+        // 服务相关
+        setData("cod.server.config.port", "9999");
+        setData("cod.server.config.host", "");
+
+        // 黑白名单设置
+        // 白名单
+        setData("cod.core.whitelist", "");
+        // 黑名单
+        setData("cod.core.blacklist", "");
+
         // 文件
         setData("cod.file.config.type", "local");
         // 本地
@@ -124,8 +143,6 @@ public class CodDataServiceImpl implements CodDataService {
         setData("cod.cache.config.json.timeToLiveSeconds", "21600");
         setData("cod.cache.config.json.timeToIdleSeconds", "21600");
 
-
-
     }
 
     /**
@@ -142,7 +159,7 @@ public class CodDataServiceImpl implements CodDataService {
     }
 
     /**
-     * 配置
+     * 获取所有配置
      */
     @Override
     public Map<String, String> getConfig() {
@@ -151,15 +168,29 @@ public class CodDataServiceImpl implements CodDataService {
     }
 
     /**
-     * 获取数据
+     * 获取配置值
      */
     @Override
-    public String getData(String key) {
+    public String getDataValue(String key) {
         CodDataConfigDo dataConfigDo = finder.from(CodDataConfigDo.TABLE_NAME).where("c_key", key).first(CodDataConfigDo.class);
         if (dataConfigDo == null){
             return "";
         }
         return dataConfigDo.getC_value();
+    }
+
+    /**
+     * 获取配置
+     * @param key key
+     * @return 配置
+     */
+    @Override
+    public CodDataConfigDto getData(String key) {
+        CodDataConfigDo dataConfigDo = finder.from(CodDataConfigDo.TABLE_NAME).where("c_key", key).first(CodDataConfigDo.class);
+        if (dataConfigDo == null){
+            return null;
+        }
+        return dataConfigDo.toDto(CodDataConfigDto.class);
     }
 
     /**
@@ -169,8 +200,39 @@ public class CodDataServiceImpl implements CodDataService {
      */
     @Override
     public void setData(String key, String value) {
-        updater.insert(CodDataConfigDo.TABLE_NAME).setId().set("c_value", value).set("c_key", key).update();
+        setData(key, value, "", "999");
     }
+
+    /**
+     * 设置数据
+     * @param key   key
+     * @param value value
+     * @param name  配置名称
+     */
+    @Override
+    public void setData(String key, String value, String name) {
+        setData(key, value, name, "999");
+    }
+
+    /**
+     * 设置数据
+     * @param key   key
+     * @param value value
+     * @param name  配置名称
+     * @param sort  序号
+     */
+    @Override
+    public void setData(String key, String value, String name, String sort) {
+        CodDataConfigDo codDataConfigDo = finder.from(CodDataConfigDo.TABLE_NAME).where("c_key", key).first(CodDataConfigDo.class);
+        Updater.Update update;
+        if (codDataConfigDo == null) {
+            update = updater.insert(CodDataConfigDo.TABLE_NAME).setId();
+        } else {
+            update = updater.update(CodDataConfigDo.TABLE_NAME).where("id", codDataConfigDo.getId());
+        }
+        int num = update.set("c_key", key).set("c_value", value).set("c_name", name).set("sort", sort).update();
+    }
+
 
     public static void main(String[] args) {
         String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);

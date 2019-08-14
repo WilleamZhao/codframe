@@ -45,25 +45,25 @@ public class CodCacheConfigJson extends CodCacheConfigBase{
     /**
      * 设置每个缓存容纳元素个数
      */
-    @Value(value = "${cod.cache.config.json.heap:heap}")
-    private int heap = 10000;
+    @Value(value = "${cod.cache.config.json.heap:10000}")
+    private Integer heap = 10000;
 
     /**
      * 设置缓存储存大小 超出的会被淘汰规则淘汰
      * 单位MB
      */
     @Value(value = "${cod.cache.config.json.disk:500}")
-    private int disk = 500;
+    private Integer disk = 500;
 
     /**
      * TTL 创建后过期时间（单位：秒）
      */
     @Value(value = "${cod.cache.config.json.timeToLiveSeconds:21600}")
-    private int timeToLiveSeconds = 60 * 60 * 6;
+    private Integer timeToLiveSeconds = 60 * 60 * 6;
 
     /**
      * TTI 最后一次访问后过期时间
      */
     @Value(value = "${cod.cache.config.json.timeToIdleSeconds:21600}")
-    private int timeToIdleSeconds = 60 * 60 * 6;
+    private Integer timeToIdleSeconds = 60 * 60 * 6;
 }

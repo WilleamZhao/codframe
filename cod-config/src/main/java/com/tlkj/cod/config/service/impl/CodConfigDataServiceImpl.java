@@ -3,14 +3,24 @@ package com.tlkj.cod.config.service.impl;
 import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.CodConfigService;
 import com.tlkj.cod.config.service.CodConfigChangeListener;
+import com.tlkj.cod.config.spring.property.PlaceholderHelper;
+import com.tlkj.cod.dao.jdbc.Finder;
+import com.tlkj.cod.dao.jdbc.Updater;
+import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
+import com.tlkj.cod.dao.util.CodDaoConnectionPool;
+import com.tlkj.cod.data.model.entity.CodDataConfigDo;
 import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Desc CodData 数据源
@@ -20,12 +30,16 @@ import java.util.function.Function;
  * @className CodConfigDataServiceImpl
  * @date 2019/5/30 11:17 AM
  */
-// @Service("codConfigDataServiceImpl")
+@Service("codConfigDataServiceImpl")
 public class CodConfigDataServiceImpl implements CodConfigService {
 
     private Map<String, Object> map = new HashMap<>();
 
-    CodDataService codDataService = new CodDataServiceImpl();
+    private final CodDataService codDataService = new CodDataServiceImpl();
+    private final PlaceholderHelper placeholderHelper = PlaceholderHelper.getInstance();
+
+    private Finder finder;
+    private Updater updater;
 
     @Override
     public CodConfigSourceType getType() {
@@ -34,19 +48,22 @@ public class CodConfigDataServiceImpl implements CodConfigService {
 
     @Override
     public boolean init() {
+        if (finder == null || updater == null){
+            DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name());
+            finder = new Finder(dataSource);
+            updater = new Updater(dataSource);
+            codDataService.init();
+        }
         return true;
     }
 
     @Override
     public Map<String, Object> load() {
-        // 模拟数据
-        Map<String, Object> map = new HashMap<>();
-        map.put("asd", "111");
-        map.put("qwe", "222");
-        map.put("zxc", "333");
-        map.put("fff", "444");
-        map.put("cod.database.url", "444");
-        // map = codDataService.config();
+        if (finder == null){
+            init();
+        }
+        List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
+        map = dataConfigDos.stream().collect(Collectors.toMap(CodDataConfigDo::getC_key, CodDataConfigDo::getC_value));
         return map;
     }
 
@@ -61,7 +78,10 @@ public class CodConfigDataServiceImpl implements CodConfigService {
         if (map.isEmpty()){
             map = load();
         }
-        return map.getOrDefault(key, defaultValue) != null ? map.getOrDefault(key, defaultValue).toString() : null;
+
+        String value = map.getOrDefault(key, defaultValue) != null ? map.getOrDefault(key, defaultValue).toString() : null;
+
+        return value;
     }
 
     @Override

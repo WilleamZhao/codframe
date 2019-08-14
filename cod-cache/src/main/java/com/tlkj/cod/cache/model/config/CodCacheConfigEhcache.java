@@ -56,22 +56,22 @@ public class CodCacheConfigEhcache extends CodCacheConfigBase {
     /**
      * 设置缓存堆容纳元素个数(JVM内存空间)超出个数后会存到offheap中
      */
-    @Value(value = "${cod.cache.config.ehcache.heap:heap}")
-    private int heap = 10000;
+    @Value(value = "${cod.cache.config.ehcache.heap:10000}")
+    private Integer heap = 10000;
 
     /**
      * 设置堆外储存大小(内存存储) 超出offheap的大小会被淘汰规则淘汰。
      * 单位MB
      */
     @Value(value = "${cod.cache.config.ehcache.offHeap:30}")
-    private int offHeap = 30;
+    private Integer offHeap = 30;
 
     /**
      * 配置磁盘持久化储存(硬盘存储)用来持久化到磁盘
      * 单位MB
      */
     @Value(value = "${cod.cache.config.ehcache.disk:500}")
-    private int disk = 500;
+    private Integer disk = 500;
 
     /**
      * 配置磁盘持久化储存(硬盘存储)用来持久化到磁盘,默认false不启用
@@ -83,12 +83,12 @@ public class CodCacheConfigEhcache extends CodCacheConfigBase {
      * TTL 创建后过期时间（单位：秒）
      */
     @Value(value = "${cod.cache.config.ehcache.timeToLiveSeconds:21600}")
-    private int timeToLiveSeconds = 60 * 60 * 6;
+    private Integer timeToLiveSeconds = 60 * 60 * 6;
 
     /**
      * TTI 最后一次访问后过期时间
      */
     @Value(value = "${cod.cache.config.ehcache.timeToIdleSeconds:21600}")
-    private int timeToIdleSeconds = 60 * 60 * 6;
+    private Integer timeToIdleSeconds = 60 * 60 * 6;
 
 }

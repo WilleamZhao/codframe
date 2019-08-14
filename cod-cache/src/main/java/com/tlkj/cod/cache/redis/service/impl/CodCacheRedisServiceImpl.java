@@ -1449,6 +1449,10 @@ public class CodCacheRedisServiceImpl implements CodCacheRedisService, CodCacheM
         }
     }
 
+    @Override
+    public String getSupportType() {
+        return "codCacheRedis";
+    }
 
     /* CodCacheManager-start */
     @Override

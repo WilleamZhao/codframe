@@ -40,6 +40,11 @@ public class CodCacheDBServiceImpl implements CodCacheDBService, CodCacheManager
     Finder finder;
 
     @Override
+    public String getSupportType() {
+        return "codCacheDatabase";
+    }
+
+    @Override
     public Object get(String key) {
         CodCacheDBDo codCacheDBDo = finder.from(CodCacheDBDo.TABLE_NAME).where("k", key).where("due < now()").first(CodCacheDBDo.class);
         if (codCacheDBDo == null){
