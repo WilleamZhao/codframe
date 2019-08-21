@@ -162,6 +162,10 @@ public class CodCommonHttpClient {
 		return httpsPost(url, null, body, null);
 	}
 
+	public static HttpResponse httpsPost(String url, StringEntity body, Header header) throws IOException, URISyntaxException {
+		return httpsPost(url, null, body, null, new Header[]{header});
+	}
+
 	public static HttpResponse httpsPost(String url, String cookie) throws IOException, URISyntaxException {
 		return httpsPost(url, null, null, cookie);
 	}
@@ -178,6 +182,29 @@ public class CodCommonHttpClient {
 		}
 
 		if (StringUtils.isNotBlank(cookie)){
+			post.addHeader(new BasicHeader("Cookie", cookie));
+		}
+
+		post.setURI(new URI(url));
+		return httpsPost(url, nvps, body, cookie, new Header[]{});
+	}
+
+	public static HttpResponse httpsPost(String url, List<NameValuePair> nvps, StringEntity body, String cookie, Header[] headers) throws URISyntaxException, IOException {
+		HttpPost post = new HttpPost();
+
+		if (nvps != null) {
+			post.setEntity(new UrlEncodedFormEntity(nvps));
+		}
+
+		if (headers.length > 0){
+			post.setHeaders(headers);
+		}
+
+		if (body != null) {
+			post.setEntity(body);
+		}
+
+		if (StringUtils.isNotBlank(cookie)) {
 			post.addHeader(new BasicHeader("Cookie", cookie));
 		}
 

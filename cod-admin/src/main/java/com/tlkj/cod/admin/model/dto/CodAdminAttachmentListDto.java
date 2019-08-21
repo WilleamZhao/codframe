@@ -11,6 +11,7 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.tlkj.cod.common.CodCommonModelConvert;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class CodAdminAttachmentListDto {
+public class CodAdminAttachmentListDto extends CodCommonModelConvert {
 
     /**
      * 附件Id

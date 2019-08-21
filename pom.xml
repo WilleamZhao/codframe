@@ -49,6 +49,7 @@
         <module>cod-framework-bom</module>
         <module>cod-maven</module>
         <module>cod-i18n</module>
+        <module>cod-pay</module>
     </modules>
 
     <name>codframe</name>
