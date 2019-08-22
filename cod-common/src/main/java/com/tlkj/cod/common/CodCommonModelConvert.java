@@ -20,6 +20,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Desc model转换类
@@ -96,6 +98,49 @@ public abstract class CodCommonModelConvert {
             }
         }
         return tempT;
+    }
+
+    /**
+     * 实体类转Map
+     * @return map
+     */
+    public Map<String, Object> toMap() {
+        if (!this.getClass().getSuperclass().getName().equals(CodCommonModelConvert.class.getName())){
+            logger.error("不是子类. 不可转换！请继承 {} 类", CodCommonModelConvert.class.getName());
+        }
+        Map<String, Object> map = new HashMap<>();
+        for (Field field : this.getClass().getDeclaredFields()){
+            // 4. 私有的 && 非static && 非final
+            if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
+                Object value = getFieldValueByName(field.getName(), this);
+                map.put(field.getName(), value);
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 实体类转Map
+     * @param object pojo
+     * @return map
+     */
+    public static Map<String, Object> toMap(Object object) {
+        Map<String, Object> map = new HashMap<>();
+        for (Field field : object.getClass().getDeclaredFields()){
+            // 4. 私有的 && 非static && 非final
+            if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
+                PropertyDescriptor pd = null;
+                try {
+                    pd = new PropertyDescriptor(field.getName(), object.getClass());
+                    Method rM = pd.getReadMethod();
+                    Object value =  rM.invoke(object);
+                    map.put(field.getName(), value);
+                } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return map;
     }
 
     /**

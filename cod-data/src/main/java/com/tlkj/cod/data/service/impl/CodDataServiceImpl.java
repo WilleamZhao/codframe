@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @className CodDataServiceImpl
  * @date 2019/6/3 2:02 PM
  */
-@Service
+@Service("codData")
 public class CodDataServiceImpl implements CodDataService {
 
     private Finder finder;
@@ -55,7 +55,6 @@ public class CodDataServiceImpl implements CodDataService {
         }
 
         List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
-        System.out.println(dataConfigDos.size());
     }
 
     /**

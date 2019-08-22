@@ -2,6 +2,7 @@ package com.tlkj.cod.dao.util;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.tlkj.cod.common.CodCommonUUID;
 import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.exception.NoSupportDataSourceException;
 import com.zaxxer.hikari.HikariConfig;
@@ -226,15 +227,20 @@ public class CodDaoConnectionPool {
      */
     private DataSource getHikariDataSource(DataConnectBean dataConnectBean){
         HikariConfig jdbcConfig = new HikariConfig();
-        jdbcConfig.setPoolName(getClass().getName());
+        jdbcConfig.setPoolName(getClass().getName() + CodCommonUUID.getUUID());
         jdbcConfig.setDriverClassName(dataConnectBean.getDriverClass());
         jdbcConfig.setJdbcUrl(dataConnectBean.getUrl());
         jdbcConfig.setUsername(dataConnectBean.getUsername());
         jdbcConfig.setPassword(dataConnectBean.getPassword());
         jdbcConfig.setMaximumPoolSize(dataConnectBean.getMaxActive());
         jdbcConfig.setAutoCommit(dataConnectBean.isAutoCommit());
-
-        HikariDataSource hikariDataSource = new HikariDataSource(jdbcConfig);
+        HikariDataSource hikariDataSource = null;
+        try {
+            hikariDataSource = new HikariDataSource(jdbcConfig);
+        } catch (Exception  e){
+            System.out.println("数据库连接异常");
+            return null;
+        }
 
         /*hikariDataSource.setDriverClassName(dataConnectBean.getDriverClass());
         hikariDataSource.setUsername(dataConnectBean.getUsername());

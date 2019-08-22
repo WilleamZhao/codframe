@@ -141,6 +141,8 @@ public class CodLauncher {
             }
             i++;
         }
+        // 截止刷新
+        LAUNCHER_MODEL.getSpring().refresh();
         System.out.println("启动模块数量:" + list.size());
         Date endDate = CodCommonDate.now();
         System.out.println("codFrame框架 启动完成.");

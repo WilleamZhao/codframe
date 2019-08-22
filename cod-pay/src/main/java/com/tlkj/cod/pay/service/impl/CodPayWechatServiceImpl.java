@@ -65,13 +65,12 @@ public class CodPayWechatServiceImpl implements CodPayWechatService {
             String order = wechatUnifiedOrderDoto.getOut_trade_no();
             codCacheManager.set(order, wechatUnifiedOrderDoto.getSign());
             result = EntityUtils.toString(response.getEntity(), "UTF-8");
-            System.out.println("微信返回" + result);
+            codLogService.debug("微信支付返回={}", result);
             CodPayWechatUnifiedOrderDito codPayWechatUnifiedOrderDito = CodCommonXml.toBean(result, CodPayWechatUnifiedOrderDito.class);
             return codPayWechatUnifiedOrderDito.toCall();
         } catch (URISyntaxException | IOException | JAXBException e) {
             e.printStackTrace();
         }
-        System.out.println(result);
         codLogService.info(result);
         return null;
     }

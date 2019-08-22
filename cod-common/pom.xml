@@ -30,6 +30,7 @@
         <zxing.version>3.3.3</zxing.version>
         <oshi.version>3.13.2</oshi.version>
         <httpclient.version>4.5.3</httpclient.version>
+        <bcprov.version>1.60</bcprov.version>
     </properties>
 
     <dependencies>
@@ -103,6 +104,14 @@
             <artifactId>oshi-core</artifactId>
             <version>${oshi.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15</artifactId>
+            <version>1.45</version>
+        </dependency>
+
 
 
 

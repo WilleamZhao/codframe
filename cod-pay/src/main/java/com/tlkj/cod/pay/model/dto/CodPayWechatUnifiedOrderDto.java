@@ -12,6 +12,7 @@ package com.tlkj.cod.pay.model.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tlkj.cod.common.CodCommonEncryption;
 import com.tlkj.cod.pay.common.CodPayCommonDate;
+import com.tlkj.cod.pay.common.CodPayCommonSign;
 import httl.util.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,9 +80,8 @@ public class CodPayWechatUnifiedOrderDto {
      */
     public String createSign(){
         String sign = "";
-        // Map map = new BeanMap(this);
-        Map map = new HashMap();
-        try{
+        Map<String, Object> map = new HashMap<>();
+        try {
             BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor property : propertyDescriptors) {
@@ -104,26 +104,7 @@ public class CodPayWechatUnifiedOrderDto {
         } catch (Exception e){
             e.printStackTrace();
         }
-        List<Map.Entry<String, Object>> infoIds = new ArrayList<Map.Entry<String, Object>>(map.entrySet());
-        // 对所有传入参数按照字段名的 ASCII 码从小到大排序（字典序）
-        infoIds.sort(Comparator.comparing(o -> (o.getKey())));
-        // 构造签名键值对的格式
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Object> item : infoIds) {
-            if (StringUtils.isNotBlank(item.getKey())) {
-                String key = item.getKey();
-                System.out.println(key);
-                Object val = item.getValue();
-                if (val != null && !"".equals(val)) {
-                    sb.append(key).append("=").append(val).append("&");
-                }
-            }
-        }
-        //sb.setLength(sb.length() - 1);
-        sb.append("key=").append("glssdzJH20fdsf23419bhsdfa3558e27");
-        sign = sb.toString();
-        //进行MD5加密
-        sign = CodCommonEncryption.EncoderByMd5(sign).toUpperCase();
+        sign = CodPayCommonSign.createWechatSign(map, "glssdzJH20fdsf23419bhsdfa3558e27");
         return sign;
     }
 

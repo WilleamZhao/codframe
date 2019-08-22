@@ -11,12 +11,15 @@ package com.tlkj.cod.pay.model.doto;
 
 import com.tlkj.cod.common.CodCommonEncryption;
 import com.tlkj.cod.http.model.CodHttpRequestParamsModelBase;
+import com.tlkj.cod.pay.common.CodPayCommonSign;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -51,8 +54,9 @@ public class CodPayWechatUnifiedOrderDoto extends CodHttpRequestParamsModelBase 
      * 必填
      * 信开放平台审核通过的应用APPID（请登录open.weixin.qq.com查看，注意与公众号的APPID不同）
      */
-    // @XmlElement(name = "appid")
-    private String appid = "wxef2fe5e209cc4196";
+    @XmlElement(name = "appid")
+    @Value(value = "${cod.pay.config.wechat.appid:wxef2fe5e209cc4196}")
+    private String appid;
 
     /**
      * 商户号
@@ -202,13 +206,6 @@ public class CodPayWechatUnifiedOrderDoto extends CodHttpRequestParamsModelBase 
      */
     private String scene_info;
 
-    /*public String getOrder() {
-        if (StringUtils.isNotBlank(this.out_trade_no)){
-            this.out_trade_no = DateUtils.getDate("yyyyMMddHHmmsss") + UUIDUtil.getUUID();
-        }
-        return out_trade_no;
-    }*/
-
     /**
      * 获取sign
      * @return
@@ -216,7 +213,7 @@ public class CodPayWechatUnifiedOrderDoto extends CodHttpRequestParamsModelBase 
     public String createSign(){
         String sign = "";
         // Map map = new BeanMap(this);
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         try{
             BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
@@ -234,25 +231,7 @@ public class CodPayWechatUnifiedOrderDoto extends CodHttpRequestParamsModelBase 
         } catch (Exception e){
             e.printStackTrace();
         }
-        List<Map.Entry<String, Object>> infoIds = new ArrayList<Map.Entry<String, Object>>(map.entrySet());
-        // 对所有传入参数按照字段名的 ASCII 码从小到大排序（字典序）
-        infoIds.sort(Comparator.comparing(o -> (o.getKey())));
-        // 构造签名键值对的格式
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Object> item : infoIds) {
-            if (StringUtils.isNotBlank(item.getKey())) {
-                String key = item.getKey();
-                System.out.println(key);
-                Object val = item.getValue();
-                if (val != null && !"".equals(val)) {
-                    sb.append(key).append("=").append(val).append("&");
-                }
-            }
-        }
-        sign = sb.toString();
-        sign = sign + "&key=glssdzJH20fdsf23419bhsdfa3558e27";
-        //进行MD5加密
-        sign = CodCommonEncryption.EncoderByMd5(sign);
+        sign = CodPayCommonSign.createWechatSign(map, "glssdzJH20fdsf23419bhsdfa3558e27");
         return sign;
     }
 
