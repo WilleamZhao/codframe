@@ -12,6 +12,7 @@ package org.slf4j.impl;
 
 import com.tlkj.cod.common.CodCommonAnsiPrint;
 import com.tlkj.cod.common.constant.CodCommonAnsiConstant;
+import com.tlkj.cod.log.common.CodLogLevel;
 import com.tlkj.cod.log.service.model.CodLogMessageModel;
 import com.tlkj.cod.model.system.core.SystemModel;
 import com.tlkj.cod.model.system.core.SystemSetLog;
@@ -21,8 +22,6 @@ import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonUUID;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.helpers.MarkerIgnoringBase;
 import org.slf4j.helpers.MessageFormatter;
@@ -112,13 +111,13 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
 
     @Override
     public void log(Marker marker, String fqcn, int level, String message, Object[] argArray, Throwable t) {
-        String clogLevel = levelToClog(level);
+        String clogLevel = CodLogLevel.levelToClog(level);
         output(clogLevel, message, argArray, t);
     }
 
     @Override
     public boolean isTraceEnabled() {
-        return clogToLevel(level) <= LocationAwareLogger.TRACE_INT;
+        return CodLogLevel.clogToLevel(level) <= LocationAwareLogger.TRACE_INT;
     }
 
     @Override
@@ -157,7 +156,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
 
     @Override
     public boolean isDebugEnabled() {
-        return clogToLevel(level) <= LocationAwareLogger.DEBUG_INT;
+        return CodLogLevel.clogToLevel(level) <= LocationAwareLogger.DEBUG_INT;
     }
 
     @Override
@@ -187,7 +186,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
 
     @Override
     public boolean isInfoEnabled() {
-        return clogToLevel(level) <= LocationAwareLogger.INFO_INT;
+        return CodLogLevel.clogToLevel(level) <= LocationAwareLogger.INFO_INT;
     }
 
     @Override
@@ -217,7 +216,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
 
     @Override
     public boolean isWarnEnabled() {
-        return clogToLevel(level) <= LocationAwareLogger.WARN_INT;
+        return CodLogLevel.clogToLevel(level) <= LocationAwareLogger.WARN_INT;
     }
 
     @Override
@@ -247,7 +246,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
 
     @Override
     public boolean isErrorEnabled() {
-        return clogToLevel(level) <= LocationAwareLogger.ERROR_INT;
+        return CodLogLevel.clogToLevel(level) <= LocationAwareLogger.ERROR_INT;
     }
 
     @Override
@@ -381,6 +380,15 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
         }
         StackTraceElement[] elements = new Throwable().getStackTrace();
 
+        // 取调用者
+        StackTraceElement element = null;
+        for (StackTraceElement traceElement : elements){
+            if (!traceElement.getClassName().startsWith("com.tlkj.cod.log")){
+                element = traceElement;
+                break;
+            }
+        }
+
         boolean isThrowable = false;
         Throwable throwable = null;
         // 是否打印
@@ -389,7 +397,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
             Object[] tempObject = objects.clone();
 
             if (objects.length != 0){
-                if ("error".equals(level)){
+                if (isErrorEnabled()){
                     // 判断最后一个是不是异常信息
                     // 如果是打印异常信息
                     if (objects[objects.length - 1] instanceof Throwable){
@@ -404,11 +412,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
             }
             msg = MessageFormatter.arrayFormat(msg, tempObject).getMessage();
             // 日志消息体
-            CodLogMessageModel model = new CodLogMessageModel(CodCommonUUID.getUUID(),
-                    elements[2].getFileName(), elements[2].getClassName(),
-                    elements[2].getMethodName(), elements[2].getLineNumber(), level,
-                    CodCommonDate.getDate("yyyy-MM-dd HH:mm:ss,SSS"), msg);
-            String log = getMessage(elements[2], level, msg);
+            String log = getMessage(element, level, msg);
             if (isAnsi){
                 log = CodCommonAnsiPrint.toString(CodCommonAnsiConstant.BLUE, log);
             }
@@ -507,72 +511,13 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
         CodLoggerAdapter.path = logHref + dateHref + splitHref;
     }
 
-    /**
-     * slf4j等级转clog等级
-     * @param level
-     * @return
-     */
-    private String levelToClog(int level) {
-        String clogLevel;
-        switch (level) {
-            case LocationAwareLogger.TRACE_INT:
-                clogLevel = "trace";
-                break;
-            case LocationAwareLogger.DEBUG_INT:
-                clogLevel = "debug";
-                break;
-            case LocationAwareLogger.INFO_INT:
-                clogLevel = "info";
-                break;
-            case LocationAwareLogger.WARN_INT:
-                clogLevel = "warn";
-                break;
-            case LocationAwareLogger.ERROR_INT:
-                clogLevel = "error";
-                break;
-            default:
-                clogLevel = "info";
-                break;
-        }
-        return clogLevel;
-    }
-
-    /**
-     * clog等级转slf4j等级
-     * @param level
-     * @return
-     */
-    private int clogToLevel(String level) {
-        int slf4jLevel;
-        switch (level) {
-            case "trace":
-                slf4jLevel = LocationAwareLogger.TRACE_INT;
-                break;
-            case "debug":
-                slf4jLevel = LocationAwareLogger.DEBUG_INT;
-                break;
-            case "info":
-                slf4jLevel = LocationAwareLogger.INFO_INT;
-                break;
-            case "warn":
-                slf4jLevel = LocationAwareLogger.WARN_INT;
-                break;
-            case "error":
-                slf4jLevel = LocationAwareLogger.ERROR_INT;
-                break;
-            default:
-                slf4jLevel = LocationAwareLogger.INFO_INT;
-        }
-        return slf4jLevel;
-    }
-
     private String getMessage(StackTraceElement element, String level, String msg){
         CodLogMessageModel model = new CodLogMessageModel();
         model.setId(CodCommonUUID.getUUID());
-        model.setFileName(element.getFileName());
-        model.setClassName(element.getClassName());
-        model.setMethodName(element.getMethodName());
-        model.setLine(element.getLineNumber());
+        model.setFileName(element == null ? "" : element.getFileName());
+        model.setClassName(element == null ? "" :element.getClassName());
+        model.setMethodName(element == null ? "" :element.getMethodName());
+        model.setLine(element == null ? 0 :element.getLineNumber());
         model.setLevel(level);
         model.setTime(CodCommonDate.getDate("yyyy-MM-dd HH:mm:ss,SSS"));
         model.setMsg(msg);

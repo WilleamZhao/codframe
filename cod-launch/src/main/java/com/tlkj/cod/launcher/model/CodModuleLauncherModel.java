@@ -31,6 +31,8 @@ import java.util.Map;
  */
 public class CodModuleLauncherModel implements Serializable {
 
+    private static final long serialVersionUID = -5298903303430353838L;
+
     private static volatile CodModuleLauncherModel singleton;
 
     public static CodModuleLauncherModel getInstance() {
@@ -48,6 +50,11 @@ public class CodModuleLauncherModel implements Serializable {
      * data
      */
     private Map<Integer, Object> map = new HashMap<>();
+
+    /**
+     * 数据源缓存
+     */
+    private Map<String, DataSource> datasourcdMap = new HashMap<>();
 
     /**
      * 状态码
@@ -103,9 +110,24 @@ public class CodModuleLauncherModel implements Serializable {
 
     /**
      * 设置data
+     * 默认 系统保留不能设置
+     * @param order 模块序号
+     * @param o     对象
      */
     public void setData(int order, Object o){
-        if (CodModuleOrderEnum.isAvailable(order)){
+        setData(order, o, true);
+    }
+
+    /**
+     * 设置data
+     * @param isVerify 是否验证
+     */
+    public void setData(int order, Object o, boolean isVerify){
+        if (isVerify){
+            if (CodModuleOrderEnum.isAvailable(order)){
+                map.put(order, o);
+            }
+        } else {
             map.put(order, o);
         }
     }
@@ -120,6 +142,27 @@ public class CodModuleLauncherModel implements Serializable {
             setSpring(applicationContext);
         }
         return applicationContext;
+    }
+
+    /**
+     * 获取 spring bean
+     */
+    public <T> T getBean(String beanName, Class<T> zlass) {
+        return getSpring().getBean(beanName, zlass);
+    }
+
+    /**
+     * 获取 spring bean
+     */
+    public <T> T getBean(Class<T> zlass) {
+        return getSpring().getBean(zlass);
+    }
+
+    /**
+     * 获取 spring bean
+     */
+    public Object getBean(String name) {
+        return getSpring().getBean(name);
     }
 
     /**
@@ -141,7 +184,7 @@ public class CodModuleLauncherModel implements Serializable {
     }
 
     /**
-     * data
+     * 核心数据源
      */
     public void setCodData(DataSource dataSource){
         map.put(CodModuleOrderEnum.DATA.getOrder(), dataSource);
@@ -149,6 +192,18 @@ public class CodModuleLauncherModel implements Serializable {
 
     public DataSource getCodData(){
         return (DataSource) map.get(CodModuleOrderEnum.DATA.getOrder());
+    }
+
+    /**
+     * 模块数据源
+     * 不设置默认 默认数据源
+     */
+    public void setModuleDatasource(String name, DataSource dataSource){
+        datasourcdMap.put(name, dataSource);
+    }
+
+    public DataSource getModuleDatasource(String name){
+        return (DataSource) datasourcdMap.get(name);
     }
 
     /**

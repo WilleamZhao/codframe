@@ -76,5 +76,7 @@ public interface CodModuleInitialize {
      * 模块初始化失败
      * @param e 异常
      */
-    void fail(Throwable e);
+    default void fail(Throwable e){
+
+    }
 }

@@ -10,19 +10,13 @@
 
 package com.tlkj.cod.log.service.impl;
 
-import com.tlkj.cod.common.CodCommonDate;
-import com.tlkj.cod.common.CodCommonJson;
-import com.tlkj.cod.common.CodCommonUUID;
 import com.tlkj.cod.log.service.CodLogService;
-import com.tlkj.cod.log.service.model.CodLogMessageModel;
-import com.tlkj.cod.model.system.core.SystemModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.helpers.MessageFormatter;
+import org.slf4j.impl.CodLoggerAdapter;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 
 /**
  * Desc cod log
@@ -34,46 +28,11 @@ import java.util.Arrays;
  */
 @Service("clogImpl")
 public class CodCodLogServiceImpl implements CodLogService {
-/*
-    private static SystemModel model = SystemModel.getInstance();
-
-    @Autowired
-    List<CodLogService> codLogServices;*/
 
     @Override
     public String getSupportType() {
         return "clog";
     }
-
-    /*
-    @Autowired
-    Finder finder;
-    */
-
-    private static String setValue = "";
-
-    /**
-     * 获取日志设置
-     * 日志支持的类型 clog(默认), slf4j, logback, aliyunLog
-     * 1. 默认获取配置文件设置
-     * 2. 配置文件没有获取数据库设置
-     * 3. 数据库没有默认采用clog
-     * @return CodLogService 日志服务
-     */
-    /*public CodLogService getLog() {
-        if (model.getLog() != null && StringUtils.isNotBlank(model.getLog().getType())){
-            setValue = model.getLog().getType();
-        } else {
-            setValue = getSetValue("clog");
-        }
-        for (CodLogService f : codLogServices){
-            if (f.getSupportType().equals(setValue)){
-                return f;
-            }
-        }
-        System.err.println("获取日志service错误");
-        return null;
-    }*/
 
     @Override
     public void trace(String msg, Object... objects) {
@@ -104,36 +63,19 @@ public class CodCodLogServiceImpl implements CodLogService {
      * 输出
      */
     private void output(String level, String msg, Object... objects){
-        StackTraceElement[] elements = new Throwable().getStackTrace();
-        Logger logger = LoggerFactory.getLogger(elements[2].getClassName());
+        Logger logger = LoggerFactory.getLogger(this.getClass());
 
         boolean isThrowable = false;
         Throwable throwable = null;
-        // 是否打印
-        if (SystemModel.getInstance().getLog().isConsole()){
-            // 源数组
-            Object[] tempObject = objects.clone();
-
+        if (CodLoggerAdapter.getInstance().isErrorEnabled()){
             if (objects.length != 0){
                 // 判断最后一个是不是异常信息
                 // 如果是打印异常信息
                 if (objects[objects.length - 1] instanceof Throwable){
-                    // 截取后数组
-                    tempObject = Arrays.copyOf(objects, tempObject.length-1);
                     isThrowable = true;
-                    throwable = (Throwable) tempObject[tempObject.length - 1];
-                    // 打印异常信息
-                    throwable.printStackTrace();
+                    throwable = (Throwable) objects[objects.length - 1];
                 }
             }
-            msg = MessageFormatter.arrayFormat(msg, tempObject).getMessage();
-            // 日志消息体
-            CodLogMessageModel model = new CodLogMessageModel(CodCommonUUID.getUUID(),
-                    elements[2].getFileName(), elements[2].getClassName(),
-                    elements[2].getMethodName(), elements[2].getLineNumber(), level,
-                    CodCommonDate.getDate("yyyy-MM-dd HH:mm:ss,SSS"), msg);
-            String log = CodCommonJson.dump(model);
-            System.out.println(log);
         }
 
         switch (level) {
@@ -175,16 +117,5 @@ public class CodCodLogServiceImpl implements CodLogService {
             default:
                 logger.info(msg, objects);
         }
-    }
-
-    /**
-     * 获取设置Value
-     * @param setCode 设置代码
-     * @return 设置值
-     */
-    private String getSetValue(String setCode) {
-        // CodAdminSetDo setDo = finder.from(CodAdminSetDo.TABLE_NAME).where("set_code", setCode).first(CodAdminSetDo.class);
-        // return setDo.getSet_value();
-        return "";
     }
 }

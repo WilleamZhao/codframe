@@ -1,7 +1,6 @@
 package com.tlkj.cod.data.service;
 
 import com.tlkj.cod.data.model.dto.CodDataConfigDto;
-import com.tlkj.cod.data.model.entity.CodDataConfigDo;
 
 import java.util.Map;
 
@@ -14,11 +13,6 @@ import java.util.Map;
  * @date 2019/5/28 11:33 AM
  */
 public interface CodDataService {
-
-    /**
-     * 初始化
-     */
-    void init();
 
     /**
      * 获取配置

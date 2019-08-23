@@ -61,4 +61,16 @@ public class CodAdminTestAction extends GeneralResponse {
         codLogService.error("error");
         return super.success();
     }
+
+    /**
+     * 异常测试
+     */
+    @RequestMapping(value = "error", method = {RequestMethod.GET})
+    public Response testError(HttpServletRequest request){
+
+        String[] strings = {"1", "2"};
+        System.out.println(strings[3]);
+
+        return super.success();
+    }
 }

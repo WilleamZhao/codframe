@@ -4,6 +4,7 @@ import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.data.model.config.CodDataConfig;
+import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.init.CodModuleDataInitialize;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
@@ -24,6 +25,17 @@ public class InitData implements CodModuleDataInitialize {
     }
 
     @Override
+    public String alias() {
+        return "核心数据";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+        CodDataServiceImpl codDataService = codModuleLauncherModel.getBean(CodDataServiceImpl.class);
+        codModuleLauncherModel.setData(CodModuleOrderEnum.DATA.getOrder(), codDataService, false);
+    }
+
+    @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
         // 设置 CodData 数据库连接信息 H2
         DataConnectBean bean = new DataConnectBean();
@@ -36,11 +48,12 @@ public class InitData implements CodModuleDataInitialize {
         bean.setName(CodDaoDatasourceTypeEnum.DATA.name());
         bean.setAutoCommit(true);
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DATA.name(), bean);
+        codModuleLauncherModel.finish();
     }
 
     @Override
-    public void fail(Throwable e) {
-
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+        codModuleLauncherModel.stop();
     }
 
 

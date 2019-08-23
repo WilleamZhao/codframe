@@ -8,10 +8,10 @@ import com.tlkj.cod.dao.util.CreateTable;
 import com.tlkj.cod.data.model.dto.CodDataConfigDto;
 import com.tlkj.cod.data.model.entity.CodDataConfigDo;
 import com.tlkj.cod.data.service.CodDataService;
-import org.apache.commons.collections.map.HashedMap;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
@@ -45,27 +45,30 @@ public class CodDataServiceImpl implements CodDataService {
     /**
      * 初始化
      */
-    @PostConstruct
-    @Override
-    public void init(){
-        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name());
+    public CodDataServiceImpl(){
+        CodDataServiceImpl codDataService = (CodDataServiceImpl) CodModuleLauncherModel.getInstance().getData(CodModuleOrderEnum.DATA.getOrder());
+        if (codDataService != null){
+            this.finder = codDataService.finder;
+            this.updater = codDataService.updater;
+        } else {
+            DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name());
 
-        finder = new Finder(dataSource);
-        updater = new Updater(dataSource);
+            finder = new Finder(dataSource);
+            updater = new Updater(dataSource);
 
-        // config
-        if (verifyExists(CodDataConfigDo.TABLE_NAME)){
-            String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);
-            updater.execute(sql);
+            // config
+            if (verifyExists(CodDataConfigDo.TABLE_NAME)){
+                String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);
+                updater.execute(sql);
+            }
+
+            // 执行初始化数据
+            int num = finder.from(CodDataConfigDo.TABLE_NAME).select("count(*)").firstForObject(Integer.class);
+            if (num == 0){
+                initDataSql();
+            }
         }
 
-        // 执行初始化数据
-        int num = finder.from(CodDataConfigDo.TABLE_NAME).select("count(*)").firstForObject(Integer.class);
-        if (num == 0){
-            initDataSql();
-        }
-
-        // List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
     }
 
     /**

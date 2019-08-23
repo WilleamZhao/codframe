@@ -18,6 +18,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class CodLogConfig {
 
+    /**
+     * 日志类型
+     * 支持
+     * clog(默认)
+     * log4j
+     * aliLog
+     * logback
+     */
     @Value("${cod.log.config.type:clog}")
     private String type;
 

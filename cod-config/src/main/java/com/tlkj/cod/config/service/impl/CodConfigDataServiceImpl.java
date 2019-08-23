@@ -9,9 +9,6 @@ import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.data.model.entity.CodDataConfigDo;
-import com.tlkj.cod.data.service.CodDataService;
-import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -35,7 +32,6 @@ public class CodConfigDataServiceImpl implements CodConfigService {
 
     private Map<String, Object> map = new HashMap<>();
 
-    private final CodDataService codDataService = new CodDataServiceImpl();
     private final PlaceholderHelper placeholderHelper = PlaceholderHelper.getInstance();
 
     private Finder finder;
@@ -52,7 +48,6 @@ public class CodConfigDataServiceImpl implements CodConfigService {
             DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name());
             finder = new Finder(dataSource);
             updater = new Updater(dataSource);
-            codDataService.init();
         }
         return true;
     }

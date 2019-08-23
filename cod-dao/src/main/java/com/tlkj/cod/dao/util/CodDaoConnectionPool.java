@@ -199,6 +199,17 @@ public class CodDaoConnectionPool {
     }
 
     /**
+     * 添加数据源
+     */
+    public synchronized void addDataSource(String name, DataSource dataSource){
+        if (dataSource != null){
+            if (StringUtils.isNotBlank(name)){
+                this.addDataSources(name, dataSource);
+            }
+        }
+    }
+
+    /**
      * 获取datasource
      * @return datasource
      */
@@ -335,20 +346,36 @@ public class CodDaoConnectionPool {
     }
 
     /**
-     * 添加多重数据源
+     * 设置多重数据源
      * @param name       名称
      * @param dataSource 多重数据源
      */
     private void setDataSources(String name, DataSource... dataSource){
+        // 1. 设置
+        LinkedList<DataSource> linkedList = new LinkedList<>();
+        linkedList.addAll(Arrays.asList(dataSource));
+        map.put(name, linkedList);
+    }
+
+    /**
+     * 添加多重数据源
+     * @param name       名称
+     * @param dataSource 多重数据源
+     */
+    private void addDataSources(String name, DataSource... dataSource){
+        // 1. 读取旧配置
         LinkedList<DataSource> linkedList = map.get(name);
         if (linkedList == null || linkedList.isEmpty()){
             linkedList = new LinkedList<>();
             linkedList.addAll(Arrays.asList(dataSource));
         } else {
+            // 2. 添加
             linkedList.addAll(Arrays.asList(dataSource));
         }
         map.put(name, linkedList);
     }
+
+
 
     /**
      * 动态获取数据源

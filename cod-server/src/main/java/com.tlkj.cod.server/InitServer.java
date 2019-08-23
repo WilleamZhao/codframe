@@ -36,11 +36,13 @@ public class InitServer implements CodModuleServerInitialize {
         return CodModuleOrderEnum.SERVER.getOrder();
     }
 
+    @Override
+    public String alias() {
+        return "服务";
+    }
 
     @Override
-    public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        codModuleLauncherModel.getSpring().refresh();
-
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
         // TODO 从配置模块里读取
         CodServerService codServerService = (CodServerService) codModuleLauncherModel.getSpring().getBean("codServerJetty");
         // 设置编码过滤器
@@ -50,13 +52,27 @@ public class InitServer implements CodModuleServerInitialize {
         codModuleLauncherModel.setServer(CodServerModel.getInstance());
         codServerService.start(codModuleLauncherModel);
 
+    }
+
+    /**
+     * 初始化
+     * order < 0 : null;
+     * @param codModuleLauncherModel 启动引导对象
+     */
+    @Override
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
         codModuleLauncherModel.finish();
     }
 
     @Override
-    public void fail(Throwable e) {
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
         System.out.println("启动服务失败");
-        e.printStackTrace();
+        codModuleLauncherModel.stop();
+    }
+
+    @Override
+    public void fail(Throwable e) {
+
     }
 
     /**

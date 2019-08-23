@@ -57,7 +57,7 @@ public class CodLauncher {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println("开始启动codFrame");
+        logger.info("开始启动codFrame");
         Date startDate = CodCommonDate.now();
 
         if (LAUNCHER_MODEL.isStart()){
@@ -103,7 +103,8 @@ public class CodLauncher {
         // 设置环境
         setEnv("dev");
 
-        int i = 0;
+        int i = 1;
+        boolean isFinish = true;
         m : for (CodModuleInitialize module : linkedList){
             /*if (i > 6){
                 break;
@@ -128,33 +129,39 @@ public class CodLauncher {
                     default:
                         break;
                 }
+                // 调用成功方法
                 module.success(LAUNCHER_MODEL);
                 logger.info("启动 {} 模块完成", getModelName(module));
-            } catch (CodModuleStartFailException e){
-                logger.error("模块 {} 启动失败, 继续启动", getModelName(module));
-                module.fail(LAUNCHER_MODEL, e);
-                switch (LAUNCHER_MODEL.getStateEnum()){
-                    case FAIL:
-                        LAUNCHER_MODEL.stop();
-                        break m;
-                    default:
-                        break;
-                }
             } catch (Exception e) {
                 // TODO cod set log Debug
-                logger.error("模块 {} 启动失败, 继续启动", getModelName(module));
                 e.printStackTrace();
                 module.fail(LAUNCHER_MODEL, e);
+                switch (LAUNCHER_MODEL.getStateEnum()){
+                    case STOP:
+                        logger.error("{}模块 启动失败, 停止启动", getModelName(module));
+                        isFinish = false;
+                        break m;
+                    case CONTINUE:
+                        logger.error("{}模块 启动失败, 继续启动", getModelName(module));
+                        break;
+                    default:
+                        logger.error("{}模块 启动失败, 继续启动", getModelName(module));
+                        break;
+                }
             }
             i++;
         }
         // 所有模块启动完成后, 结束刷新
-        LAUNCHER_MODEL.getSpring().refresh();
+        // LAUNCHER_MODEL.getSpring().refresh();
         logger.info("总模块数量: {}; 启动模块数量: {};", list.size(), i);
         Date endDate = CodCommonDate.now();
         String diffTime =CodCommonDate.getTimeDifference(startDate, endDate);
         String time = CodCommonDate.formatDate(CodCommonDate.parseDate(diffTime, CodCommonDate.PATTERN_DIFF), "mm分:ss秒");
-        logger.info("codFrame 启动完成. 用时: {}", time);
+        if (isFinish){
+            logger.info("codFrame 启动完成. 用时: {}", time);
+        } else {
+            logger.info("codFrame 启动失败. 用时: {}", time);
+        }
     }
 
     /**
