@@ -1,6 +1,7 @@
 package com.tlkj.cod.search;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
@@ -15,7 +16,22 @@ public class InitSearch implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return Integer.MIN_VALUE;
+        return CodModuleOrderEnum.NO.getOrder();
+    }
+
+    @Override
+    public String alias() {
+        return "搜索";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
     }
 
     @Override

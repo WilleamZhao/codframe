@@ -30,6 +30,21 @@ public class InitCache implements CodModuleInitialize {
     }
 
     @Override
+    public String alias() {
+        return "缓存";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
+    }
+
+    @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
         /*Object o = codModuleLauncherModel.getSpring().getBean(CodDataSourceConfig.class);
         System.out.println(CodCommonJson.dump(o));*/

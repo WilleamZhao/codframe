@@ -20,6 +20,21 @@ public class InitView implements CodModuleInitialize {
     }
 
     @Override
+    public String alias() {
+        return "视图";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
+    }
+
+    @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
 
     }

@@ -23,6 +23,21 @@ public class InitFilter implements CodModuleInitialize {
     }
 
     @Override
+    public String alias() {
+        return "过滤器";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
+    }
+
+    @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
         CodServerModel codServer = CodServerModel.getInstance();
         setCors(codServer);

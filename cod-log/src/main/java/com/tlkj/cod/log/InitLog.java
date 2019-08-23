@@ -1,6 +1,7 @@
 package com.tlkj.cod.log;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
@@ -15,7 +16,22 @@ public class InitLog implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return -6;
+        return CodModuleOrderEnum.LOG.getOrder();
+    }
+
+    @Override
+    public String alias() {
+        return "日志";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
     }
 
     @Override

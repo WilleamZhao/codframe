@@ -11,6 +11,7 @@
 package com.tlkj.cod.core;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
@@ -25,9 +26,23 @@ public class InitCore implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 20;
+        return CodModuleOrderEnum.CORE.getOrder();
     }
 
+    @Override
+    public String alias() {
+        return "核心";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+        codModuleLauncherModel.stop();
+    }
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
 

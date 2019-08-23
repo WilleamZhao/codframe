@@ -382,11 +382,13 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
 
         // 取调用者
         StackTraceElement element = null;
+        int i = 0;
         for (StackTraceElement traceElement : elements){
-            if (!traceElement.getClassName().startsWith("com.tlkj.cod.log")){
+            if (i >= 2 && !traceElement.getClassName().startsWith("com.tlkj.cod.log") && !traceElement.getClassName().startsWith("org.slf4j.impl")){
                 element = traceElement;
                 break;
             }
+            i++;
         }
 
         boolean isThrowable = false;

@@ -153,7 +153,7 @@ public class CodLauncher {
         }
         // 所有模块启动完成后, 结束刷新
         // LAUNCHER_MODEL.getSpring().refresh();
-        logger.info("总模块数量: {}; 启动模块数量: {};", list.size(), i);
+        logger.info("总模块数量: {}; 启动模块数量: {};", list.size(), i - 1);
         Date endDate = CodCommonDate.now();
         String diffTime =CodCommonDate.getTimeDifference(startDate, endDate);
         String time = CodCommonDate.formatDate(CodCommonDate.parseDate(diffTime, CodCommonDate.PATTERN_DIFF), "mm分:ss秒");

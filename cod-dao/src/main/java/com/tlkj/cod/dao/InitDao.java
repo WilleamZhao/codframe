@@ -1,5 +1,6 @@
 package com.tlkj.cod.dao;
 
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.init.CodModuleSpringInitialize;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
@@ -15,7 +16,22 @@ public class InitDao implements CodModuleSpringInitialize {
 
     @Override
     public int order() {
-        return -70;
+        return CodModuleOrderEnum.DAO.getOrder();
+    }
+
+    @Override
+    public String alias() {
+        return "数据操作";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
     }
 
     @Override

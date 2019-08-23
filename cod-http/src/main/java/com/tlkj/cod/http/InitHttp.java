@@ -1,6 +1,7 @@
 package com.tlkj.cod.http;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
@@ -15,7 +16,22 @@ public class InitHttp implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 101;
+        return CodModuleOrderEnum.NO.getOrder();
+    }
+
+    @Override
+    public String alias() {
+        return "HTTP";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
     }
 
     @Override

@@ -24,7 +24,7 @@ public class InitAdmin implements CodModuleInitialize {
 
     @Override
     public String alias() {
-        return "管理模块";
+        return "管理";
     }
 
     @Override
