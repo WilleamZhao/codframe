@@ -41,8 +41,6 @@ import java.util.List;
 @Service
 public class CodAdminSystemSetServiceImpl implements CodAdminSystemSetService {
 
-    private static SystemModel model = SystemModel.getInstance();
-
     private static Logger logger = LoggerFactory.getLogger(CodAdminSystemSetServiceImpl.class);
 
     @Autowired

@@ -50,6 +50,12 @@ public class CodDataConfigDo extends CodCommonModelConvert implements Serializab
     private String c_name;
 
     /**
+     * 配置描述
+     */
+    @CodDaoColumn(type = "varchar(2000)", comment = "配置描述")
+    private String c_desc;
+
+    /**
      * 序号
      */
     @CodDaoColumn(type = "int", comment = "序号")

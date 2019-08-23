@@ -20,6 +20,7 @@ import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.common.CodCommonNetWork;
 import com.tlkj.cod.core.annotation.CodParamVerify;
 import com.tlkj.cod.log.annotation.CodLog;
+import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.enums.StatusCode;
 
 import org.apache.commons.lang3.StringUtils;
@@ -56,6 +57,9 @@ public class CodAdminAttachmentFacadeImpl implements CodAdminAttachmentFacade {
     @Autowired
     CodAdminFileFacade codAdminFileFacade;
 
+    @Autowired
+    CodLogService codLogService;
+
     /**
      * 保存附件
      * @param id
@@ -73,7 +77,7 @@ public class CodAdminAttachmentFacadeImpl implements CodAdminAttachmentFacade {
         try {
             ip = CodCommonNetWork.getIpAddress(request);
         } catch (IOException e) {
-            codAdminSystemSetService.getLog().error("获取文件&ip失败, {}", e.getMessage());
+            codLogService.error("获取文件&ip失败, {}", e.getMessage());
             return null;
         }
 
@@ -104,7 +108,7 @@ public class CodAdminAttachmentFacadeImpl implements CodAdminAttachmentFacade {
             io = file.getInputStream();
             ip = CodCommonNetWork.getIpAddress(request);
         } catch (IOException e) {
-            codAdminSystemSetService.getLog().error("获取文件&ip失败, {}", e.getMessage());
+            codLogService.error("获取文件&ip失败, {}", e.getMessage());
             return null;
         }
 

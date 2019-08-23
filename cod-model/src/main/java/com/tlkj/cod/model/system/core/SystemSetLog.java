@@ -54,7 +54,7 @@ public class SystemSetLog {
      * 是否打印控制台日志
      * 默认不打印
      */
-    private boolean console = false;
+    private boolean console = true;
 
     public String getType() {
         return type;

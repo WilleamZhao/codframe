@@ -20,7 +20,7 @@ public class InitHttp implements CodModuleInitialize {
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        System.out.println("开始初始化http模块");
+
     }
 
     @Override

@@ -10,11 +10,9 @@
 
 package com.tlkj.cod.log.service.impl;
 
-import com.tlkj.cod.common.CodCommonAnsiPrint;
 import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonUUID;
-import com.tlkj.cod.common.constant.CodCommonAnsiConstant;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.log.service.model.CodLogMessageModel;
 import com.tlkj.cod.model.system.core.SystemModel;
@@ -53,9 +51,6 @@ public class CodCodLogServiceImpl implements CodLogService {
     */
 
     private static String setValue = "";
-
-    private static boolean isAnsi = true;
-
 
     /**
      * 获取日志设置
@@ -97,17 +92,11 @@ public class CodCodLogServiceImpl implements CodLogService {
 
     @Override
     public void error(String msg, Object... objects) {
-        if (isAnsi){
-            msg = CodCommonAnsiPrint.toString(CodCommonAnsiConstant.RED, msg);
-        }
         output("error", msg, objects);
     }
 
     @Override
     public void warn(String msg, Object... objects) {
-        if (isAnsi){
-            msg = CodCommonAnsiPrint.toString(CodCommonAnsiConstant.YELLOW, msg);
-        }
         output("warn", msg, objects);
     }
 

@@ -63,5 +63,21 @@ public interface CodDataService {
      */
     void setData(String key, String value, String name, String sort);
 
+    /**
+     * 设置数据
+     * @param key   key
+     * @param value value
+     * @param name  配置名称
+     * @param sort  序号
+     * @param desc  描述
+     */
+    void setData(String key, String value, String name, String desc, String sort);
+
+    /**
+     * 删除
+     * @param key   key
+     */
+    void delete(String key);
+
 }
 

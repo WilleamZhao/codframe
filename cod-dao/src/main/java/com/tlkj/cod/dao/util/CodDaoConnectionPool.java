@@ -227,7 +227,7 @@ public class CodDaoConnectionPool {
      */
     private DataSource getHikariDataSource(DataConnectBean dataConnectBean){
         HikariConfig jdbcConfig = new HikariConfig();
-        jdbcConfig.setPoolName(getClass().getName() + CodCommonUUID.getUUID());
+        jdbcConfig.setPoolName(getClass().getName());
         jdbcConfig.setDriverClassName(dataConnectBean.getDriverClass());
         jdbcConfig.setJdbcUrl(dataConnectBean.getUrl());
         jdbcConfig.setUsername(dataConnectBean.getUsername());

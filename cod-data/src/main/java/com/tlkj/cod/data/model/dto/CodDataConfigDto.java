@@ -31,6 +31,9 @@ public class CodDataConfigDto extends CodCommonModelConvert {
     @JsonProperty("name")
     private String cName;
 
+    @JsonProperty("desc")
+    private String cDesc;
+
     @JsonProperty("sort")
     private int sort;
 

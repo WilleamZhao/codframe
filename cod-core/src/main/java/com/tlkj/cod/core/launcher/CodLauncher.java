@@ -17,6 +17,7 @@ import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.config.CodSpringConfiguration;
 import com.tlkj.cod.launcher.exception.CodModuleStartFailException;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
@@ -108,17 +109,15 @@ public class CodLauncher {
                 break;
             }*/
             try {
-                logger.info("开始加载 {} 模块", module.name());
-                System.out.println("开始启动" + module.order());
-                System.out.println("开始启动" + module.name());
+                logger.info("开始启动 第 {} 个模块; 序号: {}; 名称: {}模块;", i, module.order(), getModelName(module));
                 LAUNCHER_MODEL.getSpring().scan(module.name());
                 module.init(LAUNCHER_MODEL);
                 switch (LAUNCHER_MODEL.getStateEnum()){
                     case FAIL:
-                        LAUNCHER_MODEL.next();
+                        LAUNCHER_MODEL.fail();
                         throw new CodModuleStartFailException();
                     case STOP:
-                        System.out.println("停止启动" + module.order());
+                        logger.info("停止启动模块{}", getModelName(module));
                         break m;
                     case SUCCESS:
                         LAUNCHER_MODEL.getSpring().refresh();
@@ -129,25 +128,42 @@ public class CodLauncher {
                     default:
                         break;
                 }
-                logger.info("加载 {} 模块完成", module.name());
+                module.success(LAUNCHER_MODEL);
+                logger.info("启动 {} 模块完成", getModelName(module));
             } catch (CodModuleStartFailException e){
-                System.out.println("服务启动失败");
-                logger.error("模块 {} 启动失败, 继续启动", module.name());
+                logger.error("模块 {} 启动失败, 继续启动", getModelName(module));
+                module.fail(LAUNCHER_MODEL, e);
+                switch (LAUNCHER_MODEL.getStateEnum()){
+                    case FAIL:
+                        LAUNCHER_MODEL.stop();
+                        break m;
+                    default:
+                        break;
+                }
             } catch (Exception e) {
                 // TODO cod set log Debug
-                logger.info("加载 {} 模块失败", module.name());
+                logger.error("模块 {} 启动失败, 继续启动", getModelName(module));
                 e.printStackTrace();
-                module.fail(e);
+                module.fail(LAUNCHER_MODEL, e);
             }
             i++;
         }
-        // 截止刷新
+        // 所有模块启动完成后, 结束刷新
         LAUNCHER_MODEL.getSpring().refresh();
-        System.out.println("启动模块数量:" + list.size());
+        logger.info("总模块数量: {}; 启动模块数量: {};", list.size(), i);
         Date endDate = CodCommonDate.now();
-        System.out.println("codFrame框架 启动完成.");
         String diffTime =CodCommonDate.getTimeDifference(startDate, endDate);
-        System.out.println("启动时间: " + CodCommonDate.formatDate(CodCommonDate.parseDate(diffTime, CodCommonDate.PATTERN_DIFF), "mm分:ss秒"));
+        String time = CodCommonDate.formatDate(CodCommonDate.parseDate(diffTime, CodCommonDate.PATTERN_DIFF), "mm分:ss秒");
+        logger.info("codFrame 启动完成. 用时: {}", time);
+    }
+
+    /**
+     * 获取模块名称
+     * 有别名返回别名 没有返回name
+     * @return 模块名称
+     */
+    private static String getModelName(CodModuleInitialize module){
+        return StringUtils.isEmpty(module.alias()) ? module.name() : module.alias();
     }
 
     private void orderModule(int order, LinkedList list, CodModuleInitialize codModuleInitialize){

@@ -8,6 +8,7 @@ import com.tlkj.cod.dao.util.CreateTable;
 import com.tlkj.cod.data.model.dto.CodDataConfigDto;
 import com.tlkj.cod.data.model.entity.CodDataConfigDo;
 import com.tlkj.cod.data.service.CodDataService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +33,16 @@ public class CodDataServiceImpl implements CodDataService {
     private Updater updater;
 
     /**
+     * 缓存map
+     */
+    private Map<String, String> map = null;
+
+    /**
+     * 是否刷新过
+     */
+    private boolean isRefresh = false;
+
+    /**
      * 初始化
      */
     @PostConstruct
@@ -54,7 +65,7 @@ public class CodDataServiceImpl implements CodDataService {
             initDataSql();
         }
 
-        List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
+        // List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
     }
 
     /**
@@ -66,6 +77,8 @@ public class CodDataServiceImpl implements CodDataService {
         // 项目相关
         setData("cod.core.config.project.name", "codframe");
         setData("cod.core.config.project.desc", "codframe框架");
+        // 单机还是集群
+        setData("cod.core.config.server", "single");
 
         // 服务相关
         setData("cod.server.config.port", "9999");
@@ -160,10 +173,22 @@ public class CodDataServiceImpl implements CodDataService {
     /**
      * 获取所有配置
      */
+    /*@Override
+    public List<CodDataConfigDto> list(String key, String value, String page, String pageSize) {
+        List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
+        return dataConfigDos.stream().map(codDataConfigDo -> codDataConfigDo.toDto(CodDataConfigDto.class)).collect(Collectors.toList());
+    }*/
+
+    /**
+     * 获取所有配置
+     */
     @Override
     public Map<String, String> getConfig() {
-        List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
-        return dataConfigDos.stream().collect(Collectors.toMap(CodDataConfigDo::getC_key, CodDataConfigDo::getC_value));
+        if (isRefresh){
+            List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
+            map = dataConfigDos.stream().collect(Collectors.toMap(CodDataConfigDo::getC_key, CodDataConfigDo::getC_value));
+        }
+        return map;
     }
 
     /**
@@ -171,11 +196,10 @@ public class CodDataServiceImpl implements CodDataService {
      */
     @Override
     public String getDataValue(String key) {
-        CodDataConfigDo dataConfigDo = finder.from(CodDataConfigDo.TABLE_NAME).where("c_key", key).first(CodDataConfigDo.class);
-        if (dataConfigDo == null){
-            return "";
+        if (isRefresh()){
+            getConfig();
         }
-        return dataConfigDo.getC_value();
+        return map.get(key);
     }
 
     /**
@@ -222,6 +246,18 @@ public class CodDataServiceImpl implements CodDataService {
      */
     @Override
     public void setData(String key, String value, String name, String sort) {
+        setData(key, value, name,"", sort);
+    }
+
+    /**
+     * 设置数据
+     * @param key   key
+     * @param value value
+     * @param name  配置名称
+     * @param sort  序号
+     */
+    @Override
+    public void setData(String key, String value, String name, String desc, String sort) {
         CodDataConfigDo codDataConfigDo = finder.from(CodDataConfigDo.TABLE_NAME).where("c_key", key).first(CodDataConfigDo.class);
         Updater.Update update;
         if (codDataConfigDo == null) {
@@ -229,10 +265,28 @@ public class CodDataServiceImpl implements CodDataService {
         } else {
             update = updater.update(CodDataConfigDo.TABLE_NAME).where("id", codDataConfigDo.getId());
         }
-        int num = update.set("c_key", key).set("c_value", value).set("c_name", name).set("sort", sort).update();
+        int num = update.set("c_key", key).set("c_value", value).set("c_name", name).set("sort", sort).set("c_desc", desc).update();
+        isRefresh = true;
     }
 
+    @Override
+    public void delete(String key) {
+        int i = updater.delete(CodDataConfigDo.TABLE_NAME).where("c_key", key).update();
+        if (i == 1){
+            System.out.println("删除成功");
+        }
+        isRefresh = true;
+    }
 
+    /**
+     * 判断是否重新读取
+     */
+    private boolean isRefresh(){
+        if (isRefresh){
+            return true;
+        }
+        return map.isEmpty();
+    }
     public static void main(String[] args) {
         String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);
         System.out.println(sql);

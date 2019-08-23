@@ -10,6 +10,8 @@
 
 package org.slf4j.impl;
 
+import com.tlkj.cod.common.CodCommonAnsiPrint;
+import com.tlkj.cod.common.constant.CodCommonAnsiConstant;
 import com.tlkj.cod.log.service.model.CodLogMessageModel;
 import com.tlkj.cod.model.system.core.SystemModel;
 import com.tlkj.cod.model.system.core.SystemSetLog;
@@ -18,6 +20,9 @@ import com.tlkj.cod.common.CodCommonIO;
 import com.tlkj.cod.common.CodCommonJson;
 import com.tlkj.cod.common.CodCommonUUID;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.helpers.MarkerIgnoringBase;
 import org.slf4j.helpers.MessageFormatter;
@@ -25,6 +30,7 @@ import org.slf4j.spi.LocationAwareLogger;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -35,7 +41,7 @@ import java.util.Date;
  * @className CodLoggerAdapter
  * @date 2018/12/4 8:42 PM
  */
-public final class CodLoggerAdapter extends MarkerIgnoringBase implements LocationAwareLogger, Serializable {
+public final class CodLoggerAdapter extends MarkerIgnoringBase implements LocationAwareLogger, Log, Serializable {
 
     private static final long serialVersionUID = -6560271005436328378L;
 
@@ -63,15 +69,19 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
     /**
      * 等级
      */
-    private static String level = systemSetLog != null && StringUtils.isNotBlank(systemSetLog.getLevel()) ? systemSetLog.getLevel() : "info";
+    private volatile static String level = systemSetLog != null && StringUtils.isNotBlank(systemSetLog.getLevel()) ? systemSetLog.getLevel() : "info";
+
+    private volatile static boolean isConsole = (systemSetLog != null && systemSetLog.isConsole()) && systemSetLog.isConsole();
 
     private static volatile CodLoggerAdapter instance;
 
-    private CodLoggerAdapter() {
+    private static boolean isAnsi = true;
+
+    public CodLoggerAdapter() {
 
     }
 
-    private CodLoggerAdapter(String name){
+    public CodLoggerAdapter(String name){
         this.name = name;
     }
 
@@ -103,7 +113,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
     @Override
     public void log(Marker marker, String fqcn, int level, String message, Object[] argArray, Throwable t) {
         String clogLevel = levelToClog(level);
-        output(this.name, clogLevel, message, argArray);
+        output(clogLevel, message, argArray, t);
     }
 
     @Override
@@ -134,6 +144,15 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
     @Override
     public void trace(String msg, Throwable t) {
         output("trace", msg, t);
+    }
+
+    /**
+     * 打印日志
+     * @param msg     消息
+     * @param objects 参数
+     */
+    private synchronized void output(String level, Object msg, Object... objects){
+        output(level, msg.toString(), objects);
     }
 
     @Override
@@ -232,6 +251,11 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
     }
 
     @Override
+    public boolean isFatalEnabled() {
+        return false;
+    }
+
+    @Override
     public void error(String msg) {
         output("error", msg);
     }
@@ -256,6 +280,72 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
         output("error", msg, t);
     }
 
+    /**
+     * common-logging
+     */
+    @Override
+    public void debug(Object message) {
+        output("debug", message);
+    }
+
+    @Override
+    public void debug(Object message, Throwable t) {
+        output("debug", message, t);
+    }
+
+    @Override
+    public void error(Object message) {
+        output("error", message);
+    }
+
+    @Override
+    public void error(Object message, Throwable t) {
+        output("error", message, t);
+    }
+
+    @Override
+    public void fatal(Object message) {
+        output("fatal", message);
+    }
+
+    @Override
+    public void fatal(Object message, Throwable t) {
+        output("fatal", message, t);
+    }
+
+    @Override
+    public void info(Object message) {
+        output("info", message);
+    }
+
+    @Override
+    public void info(Object message, Throwable t) {
+        output("info", message, t);
+    }
+
+
+    @Override
+    public void trace(Object message) {
+        output("trace", message);
+    }
+
+    @Override
+    public void trace(Object message, Throwable t) {
+        output("trace", message, t);
+
+    }
+
+    @Override
+    public void warn(Object message) {
+        output("warn", message);
+
+    }
+
+    @Override
+    public void warn(Object message, Throwable t) {
+        output("warn", message, t);
+    }
+
 
     /**
      * 打印日志
@@ -263,6 +353,68 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
      * @param objects 参数
      */
     private synchronized void output(String level, String msg, Object... objects){
+        // 是否能打印
+        boolean isPrint;
+        switch (level) {
+            case "trace":
+                isPrint = isTraceEnabled();
+                break;
+            case "debug":
+                isPrint = isDebugEnabled();
+                break;
+            case "info":
+                isPrint = isInfoEnabled();
+                break;
+            case "warn":
+                isPrint = isWarnEnabled();
+                break;
+            case "error":
+                isPrint = isErrorEnabled();
+                break;
+            default:
+                isPrint = isInfoEnabled();
+                break;
+        }
+
+        if (!isPrint){
+            return;
+        }
+        StackTraceElement[] elements = new Throwable().getStackTrace();
+
+        boolean isThrowable = false;
+        Throwable throwable = null;
+        // 是否打印
+        if (isConsole){
+            // 源数组
+            Object[] tempObject = objects.clone();
+
+            if (objects.length != 0){
+                if ("error".equals(level)){
+                    // 判断最后一个是不是异常信息
+                    // 如果是打印异常信息
+                    if (objects[objects.length - 1] instanceof Throwable){
+                        // 截取后数组
+                        tempObject = tempObject.length == 1 ? tempObject : Arrays.copyOf(objects, tempObject.length-1);
+                        isThrowable = true;
+                        throwable = (Throwable) tempObject[tempObject.length - 1];
+                        // 打印异常信息
+                        throwable.printStackTrace();
+                    }
+                }
+            }
+            msg = MessageFormatter.arrayFormat(msg, tempObject).getMessage();
+            // 日志消息体
+            CodLogMessageModel model = new CodLogMessageModel(CodCommonUUID.getUUID(),
+                    elements[2].getFileName(), elements[2].getClassName(),
+                    elements[2].getMethodName(), elements[2].getLineNumber(), level,
+                    CodCommonDate.getDate("yyyy-MM-dd HH:mm:ss,SSS"), msg);
+            String log = getMessage(elements[2], level, msg);
+            if (isAnsi){
+                log = CodCommonAnsiPrint.toString(CodCommonAnsiConstant.BLUE, log);
+            }
+            System.out.println(log);
+        }
+
         long n = System.currentTimeMillis();
         if (n <= nextCheck) {
             now.setTime(n);
@@ -273,9 +425,7 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
         if (StringUtils.isBlank(path)){
             getPath();
         }
-        // 是否throwable
-        boolean isThrowable = false;
-        Throwable throwable = null;
+
 
         // 转消息
         if (objects != null && objects.length != 0){
@@ -304,6 +454,8 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
      * @param stackTraceElements 日志
      */
     private void printLog(String level, String msg, StackTraceElement stackTraceElements){
+
+
         StackTraceElement[] elements = new Throwable().getStackTrace();
         StackTraceElement element;
         if (elements.length <= 4){
@@ -337,33 +489,8 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
             fileName = level + "." + CodCommonDate.getDate("yyyy-MM-dd", now) + ".log";
         }
 
-        // 是否能打印
-        boolean isPrint;
-        switch (level) {
-            case "trace":
-                isPrint = isTraceEnabled();
-                break;
-            case "debug":
-                isPrint = isDebugEnabled();
-                break;
-            case "info":
-                isPrint = isInfoEnabled();
-                break;
-            case "warn":
-                isPrint = isWarnEnabled();
-                break;
-            case "error":
-                isPrint = isErrorEnabled();
-                break;
-            default:
-                isPrint = isInfoEnabled();
-                break;
-        }
-
         try {
-            if (isPrint){
-                CodCommonIO.outputFile(path, fileName, log+"\r\n", true);
-            }
+            CodCommonIO.outputFile(path, fileName, log+"\r\n", true);
         } catch (IOException e) {
             System.err.println("打印日志失败");
         }
@@ -438,5 +565,24 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
         }
         return slf4jLevel;
     }
+
+    private String getMessage(StackTraceElement element, String level, String msg){
+        CodLogMessageModel model = new CodLogMessageModel();
+        model.setId(CodCommonUUID.getUUID());
+        model.setFileName(element.getFileName());
+        model.setClassName(element.getClassName());
+        model.setMethodName(element.getMethodName());
+        model.setLine(element.getLineNumber());
+        model.setLevel(level);
+        model.setTime(CodCommonDate.getDate("yyyy-MM-dd HH:mm:ss,SSS"));
+        model.setMsg(msg);
+        String log = CodCommonJson.dump(model);
+        if (isAnsi){
+            log = CodCommonAnsiPrint.toString(CodCommonAnsiConstant.CYAN, log);
+        }
+        return log;
+    }
+
+
 }
 

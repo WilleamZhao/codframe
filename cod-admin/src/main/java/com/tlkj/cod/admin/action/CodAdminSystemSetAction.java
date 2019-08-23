@@ -37,6 +37,7 @@ public class CodAdminSystemSetAction extends GeneralResponse {
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public Response list(HttpServletRequest request){
+        String key = request.getParameter("key");
 
         return success();
     }

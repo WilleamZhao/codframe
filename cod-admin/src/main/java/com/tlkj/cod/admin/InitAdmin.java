@@ -1,6 +1,9 @@
 package com.tlkj.cod.admin;
 
+import com.tlkj.cod.admin.model.config.CodAdminDatabaseConfig;
 import com.tlkj.cod.dao.bean.DataConnectBean;
+import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
+import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
@@ -20,8 +23,25 @@ public class InitAdmin implements CodModuleInitialize {
     }
 
     @Override
+    public String alias() {
+        return "管理模块";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+        CodAdminDatabaseConfig codAdminDatabaseConfig = (CodAdminDatabaseConfig) codModuleLauncherModel.getSpring().getBean("codAdminDatabaseConfig");
+        DataConnectBean bean = (DataConnectBean) codModuleLauncherModel.getSpring().getBean("dataSource");
+        bean.setPassword(codAdminDatabaseConfig.getPassword());
+        bean.setUsername(codAdminDatabaseConfig.getUsername());
+        bean.setDriverClass(codAdminDatabaseConfig.getDriver());
+        bean.setUrl(codAdminDatabaseConfig.getUrl());
+        bean.setAutoCommit(true);
+        CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);
+    }
+
+    @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        DataConnectBean bean = new DataConnectBean();
+        // DataConnectBean bean = new DataConnectBean();
 
         /*CodAdminDatabaseConfig databaseConfig = (CodAdminDatabaseConfig) codModuleLauncherModel.getSpring().getBean("CodAdminDatabaseConfig");
         bean.setPassword(databaseConfig.getPassword());
@@ -34,7 +54,6 @@ public class InitAdmin implements CodModuleInitialize {
         finder.from();
 
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);*/
-        System.out.println("初始化成功");
         codModuleLauncherModel.finish();
 
     }

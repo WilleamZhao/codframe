@@ -36,10 +36,10 @@ public class CodAdminDatabaseConfig {
     @Value("${cod.admin.database.config.password:codframep@ssw0rd}")
     private String password;
 
-    @Autowired
-    DataConnectBean bean;
+    // @Autowired
+    // DataConnectBean bean;
 
-    @PostConstruct
+    /*@PostConstruct
     public void init(){
         bean.setPassword(this.getPassword());
         bean.setUsername(this.getUsername());
@@ -47,7 +47,7 @@ public class CodAdminDatabaseConfig {
         bean.setUrl(this.getUrl());
         bean.setAutoCommit(true);
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);
-    }
+    }*/
 
 
 }

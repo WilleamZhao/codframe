@@ -11,6 +11,7 @@
 package com.tlkj.cod.admin.api;
 
 import com.tlkj.cod.admin.service.CodAdminSystemSetService;
+import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import org.apache.commons.lang3.StringUtils;
@@ -34,11 +35,15 @@ public class WebApi extends GeneralResponse {
     @Autowired
     private CodAdminSystemSetService codAdminSystemSetService;
 
+    @Autowired
+    CodLogService codLogService;
+
     /**
      * 获取前端url
      */
     @RequestMapping(value = "getFrontUrl", method = {RequestMethod.GET})
     public Response getWebUrl(){
+        codLogService.info("测试: {};", "aaaa");
         String frontUrl = codAdminSystemSetService.getSetValue("web_front_url");
         return StringUtils.isNotBlank(frontUrl) ? super.success(frontUrl) : super.fail();
     }
@@ -48,6 +53,7 @@ public class WebApi extends GeneralResponse {
      */
     @RequestMapping(value = "getWebName", method = {RequestMethod.GET})
     public Response getWebName(){
+        codLogService.info("测试: {};", "aaaa");
         String webName = codAdminSystemSetService.getSetValue("web_name");
         return StringUtils.isNotBlank(webName) ? super.success(webName) : super.fail();
     }

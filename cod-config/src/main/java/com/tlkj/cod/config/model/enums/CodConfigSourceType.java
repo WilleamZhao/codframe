@@ -15,17 +15,13 @@ public enum CodConfigSourceType {
     APOLLO("codConfigApolloServiceImpl", 2),
 
     /**
-     * cod内置
-     */
-    LOCAL("codConfigCacheServiceImpl",3 ),
-
-    /**
      * 数据库
      */
     DATABASE("codConfigDatabaseServiceImpl", 1),
 
     /**
      * CodData
+     * 本地
      */
     DATA("codConfigDataServiceImpl", 0),
 

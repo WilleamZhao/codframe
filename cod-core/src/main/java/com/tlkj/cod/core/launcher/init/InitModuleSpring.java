@@ -38,14 +38,17 @@ public class InitModuleSpring implements CodModuleSpringInitialize {
     }
 
     @Override
+    public String alias() {
+        return "spring";
+    }
+
+    @Override
     public int order() {
         return CodModuleOrderEnum.SPRING.getOrder();
     }
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        System.out.println("开始初始化spring");
-
         /*
          * spring annotation
          */

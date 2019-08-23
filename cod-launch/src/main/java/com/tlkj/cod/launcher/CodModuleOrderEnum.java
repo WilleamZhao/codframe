@@ -16,7 +16,8 @@ import com.tlkj.cod.launcher.init.CodModuleServletInitialize;
 import com.tlkj.cod.launcher.init.CodModuleSpringInitialize;
 
 /**
- * Desc
+ * Desc codframe 框架核心内置模块
+ * 业务序号不允许相同 相同的业务模块不会加载
  *
  * @author sourcod
  * @version 1.0
@@ -31,24 +32,60 @@ public enum CodModuleOrderEnum {
     NO(Integer.MIN_VALUE, CodModuleInitialize.class),
 
     /**
-     * 启动data
+     * 启动 dao
+     */
+    DAO(-70, CodModuleInitialize.class),
+
+    /**
+     * 启动 data
      */
     DATA(-60, CodModuleDataInitialize.class),
 
     /**
-     * 启动spring
+     * 启动 config
+     */
+    CONFIG(-50, CodModuleInitialize.class),
+
+    /**
+     * 启动 log
+     */
+    LOG(-40, CodModuleInitialize.class),
+
+    /**
+     * 启动 cache
+     */
+    CACHE(-40, CodModuleInitialize.class),
+
+    /**
+     * 启动 spring
      */
     SPRING(0, CodModuleSpringInitialize.class),
 
     /**
-     * 启动servlet
+     * 启动 admin
+     */
+    ADMIN(10, CodModuleInitialize.class),
+
+    /**
+     * 启动 core
+     */
+    CORE(20, CodModuleInitialize.class),
+
+    /**
+     * 启动 servlet
      */
     SERVLET(50, CodModuleServletInitialize.class),
 
     /**
      * 启动服务
      */
-    SERVER(100, CodModuleServerInitialize.class);
+    SERVER(100, CodModuleServerInitialize.class),
+
+    /**
+     * 启动 pay
+     */
+    PAY(110, CodModuleInitialize.class);
+
 
     private int order;
 

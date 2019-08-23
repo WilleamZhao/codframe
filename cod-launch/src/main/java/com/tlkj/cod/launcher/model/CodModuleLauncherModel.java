@@ -154,7 +154,6 @@ public class CodModuleLauncherModel implements Serializable {
     /**
      * 继续执行下一步
      * 刷新
-     * @return
      */
     public void finish(){
         this.stateEnum = CodModuleLauncherStateEnum.SUCCESS;
@@ -169,7 +168,7 @@ public class CodModuleLauncherModel implements Serializable {
 
     /**
      * 停止执行下一步
-     * @return
+     * 启动结束
      */
     public CodModuleLauncherModel stop(){
         this.stateEnum = CodModuleLauncherStateEnum.STOP;
@@ -178,6 +177,7 @@ public class CodModuleLauncherModel implements Serializable {
 
     /**
      * 继续执行不刷新
+     * 默认
      */
     public void next(){
         this.stateEnum = CodModuleLauncherStateEnum.CONTINUE;
