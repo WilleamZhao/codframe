@@ -63,7 +63,7 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
 
         CodServerModel codServerModel = (CodServerModel) CodServerServiceJettyImpl.codModuleLauncherModel.getServer();
         codServerModel = codServerModel == null ? new CodServerJettyModel() : codServerModel;
-        AnnotationConfigWebApplicationContext applicationContext = (AnnotationConfigWebApplicationContext) codModuleLauncherModel.getSpring();
+        AnnotationConfigWebApplicationContext applicationContext = codModuleLauncherModel.getSpring();
 
         // 注册springMVC
         applicationContext.register(CodServerSpringMVCConfiguration.class);
@@ -72,6 +72,8 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         // applicationContext.refresh();
         DispatcherServlet dispatcherServlet = new DispatcherServlet(applicationContext);
         // dispatcherServlet.setContextInitializers();
+
+        // 刷新springmvc
         dispatcherServlet.refresh();
 
         // initServlet();
