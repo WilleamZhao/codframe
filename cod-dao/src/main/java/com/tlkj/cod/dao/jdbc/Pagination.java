@@ -1,11 +1,10 @@
 /*
- * Copyright (c) 2019.
- * Beijing sky blue technology co., LTD.
- * All rights reserved
+ * Copyright (c) 2018-2019.
+ * sourcod All rights reserved
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.sourcod.com
+ * site：http://blog.sourcod.com
  */
 
 package com.tlkj.cod.dao.jdbc;
@@ -13,6 +12,11 @@ package com.tlkj.cod.dao.jdbc;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 分页数据
+ * @author sourcod
+ * @param <T>
+ */
 public class Pagination<T> {
 
 	/**
@@ -123,12 +127,6 @@ public class Pagination<T> {
 		}
 
 		return pages;
-	}
-
-	@Override
-	public String toString() {
-		return "Pagination [page=" + page + ", perPage=" + perPage + ", total="
-				+ total + ", data=" + data + "]";
 	}
 
 }

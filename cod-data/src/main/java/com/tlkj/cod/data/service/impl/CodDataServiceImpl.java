@@ -190,6 +190,7 @@ public class CodDataServiceImpl implements CodDataService {
         if (isRefresh){
             List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
             map = dataConfigDos.stream().collect(Collectors.toMap(CodDataConfigDo::getC_key, CodDataConfigDo::getC_value));
+            isRefresh = false;
         }
         return map;
     }
@@ -200,6 +201,7 @@ public class CodDataServiceImpl implements CodDataService {
     @Override
     public String getDataValue(String key) {
         if (isRefresh()){
+            isRefresh = true;
             getConfig();
         }
         return map.get(key);
