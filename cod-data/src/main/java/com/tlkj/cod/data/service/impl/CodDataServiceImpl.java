@@ -288,7 +288,7 @@ public class CodDataServiceImpl implements CodDataService {
         if (isRefresh){
             return true;
         }
-        return map.isEmpty();
+        return map == null || map.isEmpty();
     }
     public static void main(String[] args) {
         String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);

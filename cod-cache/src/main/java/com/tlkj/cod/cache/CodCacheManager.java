@@ -30,7 +30,7 @@ public interface CodCacheManager {
      * @return 默认支持
      */
     default String getSupportType(){
-        return "ehcache";
+        return "codCacheEhcache";
     }
 
     /**
