@@ -54,26 +54,43 @@ public class CodCommonHttpClient {
 	private static Integer PROCOTOL_HTTPS = 1;
 
 	public static HttpResponse httpGet(String url) throws IOException, URISyntaxException {
-		return httpGet(url, null, null, "");
+		return httpGet(url, null, null, null, "");
 	}
 
 	public static HttpResponse httpGet(String url, String charset) throws IOException, URISyntaxException {
-		return httpGet(url, null, null, charset);
+		return httpGet(url, null,  null,null, charset);
 	}
 
 	public static HttpResponse httpGet(String url, List<NameValuePair> nvps) throws IOException, URISyntaxException {
-		return httpGet(url, nvps, null, "");
+		return httpGet(url, nvps, null, null, "");
+	}
+
+	public static HttpResponse httpGet(String url, StringEntity entity) throws IOException, URISyntaxException {
+		return httpGet(url, entity, null);
+	}
+
+	public static HttpResponse httpGet(String url, StringEntity entity, Header[] headers) throws IOException, URISyntaxException {
+		return httpGet(url, null, entity, headers, "");
 	}
 	
 	public static HttpResponse httpGet(String url, List<NameValuePair> nvps, Header[] headers) throws IOException, URISyntaxException {
-		return httpGet(url, nvps, headers, "");
+		return httpGet(url, nvps, null, headers, "");
 	}
 
-	public static HttpResponse httpGet(String url, List<NameValuePair> nvps, Header[] headers, String charset) throws IOException, URISyntaxException {
+	public static HttpResponse httpGet(String url, List<NameValuePair> nvps, StringEntity entity, Header[] headers, String charset) throws IOException, URISyntaxException {
 		HttpGet get = new HttpGet();
+		String nvpString = "";
+		boolean isok = false;
 		if (nvps != null && nvps.size() > 0){
-			get.setURI(new URI(url + "?" + EntityUtils.toString(new UrlEncodedFormEntity(nvps), StringUtils.isBlank(charset) ? CHARSET : charset)));
+			nvpString = EntityUtils.toString(new UrlEncodedFormEntity(nvps), StringUtils.isBlank(charset) ? CHARSET : charset);
+			isok = true;
 		}
+
+		String entityString = "";
+		if (entity != null){
+			entityString = (isok ? "&" : "") + EntityUtils.toString(entity, StringUtils.isBlank(charset) ? CHARSET : charset);
+		}
+		get.setURI(new URI(url + "?" + nvpString + entityString));
 
 		if (headers != null && headers.length > 0){
 			get.setHeaders(headers);

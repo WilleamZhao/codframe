@@ -1,5 +1,8 @@
 package com.tlkj.cod.http.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Desc Http 请求头
  *
@@ -8,33 +11,12 @@ package com.tlkj.cod.http.model;
  * @className CodHttpHeaderModel
  * @date 2019/4/30 6:59 PM
  */
+@Getter
+@Setter
 public abstract class CodHttpHeaderModel {
 
     private String userAgent;
-    private String Referer;
-    private String AccessToken;
+    private String referer;
+    private String accessToken;
 
-    public String getUserAgent() {
-        return userAgent;
-    }
-
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
-    }
-
-    public String getReferer() {
-        return Referer;
-    }
-
-    public void setReferer(String referer) {
-        Referer = referer;
-    }
-
-    public String getAccessToken() {
-        return AccessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        AccessToken = accessToken;
-    }
 }

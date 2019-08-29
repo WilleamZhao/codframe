@@ -5,6 +5,7 @@ import com.tlkj.cod.http.model.CodHttpRequestParamsModelBase;
 import com.tlkj.cod.http.model.CodHttpResponseModel;
 import com.tlkj.cod.http.service.CodHttpSerivce;
 import org.apache.http.NameValuePair;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @className CodHttpServiceImpl
  * @date 2019/5/21 12:04 PM
  */
+@Service
 public class CodHttpServiceImpl implements CodHttpSerivce {
 
     @Override

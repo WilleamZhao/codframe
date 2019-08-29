@@ -1,7 +1,7 @@
 package com.tlkj.cod.http.model;
 
 /**
- * Desc
+ * Desc 响应实体
  *
  * @author sourcod
  * @version 1.0
@@ -12,6 +12,6 @@ public class CodHttpResponseModel {
 
     private String contextType;
 
-
+    private String a;
 
 }

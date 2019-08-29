@@ -1,5 +1,8 @@
 package com.tlkj.cod.http.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Map;
 import java.util.List;
 
@@ -11,11 +14,13 @@ import java.util.List;
  * @className CodHttpModel
  * @date 2019/4/30 6:57 PM
  */
+@Getter
+@Setter
 public class CodHttpModel {
 
     private String url;
     private String type;
-    private String Accept;
+    private String accept;
     private Map<String, String> header;
     private List<CodHttpRequestParamsModelBase> codHttpRequestParamsModelList;
 
