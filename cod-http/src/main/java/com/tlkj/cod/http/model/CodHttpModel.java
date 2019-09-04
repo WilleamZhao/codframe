@@ -22,7 +22,7 @@ public class CodHttpModel {
     private String type;
     private String accept;
     private Map<String, String> header;
-    private List<CodHttpRequestParamsModelBase> codHttpRequestParamsModelList;
+    private List<CodHttpRequestParamsModel> codHttpRequestParamsModelList;
 
 
 

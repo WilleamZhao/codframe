@@ -1,7 +1,7 @@
 package com.tlkj.cod.http.service;
 
 import com.tlkj.cod.http.model.CodHttpHeaderModel;
-import com.tlkj.cod.http.model.CodHttpRequestParamsModelBase;
+import com.tlkj.cod.http.model.CodHttpRequestParamsModel;
 import com.tlkj.cod.http.model.CodHttpResponseModel;
 import org.apache.http.NameValuePair;
 
@@ -21,19 +21,19 @@ public interface CodHttpSerivce {
 
     CodHttpResponseModel httpGet(String url, String charset);
 
-    CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModelBase nvps);
+    CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModel nvps);
 
     CodHttpResponseModel httpGet(String url, List<NameValuePair> nvps);
 
     CodHttpResponseModel httpGet(String url, List<NameValuePair> nvps, CodHttpHeaderModel headerModel);
 
-    CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headerModel);
+    CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headerModel);
 
-    CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headerModel, String charset);
+    CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headerModel, String charset);
 
     CodHttpResponseModel httpPost(String url);
 
-    CodHttpResponseModel httpPost(String url, CodHttpRequestParamsModelBase nvps);
+    CodHttpResponseModel httpPost(String url, CodHttpRequestParamsModel nvps);
 
     CodHttpResponseModel httpPost(String url, List<NameValuePair> nvps);
 
@@ -46,13 +46,13 @@ public interface CodHttpSerivce {
 
     CodHttpResponseModel httpsGet(String url, String charset);
 
-    CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModelBase nvps);
+    CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModel nvps);
 
     CodHttpResponseModel httpsGet(String url, List<NameValuePair> nvps);
 
-    CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headers);
+    CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headers);
 
-    CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headers, String charset);
+    CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headers, String charset);
 
     /**
      * https POST
@@ -61,11 +61,11 @@ public interface CodHttpSerivce {
 
     CodHttpResponseModel httpsPost(String url, String charset);
 
-    CodHttpResponseModel httpsPost(String url, CodHttpRequestParamsModelBase nvps);
+    CodHttpResponseModel httpsPost(String url, CodHttpRequestParamsModel nvps);
 
     CodHttpResponseModel httpsPost(String url, List<NameValuePair> nvps, CodHttpHeaderModel headers);
 
-    CodHttpResponseModel httpsPost(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headers);
+    CodHttpResponseModel httpsPost(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headers);
 
 
 }

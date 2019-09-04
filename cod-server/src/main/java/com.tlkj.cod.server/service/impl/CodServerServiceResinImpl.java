@@ -27,6 +27,11 @@ import org.springframework.stereotype.Component;
 public class CodServerServiceResinImpl implements CodServerService {
 
     @Override
+    public String support() {
+        return "codServerResin";
+    }
+
+    @Override
     public void start(CodModuleLauncherModel codModuleLauncherModel) {
 
     }

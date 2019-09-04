@@ -1,7 +1,7 @@
 package com.tlkj.cod.http.service.impl;
 
 import com.tlkj.cod.http.model.CodHttpHeaderModel;
-import com.tlkj.cod.http.model.CodHttpRequestParamsModelBase;
+import com.tlkj.cod.http.model.CodHttpRequestParamsModel;
 import com.tlkj.cod.http.model.CodHttpResponseModel;
 import com.tlkj.cod.http.service.CodHttpSerivce;
 import org.apache.http.NameValuePair;
@@ -31,7 +31,7 @@ public class CodHttpServiceImpl implements CodHttpSerivce {
     }
 
     @Override
-    public CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModelBase nvps) {
+    public CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModel nvps) {
         return null;
     }
 
@@ -46,12 +46,12 @@ public class CodHttpServiceImpl implements CodHttpSerivce {
     }
 
     @Override
-    public CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headerModel) {
+    public CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headerModel) {
         return null;
     }
 
     @Override
-    public CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headerModel, String charset) {
+    public CodHttpResponseModel httpGet(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headerModel, String charset) {
         return null;
     }
 
@@ -61,7 +61,7 @@ public class CodHttpServiceImpl implements CodHttpSerivce {
     }
 
     @Override
-    public CodHttpResponseModel httpPost(String url, CodHttpRequestParamsModelBase nvps) {
+    public CodHttpResponseModel httpPost(String url, CodHttpRequestParamsModel nvps) {
         return null;
     }
 
@@ -86,7 +86,7 @@ public class CodHttpServiceImpl implements CodHttpSerivce {
     }
 
     @Override
-    public CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModelBase nvps) {
+    public CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModel nvps) {
         return null;
     }
 
@@ -96,12 +96,12 @@ public class CodHttpServiceImpl implements CodHttpSerivce {
     }
 
     @Override
-    public CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headers) {
+    public CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headers) {
         return null;
     }
 
     @Override
-    public CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headers, String charset) {
+    public CodHttpResponseModel httpsGet(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headers, String charset) {
         return null;
     }
 
@@ -116,7 +116,7 @@ public class CodHttpServiceImpl implements CodHttpSerivce {
     }
 
     @Override
-    public CodHttpResponseModel httpsPost(String url, CodHttpRequestParamsModelBase nvps) {
+    public CodHttpResponseModel httpsPost(String url, CodHttpRequestParamsModel nvps) {
         return null;
     }
 
@@ -126,7 +126,7 @@ public class CodHttpServiceImpl implements CodHttpSerivce {
     }
 
     @Override
-    public CodHttpResponseModel httpsPost(String url, CodHttpRequestParamsModelBase nvps, CodHttpHeaderModel headers) {
+    public CodHttpResponseModel httpsPost(String url, CodHttpRequestParamsModel nvps, CodHttpHeaderModel headers) {
         return null;
     }
 }

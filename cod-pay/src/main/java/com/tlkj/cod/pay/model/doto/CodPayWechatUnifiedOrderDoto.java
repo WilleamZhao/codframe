@@ -9,12 +9,10 @@
 
 package com.tlkj.cod.pay.model.doto;
 
-import com.tlkj.cod.common.CodCommonEncryption;
-import com.tlkj.cod.http.model.CodHttpRequestParamsModelBase;
+import com.tlkj.cod.http.model.CodHttpRequestParamsModel;
 import com.tlkj.cod.pay.common.CodPayCommonSign;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -26,10 +24,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +40,7 @@ import java.util.Map;
 @Setter
 @XmlRootElement(name = "xml")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CodPayWechatUnifiedOrderDoto extends CodHttpRequestParamsModelBase implements Serializable {
+public class CodPayWechatUnifiedOrderDoto extends CodHttpRequestParamsModel implements Serializable {
 
     private static final long serialVersionUID = 6884799010888567813L;
 

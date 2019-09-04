@@ -10,6 +10,7 @@
 
 package com.tlkj.cod.common;
 
+import com.sun.javafx.fxml.builder.URLBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -18,6 +19,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.StringEntity;
@@ -78,13 +80,21 @@ public class CodCommonHttpClient {
 	}
 
 	public static HttpResponse httpGet(String url, List<NameValuePair> nvps, StringEntity entity, Header[] headers, String charset) throws IOException, URISyntaxException {
-		HttpGet get = new HttpGet();
+
+		// 1. 设置参数
+		URIBuilder uriBuilder = new URIBuilder(url);
+		uriBuilder.addParameters(nvps);
+
+		// 2. 设置 HttpGet
+		HttpGet get = new HttpGet(uriBuilder.build());
 		String nvpString = "";
 		boolean isok = false;
 		if (nvps != null && nvps.size() > 0){
 			nvpString = EntityUtils.toString(new UrlEncodedFormEntity(nvps), StringUtils.isBlank(charset) ? CHARSET : charset);
 			isok = true;
 		}
+
+
 
 		String entityString = "";
 		if (entity != null){

@@ -31,14 +31,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.DispatcherType;
 import java.lang.management.ManagementFactory;
 import java.util.EnumSet;
 import java.util.EventListener;
 import java.util.LinkedList;
 
 /**
- * Desc cod启动JettyServer
+ * Desc cod 启动 JettyServer
  *
  * @author sourcod
  * @version 1.0
@@ -52,11 +51,12 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
     private static Server server = null;
     private static CodServerModel startModel = CodServerModel.getInstance();
 
-    private static final int DEFAULT_PORT = 8080;
-    private static final String CONTEXT_PATH = "/";
-    private static final String MAPPING_URL = "/*";
-
     private static CodModuleLauncherModel codModuleLauncherModel;
+
+    @Override
+    public String support() {
+        return "codServerJetty";
+    }
 
     @Override
     public void run() {
@@ -81,7 +81,7 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         // set Dispatcher
         ServletHolder servletHolder = new ServletHolder(dispatcherServlet);
         ServletContextHandler context = new ServletContextHandler();
-        context.addServlet(servletHolder, "/codframe/*");
+        context.addServlet(servletHolder, "/" + codServerModel.getProjectName() + "/*");
 
         LinkedList<CodServerFilterModel> filters = codServerModel.getFilters();
 

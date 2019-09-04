@@ -1,6 +1,7 @@
 package com.tlkj.cod.filter;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import com.tlkj.cod.server.model.CodServerFilterModel;
 import com.tlkj.cod.server.model.server.CodServerModel;
@@ -19,7 +20,7 @@ public class InitFilter implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 30;
+        return CodModuleOrderEnum.FILTER.getOrder();
     }
 
     @Override
@@ -43,6 +44,7 @@ public class InitFilter implements CodModuleInitialize {
         setCors(codServer);
         // setJwt(codServer);
         setParamConvert(codServer);
+        setInitAdmin(codServer);
     }
 
     @Override
@@ -99,5 +101,17 @@ public class InitFilter implements CodModuleInitialize {
         codServerFilterModel.setName("param");
         codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
+    }
+
+    /**
+     * 设置是否初始化过滤器
+     */
+    private void setInitAdmin(CodServerModel codServerModel){
+        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
+        codServerFilterModel.setMapping("/*");
+        codServerFilterModel.setFilter(new CodFilterInitAdmin());
+        codServerFilterModel.setName("initAdmin");
+        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
+        codServerModel.addFilter(codServerFilterModel);
     }
 }

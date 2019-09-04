@@ -11,9 +11,7 @@
 package com.tlkj.cod.core.main;
 
 import com.tlkj.cod.core.main.service.CodStartServer;
-import com.tlkj.cod.core.main.service.impl.CodStartJettyServerImpl;
 import com.tlkj.cod.core.main.service.impl.CodStartResinServerImpl;
-/*import com.tlkj.cod.core.main.service.impl.CodStartTomcatServerImpl;*/
 import com.tlkj.cod.model.system.core.SystemModel;
 import org.apache.commons.lang3.StringUtils;
 import org.yaml.snakeyaml.Yaml;
@@ -104,7 +102,7 @@ public class Start {
         if (StringUtils.isNotBlank(env)){
             switch (server){
                 case "0":
-                    codStartServer = new CodStartJettyServerImpl();
+                    //codStartServer = new CodStartJettyServerImpl();
 
                     codStartServer.start();
                     break;

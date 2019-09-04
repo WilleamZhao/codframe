@@ -61,7 +61,7 @@ public class CodAdminLoginAction extends GeneralResponse {
             e.printStackTrace();
         }
         CodAdminLoginDto codAdminLoginDto = loginService.login(username, password, code, isRemember);
-        if ("1".equals(codAdminLoginDto.getCode())){
+        if (codAdminLoginDto != null && "1".equals(codAdminLoginDto.getCode())){
             // TODO 记住我
             codCacheDBService.set(host, "");
         }

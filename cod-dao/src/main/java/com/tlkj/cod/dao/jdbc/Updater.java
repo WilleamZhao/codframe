@@ -920,7 +920,7 @@ public class Updater {
                 System.out.println(g.toSQL());
             }
             int rows = jdbcTemplate.update(g.toSQL(), g.getParameters());
-            if (autoCommit){
+            /*if (autoCommit){
                 Connection connection = null;
                 try {
                     connection = getConnection();
@@ -936,7 +936,7 @@ public class Updater {
                         e.printStackTrace();
                     }
                 }
-            }
+            }*/
             return rows;
         }
 

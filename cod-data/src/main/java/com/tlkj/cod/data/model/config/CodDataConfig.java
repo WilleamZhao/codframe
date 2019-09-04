@@ -3,6 +3,7 @@ package com.tlkj.cod.data.model.config;
 import com.tlkj.cod.common.CodCommonDeviceInfo;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 /**
  * Desc 内置H2数据库信息
@@ -14,6 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Component("codDataConfig")
 public class CodDataConfig {
 
     private String type = "data";

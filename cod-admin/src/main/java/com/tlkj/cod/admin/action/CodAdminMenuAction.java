@@ -106,7 +106,7 @@ public class CodAdminMenuAction extends GeneralResponse {
         if (Page.isData(tempPage)){
             return super.success(tempPage);
         }
-        return super.fail();
+        return super.fail(StatusCode.DATA_NULL_CODE);
     }
 
     /**

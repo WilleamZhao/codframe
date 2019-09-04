@@ -12,6 +12,8 @@ package com.tlkj.cod.pay.common;
 import com.tlkj.cod.common.CodCommonEncryption;
 import httl.util.StringUtils;
 import org.apache.commons.collections.map.HashedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ import java.util.Map;
  */
 public class CodPayCommonSign {
 
+    private static Logger logger = LoggerFactory.getLogger(CodPayCommonSign.class);
+
     public static String createWechatSign(Map<String, Object> map, String key){
         List<Map.Entry<String, Object>> infoIds = new ArrayList<>(map.entrySet());
         // 对所有传入参数按照字段名的 ASCII 码从小到大排序（字典序）
@@ -38,7 +42,6 @@ public class CodPayCommonSign {
         for (Map.Entry<String, Object> item : infoIds) {
             if (StringUtils.isNotBlank(item.getKey())) {
                 String mapKey = item.getKey();
-                System.out.println(mapKey);
                 Object val = item.getValue();
                 if (val != null && !"".equals(val)) {
                     // sign 不参与
@@ -49,8 +52,8 @@ public class CodPayCommonSign {
                         try {
                             val = new String(((String) val).getBytes(), "UTF-8");
                         } catch (UnsupportedEncodingException e) {
-                            System.out.println("转码错误");
-                            e.printStackTrace();
+                            logger.error("转码错误", e);
+                            return "";
                         }
                     }
                     sb.append(mapKey).append("=").append(val).append("&");
@@ -68,7 +71,7 @@ public class CodPayCommonSign {
         CodPayCommonSign codPayCommonSign = new CodPayCommonSign();
         Map map = new HashedMap();
         map.put("a", "a");
-        String sign = codPayCommonSign.createWechatSign(map, "glssdzJH20fdsf23419bhsdfa3558e27");
+        String sign = CodPayCommonSign.createWechatSign(map, "glssdzJH20fdsf23419bhsdfa3558e27");
         System.out.println(sign);
     }
 }

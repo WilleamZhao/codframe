@@ -20,7 +20,7 @@ import java.util.LinkedList;
 
 
 /**
- * Desc cod启动model
+ * Desc cod 启动 model
  *
  * @author sourcod
  * @version 1.0
@@ -28,6 +28,8 @@ import java.util.LinkedList;
  * @date 2019/4/9 7:21 PM
  */
 public class CodServerModel extends CodModuleServerModel implements Serializable {
+
+    private static final long serialVersionUID = 2970098358306956758L;
 
     private static volatile CodServerModel instance;
 
@@ -68,15 +70,18 @@ public class CodServerModel extends CodModuleServerModel implements Serializable
      */
     private String env = "0";
 
-    private String encode = "";
+    /**
+     * 编码
+     */
+    private String encode = "UTF-8";
 
     /**
      * 服务
-     * 1: jetty
-     * 2: tomcat
-     * 3: resin
+     * 1: codServerJetty
+     * 2: codServerTomcat
+     * 3: codServerResin
      */
-    private String server = "jetty";
+    private String server = "codServerJetty";
 
     /**
      * 项目名称
@@ -186,5 +191,13 @@ public class CodServerModel extends CodModuleServerModel implements Serializable
 
     public void addServlet(CodServerServletModel servlet) {
         this.servlets.add(servlet);
+    }
+
+    public String getEncode() {
+        return encode;
+    }
+
+    public void setEncode(String encode) {
+        this.encode = encode;
     }
 }

@@ -30,6 +30,8 @@ public class CodAdminUserDo extends CodCommonModelConvert implements Serializabl
 
     public static final String TABLE_NAME = "cod_sys_user";
 
+    private static final long serialVersionUID = -4662175725786435895L;
+
     /**
      * 主键
      */

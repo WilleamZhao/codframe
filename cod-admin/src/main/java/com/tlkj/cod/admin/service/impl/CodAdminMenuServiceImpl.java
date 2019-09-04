@@ -121,7 +121,6 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
         }
 
         menuDoList = pagination.getData();
-        System.out.println(pagination.toString());
 
         if (menuDoList == null){
             return null;
@@ -143,7 +142,7 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
                     }
                 }
             }
-            menuListDto.setPId(menuDo.getP_id());
+            menuListDto.setpId(menuDo.getP_id());
             menuListDto.setPrevMenuName(prevMenu);
             menuListDto.setLevel(menuDo.getLevel());
             menuListDto.setMenuName(menuDo.getMenu_name());

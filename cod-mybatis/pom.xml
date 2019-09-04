@@ -23,7 +23,7 @@
 
     <description>mybatis模块</description>
 
-    <name>cod-model</name>
+    <name>cod-mybatis</name>
     <url>http://codframe.sourcod.com</url>
 
     <properties>

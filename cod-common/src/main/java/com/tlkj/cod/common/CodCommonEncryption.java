@@ -301,9 +301,8 @@ public class CodCommonEncryption {
 			sTemp = Integer.toHexString(0xFF & bArray[i]);
 			if (sTemp.length() < 2){
 				sb.append(0);
-			} else {
-				sb.append(sTemp.toLowerCase());
 			}
+			sb.append(sTemp.toLowerCase());
 		}
 		return sb.toString();
 	}

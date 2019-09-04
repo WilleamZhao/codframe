@@ -23,6 +23,10 @@ import com.tlkj.cod.launcher.service.CodCoreServiceManagement;
  */
 public interface CodServerService extends CodCoreServiceManagement {
 
+    default String support(){
+        return "jetty";
+    }
+
     /**
      * 启动
      */

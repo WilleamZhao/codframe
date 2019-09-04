@@ -11,6 +11,6 @@ package com.tlkj.cod.launcher.service;
 public interface CodCoreServiceManagement {
 
     default String support(String type){
-        return "";
+        return "codServerJetty";
     }
 }

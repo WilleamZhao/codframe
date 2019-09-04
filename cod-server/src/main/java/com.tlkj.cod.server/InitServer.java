@@ -13,9 +13,12 @@ package com.tlkj.cod.server;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.server.facade.CodServerFacade;
 import com.tlkj.cod.server.model.CodServerFilterModel;
 import com.tlkj.cod.server.model.server.CodServerModel;
 import com.tlkj.cod.server.service.CodServerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.HashMap;
@@ -31,6 +34,8 @@ import java.util.Map;
  */
 public class InitServer implements CodModuleServerInitialize {
 
+    private static Logger logger = LoggerFactory.getLogger(InitServer.class);
+
     @Override
     public int order() {
         return CodModuleOrderEnum.SERVER.getOrder();
@@ -44,14 +49,11 @@ public class InitServer implements CodModuleServerInitialize {
     @Override
     public void success(CodModuleLauncherModel codModuleLauncherModel) {
         // TODO 从配置模块里读取
-        CodServerService codServerService = (CodServerService) codModuleLauncherModel.getSpring().getBean("codServerJetty");
+        CodServerFacade codServerFacade = (CodServerFacade) codModuleLauncherModel.getSpring().getBean("codServerFacadeImpl");
         // 设置编码过滤器
         setCharacterEncodingFilter();
-
-        codServerService.support("");
         codModuleLauncherModel.setServer(CodServerModel.getInstance());
-        codServerService.start(codModuleLauncherModel);
-
+        codServerFacade.start(codModuleLauncherModel);
     }
 
     /**
@@ -66,7 +68,7 @@ public class InitServer implements CodModuleServerInitialize {
 
     @Override
     public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
-        System.out.println("启动服务失败");
+        logger.info("启动服务失败", e);
         codModuleLauncherModel.stop();
     }
 

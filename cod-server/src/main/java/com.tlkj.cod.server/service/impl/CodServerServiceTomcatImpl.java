@@ -61,6 +61,10 @@ public class CodServerServiceTomcatImpl implements CodServerService {
 
     private CodModuleLauncherModel codModuleLauncherModel;
 
+    @Override
+    public String support() {
+        return "codServerTomcat";
+    }
 
     private void initSpring(){
         if (!initSpring){

@@ -11,6 +11,9 @@
 package com.tlkj.cod.common;
 
 import com.google.common.base.CaseFormat;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +23,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -101,11 +106,47 @@ public abstract class CodCommonModelConvert {
     }
 
     /**
+     * 实体类转 http 请求参数
+     * @return
+     */
+    public List<NameValuePair> toHttp() {
+        if (!CodCommonModelConvert.class.isAssignableFrom(this.getClass())){
+            logger.error("不是子类. 不可转换！请继承 {} 类", CodCommonModelConvert.class.getName());
+        }
+        List<NameValuePair> list = new ArrayList<>();
+        for (Field field : this.getClass().getDeclaredFields()){
+            // 4. 私有的 && 非static && 非final
+            if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
+                Object value = getFieldValueByName(field.getName(), this);
+                if (value != null){
+                    if (value instanceof String){
+                        if (StringUtils.isNotEmpty(value.toString())){
+                            list.add(new BasicNameValuePair(field.getName(), value.toString()));
+                        }
+                    } else if (value instanceof List){
+                        if (!((List) value).isEmpty()){
+                            list.add(new BasicNameValuePair(field.getName(), CodCommonJson.dump(value)));
+                        }
+                    } else if (value instanceof Map){
+                        if (!((Map) value).isEmpty()){
+                            list.add(new BasicNameValuePair(field.getName(), CodCommonJson.dump(value)));
+                        }
+                    } else {
+                        list.add(new BasicNameValuePair(field.getName(), CodCommonJson.dump(value)));
+                    }
+
+                }
+            }
+        }
+        return list;
+    }
+
+    /**
      * 实体类转Map
      * @return map
      */
     public Map<String, Object> toMap() {
-        if (!this.getClass().getSuperclass().getName().equals(CodCommonModelConvert.class.getName())){
+        if (!CodCommonModelConvert.class.isAssignableFrom(this.getClass())){
             logger.error("不是子类. 不可转换！请继承 {} 类", CodCommonModelConvert.class.getName());
         }
         Map<String, Object> map = new HashMap<>();
@@ -124,7 +165,10 @@ public abstract class CodCommonModelConvert {
      * @param object pojo
      * @return map
      */
-    public static Map<String, Object> toMap(Object object) {
+    public Map<String, Object> toMap(Object object) {
+        if (!CodCommonModelConvert.class.isAssignableFrom(this.getClass())){
+            logger.error("不是子类. 不可转换！请继承 {} 类", CodCommonModelConvert.class.getName());
+        }
         Map<String, Object> map = new HashMap<>();
         for (Field field : object.getClass().getDeclaredFields()){
             // 4. 私有的 && 非static && 非final
@@ -191,6 +235,12 @@ public abstract class CodCommonModelConvert {
         /**
          * 下划线转驼峰
          */
-        toDto
+        toDto,
+
+        /**
+         * 实体转 Http 请求参数
+         * List<NameValuePair>
+         */
+        toHttp,
     }
 }

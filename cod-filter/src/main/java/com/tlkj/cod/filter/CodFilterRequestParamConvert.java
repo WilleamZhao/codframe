@@ -29,7 +29,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Desc 参数转换Filter
+ * Desc 参数转换 Filter
  * 把参数统一转成Attribute
  *
  * @author sourcod
@@ -42,7 +42,7 @@ public class CodFilterRequestParamConvert implements Filter {
     private static Logger logger = LoggerFactory.getLogger(CodFilterRequestParamConvert.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

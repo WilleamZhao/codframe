@@ -5,7 +5,9 @@ import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.launcher.CodModuleInitialize;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.launcher.model.CodModuleServerModel;
 
 /**
  * Desc 初始化管理模块
@@ -19,7 +21,7 @@ public class InitAdmin implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 1;
+        return CodModuleOrderEnum.ADMIN.getOrder();
     }
 
     @Override
@@ -37,6 +39,10 @@ public class InitAdmin implements CodModuleInitialize {
         bean.setUrl(codAdminDatabaseConfig.getUrl());
         bean.setAutoCommit(true);
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);
+
+        // 设置 初始化验证 filter
+        CodModuleServerModel codModuleServerModel = codModuleLauncherModel.getServer();
+
     }
 
     @Override

@@ -70,13 +70,13 @@ public class DataConnectBean {
     /**
      * 初始连接数
      */
-    @Value("${cod.database.config.initial.size:10}")
+    @Value("${cod.database.config.initial.size:5}")
     private int initialSize;
 
     /**
      * 最大连接数
      */
-    @Value("${cod.database.config.active.max:1000}")
+    @Value("${cod.database.config.active.max:100}")
     private int maxActive;
 
     /**

@@ -34,6 +34,7 @@ import java.util.Date;
 
 /**
  * Desc slf4j-cod-log adapter
+ * commons logging to cod-log
  *
  * @author sourcod
  * @version 1.0

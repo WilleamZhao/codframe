@@ -72,6 +72,11 @@ public enum CodModuleOrderEnum {
     CORE(20, CodModuleInitialize.class),
 
     /**
+     * 启动 filter
+     */
+    FILTER(30, CodModuleInitialize.class),
+
+    /**
      * 启动 servlet
      */
     SERVLET(50, CodModuleServletInitialize.class),

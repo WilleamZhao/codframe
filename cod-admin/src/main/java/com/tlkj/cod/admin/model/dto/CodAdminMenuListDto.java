@@ -10,7 +10,9 @@
 
 package com.tlkj.cod.admin.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -87,4 +89,12 @@ public class CodAdminMenuListDto {
      */
     private String updateTime;
 
+    @JsonProperty("pId")
+    public String getpId() {
+        return pId;
+    }
+
+    public void setpId(String pId) {
+        this.pId = pId;
+    }
 }
