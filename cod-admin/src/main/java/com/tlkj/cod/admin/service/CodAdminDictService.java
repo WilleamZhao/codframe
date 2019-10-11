@@ -63,6 +63,14 @@ public interface CodAdminDictService {
     Page<List<CodAdminDictItemListDto>> listDictItem(String typeId, String page, String pageSize, String allPin, String itemName, String itemCode, String itemStatus, String simplePin);
 
     /**
+     * 根据类型获取字典数据
+     * @param typeId   类型ID
+     * @param typeCode 类型代码
+     * @return
+     */
+    Page<List<CodAdminDictItemListDto>> listDictItemByType(String typeId, String typeCode, String page, String pageSize);
+
+    /**
      * 保存字典数据
      * @return
      */
@@ -72,7 +80,7 @@ public interface CodAdminDictService {
      * 保存字典类型
      * @return
      */
-    StatusCode saveDictType(String typeId, String typeCode, String typeName, String englishName, String typeStatus, String remark);
+    StatusCode saveDictType(String typeId, String typeCode, String typeName, String englishName, String typeStatus, String remark, String sort);
 
     /**
      * 根据类型code 获取item

@@ -23,12 +23,23 @@
 
     <description>视图模块</description>
 
+    <properties>
+        <httl.version>1.0.11</httl.version>
+    </properties>
     <dependencies>
+
         <dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-launch</artifactId>
             <version>${codframe.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.httl</groupId>
+            <artifactId>httl</artifactId>
+            <version>${httl.version}</version>
+        </dependency>
+
 
     </dependencies>
 

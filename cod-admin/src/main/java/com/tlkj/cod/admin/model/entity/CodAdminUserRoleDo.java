@@ -10,11 +10,9 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
  * Desc 用户角色关联表Do
@@ -26,7 +24,9 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class CodAdminUserRoleDo extends CodCommonModelConvert implements Serializable {
+public class CodAdminUserRoleDo extends CodDaoDo {
+
+    private static final long serialVersionUID = 5677920231064319404L;
 
     public static String TABLE_NAME = "cod_sys_user_role";
 

@@ -28,6 +28,8 @@ public class CodAdminAttachmentDo extends CodDaoDo {
 
     public static final String TABLE_NAME = "cod_sys_attachment";
 
+    private static final long serialVersionUID = 5321971875845919294L;
+
     /**
      * 主键
      */

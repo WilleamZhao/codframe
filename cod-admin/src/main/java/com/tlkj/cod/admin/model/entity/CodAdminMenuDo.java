@@ -10,11 +10,9 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
  * Desc 菜单表Do
@@ -26,11 +24,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class CodAdminMenuDo extends CodCommonModelConvert implements Serializable {
-
-    private static final long serialVersionUID = -7890711379967874689L;
+public class CodAdminMenuDo extends CodDaoDo {
 
     public static String TABLE_NAME = "cod_sys_menu";
+
+    private static final long serialVersionUID = -7890711379967874689L;
 
     /**
      * 主键

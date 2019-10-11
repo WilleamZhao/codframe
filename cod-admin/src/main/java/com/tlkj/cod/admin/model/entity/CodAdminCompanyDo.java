@@ -10,7 +10,7 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,9 +26,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class CodAdminCompanyDo extends CodCommonModelConvert implements Serializable {
+public class CodAdminCompanyDo extends CodDaoDo {
 
     public static final String TABLE_NAME = "cod_sys_company";
+
+    private static final long serialVersionUID = -257249658745798730L;
 
     /**
      * 主键

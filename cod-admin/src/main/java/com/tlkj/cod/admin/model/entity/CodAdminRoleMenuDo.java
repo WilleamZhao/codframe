@@ -10,11 +10,9 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
  * Desc 角色菜单表
@@ -26,9 +24,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class CodAdminRoleMenuDo extends CodCommonModelConvert implements Serializable {
+public class CodAdminRoleMenuDo extends CodDaoDo {
 
     public static String TABLE_NAME = "cod_sys_role_menu";
+
+    private static final long serialVersionUID = 7170154817737506343L;
 
     /**
      * 主键

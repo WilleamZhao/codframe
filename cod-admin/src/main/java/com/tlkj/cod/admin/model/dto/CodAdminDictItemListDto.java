@@ -26,6 +26,7 @@ import lombok.Setter;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminDictItemListDto {
+
     private String id;
     private String typeId;
     private String itemName;

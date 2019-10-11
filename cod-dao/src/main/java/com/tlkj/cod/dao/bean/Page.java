@@ -88,6 +88,13 @@ public class Page<T> {
         return true;
     }
 
+    public boolean isData(){
+        if (this.p.total == 0){
+            return false;
+        }
+        return true;
+    }
+
     public class P{
 
         P(Pagination pagination){

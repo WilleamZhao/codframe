@@ -10,11 +10,10 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 
 /**
  * Desc 字典类型表
@@ -26,9 +25,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class CodAdminDictTypeDo extends CodCommonModelConvert implements Serializable {
+public class CodAdminDictTypeDo extends CodDaoDo {
 
     public static String TABLE_NAME = "cod_sys_dict_type";
+
+    private static final long serialVersionUID = -7745606598549703418L;
 
     /**
      * 主键

@@ -10,11 +10,9 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
  * Desc 系统缓存表
@@ -26,12 +24,14 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class CodAdminCacheDo extends CodCommonModelConvert implements Serializable {
+public class CodAdminCacheDo extends CodDaoDo {
 
     /**
      * 表名
      */
     public final static String TABLE_NAME = "cod_sys_cache";
+
+    private static final long serialVersionUID = 8549133537189231206L;
 
     /**
      * 主键

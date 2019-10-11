@@ -45,7 +45,7 @@ import java.util.List;
 @Service
 public class CodAdminDictServiceImpl implements CodAdminDictService {
 
-    private static Logger logger =LoggerFactory.getLogger(CodAdminDictServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(CodAdminDictServiceImpl.class);
 
     @Autowired
     Finder finder;
@@ -221,6 +221,66 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
     }
 
     /**
+     * 根据类型获取字典数据
+     * @param typeId   类型ID
+     * @param typeCode 类型代码
+     * @return
+     */
+    @Override
+    public Page<List<CodAdminDictItemListDto>> listDictItemByType(String typeId, String typeCode, String page, String pageSize) {
+        Finder.Query query = finder.from(CodAdminDictItemDo.TABLE_NAME).not("state", "-1").orderBy("sort");
+
+        // typeId为空查询
+        if (StringUtils.isBlank(typeId)){
+            CodAdminDictTypeDo codAdminDictTypeDo = finder.from(CodAdminDictTypeDo.TABLE_NAME).where("type_code", typeCode).first(CodAdminDictTypeDo.class);
+            typeId = codAdminDictTypeDo.getId();
+        }
+
+        // 如果都为空返回无数据
+        if (StringUtils.isBlank(typeId)){
+            return new Page<>();
+        }
+
+        query.where("type_id", typeId);
+
+        int currentPage = StringUtils.isNotBlank(page) ? Integer.parseInt(page) : 1;
+        int perPage = StringUtils.isNotBlank(pageSize) ? Integer.parseInt(pageSize) : Pagination.DEFAULT_PER_PAGE;
+        Pagination<CodAdminDictItemDo> pagination;
+        try {
+            pagination = query.paginate(CodAdminDictItemDo.class, currentPage, perPage);
+        } catch (Exception e) {
+            logger.error("sql查询错误:={}", e.getMessage());
+            return null;
+        }
+        if (pagination == null) {
+            return new Page<>();
+        }
+        List<CodAdminDictItemDo> codAdminDictItemDoList = pagination.getData();
+        List<CodAdminDictItemListDto> dtoList = new ArrayList<>();
+        codAdminDictItemDoList.forEach( dictItemDo -> {
+            CodAdminDictItemListDto dto = new CodAdminDictItemListDto();
+            dto.setId(dictItemDo.getId());
+            dto.setAllPin(dictItemDo.getAllpin());
+            dto.setIsFixed(dictItemDo.getIsfixed());
+            dto.setEnglishName(dictItemDo.getEnglish_name());
+            dto.setItemCode(dictItemDo.getItem_code());
+            dto.setItemName(dictItemDo.getItem_name());
+            dto.setItemValue(dictItemDo.getItem_value());
+            dto.setItemStatus(dictItemDo.getState());
+            dto.setRemark(dictItemDo.getRemark());
+            dto.setSimplePin(dictItemDo.getSimplepin());
+            dto.setSort(dictItemDo.getSort());
+            dto.setTypeId(dictItemDo.getType_id());
+            dto.setType(dictItemDo.getType());
+            dto.setItemValue(dictItemDo.getItem_value());
+            dtoList.add(dto);
+        });
+
+        Page<List<CodAdminDictItemListDto>> tempPage = new Page<>(dtoList, pagination);
+        return tempPage;
+    }
+
+    /**
      * 保存字典数据
      * @param itemId      数据Id(更新需要)
      * @param typeId      类型Id
@@ -282,7 +342,7 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
     @CodLog(name = "保存字典类型")
     @CodSystemLog
     @Override
-    public StatusCode saveDictType(String dictId, String typeCode, String typeName, String englishName, String typeStatus, String remark) {
+    public StatusCode saveDictType(String dictId, String typeCode, String typeName, String englishName, String typeStatus, String remark, String sort) {
 
         // 有主键更新，没有新增
         Updater.Update update = StringUtils.isBlank(dictId) ? updater.insert(CodAdminDictTypeDo.TABLE_NAME).setId() : updater.update(CodAdminDictTypeDo.TABLE_NAME).where("id", dictId);
@@ -298,9 +358,14 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
         update.set("remark", remark);
         String allPin = CodCommonPinyin.convertLower(typeName);
         update.set("allpin", allPin);
-        int i = update.update();
-        if (i == 1){
-            return StatusCode.SUCCESS_CODE;
+        update.set("sort", sort);
+        try {
+            int i = update.update();
+            if (i == 1){
+                return StatusCode.SUCCESS_CODE;
+            }
+        } catch (Exception e){
+            return StatusCode.FAIL_CODE;
         }
         return StatusCode.FAIL_CODE;
     }

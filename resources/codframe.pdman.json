@@ -1008,6 +1008,10 @@
             {
               "fieldName": "relationNoShow",
               "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
             }
           ],
           "chnname": "菜单表"
@@ -1278,6 +1282,10 @@
             },
             {
               "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
               "relationNoShow": true
             }
           ],
@@ -1708,6 +1716,12 @@
               "defaultValue": "1"
             },
             {
+              "name": "coin",
+              "type": "Integer",
+              "remark": "账户可用余额",
+              "chnname": "余额"
+            },
+            {
               "name": "register_time",
               "type": "timestamp",
               "remark": "",
@@ -1761,6 +1775,10 @@
             },
             {
               "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
               "relationNoShow": true
             }
           ],
@@ -1901,97 +1919,69 @@
           "chnname": "用户角色表"
         },
         {
-          "title": "mczoo_member",
+          "title": "cod_sys_api",
           "fields": [
             {
               "name": "id",
               "type": "id",
               "remark": "",
-              "chnname": "主键"
+              "chnname": "主键",
+              "pk": true,
+              "notNull": true
             },
             {
-              "name": "password",
-              "type": "ShortString",
-              "remark": "",
-              "chnname": "密码"
-            },
-            {
-              "name": "username",
-              "type": "DefaultString",
-              "remark": "",
-              "chnname": "用户名"
-            },
-            {
-              "name": "address",
-              "type": "MiddleString",
-              "remark": "",
-              "chnname": "地址"
-            },
-            {
-              "name": "real_name",
-              "type": "DefaultString",
-              "remark": "",
-              "chnname": "真实姓名"
-            },
-            {
-              "name": "mobile",
-              "type": "DefaultString",
-              "remark": "",
-              "chnname": "手机号"
-            },
-            {
-              "name": "email",
-              "type": "ShortString",
-              "remark": "",
-              "chnname": "邮箱"
-            },
-            {
-              "name": "sex",
+              "name": "api_name",
               "type": "id",
               "remark": "",
-              "chnname": "性别"
+              "chnname": "接口名称"
             },
             {
-              "name": "company_id",
+              "name": "api_type",
+              "type": "id",
+              "remark": "对外接口, 对内接口",
+              "chnname": "接口类型"
+            },
+            {
+              "name": "api_classify_id",
               "type": "id",
               "remark": "",
-              "chnname": "公司"
+              "chnname": "接口分类"
             },
             {
-              "name": "idcard",
-              "type": "DefaultString",
+              "name": "api_price",
+              "type": "Integer",
+              "remark": "消耗积分",
+              "chnname": "接口价格"
+            },
+            {
+              "name": "api_method",
+              "type": "id",
               "remark": "",
-              "chnname": "证件号"
+              "chnname": "请求方式"
             },
             {
-              "name": "state",
+              "name": "user_level",
+              "type": "Name",
+              "remark": "",
+              "chnname": "用户级别"
+            },
+            {
+              "name": "result_format",
               "type": "type",
-              "remark": "",
-              "chnname": "状态"
-            },
-            {
-              "name": "openid",
-              "type": "DefaultString",
-              "remark": "",
-              "chnname": "微信ID"
-            },
-            {
-              "name": "head_url",
-              "type": "id",
-              "remark": "",
-              "chnname": "头像"
+              "remark": "1: json; 2: xml; 3: txt",
+              "chnname": "返回格式"
             },
             {
               "name": "remark",
-              "type": "LongString",
+              "type": "MiddleString",
               "remark": "",
               "chnname": "备注"
             },
             {
-              "name": "introduce",
-              "type": "LongString",
+              "name": "resource_id",
+              "type": "id",
               "remark": "",
-              "chnname": "介绍"
+              "chnname": "资源id"
             },
             {
               "name": "create_time",
@@ -2048,9 +2038,302 @@
             {
               "fieldName": "relationNoShow",
               "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
             }
           ],
-          "chnname": "会员表"
+          "chnname": "接口表"
+        },
+        {
+          "title": "cod_sys_api_classify",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键",
+              "pk": true,
+              "notNull": true
+            },
+            {
+              "name": "classify_name",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "分类名称"
+            },
+            {
+              "name": "classify_pId",
+              "type": "id",
+              "remark": "",
+              "chnname": "上级分类"
+            },
+            {
+              "name": "level",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "级别"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "接口分类表",
+          "remark": ""
+        },
+        {
+          "title": "cod_sys_api_param",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键",
+              "pk": true,
+              "notNull": true
+            },
+            {
+              "name": "param_name",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "参数名称"
+            },
+            {
+              "name": "param_key",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "参数key"
+            },
+            {
+              "name": "param_value",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "参数值"
+            },
+            {
+              "name": "param_type",
+              "type": "type",
+              "remark": "1: 请求参数\n2: 返回参数",
+              "chnname": "参数类型"
+            },
+            {
+              "name": "api_id",
+              "type": "id",
+              "remark": "",
+              "chnname": "接口id"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "参数表"
+        },
+        {
+          "title": "cod_sys_api_param_value",
+          "fields": [
+            {
+              "name": "id",
+              "type": "id",
+              "remark": "",
+              "chnname": "主键",
+              "pk": true,
+              "notNull": true
+            },
+            {
+              "name": "value",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "值"
+            },
+            {
+              "name": "value_desc",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "值描述"
+            },
+            {
+              "name": "param_id",
+              "type": "id",
+              "remark": "",
+              "chnname": "参数id"
+            },
+            {
+              "name": "create_time",
+              "type": "timestamp",
+              "remark": "",
+              "chnname": "创建时间",
+              "defaultValue": "CURRENT_TIMESTAMP()"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "参数值表"
         }
       ],
       "graphCanvas": {
@@ -2455,7 +2738,7 @@
       {
         "code": "JAVA",
         "template": "package group.rober.pdman.{{=it.module.name}}.entity;\n$blankline\nimport javax.persistence.*;\nimport java.io.Serializable;\nimport java.util.Date;\n$blankline\n$blankline\n\n/** {{=it.entity.chnname}} */\n@Table(name=\"{{=it.entity.title}}\")\npublic class {{=it.func.camel(it.entity.title,true) }} implements Serializable,Cloneable{\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    {{? field.pk }}\n    @Id\n    @GeneratedValue\n    {{?}}\n    private {{=field.type}} {{=it.func.camel(field.name,false)}} ;\n{{~}}\n$blankline\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    public {{=field.type}} get{{=it.func.camel(field.name,true)}}(){\n        return this.{{=it.func.camel(field.name,false)}};\n    }\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    public void set{{=it.func.camel(field.name,true)}}({{=field.type}} {{= it.func.camel(field.name,false) }}){\n        this.{{=it.func.camel(field.name,false)}} = {{= it.func.camel(field.name,false) }};\n    }\n{{~}}\n}",
-        "createTableTemplate": "/*\n * Copyright (c) 2018-2019.\n * Beijing sky blue technology co., LTD.\n * All rights reserved\n */\n \n \npackage com.tlkj.cod.{{=it.module.name}}.entity;\n$blankline\nimport java.io.Serializable;\n$blankline\n$blankline\n/**\n * codFrame auto create\n */\npublic class {{=it.func.camel(it.entity.title,true) }}Do implements Serializable,Cloneable{\n    /**\n     * 表名\n     */\n    public static final String TABLE_NAME = \"{{=it.entity.title}}\";\n    \n{{~it.entity.fields:field:index}}\n    \n    /**\n     * {{=it.func.join(field.chnname,field.remark,';')}} \n     */\n    private {{=field.type}} {{=field.name}};\n    \n{{~}}\n$blankline\n\n{{~it.entity.fields:field:index}}\n    \n    public {{=field.type}} get{{=it.func.camel(field.name,true)}}(){\n        return this.{{=it.func.camel(field.name,false)}};\n    }\n    \n    \n    public void set{{=it.func.camel(field.name,true)}}({{=field.type}} {{= it.func.camel(field.name,false) }}){\n        this.{{=it.func.camel(field.name,false)}} = {{= it.func.camel(field.name,false) }};\n    }\n    \n{{~}}\n}\n",
+        "createTableTemplate": "/*\n * Copyright (c) 2018-2019.\n * Beijing sky blue technology co., LTD.\n * All rights reserved\n */\n \n \npackage com.tlkj.cod.{{=it.module.name}}.entity;\n$blankline\nimport com.tlkj.cod.dao.model.CodDaoDo;\nimport lombok.Getter;\nimport lombok.Setter;\n$blankline\n$blankline\n/**\n * {{=it.entity.chnname}}\n * {{=it.entity.title}}\n * \n * \n * codFrame create\n * @author sourcod\n */\n@Getter\n@Setter\npublic class {{=it.func.camel(it.entity.title,true) }}Do extends CodDaoDo {\n    $blankline\n    /**\n     * 表名\n     */\n    public static final String TABLE_NAME = \"{{=it.entity.title}}\";\n    \n{{~it.entity.fields:field:index}}\n    \n    /**\n     * {{=it.func.join(field.chnname,field.remark,';')}} \n     */\n    private {{=field.type}} {{=field.name}};\n    \n{{~}}\n$blankline\n\n}\n",
         "deleteTableTemplate": "",
         "rebuildTableTemplate": "",
         "createFieldTemplate": "",
@@ -2468,7 +2751,7 @@
       {
         "code": "JAVA_DTO",
         "template": "package group.rober.pdman.{{=it.module.name}}.entity;\n$blankline\nimport javax.persistence.*;\nimport java.io.Serializable;\nimport java.util.Date;\n$blankline\n$blankline\n\n/** {{=it.entity.chnname}} */\n@Table(name=\"{{=it.entity.title}}\")\npublic class {{=it.func.camel(it.entity.title,true) }} implements Serializable,Cloneable{\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    {{? field.pk }}\n    @Id\n    @GeneratedValue\n    {{?}}\n    private {{=field.type}} {{=it.func.camel(field.name,false)}} ;\n{{~}}\n$blankline\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    public {{=field.type}} get{{=it.func.camel(field.name,true)}}(){\n        return this.{{=it.func.camel(field.name,false)}};\n    }\n    /** {{=it.func.join(field.chnname,field.remark,';')}} */\n    public void set{{=it.func.camel(field.name,true)}}({{=field.type}} {{= it.func.camel(field.name,false) }}){\n        this.{{=it.func.camel(field.name,false)}} = {{= it.func.camel(field.name,false) }};\n    }\n{{~}}\n}",
-        "createTableTemplate": "/*\n * Copyright (c) 2018-2019.\n * Beijing sky blue technology co., LTD.\n * All rights reserved\n */\n\npackage com.tlkj.cod.{{=it.module.name}}.dto;\n$blankline\n$blankline\n/**\n * codFrame auto create\n * Dto\n */\npublic class {{=it.func.camel(it.entity.title,true) }}Dto {\n    \n{{~it.entity.fields:field:index}}\n    \n    /**\n     * {{=it.func.join(field.chnname,field.remark,';')}} \n     */\n    private {{=field.type}} {{=it.func.camel(field.name,false)}};\n    \n{{~}}\n$blankline\n{{~it.entity.fields:field:index}}\n    \n    public {{=field.type}} get{{=it.func.camel(field.name,true)}}(){\n        return this.{{=it.func.camel(field.name,false)}};\n    }\n    \n    \n    public void set{{=it.func.camel(field.name,true)}}({{=field.type}} {{= it.func.camel(field.name,false) }}){\n        this.{{=it.func.camel(field.name,false)}} = {{= it.func.camel(field.name,false) }};\n    }\n    \n{{~}}\n}",
+        "createTableTemplate": "/*\n * Copyright (c) 2018-2019.\n * Beijing sky blue technology co., LTD.\n * All rights reserved\n */\n\npackage com.tlkj.cod.{{=it.module.name}}.dto;\n$blankline\n$blankline\nimport com.tlkj.cod.common.CodCommonModelConvert;\nimport lombok.Getter;\nimport lombok.Setter;\n$blankline\n$blankline\n/**\n * {{=it.entity.chnname}}\n * {{=it.entity.title}}\n * \n * codFrame auto create\n * @author sourcod\n */\n@Getter\n@Setter\npublic class {{=it.func.camel(it.entity.title,true) }}Dto extends CodCommonModelConvert {\n    \n{{~it.entity.fields:field:index}}\n    \n    /**\n     * {{=it.func.join(field.chnname,field.remark,';')}} \n     */\n    private {{=field.type}} {{=it.func.camel(field.name,false)}};\n    \n{{~}}\n$blankline\n}",
         "deleteTableTemplate": "",
         "rebuildTableTemplate": "",
         "createFieldTemplate": "",

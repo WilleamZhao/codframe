@@ -9,8 +9,6 @@
 
 package com.tlkj.cod.filter;
 
-import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
-import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +18,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.sql.DataSource;
 import java.io.IOException;
 
 /**

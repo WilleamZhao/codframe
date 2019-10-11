@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("error")
 public class CodAdminErrorAction extends GeneralResponse {
+
     private static Logger logger = LoggerFactory.getLogger(CodAdminErrorAction.class);
 
     @Autowired

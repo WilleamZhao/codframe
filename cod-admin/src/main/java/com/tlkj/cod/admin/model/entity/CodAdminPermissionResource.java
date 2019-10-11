@@ -10,11 +10,10 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 
 /**
  * Desc 权限资源关联表Do
@@ -26,9 +25,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class CodAdminPermissionResource extends CodCommonModelConvert implements Serializable {
+public class CodAdminPermissionResource extends CodDaoDo {
 
     public static String TABLE_NAME = "cod_sys_permission_resource";
+
+    private static final long serialVersionUID = -7611840969285824374L;
 
     /**
      * 主键

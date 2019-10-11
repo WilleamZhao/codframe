@@ -78,6 +78,19 @@ public class CodAdminDictAction extends GeneralResponse {
     }
 
     /**
+     * 根据类型获取字典数据
+     */
+    @RequestMapping(value = "listDictItemByType", method = {RequestMethod.GET})
+    public Response listDictItemByType(HttpServletRequest request){
+        String typeId = getParams(request, "typeId");
+        String typeCode = getParams(request, "typeCode");
+        String page = getParams(request, "page");
+        String pageSize = getParams(request, "pageSize");
+        Page listPage = codAdminDictService.listDictItemByType(typeId, typeCode, page, pageSize);
+        return listPage.isData() ? success(listPage) : fail();
+    }
+
+    /**
      * 获取字典数据
      */
     @CodParamVerify(parameter = "itemId")
@@ -94,7 +107,6 @@ public class CodAdminDictAction extends GeneralResponse {
     @RequestMapping(value = "getDictType", method = {RequestMethod.GET})
     public Response getDictType(HttpServletRequest request){
         String typeId = request.getParameter("typeId");
-
         return super.success();
     }
 
@@ -112,7 +124,8 @@ public class CodAdminDictAction extends GeneralResponse {
         String englishName = request.getParameter("englishName");
         String typeStatus = request.getParameter("typeStatus");
         String remark = request.getParameter("remark");
-        StatusCode statusCode = codAdminDictService.saveDictType(typeId, typeCode, typeName, englishName, typeStatus, remark);
+        String sort = request.getParameter("sort");
+        StatusCode statusCode = codAdminDictService.saveDictType(typeId, typeCode, typeName, englishName, typeStatus, remark, sort);
         return StatusCode.verifyStatusCode(statusCode) ? super.success() : super.fail();
     }
 

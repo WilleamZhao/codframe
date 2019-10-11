@@ -10,11 +10,9 @@
 
 package com.tlkj.cod.admin.model.entity;
 
-import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
  * Desc 权限表Do
@@ -26,9 +24,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class CodAdminPermissionDo extends CodCommonModelConvert implements Serializable {
+public class CodAdminPermissionDo extends CodDaoDo {
 
     public static String TABLE_NAME = "cod_sys_permission";
+
+    private static final long serialVersionUID = 3758547462601696112L;
 
     /**
      * 主键
