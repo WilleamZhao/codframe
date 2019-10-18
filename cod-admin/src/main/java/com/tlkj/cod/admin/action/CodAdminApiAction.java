@@ -9,6 +9,7 @@
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.service.CodAdminApiService;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CodAdminApiAction extends GeneralResponse {
 
     @Autowired
-
+    CodAdminApiService codAdminApiService;
 
     /**
      * 接口列表
