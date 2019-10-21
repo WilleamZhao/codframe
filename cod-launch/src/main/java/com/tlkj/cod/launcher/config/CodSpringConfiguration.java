@@ -7,6 +7,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
  * Desc 全局配置
+ * Bean 不再这里配置
+ * Bean 作用范围
  *
  * @author sourcod
  * @version 1.0
@@ -20,17 +22,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  */
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class CodSpringConfiguration {
-
-    /**
-     * 支持@Value
-     * 支持 placeholder
-     * @return
-     */
-    @Bean
-    public PropertySourcesPlaceholderConfigurer sourcesPlaceholderConfigurer(){
-        return new PropertySourcesPlaceholderConfigurer();
-    }
-
 
 
 }

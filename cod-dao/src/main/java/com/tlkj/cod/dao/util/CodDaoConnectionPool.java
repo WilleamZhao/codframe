@@ -419,6 +419,9 @@ public class CodDaoConnectionPool {
         if (StringUtils.isNotBlank(name)){
             List<DataSource> list = this.map.get(name);
             // 关闭链接
+            if (list == null){
+                return;
+            }
             for (DataSource dataSource : list){
                 try {
                     dataSource.getConnection().close();

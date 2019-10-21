@@ -14,7 +14,7 @@ import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.core.common.CodCoreFindClass;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.launcher.config.CodSpringConfiguration;
+import com.tlkj.cod.core.main.CodSpringConfiguration;
 import com.tlkj.cod.launcher.exception.CodModuleStartFailException;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import org.apache.commons.lang3.StringUtils;
@@ -96,9 +96,14 @@ public class CodLauncher {
             e.printStackTrace();
         }
 
+        /*
+         * 注入spring配置
+         */
         LAUNCHER_MODEL.getSpring().register(CodSpringConfiguration.class);
 
         LAUNCHER_MODEL.getSpring().register(CommonAnnotationBeanPostProcessor.class);
+
+        // TODO 验证license
 
         // 设置环境
         setEnv("dev");

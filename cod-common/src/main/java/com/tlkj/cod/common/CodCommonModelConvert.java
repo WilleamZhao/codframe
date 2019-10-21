@@ -65,7 +65,7 @@ public abstract class CodCommonModelConvert {
     }
 
     private <T> T to(Class<T> zlass, ConvertType type){
-        if (!this.getClass().getSuperclass().getName().equals(CodCommonModelConvert.class.getName())){
+        if (!CodCommonModelConvert.class.isAssignableFrom(this.getClass())){
             logger.error("不是子类. 不可转换！请继承 {} 类", CodCommonModelConvert.class.getName());
         }
 
@@ -97,7 +97,7 @@ public abstract class CodCommonModelConvert {
                 } catch (IllegalAccessException | IntrospectionException | InvocationTargetException e) {
                     e.printStackTrace();
                     String dtoSetName = field.getName();
-                    logger.warn("Do类必须采用下划线模式, 错误字段{}", dtoSetName);
+                    logger.warn("{}类必须采用{}模式, 错误字段{}", type.name(), "toDo".equals(type.name()) ? "下划线" : "驼峰",  dtoSetName);
                     System.err.println("set 错误");
                 }
             }
@@ -200,7 +200,7 @@ public abstract class CodCommonModelConvert {
                 setName = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name);
                 return setName;
             case toDto:
-                setName = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name);
+                setName = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name);
                 return setName;
             default:
                 break;

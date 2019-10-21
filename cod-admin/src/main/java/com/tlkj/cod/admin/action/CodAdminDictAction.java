@@ -10,6 +10,7 @@
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.model.bo.CodAdminDictItemBo;
 import com.tlkj.cod.admin.model.dto.CodAdminDictItemListDto;
 import com.tlkj.cod.admin.model.dto.CodAdminDictTypeListDto;
 import com.tlkj.cod.admin.service.CodAdminDictService;
@@ -75,6 +76,26 @@ public class CodAdminDictAction extends GeneralResponse {
         String simplePin = request.getParameter("simplepin");
         Page<List<CodAdminDictItemListDto>> listPage = codAdminDictService.listDictItem(typeId, page, pageSize, allpin, itemName, itemCode, itemStatus, simplePin);
         return listPage == null ? super.fail() : super.success(listPage);
+    }
+
+    /**
+     * 根据 type:code 获取字典数据
+     */
+    @RequestMapping(value = "getItem", method = {RequestMethod.GET})
+    public Response getItem(HttpServletRequest request){
+        String code = request.getParameter("code");
+        CodAdminDictItemBo codAdminDictItemBo = codAdminDictService.getItem(code);
+        return codAdminDictItemBo == null ? super.fail() : super.success(codAdminDictItemBo);
+    }
+
+    /**
+     * 根据 type code 获取字典数据列表
+     */
+    @RequestMapping(value = "getItemByType", method = {RequestMethod.GET})
+    public Response getItemByType(HttpServletRequest request){
+        String code = request.getParameter("code");
+        List<CodAdminDictItemBo> codAdminDictItemBos = codAdminDictService.getItemByType(code);
+        return codAdminDictItemBos == null ? super.fail() : super.success(codAdminDictItemBos);
     }
 
     /**

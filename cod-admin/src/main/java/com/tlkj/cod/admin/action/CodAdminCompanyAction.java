@@ -16,6 +16,7 @@ import com.tlkj.cod.admin.service.CodAdminCompanyService;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
+import com.tlkj.cod.model.enums.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -93,7 +94,7 @@ public class CodAdminCompanyAction extends GeneralResponse {
     @RequestMapping(value = "del", method = {RequestMethod.GET})
     public Response delCompany(HttpServletRequest request) {
         String id = request.getParameter("ids");
-        CodAdminCompanyDto codAdminCompanyDto = codAdminCompanyService.getCompanyById(id);
-        return codAdminCompanyDto == null ? super.fail() : super.success(codAdminCompanyDto);
+        StatusCode statusCode = codAdminCompanyService.delMenu(id);
+        return "1111".equals(statusCode.getStatusCode()) ? super.fail() : super.success();
     }
 }

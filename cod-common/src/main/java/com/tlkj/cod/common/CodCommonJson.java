@@ -87,6 +87,16 @@ public final class CodCommonJson {
 		return jsonArray;
 	}
 
+	public boolean isGoodJson(String json){
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.readTree(json);
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
 
 
 

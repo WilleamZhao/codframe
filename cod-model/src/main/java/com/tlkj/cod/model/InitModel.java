@@ -19,12 +19,17 @@ public class InitModel implements CodModuleInitialize {
     }
 
     @Override
+    public String alias(){
+        return "模型";
+    }
+
+    @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
         /*Object o = codModuleLauncherModel.getSpring().getBean(CodDataSourceConfig.class);
         System.out.println(CodCommonJson.dump(o));
         o = codModuleLauncherModel.getSpring().getBean(CodCoreConfig.class);
         System.out.println(CodCommonJson.dump(o));*/
-        codModuleLauncherModel.finish();
+        // codModuleLauncherModel.finish();
     }
 
     @Override

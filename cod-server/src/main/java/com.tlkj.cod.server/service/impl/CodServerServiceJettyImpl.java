@@ -53,6 +53,10 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
 
     private static CodModuleLauncherModel codModuleLauncherModel;
 
+    public CodServerServiceJettyImpl(){
+
+    }
+
     @Override
     public String support() {
         return "codServerJetty";
@@ -65,8 +69,10 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         codServerModel = codServerModel == null ? new CodServerJettyModel() : codServerModel;
         AnnotationConfigWebApplicationContext applicationContext = codModuleLauncherModel.getSpring();
 
+
         // 注册springMVC
         applicationContext.register(CodServerSpringMVCConfiguration.class);
+        applicationContext.getBean("multipartResolver");
 
         applicationContext.setServletContext(new ContextHandler.StaticContext());
         // applicationContext.refresh();
