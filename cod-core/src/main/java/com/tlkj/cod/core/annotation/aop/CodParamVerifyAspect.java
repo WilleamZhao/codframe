@@ -59,7 +59,7 @@ public class CodParamVerifyAspect extends GeneralResponse{
 	 * @return
 	 * @throws Throwable
 	 */
-	@Around("@annotation(com.tlkj.cod.core.annotation.CodParamVerify) && @annotation(codParamVerify) && !execution(int *.* (..)) && (execution(* com.tlkj.cod.action..* (..)) || execution(* com.tlkj.cod.api..* (..)))")
+	@Around("@annotation(com.tlkj.cod.core.annotation.CodParamVerify) && @annotation(codParamVerify) && !execution(int *.* (..)) && (execution(* com.tlkj.cod..*.action..* (..)) || execution(* com.tlkj.cod..*.api..* (..)))")
 	public Object advice(ProceedingJoinPoint joinPoint, CodParamVerify codParamVerify) throws Throwable{
 		String[] paraName = codParamVerify.parameter().split(",");
 		String parameter = "";
@@ -92,7 +92,7 @@ public class CodParamVerifyAspect extends GeneralResponse{
 	 * @return
 	 * @throws Throwable
 	 */
-	@Around("@annotation(com.tlkj.cod.core.annotation.CodParamVerify) && @annotation(codParamVerify) && !execution(int *.* (..)) && execution(* com.tlkj.cod.service..* (..))")
+	@Around("@annotation(com.tlkj.cod.core.annotation.CodParamVerify) && @annotation(codParamVerify) && !execution(int *.* (..)) && execution(* com.tlkj.cod..*.service..* (..))")
 	public Object advice1(ProceedingJoinPoint joinPoint, CodParamVerify codParamVerify) throws Throwable{
 		String[] paraName = codParamVerify.parameter().split(",");
 
