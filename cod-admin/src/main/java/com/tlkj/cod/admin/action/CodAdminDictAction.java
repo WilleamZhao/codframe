@@ -117,7 +117,7 @@ public class CodAdminDictAction extends GeneralResponse {
     @CodParamVerify(parameter = "itemId")
     @RequestMapping(value = "getDictItem", method = {RequestMethod.GET})
     public Response getDictItem(HttpServletRequest request){
-        String itemId = request.getParameter("itemId");
+        String itemId = request.getParameter("dict");
 
         return super.success();
     }

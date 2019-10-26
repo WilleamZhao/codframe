@@ -11,6 +11,9 @@
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
+import com.tlkj.cod.common.CodCommonClass;
+import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.dao.exception.CodDataModelConvertException;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import org.apache.commons.lang3.StringUtils;
@@ -21,11 +24,13 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.beans.PropertyDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -892,6 +897,40 @@ public class Updater {
             return this;
         }
 
+        public Update set(String name, Object value, String typeName) {
+            setName.add(name);
+            setValue.add(setValue(value, typeName));
+            return this;
+        }
+
+        /**
+         * 设置类型
+         * @param o
+         * @param klass
+         * @return
+         */
+        public Update set(Object o, Class klass) {
+            if (!CodCommonModelConvert.class.isAssignableFrom(o.getClass())){
+                // 不是子类
+                return this;
+            }
+            Field[] fields = o.getClass().getDeclaredFields();
+            // 3. 设置值
+            for (Field field : fields) {
+                // 4. 私有的 && 非static && 非final
+                if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
+                    Object value = getFieldValueByName(field.getName(), o);
+                    if (value == null){
+                        continue;
+                    }
+                    // 获取字段类型 class
+                    Class aClass = field.getType();
+                    set(field.getName(), value, aClass);
+                }
+            }
+            return this;
+        }
+
         /**
          * 框架约定
          * 更新时间
@@ -982,16 +1021,20 @@ public class Updater {
             return this.jdbcTemplate.getDataSource().getConnection();
         }
 
+        private String setValue(Object value, Class klass) {
+            return setValue(value, klass != null ? klass.getCanonicalName() : String.class.toString());
+        }
+
         /**
          * 设置不同类型sql语句
          *
          * @param value
-         * @param klass
+         * @param klassName
          * @return
          */
-        private String setValue(Object value, Class klass) {
+        private String setValue(Object value, String klassName) {
             String v = null;
-            switch (klass.getCanonicalName()) {
+            switch (klassName) {
                 case "java.lang.String":
                     v = "'" + value + "'";
                     break;
@@ -1013,12 +1056,15 @@ public class Updater {
                 case "java.lang.Void":
                     v = value != null ? value.toString() : "";
                     break;
+                case "":
+                    break;
                 default:
                     // v = value != null ? value.toString() : "";
                     break;
             }
             return v;
         }
+
 
         /**
          * 获取属性类型(type)，属性名(name)，属性值(value)的map组成的list
@@ -1050,10 +1096,9 @@ public class Updater {
          */
         private Object getFieldValueByName(String fieldName, Object o) {
             try {
-                String firstLetter = fieldName.substring(0, 1).toUpperCase();
-                String getter = "get" + firstLetter + fieldName.substring(1);
-                Method method = o.getClass().getMethod(getter);
-                return method.invoke(o);
+                PropertyDescriptor pd = new PropertyDescriptor(fieldName, o.getClass());
+                Method rM = pd.getReadMethod();
+                return rM.invoke(o);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return null;

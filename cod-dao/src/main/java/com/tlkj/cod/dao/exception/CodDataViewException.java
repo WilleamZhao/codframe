@@ -20,6 +20,8 @@ package com.tlkj.cod.dao.exception;
  */
 public class CodDataViewException extends RuntimeException {
 
+    private static final long serialVersionUID = 3096318412518961159L;
+
     public CodDataViewException() {
         super();
     }
