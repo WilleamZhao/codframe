@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -321,7 +323,13 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
         update.set("allpin", allPin);
         update.set("simplepin", simplePing);
 
-        int i = update.update();
+        int i = 0;
+        try {
+            i = update.update();
+        } catch (Exception e){
+            logger.error("code 重复", e);
+            return StatusCode.DICT_CODE_DUPLICATION;
+        }
 
         if (i == 1){
             return StatusCode.SUCCESS_CODE;
@@ -365,6 +373,7 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
                 return StatusCode.SUCCESS_CODE;
             }
         } catch (Exception e){
+            logger.error("执行保存字段类型错误", e);
             return StatusCode.FAIL_CODE;
         }
         return StatusCode.FAIL_CODE;
@@ -385,6 +394,7 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
                     .join("join " + CodAdminDictTypeDo.TABLE_NAME + " type on item.type_id = type.id ")
                     .where("type.type_code", code).where("item.state", "1")
                     .select("item.id", "item.item_name", "item.item_code", "item.isFixed", "item.english_name", "item.allpin", "item.simplepin", "item.remark", "item.item_value")
+                    .orderBy("item.sort")
                     .all(CodAdminDictItemDo.class);
         } catch (Exception e){
             logger.error("获取item, sql异常, {}", e.getMessage());

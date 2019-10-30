@@ -11,6 +11,7 @@
 package com.tlkj.cod.common;
 
 import com.google.common.base.CaseFormat;
+import com.tlkj.cod.common.annotation.CodModelExclude;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -80,10 +81,25 @@ public abstract class CodCommonModelConvert {
             System.err.println("创建实例失败");
             return null;
         }
+        // 获取排除字段
+        CodModelExclude codModelExclude = zlass.getAnnotation(CodModelExclude.class);
+
         // 3. 设置值
         for (Field field : fields) {
             // 4. 私有的 && 非static && 非final
             if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
+
+                // 如果排除, 重新循环
+                if (codModelExclude != null && isExclude(field.getName(), codModelExclude.name())){
+                    continue;
+                }
+
+                // 如果排除, 重新循环
+                CodModelExclude modelExclude = field.getAnnotation(CodModelExclude.class);
+                if (modelExclude != null){
+                    continue;
+                }
+
                 try {
                     Object value = getFieldValueByName(field.getName(), this);
                     if (value == null){
@@ -220,6 +236,21 @@ public abstract class CodCommonModelConvert {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * 当前字段是否排除
+     * @param excludes 排除数组
+     * @param name     字段名
+     * @return
+     */
+    private boolean isExclude(String name, String[] excludes){
+        for (String exclude : excludes){
+            if (name.equals(exclude)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

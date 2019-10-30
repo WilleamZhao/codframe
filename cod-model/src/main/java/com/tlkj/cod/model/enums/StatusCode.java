@@ -13,6 +13,9 @@ package com.tlkj.cod.model.enums;
 /**
  * Desc 返回状态码
  *
+ * 1xxx 接口调用成功, 后台处理失败
+ * 0xxx 接口调用失败
+ *
  * @author sourcod
  * @version 1.0
  * @className StatusCode
@@ -46,24 +49,19 @@ public enum StatusCode {
     IP_DISABLE_CODE("1003", "IP禁用", "当前IP禁止访问"),
 
     /**
-     * 参数错误
-     */
-    PARAM_ERROR_CODE("1014", "参数错误", "参数错误"),
-
-    /**
      * 没有数据
      */
     DATA_NULL_CODE("1015", "没有数据", "没有数据"),
 
     /**
-     * 参数openid 为空
+     * 字典代码重复
      */
-    PARAM_OPENID_NULL_CODE("0001", "参数错误", "参数openid为空"),
+    DICT_CODE_DUPLICATION("1016", "字典代码重复", "字典代码重复"),
 
     /**
-     * 参数openid 为空
+     * 参数错误
      */
-    PARAM_UNIONID_NULL_CODE("0001", "参数错误", "参数unionid为空"),
+    PARAM_ERROR_CODE("0014", "参数错误", "参数错误")
     ;
 
 

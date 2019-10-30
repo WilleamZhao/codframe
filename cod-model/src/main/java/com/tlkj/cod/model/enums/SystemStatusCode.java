@@ -23,22 +23,22 @@ public enum SystemStatusCode {
     /**
      * 操作成功
      */
-    SUCCESS_CODE("111111", "操作成功", "操作成功", StatusCode.SUCCESS_CODE),
+    SUCCESS_CODE("1111", "操作成功", "操作成功", StatusCode.SUCCESS_CODE),
 
     /**
      * 操作失败
      */
-    FAIL_CODE("000000", "操作失败", "操作失败", StatusCode.FAIL_CODE),
+    FAIL_CODE("0000", "操作失败", "操作失败", StatusCode.FAIL_CODE),
 
     /**
      * SQL错误
      */
-    SQL_ERROR_CODE("000000", "操作失败", "sql错误", StatusCode.FAIL_CODE),
+    SQL_ERROR_CODE("0002", "操作失败", "sql错误", StatusCode.FAIL_CODE),
 
     /**
      * 登录失败
      */
-    LOGIN_FAIL_CODE("000001", "登录失败", "暂未登陆", StatusCode.LOGIN_FAIL_CODE);
+    LOGIN_FAIL_CODE("0001", "登录失败", "暂未登陆", StatusCode.LOGIN_FAIL_CODE);
 
     /**
      * 状态码
