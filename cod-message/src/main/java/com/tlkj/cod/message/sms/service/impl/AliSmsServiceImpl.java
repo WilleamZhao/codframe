@@ -19,7 +19,7 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.tlkj.cod.log.annotation.CodLog;
-import com.tlkj.cod.message.model.config.AliYunSmsConfig;
+import com.tlkj.cod.message.model.config.CodMessageSmsAliConfig;
 import com.tlkj.cod.message.sms.service.AliSmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ import org.springframework.stereotype.Service;
 public class AliSmsServiceImpl implements AliSmsService {
 
     @Autowired
-    private AliYunSmsConfig aliYunSmsConfig;
+    private CodMessageSmsAliConfig codMessageSmsAliConfig;
 
     /**
      * 短信API产品名称（短信产品名固定，无需修改）
@@ -59,16 +59,39 @@ public class AliSmsServiceImpl implements AliSmsService {
     @Override
     @CodLog(name = "发送短信")
     public boolean send(String phone, String code, String signName, String templateCode) {
+        /*DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", aliYunSmsConfig.getAccessKeyId(),aliYunSmsConfig.getAccessKeySecret(), "1SGTSoGBblMRdGVNZcG4G23NGagyG5");//不要修改
+        IAcsClient client = new DefaultAcsClient(profile);
+
+        CommonRequest request = new CommonRequest();
+        request.setMethod(MethodType.POST);
+        request.setDomain("dysmsapi.aliyuncs.com");
+        request.setVersion("2017-05-25");
+        request.setAction("SendSms");
+        request.putQueryParameter("RegionId", "cn-hangzhou");
+        request.putQueryParameter("PhoneNumbers", phone);//13811294720为目标用户的手机号码
+        request.putQueryParameter("SignName", aliYunSmsConfig.getSignName());//签名，不要修改
+        request.putQueryParameter("TemplateCode", aliYunSmsConfig.getTemplateCode());//短信模板编号，不要修改
+        request.putQueryParameter("TemplateParam", "{\"code\":\"" + code + "\"}");//请记住 111111 是验证码，需要替换成你自己的验证码
+        request.putQueryParameter();
+
+        try {
+            CommonResponse response = client.getCommonResponse(request);
+            System.out.println(response.getData());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }*/
+
         // systemSetService.getLog().info("发送短信[阿里云], 电话号={}, 验证码={}", phone, code);
 
         //初始化ascClient,暂时不支持多region（请勿修改）
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", aliYunSmsConfig.getAccessKeyId(), aliYunSmsConfig.getAccessKeySecret());
+        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", codMessageSmsAliConfig.getAccessKeyId(), codMessageSmsAliConfig.getAccessKeySecret());
         try {
             DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
         } catch (ClientException e) {
             // systemSetService.getLog().error("调用失败", e.getMessage());
             return false;
         }
+
         IAcsClient acsClient = new DefaultAcsClient(profile);
         //组装请求对象
         SendSmsRequest request = new SendSmsRequest();
@@ -87,7 +110,7 @@ public class AliSmsServiceImpl implements AliSmsService {
         //request.setSmsUpExtendCode("90997");
 
         //可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
-        request.setOutId(aliYunSmsConfig.getOutId());
+        request.setOutId(codMessageSmsAliConfig.getOutId());
         //请求失败这里会抛ClientException异常
         SendSmsResponse sendSmsResponse;
         try {

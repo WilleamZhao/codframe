@@ -33,6 +33,7 @@
         <dbcp.version>1.4</dbcp.version>
         <druid.version>1.0.29</druid.version>
         <c3p0.version>0.9.1.1</c3p0.version>
+        <metrics.version>3.2.4</metrics.version>
 
         <aspectjweaver.version>1.8.13</aspectjweaver.version>
 
@@ -66,6 +67,21 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${hikari.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>${metrics.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-healthchecks</artifactId>
+            <version>${metrics.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <!-- commons-dbcp -->

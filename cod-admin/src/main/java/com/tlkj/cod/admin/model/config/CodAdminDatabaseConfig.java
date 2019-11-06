@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Setter
-@Component
+@Component("codAdminDatabaseConfig")
 public class CodAdminDatabaseConfig {
 
     @Value("${cod.admin.database.config.driver:#{codDataConfig.driver}}")

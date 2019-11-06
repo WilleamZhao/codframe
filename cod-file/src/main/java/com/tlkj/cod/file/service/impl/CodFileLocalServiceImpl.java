@@ -6,6 +6,7 @@ import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.file.model.CodFileInfo;
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
+import com.tlkj.cod.file.service.CodFileLocalService;
 import com.tlkj.cod.file.service.CodFileService;
 import com.tlkj.cod.log.service.CodLogService;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +27,7 @@ import java.util.List;
  * @date 2019/6/18 8:55 AM
  */
 @Service
-public class CodFileLocalServiceImpl implements CodFileService {
+public class CodFileLocalServiceImpl implements CodFileLocalService {
 
     @Autowired
     CodLogService codLogService;

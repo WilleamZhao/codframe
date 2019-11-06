@@ -5,6 +5,7 @@ import com.tlkj.cod.file.model.CodFileInfo;
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
 import com.tlkj.cod.file.service.CodFileService;
+import com.tlkj.cod.file.service.CodFileUpUssService;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -15,11 +16,11 @@ import java.util.List;
  *
  * @author sourcod
  * @version 1.0
- * @className CodFileUpyunServiceImpl
+ * @className CodFileUpUssService
  * @date 2019/6/18 8:56 AM
  */
 @Service
-public class CodFileUpyunServiceImpl implements CodFileService {
+public class CodFileUpUssServiceImpl implements CodFileUpUssService {
 
     @Override
     public CodFileTypeEnum support() {

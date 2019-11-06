@@ -11,6 +11,7 @@
 package com.tlkj.cod.core.annotation.aop;
 
 import com.tlkj.cod.common.CodCommonNetWork;
+import com.tlkj.cod.common.constant.CodCommonParamDefined;
 import com.tlkj.cod.core.annotation.CodSystemLog;
 import com.tlkj.cod.core.service.AspectSystemLogService;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -66,7 +67,7 @@ public class CodSystemLogAspect {
         Object[] args = joinPoint.getArgs();
 
         CodSystemLog log = method.getAnnotation(CodSystemLog.class);
-        String token = request.getHeader("cod_admin_token");
+        String token = request.getParameter(CodCommonParamDefined.ADMIN_TOKEN_NAME);
 
         /*String username =(String) session.getAttribute("username");
         if(StringUtils.isBlank("username")){

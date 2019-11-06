@@ -11,6 +11,7 @@ package com.tlkj.cod.admin.facade.impl;
 
 import com.tlkj.cod.admin.facade.CodAdminSystemCoreSetFacade;
 import com.tlkj.cod.admin.model.dto.CodAdminSystemCoreSetDto;
+import com.tlkj.cod.data.model.dto.CodDataConfigDto;
 import com.tlkj.cod.data.service.CodDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class CodAdminSystemCoreSetFacadeImpl implements CodAdminSystemCoreSetFac
      */
     @Override
     public List<CodAdminSystemCoreSetDto> list(String key, String name, String page, String pageSize) {
-
+        CodDataConfigDto codDataConfigDto = codDataService.getData(key);
         return null;
     }
 }

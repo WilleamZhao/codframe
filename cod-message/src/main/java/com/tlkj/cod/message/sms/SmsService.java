@@ -20,6 +20,8 @@ package com.tlkj.cod.message.sms;
  */
 public interface SmsService {
 
+    String support();
+
     /**
      * 动态选择服务商发送短信
      * @param nationcode   国家码

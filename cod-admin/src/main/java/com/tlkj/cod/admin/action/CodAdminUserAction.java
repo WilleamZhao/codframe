@@ -14,6 +14,7 @@ import com.tlkj.cod.admin.facade.CodAdminUserFacade;
 import com.tlkj.cod.admin.model.dto.CodAdminUserDto;
 import com.tlkj.cod.admin.service.CodAdminUserRoleService;
 import com.tlkj.cod.admin.service.CodAdminUserService;
+import com.tlkj.cod.common.constant.CodCommonParamDefined;
 import com.tlkj.cod.core.annotation.CodParamVerify;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.log.annotation.CodLog;
@@ -54,7 +55,7 @@ public class CodAdminUserAction extends GeneralResponse {
      */
     @RequestMapping(value = "getUser", method = {RequestMethod.GET})
     public Response getUserByCache(HttpServletRequest request){
-        String token = request.getParameter("cod_admin_token");
+        String token = request.getParameter(CodCommonParamDefined.ADMIN_TOKEN_NAME);
         CodAdminUserDto dto = codAdminUserService.getUserByCache(token);
         return dto == null ? super.fail(StatusCode.LOGIN_FAIL_CODE) : super.success(dto);
     }

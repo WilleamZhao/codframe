@@ -106,14 +106,7 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
         }
 
         Pagination<CodAdminMenuDo> pagination = null;
-        if (StringUtils.isNotBlank(page)){
-            if (StringUtils.isNotBlank(limit)){
-                pagination = query.paginate(CodAdminMenuDo.class, Integer.parseInt(page), Integer.parseInt(limit));
-            } else {
-                pagination = query.paginate(CodAdminMenuDo.class, Integer.parseInt(page), Pagination.DEFAULT_PER_PAGE);
-            }
-
-        }
+        pagination = query.paginate(CodAdminMenuDo.class, page, limit);
 
         List<CodAdminMenuDo> menuDoList = null;
         if (pagination == null){
@@ -142,7 +135,9 @@ public class CodAdminMenuServiceImpl implements CodAdminMenuService {
                     }
                 }
             }
-            menuListDto.setpId(menuDo.getP_id());
+
+            // 设置一级菜单为 -1
+            menuListDto.setpId("1".equals(menuDo.getLevel()) ? "-1" : menuDo.getP_id());
             menuListDto.setPrevMenuName(prevMenu);
             menuListDto.setLevel(menuDo.getLevel());
             menuListDto.setMenuName(menuDo.getMenu_name());

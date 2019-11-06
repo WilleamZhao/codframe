@@ -10,6 +10,7 @@
 
 package com.tlkj.cod.message.sms.service;
 
+import com.tlkj.cod.message.model.enums.CodMessageSmsSupportEnum;
 import com.tlkj.cod.message.sms.SmsService;
 
 /**
@@ -31,4 +32,8 @@ public interface AliSmsService extends SmsService {
      */
     boolean send(String phone, String code, String signName, String templateCode);
 
+    @Override
+    default String support(){
+        return CodMessageSmsSupportEnum.ALI_SMS.name();
+    }
 }

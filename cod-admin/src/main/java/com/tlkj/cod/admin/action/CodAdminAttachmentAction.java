@@ -15,6 +15,7 @@ import com.tlkj.cod.admin.model.dto.CodAdminAttachmentListDto;
 import com.tlkj.cod.admin.model.dto.CodAdminAttachmentTypeDto;
 import com.tlkj.cod.admin.service.CodAdminAttachmentService;
 import com.tlkj.cod.admin.service.CodAdminUserService;
+import com.tlkj.cod.common.constant.CodCommonParamDefined;
 import com.tlkj.cod.dao.bean.Page;
 
 import com.tlkj.cod.model.common.GeneralResponse;
@@ -80,7 +81,7 @@ public class CodAdminAttachmentAction extends GeneralResponse {
     @RequestMapping(value = "save", method = {RequestMethod.POST})
     public Response uploadAttachment(@RequestParam("file") MultipartFile file, HttpServletRequest request){
         String id = request.getParameter("id");
-        String token = request.getParameter("cod_admin_token");
+        String token = request.getParameter(CodCommonParamDefined.ADMIN_TOKEN_NAME);
         String userId = codAdminUserService.getUserByCache(token).getId();
         String status = request.getParameter("status");
         String fileType = request.getParameter("fileType");
@@ -95,7 +96,7 @@ public class CodAdminAttachmentAction extends GeneralResponse {
     @RequestMapping(value = "del", method = {RequestMethod.POST})
     public Response deleteAttachment(HttpServletRequest request){
         String id = request.getParameter("id");
-        String token = request.getParameter("cod_admin_token");
+        String token = request.getParameter(CodCommonParamDefined.ADMIN_TOKEN_NAME);
         String userId = codAdminUserService.getUserByCache(token).getId();
         String status = request.getParameter("status");
 

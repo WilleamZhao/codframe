@@ -147,13 +147,27 @@ public class SystemResponse<T> implements Serializable, Cloneable {
      * 失败
      */
     public SystemResponse<T> fail(StatusCode statusCode){
-        return fail(statusCode, null);
+        return fail(statusCode, "", null);
+    }
+
+    /**
+     * 失败
+     */
+    public SystemResponse<T> fail(StatusCode statusCode, String msg){
+        return fail(statusCode, msg, null);
     }
 
     /**
      * 失败
      */
     public SystemResponse<T> fail(StatusCode statusCode, T T){
+        return fail(statusCode, "", T);
+    }
+
+    /**
+     * 失败
+     */
+    public SystemResponse<T> fail(StatusCode statusCode, String msg, T T){
         this.statusCode = statusCode;
         this.data = T;
         return this;

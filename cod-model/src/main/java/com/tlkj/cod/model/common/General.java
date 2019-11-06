@@ -10,6 +10,8 @@
 
 package com.tlkj.cod.model.common;
 
+import net.sf.json.JSON;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.protocol.HttpClientContext;
 
@@ -37,14 +39,15 @@ public abstract class General {
      * 4. 从 header 里取
      * @param request 请求
      * @param name    参数名
+     * @param isStream 是否从流里读取
      * @return 参数值
      */
-    protected String getParams(HttpServletRequest request, String name){
+    protected String getParams(HttpServletRequest request, String name, boolean isStream){
         String value = request.getParameter(name);
         if (StringUtils.isEmpty(value)){
             Object o = request.getAttribute(name);
             if (o == null){
-                if (!isMultipart(request)){
+                if (!isMultipart(request) && isStream){
                     value = charReader(request);
                     if (StringUtils.isBlank(value)){
                         return request.getHeader(name);
@@ -53,9 +56,23 @@ public abstract class General {
                 }
                 return "";
             }
-            return o.toString();
+            return String.valueOf(o);
         }
         return value;
+    }
+
+    /**
+     * 获取参数方法
+     * 1. 从 parameter 里取
+     * 2. 从 attribute 里取
+     * 3. 从 body 里取
+     * 4. 从 header 里取
+     * @param request 请求
+     * @param name    参数名
+     * @return 参数值
+     */
+    protected String getParams(HttpServletRequest request, String name){
+        return getParams(request, name, false);
     }
 
     /**

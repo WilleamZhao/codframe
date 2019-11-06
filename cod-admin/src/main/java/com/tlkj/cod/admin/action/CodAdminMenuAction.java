@@ -14,6 +14,7 @@ import com.tlkj.cod.admin.facade.CodAdminMenuFacade;
 import com.tlkj.cod.admin.model.dto.CodAdminMenuDto;
 import com.tlkj.cod.admin.model.dto.CodAdminMenuListDto;
 import com.tlkj.cod.admin.service.CodAdminMenuService;
+import com.tlkj.cod.common.constant.CodCommonParamDefined;
 import com.tlkj.cod.core.annotation.CodParamVerify;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
@@ -50,7 +51,7 @@ public class CodAdminMenuAction extends GeneralResponse {
      */
     @RequestMapping(value = "getMenu", method = {RequestMethod.GET, RequestMethod.OPTIONS})
     public Response getMenu(HttpServletRequest request){
-        String token = request.getParameter("cod_admin_token");
+        String token = request.getParameter(CodCommonParamDefined.ADMIN_TOKEN_NAME);
         List<CodAdminMenuDto> menuDtoList = codAdminMenuFacade.getMenu(token);
         return menuDtoList == null ? super.fail(StatusCode.LOGIN_FAIL_CODE) : menuDtoList.size() == 0 ? super.fail() : super.success(menuDtoList);
     }
@@ -98,7 +99,7 @@ public class CodAdminMenuAction extends GeneralResponse {
     public Response listMenu(HttpServletRequest request){
         String menuName = request.getParameter("menuName");
         String menuTitle = request.getParameter("menuTitle");
-        String level = request.getParameter("level");
+        String level = request.getParameter("menuLevel");
         String status = request.getParameter("status");
         String limit = request.getParameter("limit");
         String page = request.getParameter("page");

@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 /**
  * Desc cod-file 数据库 配置
  *
@@ -15,21 +17,21 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Setter
-@Component
-public class CodFileDatabaseConfig extends CodFileConfig{
+@Component("codFileDatabaseConfig")
+public class CodFileDatabaseConfig extends CodFileConfig implements Serializable {
 
     private static final long serialVersionUID = -53722484064797351L;
 
     /**
      * ip
      */
-    @Value(value = "${cod.file.config.database.host:127.0.0.1}")
+    @Value(value = "${cod.file.config.database.host:#{codAdminDatabaseConfig.driver}}")
     private String host;
 
     /**
      * 端口
      */
-    @Value(value = "${cod.file.config.database.port:3306}")
+    @Value(value = "${cod.file.config.database.port:#{codAdminDatabaseConfig.port}}")
     private String port;
 
     /**

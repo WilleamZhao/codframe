@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 /**
  * Desc cod-file alioss 配置
  *
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-public class CodFileAliOssConfig extends CodFileConfig{
+public class CodFileAliOssConfig extends CodFileConfig implements Serializable {
 
     private static final long serialVersionUID = -2397730997062937778L;
 

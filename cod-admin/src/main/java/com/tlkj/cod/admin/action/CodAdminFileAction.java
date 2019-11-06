@@ -43,8 +43,10 @@ public class CodAdminFileAction extends GeneralResponse {
      * 上传文件
      */
     @RequestMapping(value = "upload", method = {RequestMethod.PUT, RequestMethod.POST})
-    public Response upload(@RequestParam("file") MultipartFile file, String type){
-        CodAdminFileDto filePath = codAdminFileFacade.upload(file, type);
+    public Response upload(@RequestParam("file") MultipartFile file, String type, HttpServletRequest request){
+        // 前缀
+        String prefix = getParams(request, "prefix");
+        CodAdminFileDto filePath = codAdminFileFacade.upload(file, type, prefix);
         return super.output(filePath);
     }
 

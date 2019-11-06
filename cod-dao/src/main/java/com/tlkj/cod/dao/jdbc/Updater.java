@@ -16,6 +16,7 @@ import com.tlkj.cod.common.CodCommonModelConvert;
 import com.tlkj.cod.dao.exception.CodDataModelConvertException;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -917,10 +918,14 @@ public class Updater {
             Field[] fields = o.getClass().getDeclaredFields();
             // 3. 设置值
             for (Field field : fields) {
+                // 如果是修改, 不设置id
+                if (prefix == 0 && "id".equals(field.getName())){
+                    continue;
+                }
                 // 4. 私有的 && 非static && 非final
                 if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
                     Object value = getFieldValueByName(field.getName(), o);
-                    if (value == null){
+                    if (value == null || StringUtils.isBlank(ObjectUtils.toString(value))){
                         continue;
                     }
                     // 获取字段类型 class

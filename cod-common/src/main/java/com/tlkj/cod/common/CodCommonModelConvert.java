@@ -82,7 +82,7 @@ public abstract class CodCommonModelConvert {
             return null;
         }
         // 获取排除字段
-        CodModelExclude codModelExclude = zlass.getAnnotation(CodModelExclude.class);
+        CodModelExclude codModelExclude = this.getClass().getAnnotation(CodModelExclude.class);
 
         // 3. 设置值
         for (Field field : fields) {

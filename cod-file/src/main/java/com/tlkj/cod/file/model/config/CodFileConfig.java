@@ -28,6 +28,8 @@ import java.io.Serializable;
 @Component
 public class CodFileConfig extends CodCoreConfig implements Serializable {
 
+    private static final long serialVersionUID = -1391591271796828626L;
+
     /**
      * 上传文件类型
      */

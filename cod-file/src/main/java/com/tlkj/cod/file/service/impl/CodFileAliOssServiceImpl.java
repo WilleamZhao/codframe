@@ -32,20 +32,21 @@ public class CodFileAliOssServiceImpl implements CodFileService {
     /**
      * 注入 ali oss 配置
      */
+    private CodFileAliOssConfig codFileAliOssConfig;
+
+    private ClientConfiguration conf;
+
     @Autowired
-    CodFileAliOssConfig codFileConfig;
-
-    private ClientConfiguration conf = null;
-
-    public CodFileAliOssServiceImpl(){
+    public CodFileAliOssServiceImpl(CodFileAliOssConfig codFileAliOssConfig){
         // 上传到远程图片服务器
         conf = new ClientConfiguration();
         // 设置OSSClient使用的最大连接数，默认1024
-        conf.setMaxConnections(codFileConfig.getMaxConnect());
+        conf.setMaxConnections(codFileAliOssConfig.getMaxConnect());
         // 设置请求超时时间，默认50秒
-        conf.setSocketTimeout(codFileConfig.getSocketTimeout());
+        conf.setSocketTimeout(codFileAliOssConfig.getSocketTimeout());
         // 设置失败请求重试次数，默认3次
-        conf.setMaxErrorRetry(codFileConfig.getMaxErrorRetry());
+        conf.setMaxErrorRetry(codFileAliOssConfig.getMaxErrorRetry());
+        this.codFileAliOssConfig = codFileAliOssConfig;
     }
 
     @Override
@@ -63,10 +64,10 @@ public class CodFileAliOssServiceImpl implements CodFileService {
      */
     @Override
     public CodFileModel uploadFile(InputStream inputStream, CodFileTypeEnum type, String fileName, String... prefix) {
-        String endpoint = codFileConfig.getEndpoint();
-        String accessKeyId = codFileConfig.getAccessKeyId();
-        String accessKeySecret = codFileConfig.getAccessKeySecret();
-        String bucketName = codFileConfig.getBucketName();
+        String endpoint = codFileAliOssConfig.getEndpoint();
+        String accessKeyId = codFileAliOssConfig.getAccessKeyId();
+        String accessKeySecret = codFileAliOssConfig.getAccessKeySecret();
+        String bucketName = codFileAliOssConfig.getBucketName();
 
         // 创建OSSClient实例
         OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);

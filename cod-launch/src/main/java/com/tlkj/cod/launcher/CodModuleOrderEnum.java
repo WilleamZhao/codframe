@@ -47,14 +47,19 @@ public enum CodModuleOrderEnum {
     CONFIG(-50, CodModuleInitialize.class),
 
     /**
-     * 启动 log
-     */
-    LOG(-40, CodModuleInitialize.class),
-
-    /**
      * 启动 cache
      */
     CACHE(-40, CodModuleInitialize.class),
+
+    /**
+     * 启动 log
+     */
+    LOG(-30, CodModuleInitialize.class),
+
+    /**
+     * 基础模块
+     */
+    MODULE(-1, CodModuleInitialize.class),
 
     /**
      * 启动 spring

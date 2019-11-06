@@ -30,7 +30,7 @@ public class InitMessage implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return CodModuleOrderEnum.NO.getOrder();
+        return CodModuleOrderEnum.MODULE.getOrder();
     }
 
     @Override
