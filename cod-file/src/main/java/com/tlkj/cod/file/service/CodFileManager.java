@@ -21,19 +21,22 @@ import java.util.List;
  * cod-file service
  * @author sourcod
  */
-public interface CodFileService {
+public interface CodFileManager {
 
+    /**
+     * 支持类型
+     * @return
+     */
     CodFileTypeEnum support();
 
     /**
      * 上传文件
      * @param inputStream 文件
      * @param prefix      前缀; 统一放到attachment路径下的前缀,可传多个自动建立文件夹
-     * @param type        指定上传类型
      * @param fileName    文件名称
      * @return
      */
-    CodFileModel uploadFile(InputStream inputStream, CodFileTypeEnum type, String fileName, String... prefix);
+    CodFileModel uploadFile(InputStream inputStream, String fileName, String... prefix);
 
     /**
      * 删除文件

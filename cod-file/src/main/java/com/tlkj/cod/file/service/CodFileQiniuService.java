@@ -17,5 +17,5 @@ package com.tlkj.cod.file.service;
  * @className CodFileQiniuService
  * @date 2019/11/4 2:52 PM
  */
-public interface CodFileQiniuService extends CodFileService {
+public interface CodFileQiniuService extends CodFileManager {
 }

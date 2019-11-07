@@ -5,7 +5,7 @@ import com.tlkj.cod.file.facade.CodFileFacade;
 import com.tlkj.cod.file.model.CodFileInfo;
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
-import com.tlkj.cod.file.service.CodFileService;
+import com.tlkj.cod.file.service.CodFileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ import java.util.List;
 public class CodFileFacadeImpl implements CodFileFacade {
 
     @Autowired
-    List<CodFileService> codFileServices;
+    List<CodFileManager> codFileServices;
 
     /**
      * 上传文件
@@ -36,12 +36,12 @@ public class CodFileFacadeImpl implements CodFileFacade {
      */
     @Override
     public CodFileModel uploadFile(InputStream inputStream, CodFileTypeEnum type, String fileName, String... prefix) {
-        CodFileService codFileService = getCodFileService(type);
+        CodFileManager codFileService = getCodFileService(type);
         if (codFileService == null){
             return null;
         }
 
-        return codFileService.uploadFile(inputStream, type, fileName, prefix);
+        return codFileService.uploadFile(inputStream, fileName, prefix);
     }
 
     /**
@@ -76,14 +76,14 @@ public class CodFileFacadeImpl implements CodFileFacade {
     }
 
     /**
-     * 获取 CodFileService
+     * 获取 CodFileManager
      * @return codService
      */
-    private CodFileService getCodFileService(CodFileTypeEnum type){
+    private CodFileManager getCodFileService(CodFileTypeEnum type){
         if (codFileServices.isEmpty()){
             return null;
         }
-        for (CodFileService codFileService : codFileServices){
+        for (CodFileManager codFileService : codFileServices){
             if (codFileService.support().equals(type)){
                 return codFileService;
             }

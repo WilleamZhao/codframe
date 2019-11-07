@@ -7,7 +7,6 @@ import com.tlkj.cod.file.model.CodFileInfo;
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
 import com.tlkj.cod.file.service.CodFileLocalService;
-import com.tlkj.cod.file.service.CodFileService;
 import com.tlkj.cod.log.service.CodLogService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class CodFileLocalServiceImpl implements CodFileLocalService {
     }
 
     @Override
-    public CodFileModel uploadFile(InputStream inputStream, CodFileTypeEnum type, String fileName, String... prefix) {
+    public CodFileModel uploadFile(InputStream inputStream, String fileName, String... prefix) {
         try {
             String path = "";
             // 拼接文件夹

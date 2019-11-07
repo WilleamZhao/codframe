@@ -1,7 +1,7 @@
 package com.tlkj.cod.file.model.enums;
 
 /**
- * Desc 状态码
+ * Desc 第三方返回 状态码
  *
  * @author sourcod
  * @version 1.0

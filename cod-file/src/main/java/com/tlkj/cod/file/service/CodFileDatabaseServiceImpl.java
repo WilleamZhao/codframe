@@ -17,5 +17,5 @@ package com.tlkj.cod.file.service;
  * @className CodFileDatabaseServiceImpl
  * @date 2019/11/4 2:51 PM
  */
-public interface CodFileDatabaseServiceImpl extends CodFileService {
+public interface CodFileDatabaseServiceImpl extends CodFileManager {
 }

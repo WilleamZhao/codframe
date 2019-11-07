@@ -7,8 +7,9 @@ import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.file.model.CodFileInfo;
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.model.config.CodFileAliOssConfig;
+import com.tlkj.cod.file.model.enums.CodFileStatusCode;
 import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
-import com.tlkj.cod.file.service.CodFileService;
+import com.tlkj.cod.file.service.CodFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ import java.util.Random;
  * @date 2019/6/18 8:48 AM
  */
 @Service
-public class CodFileAliOssServiceImpl implements CodFileService {
+public class CodFileAliOssServiceImpl implements CodFileManager {
 
     /**
      * 注入 ali oss 配置
@@ -57,17 +58,17 @@ public class CodFileAliOssServiceImpl implements CodFileService {
     /**
      * 上传文件
      * @param inputStream 文件
-     * @param type        指定上传类型
      * @param fileName    文件名称
      * @param prefix      前缀; 统一放到attachment路径下的前缀,可传多个自动建立文件夹
      * @return
      */
     @Override
-    public CodFileModel uploadFile(InputStream inputStream, CodFileTypeEnum type, String fileName, String... prefix) {
+    public CodFileModel uploadFile(InputStream inputStream, String fileName, String... prefix) {
         String endpoint = codFileAliOssConfig.getEndpoint();
         String accessKeyId = codFileAliOssConfig.getAccessKeyId();
         String accessKeySecret = codFileAliOssConfig.getAccessKeySecret();
         String bucketName = codFileAliOssConfig.getBucketName();
+        CodFileModel codFileModel = new CodFileModel();
 
         // 创建OSSClient实例
         OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);
@@ -83,10 +84,12 @@ public class CodFileAliOssServiceImpl implements CodFileService {
         }
 
         // 上传
-        client.putObject(bucketName, fileName, inputStream);
+        client.putObject(bucketName, fileName.startsWith("/") ? fileName.substring(1, fileName.length()) : fileName, inputStream);
         // 关闭client
         client.shutdown();
-        return new CodFileModel();
+        codFileModel.setFileName(fileName);
+        codFileModel.setFileType(CodFileTypeEnum.ALIOSS);
+        return codFileModel;
     }
 
     @Override

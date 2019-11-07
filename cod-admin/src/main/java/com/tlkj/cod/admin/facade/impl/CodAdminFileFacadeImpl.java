@@ -23,10 +23,15 @@ import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.common.CodCommonFile;
 import com.tlkj.cod.common.CodCommonFileSizeConverter;
 import com.tlkj.cod.dao.jdbc.Updater;
+import com.tlkj.cod.file.model.CodFileModel;
+import com.tlkj.cod.file.model.config.CodFileConfig;
+import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
+import com.tlkj.cod.file.service.CodFileManager;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.system.core.SystemModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,11 +70,18 @@ public class CodAdminFileFacadeImpl implements CodAdminFileFacade {
     @Autowired
     private List<CodAdminFileService> codAdminFileServices;
 
+    @Autowired
+    @Qualifier("codFileManagerImpl")
+    private CodFileManager codFileManager;
+
     /**
      * 字典服务
      */
     @Autowired
     CodAdminDictService codAdminDictService;
+
+    @Autowired
+    CodFileConfig codFileConfig;
 
     /**
      * 系统设置服务
@@ -124,14 +136,10 @@ public class CodAdminFileFacadeImpl implements CodAdminFileFacade {
     @Override
     public CodAdminFileDto upload(MultipartFile file, String type, String... prefix){
 
-        type = getType(type);
-
-        CodAdminFileService codAdminFileService = getSystemSet(type);
-
-        if (codAdminFileService == null){
-            codLogService.warn("找不到上传文件方式");
-            return null;
+        if (StringUtils.isBlank(type)){
+            type = codFileConfig.getType();
         }
+
         InputStream io;
         CodAdminDictItemBo bo = codAdminDictService.getItem(SYSTEM_ATTACHMENT_SET + ":" +type);
         try {
@@ -159,7 +167,13 @@ public class CodAdminFileFacadeImpl implements CodAdminFileFacade {
             path = CodCommonDate.getDate() + File.separator;
         }
         url += path;
-        boolean isok = codAdminFileService.uploadFile(url, fileName, io);
+        // 上传到本地
+        // boolean isok = codAdminFileService.uploadFile(url, fileName, io);
+
+
+        CodFileModel codFileModel = codFileManager.uploadFile(io, fileName, prefix);
+        boolean isok = codFileModel != null;
+
         CodAdminFileDto codAdminFileDto = new CodAdminFileDto();
         if (isok){
             codAdminFileDto.setExtName(ext);

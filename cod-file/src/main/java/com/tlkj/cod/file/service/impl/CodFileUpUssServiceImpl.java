@@ -4,7 +4,6 @@ import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.file.model.CodFileInfo;
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
-import com.tlkj.cod.file.service.CodFileService;
 import com.tlkj.cod.file.service.CodFileUpUssService;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class CodFileUpUssServiceImpl implements CodFileUpUssService {
     }
 
     @Override
-    public CodFileModel uploadFile(InputStream inputStream, CodFileTypeEnum type, String fileName, String... prefix) {
+    public CodFileModel uploadFile(InputStream inputStream, String fileName, String... prefix) {
 
         return null;
     }

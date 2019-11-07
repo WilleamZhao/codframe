@@ -16,12 +16,12 @@ public class InitFile implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return CodModuleOrderEnum.NO.getOrder();
+        return CodModuleOrderEnum.MODULE.getOrder();
     }
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-
+        codModuleLauncherModel.finish();
     }
 
     @Override

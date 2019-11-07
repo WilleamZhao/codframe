@@ -9,6 +9,10 @@
 
 package com.tlkj.cod.file.service;
 
+import com.tlkj.cod.file.model.CodFileModel;
+
+import java.io.InputStream;
+
 /**
  * Desc cod-file 阿里云 OSS 文件管理
  *
@@ -17,5 +21,7 @@ package com.tlkj.cod.file.service;
  * @className CodFileAliOssService
  * @date 2019/11/4 2:50 PM
  */
-public interface CodFileAliOssService extends CodFileService{
+public interface CodFileAliOssService extends CodFileManager {
+
+    CodFileModel upload(InputStream inputStream, String fileName, String... prefix);
 }

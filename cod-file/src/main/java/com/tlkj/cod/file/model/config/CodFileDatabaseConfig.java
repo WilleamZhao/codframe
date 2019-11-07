@@ -25,13 +25,14 @@ public class CodFileDatabaseConfig extends CodFileConfig implements Serializable
     /**
      * ip
      */
-    @Value(value = "${cod.file.config.database.host:#{codAdminDatabaseConfig.driver}}")
+    //@Value(value = "${cod.file.config.database.host:#{codAdminDatabaseConfig.driver}}")
+    @Value(value = "${cod.file.config.database.host:}")
     private String host;
 
     /**
      * 端口
      */
-    @Value(value = "${cod.file.config.database.port:#{codAdminDatabaseConfig.port}}")
+    @Value(value = "${cod.file.config.database.port:}")
     private String port;
 
     /**
@@ -49,7 +50,7 @@ public class CodFileDatabaseConfig extends CodFileConfig implements Serializable
     /**
      * 文件表名
      */
-    @Value(value = "${cod.file.config.database.tableName:cod_ile}")
+    @Value(value = "${cod.file.config.database.tableName:cod_file}")
     private String tableName;
 
     /**

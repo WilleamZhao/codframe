@@ -4,7 +4,7 @@ import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.file.model.CodFileInfo;
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.model.enums.CodFileTypeEnum;
-import com.tlkj.cod.file.service.CodFileService;
+import com.tlkj.cod.file.service.CodFileManager;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2019/6/18 8:55 AM
  */
 @Service
-public class CodFileQiniuServiceImpl implements CodFileService {
+public class CodFileQiniuServiceImpl implements CodFileManager {
 
 
 
@@ -29,7 +29,7 @@ public class CodFileQiniuServiceImpl implements CodFileService {
     }
 
     @Override
-    public CodFileModel uploadFile(InputStream inputStream, CodFileTypeEnum type, String fileName, String... prefix) {
+    public CodFileModel uploadFile(InputStream inputStream, String fileName, String... prefix) {
         return null;
     }
 
