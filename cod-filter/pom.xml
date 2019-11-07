@@ -15,7 +15,7 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.4-SNAPSHOP</version>
+        <version>1.0.5-SNAPSHOP</version>
     </parent>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
