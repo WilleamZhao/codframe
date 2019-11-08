@@ -25,13 +25,22 @@ import org.springframework.web.multipart.MultipartFile;
 public interface CodAdminFileFacade {
 
     /**
-     * 系统上传文件
+     * 系统上传文件, 重置文件名
      * @param prefix 前缀; 统一放到attachment路径下的前缀,可传多个自动建立文件夹
      * @param file   文件
      * @param type   指定上传类型; 2019-03-07 add
      * @return
      */
     CodAdminFileDto upload(MultipartFile file, String type, String... prefix);
+
+    /**
+     * 系统上传文件
+     * @param prefix 前缀; 统一放到attachment路径下的前缀,可传多个自动建立文件夹
+     * @param file   文件
+     * @param type   指定上传类型; 2019-03-07 add
+     * @return
+     */
+    CodAdminFileDto upload(MultipartFile file, String type, boolean isResetName, String... prefix);
 
     /**
      * 删除文件

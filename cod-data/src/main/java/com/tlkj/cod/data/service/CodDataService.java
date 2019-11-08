@@ -73,5 +73,7 @@ public interface CodDataService {
      */
     void delete(String key);
 
+    long getRefreshTime();
+
 }
 

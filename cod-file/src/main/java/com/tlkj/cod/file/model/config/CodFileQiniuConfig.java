@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CodFileQiniuConfig extends CodFileConfig{
 
+    private static final long serialVersionUID = -1731970191893238358L;
+
     /**
      * qiniu accessKey
      */
@@ -30,4 +32,10 @@ public class CodFileQiniuConfig extends CodFileConfig{
      */
     @Value("${cod.file.config.qiniu.secretKey:ZYRrh37nY2w6JooVgwc7qhqJdLVgAp}")
     private String secretKey;
+
+    /**
+     * qiniu bucket
+     */
+    @Value("${cod.file.config.qiniu.bucket:}")
+    private String bucket;
 }

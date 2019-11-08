@@ -9,15 +9,19 @@
 
 package com.tlkj.cod.admin.action;
 
+import com.tlkj.cod.admin.model.dto.CodAdminApiDto;
 import com.tlkj.cod.admin.service.CodAdminApiService;
+import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
+import com.tlkj.cod.model.enums.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Desc 接口管理
@@ -41,9 +45,11 @@ public class CodAdminApiAction extends GeneralResponse {
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public Response list(HttpServletRequest request){
+        String name = getParams(request, "name");
+        String type = getParams(request, "type");
         String page = getParams(request, "page");
         String pageSize = getParams(request, "pageSize");
-
-        return success();
+        Page<List<CodAdminApiDto>> listPage = codAdminApiService.list(name, type, page, pageSize);
+        return listPage.isData() ? success() : fail(StatusCode.DATA_NULL_CODE);
     }
 }

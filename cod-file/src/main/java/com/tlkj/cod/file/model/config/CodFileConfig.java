@@ -33,7 +33,7 @@ public class CodFileConfig extends CodCoreConfig implements Serializable {
     /**
      * 上传文件类型
      */
-    @Value("${cod.file.type:local}")
+    @Value("${cod.file.config.type:local}")
     private String type;
 
     private String value;

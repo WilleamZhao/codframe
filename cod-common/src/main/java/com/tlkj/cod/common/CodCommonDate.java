@@ -315,6 +315,15 @@ public class CodCommonDate {
         Calendar c = Calendar.getInstance();
         return c.getTime();
     }
+
+    /**
+     * 获取当前时间
+     * @return 当前时间
+     */
+    public static long nowLong() {
+        Calendar c = Calendar.getInstance();
+        return c.getTime().getTime();
+    }
     
     public static String getDate() {
 		return getDate(PATTERN_YMD);

@@ -4,6 +4,7 @@ import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
 import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.dao.bean.Page;
+import com.tlkj.cod.file.common.CodFileCommon;
 import com.tlkj.cod.file.model.CodFileInfo;
 import com.tlkj.cod.file.model.CodFileModel;
 import com.tlkj.cod.file.model.config.CodFileAliOssConfig;
@@ -28,7 +29,7 @@ import java.util.Random;
  * @date 2019/6/18 8:48 AM
  */
 @Service
-public class CodFileAliOssServiceImpl implements CodFileManager {
+public class CodFileAliOssServiceImpl extends CodFileCommon implements CodFileManager {
 
     /**
      * 注入 ali oss 配置
@@ -73,18 +74,9 @@ public class CodFileAliOssServiceImpl implements CodFileManager {
         // 创建OSSClient实例
         OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);
 
-        // 文件名不存在自动创建, 当前时间+随机数
-        if (StringUtils.isEmpty(fileName)) {
-            fileName = CodCommonDate.getDate("yyyyMMddHHmmssSSSS") + new Random().nextInt(1000);
-        }
-
-        // 拼接文件夹
-        if (prefix != null && prefix.length > 0){
-            fileName = StringUtils.join(prefix.clone(), File.separator) + File.separator + fileName;
-        }
-
+        fileName = getFileHref(fileName, prefix);
         // 上传
-        client.putObject(bucketName, fileName.startsWith("/") ? fileName.substring(1, fileName.length()) : fileName, inputStream);
+        client.putObject(bucketName, fileName, inputStream);
         // 关闭client
         client.shutdown();
         codFileModel.setFileName(fileName);

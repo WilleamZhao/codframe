@@ -9,6 +9,7 @@
 
 package com.tlkj.cod.admin.service;
 
+import com.tlkj.cod.admin.model.dto.CodAdminApiDto;
 import com.tlkj.cod.dao.bean.Page;
 
 import java.util.List;
@@ -23,5 +24,13 @@ import java.util.List;
  */
 public interface CodAdminApiService {
 
-    Page<List> list();
+    /**
+     * 接口列表
+     * @param name     接口名称
+     * @param type     接口类型
+     * @param page     第几页
+     * @param pageSize 每页显示条数
+     * @return
+     */
+    Page<List<CodAdminApiDto>> list(String name, String type, String page, String pageSize);
 }

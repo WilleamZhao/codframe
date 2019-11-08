@@ -19,4 +19,11 @@ package com.tlkj.cod.file.service;
  */
 public interface CodFileLocalService extends CodFileManager {
 
+    /**
+     * 删除文件
+     * @param url      文件路径
+     * @param fileName 文件名
+     * @return
+     */
+    boolean delete(String url, String fileName);
 }

@@ -1,5 +1,6 @@
 package com.tlkj.cod.data.service.impl;
 
+import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Updater;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 
 /**
  * Desc cod data service impl
+ *
+ * 只要更改 (setData) 就自动更新缓存
  *
  * @author sourcod
  * @version 1.0
@@ -41,6 +44,11 @@ public class CodDataServiceImpl implements CodDataService {
      * 是否刷新过
      */
     private boolean isRefresh = false;
+
+    /**
+     * 上次刷新时间 提供给调用方
+     */
+    private long refreshTime = -1;
 
     /**
      * 初始化
@@ -187,10 +195,11 @@ public class CodDataServiceImpl implements CodDataService {
      */
     @Override
     public Map<String, String> getConfig() {
-        if (isRefresh){
+        if (isRefresh) {
             List<CodDataConfigDo> dataConfigDos = finder.from(CodDataConfigDo.TABLE_NAME).all(CodDataConfigDo.class);
             map = dataConfigDos.stream().collect(Collectors.toMap(CodDataConfigDo::getC_key, CodDataConfigDo::getC_value));
             isRefresh = false;
+            this.refreshTime = CodCommonDate.nowLong();
         }
         return map;
     }
@@ -271,7 +280,10 @@ public class CodDataServiceImpl implements CodDataService {
             update = updater.update(CodDataConfigDo.TABLE_NAME).where("id", codDataConfigDo.getId());
         }
         int num = update.set("c_key", key).set("c_value", value).set("c_name", name).set("sort", sort).set("c_desc", desc).update();
-        isRefresh = true;
+        // 更新成功刷新数据
+        if (num == 1){
+            isRefresh = true;
+        }
     }
 
     @Override
@@ -279,19 +291,27 @@ public class CodDataServiceImpl implements CodDataService {
         int i = updater.delete(CodDataConfigDo.TABLE_NAME).where("c_key", key).update();
         if (i == 1){
             System.out.println("删除成功");
+            isRefresh = true;
         }
-        isRefresh = true;
+    }
+
+    /**
+     * 获取最后一次刷新时间
+     * @return
+     */
+    @Override
+    public long getRefreshTime() {
+        return this.refreshTime;
     }
 
     /**
      * 判断是否重新读取
      */
     private boolean isRefresh(){
-        if (isRefresh){
-            return true;
-        }
-        return map == null || map.isEmpty();
+        return isRefresh || (map == null || map.isEmpty());
     }
+
+
     public static void main(String[] args) {
         String sql = CreateTable.createTable(CodDataConfigDo.class, CodDataConfigDo.TABLE_NAME);
         System.out.println(sql);

@@ -9,8 +9,14 @@
 
 package com.tlkj.cod.admin.service.impl;
 
+import com.tlkj.cod.admin.model.dto.CodAdminApiDto;
+import com.tlkj.cod.admin.model.entity.CodAdminApiDo;
 import com.tlkj.cod.admin.service.CodAdminApiService;
 import com.tlkj.cod.dao.bean.Page;
+import com.tlkj.cod.dao.jdbc.Finder;
+import com.tlkj.cod.dao.jdbc.Updater;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +31,31 @@ import java.util.List;
  */
 @Service
 public class CodAdminApiServiceImpl implements CodAdminApiService {
+
+    private Finder finder;
+    private Updater updater;
+
+    @Autowired
+    public CodAdminApiServiceImpl(Finder finder, Updater updater){
+        this.finder = finder;
+        this.updater = updater;
+    }
+
     @Override
-    public Page<List> list() {
+    public Page<List<CodAdminApiDto>> list(String name, String type, String page, String pageSize) {
+        Finder.Query query = finder.from(CodAdminApiDo.TABLE_NAME);
+        if (StringUtils.isNotBlank(name)){
+            query.like("name", "%" + name + "%");
+        }
+
+        if (StringUtils.isNotBlank(type)){
+            query.where("type", type);
+        }
         return null;
+    }
+
+    public boolean save(String id, CodAdminApiDto codAdminApiDto){
+
+        return false;
     }
 }
