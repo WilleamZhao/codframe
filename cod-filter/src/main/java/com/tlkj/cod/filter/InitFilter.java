@@ -1,5 +1,9 @@
 package com.tlkj.cod.filter;
 
+import com.tlkj.cod.filter.service.impl.CodFilterCorsImpl;
+import com.tlkj.cod.filter.service.impl.CodFilterInitAdminImpl;
+import com.tlkj.cod.filter.service.impl.CodFilterJwtImpl;
+import com.tlkj.cod.filter.service.impl.CodFilterRequestParamConvertImpl;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
@@ -59,7 +63,7 @@ public class InitFilter implements CodModuleInitialize {
     private void setCors(CodServerModel codServer){
         CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
         codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterCORS());
+        codServerFilterModel.setFilter(new CodFilterCorsImpl());
         codServerFilterModel.setName("cors");
         codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
@@ -72,7 +76,7 @@ public class InitFilter implements CodModuleInitialize {
     private void setAllowDisable(CodServerModel codServer){
         CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
         codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterCORS());
+        codServerFilterModel.setFilter(new CodFilterCorsImpl());
         codServerFilterModel.setName("allowDisable");
         codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
@@ -85,7 +89,7 @@ public class InitFilter implements CodModuleInitialize {
     private void setJwt(CodServerModel codServer){
         CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
         codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterJWT());
+        codServerFilterModel.setFilter(new CodFilterJwtImpl());
         codServerFilterModel.setName("token");
         codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
@@ -97,7 +101,7 @@ public class InitFilter implements CodModuleInitialize {
     private void setParamConvert(CodServerModel codServer){
         CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
         codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterRequestParamConvert());
+        codServerFilterModel.setFilter(new CodFilterRequestParamConvertImpl());
         codServerFilterModel.setName("param");
         codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServer.addFilter(codServerFilterModel);
@@ -109,7 +113,7 @@ public class InitFilter implements CodModuleInitialize {
     private void setInitAdmin(CodServerModel codServerModel){
         CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
         codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterInitAdmin());
+        codServerFilterModel.setFilter(new CodFilterInitAdminImpl());
         codServerFilterModel.setName("initAdmin");
         codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServerModel.addFilter(codServerFilterModel);

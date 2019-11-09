@@ -73,7 +73,7 @@ public class CodFileAliOssServiceImpl extends CodFileCommon implements CodFileMa
 
         // 创建OSSClient实例
         OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);
-
+        // 拼接文件名
         fileName = getFileHref(fileName, prefix);
         // 上传
         client.putObject(bucketName, fileName, inputStream);

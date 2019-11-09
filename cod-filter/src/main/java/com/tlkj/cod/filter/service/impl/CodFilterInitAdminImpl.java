@@ -7,8 +7,9 @@
  * site：http://blog.sourcod.com
  */
 
-package com.tlkj.cod.filter;
+package com.tlkj.cod.filter.service.impl;
 
+import com.tlkj.cod.filter.service.CodFilterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,12 +26,12 @@ import java.io.IOException;
  *
  * @author sourcod
  * @version 1.0
- * @className CodFilterInitAdmin
+ * @className CodFilterInitAdminImpl
  * @date 2019/9/3 2:35 PM
  */
-public class CodFilterInitAdmin implements Filter {
+public class CodFilterInitAdminImpl implements CodFilterService {
 
-    private static Logger logger = LoggerFactory.getLogger(CodFilterInitAdmin.class);
+    private static Logger logger = LoggerFactory.getLogger(CodFilterInitAdminImpl.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -47,5 +48,20 @@ public class CodFilterInitAdmin implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    @Override
+    public String name() {
+        return "初始化 admin 模块";
+    }
+
+    @Override
+    public String alias() {
+        return null;
+    }
+
+    @Override
+    public int sort() {
+        return 0;
     }
 }

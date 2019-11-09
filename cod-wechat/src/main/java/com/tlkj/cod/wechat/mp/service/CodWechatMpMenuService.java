@@ -17,10 +17,10 @@ import com.tlkj.cod.wechat.common.error.WxErrorException;
  *
  * @author sourcod
  * @version 1.0
- * @className WxMpMenuService
+ * @className CodWechatMpMenuService
  * @date 2019/3/12 3:59 PM
  */
-public interface WxMpMenuService {
+public interface CodWechatMpMenuService {
     /**
      * <pre>
      * 自定义菜单创建接口

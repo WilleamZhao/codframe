@@ -81,13 +81,18 @@ public final class CodCommonJson {
 		return gson.fromJson(json,type);
 	}
 
-	public static List  loadArray(String json) throws IOException {
+	public static List loadArray(String json) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		List jsonArray = mapper.readValue(json, List.class);
 		return jsonArray;
 	}
 
-	public boolean isGoodJson(String json){
+	/**
+	 * 判断字符串是否是json
+	 * @param json
+	 * @return
+	 */
+	public static boolean isGoodJson(String json){
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.readTree(json);

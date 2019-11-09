@@ -48,7 +48,7 @@ public class CodAdminApiDo extends CodDaoDo {
     private String api_type;
     
     /**
-     * 接口分类 
+     * 接口分类
      */
     private String api_classify_id;
     

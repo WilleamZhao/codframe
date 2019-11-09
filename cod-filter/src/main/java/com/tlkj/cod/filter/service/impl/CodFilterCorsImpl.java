@@ -1,21 +1,22 @@
 /*
- * Copyright (c) 2019.
- * Beijing sky blue technology co., LTD.
- * All rights reserved
+ * Copyright (c) 2018-2019.
+ * sourcod All rights reserved
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.sourcod.com
+ * site：http://blog.sourcod.com
  */
 
-package com.tlkj.cod.filter;
+package com.tlkj.cod.filter.service.impl;
 
 
 import com.tlkj.cod.core.spring.SpringContextUtil;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.service.CodDaoService;
+import com.tlkj.cod.filter.service.CodFilterService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -34,8 +35,8 @@ import java.util.regex.Pattern;
  * 全局跨域设置
  * @author sourcod
  */
-@Component
-public class CodFilterCORS implements Filter {
+@Service("codFilterCors")
+public class CodFilterCorsImpl implements CodFilterService {
 
     private static Pattern pattern = Pattern.compile("MSIE (\\d+)");
 
@@ -104,4 +105,19 @@ public class CodFilterCORS implements Filter {
 
     }
 
+    @Override
+    public String name() {
+        return "codFilterCors";
+    }
+
+    @Override
+    public String alias() {
+        return "CORS 跨域过滤器";
+    }
+
+
+    @Override
+    public int sort() {
+        return 0;
+    }
 }

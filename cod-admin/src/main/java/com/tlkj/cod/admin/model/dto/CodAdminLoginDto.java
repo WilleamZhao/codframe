@@ -19,6 +19,8 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CodAdminLoginDto implements Serializable {
 
+    private static final long serialVersionUID = 7026677352062273718L;
+
     /**
      * 描述
      */

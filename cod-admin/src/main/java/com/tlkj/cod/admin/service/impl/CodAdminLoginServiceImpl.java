@@ -64,12 +64,16 @@ public class CodAdminLoginServiceImpl implements CodAdminLoginService {
             memcachedService.get(code);
             logger.debug("用户{}: 验证码验证成功={}", username, code);
         }*/
+        String codAdminToken = CodCommonUUID.getUUID();
 
         if ("codAdmin".equals(username) && "123456".equals(password)){
-            CodAdminUserDo codAdminUserDo = finder.from(CodAdminUserDo.TABLE_NAME).where("login_account", username).first(CodAdminUserDo.class);
-            return codAdminUserDo.toDto(CodAdminLoginDto.class);
+            codAdminLoginDto.setToken(codAdminToken);
+            codAdminLoginDto.setCode("1");
+            codAdminLoginDto.setCode("登陆成功");
+            return codAdminLoginDto;
         }
 
+        // 根据用户名查询用户是否存在
         CodAdminUserDo codAdminUserDo = finder.from(CodAdminUserDo.TABLE_NAME).where("login_account", username).first(CodAdminUserDo.class);
         if (codAdminUserDo == null) {
             codAdminLoginDto.setMsg("用户名或密码错误");
@@ -104,7 +108,7 @@ public class CodAdminLoginServiceImpl implements CodAdminLoginService {
             return codAdminLoginDto;
         }
 
-        String codAdminToken = CodCommonUUID.getUUID();
+
 
         // 记住我
         if ("true".equals(isRemeber) || "1".equals(isRemeber)){

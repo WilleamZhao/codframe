@@ -16,10 +16,26 @@ import javax.servlet.Filter;
  *
  * @author sourcod
  * @version 1.0
- * @className CodFilterService
+ * @className CodFilterManager
  * @date 2019/9/3 2:38 PM
  */
-public interface CodFilterService {
+public interface CodFilterService extends Filter{
 
-    void addFilter(Filter filter);
+    /**
+     * 过滤器名称
+     * @return
+     */
+    String name();
+
+    /**
+     * 过滤器别名
+     * @return
+     */
+    String alias();
+
+    /**
+     * 过滤器序号
+     * @return
+     */
+    int sort();
 }

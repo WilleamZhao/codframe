@@ -46,7 +46,7 @@ public enum StatusCode {
     /**
      * ip禁用
      */
-    IP_DISABLE_CODE("1003", "IP禁用", "当前IP禁止访问"),
+    IP_DISABLE_CODE("1003", "IP 禁用", "当前 IP 禁止访问"),
 
     /**
      * 没有数据
@@ -61,7 +61,17 @@ public enum StatusCode {
     /**
      * 参数错误
      */
-    PARAM_ERROR_CODE("0014", "参数错误", "参数错误")
+    PARAM_ERROR_CODE("0014", "参数错误", "参数错误"),
+
+    /**
+     * token 验证错误
+     */
+    TOKEN_ERROR_CODE("0015", "token 错误", "token 验证错误"),
+
+    /**
+     * jwt 验证错误
+     */
+    JWT_ERROR_CODE("0015", "jwt 错误", "jwt 验证错误")
     ;
 
 

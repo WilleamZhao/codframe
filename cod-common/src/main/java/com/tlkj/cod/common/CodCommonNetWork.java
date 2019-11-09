@@ -186,7 +186,7 @@ public class CodCommonNetWork {
         String a = "123.123.123.123";
         System.out.println(ipCheck(a));
         System.out.println(isInRange("123.123.255.255", "123.123.0.0/16"));
-        System.out.println(isInRange("123.123.123.123", "123.123.123.1-123.123.123.124"));
+        System.out.println(isInRange("123.123.123.123", "123.123.123.1-123.123.123.122"));
     }
 
 
