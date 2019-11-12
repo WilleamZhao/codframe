@@ -12,11 +12,14 @@ package com.tlkj.cod.dao.view;
 
 import com.google.common.base.CaseFormat;
 import com.tlkj.cod.dao.annotation.CodDaoViewColumn;
+import com.tlkj.cod.dao.annotation.CodDaoViewGroupBy;
 import com.tlkj.cod.dao.annotation.CodDaoViewJoin;
+import com.tlkj.cod.dao.annotation.CodDaoViewOrderBy;
 import com.tlkj.cod.dao.annotation.CodDaoViewTable;
 import com.tlkj.cod.dao.annotation.CodDaoViewWhere;
 import com.tlkj.cod.dao.exception.CodDataViewException;
 import com.tlkj.cod.dao.jdbc.Finder;
+import com.tlkj.cod.dao.model.CodDaoDo;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
@@ -30,7 +33,7 @@ import java.lang.reflect.Method;
  * @className AbstractDataView
  * @date 2019/1/4 8:31 PM
  */
-public abstract class AbstractDataView {
+public abstract class AbstractDataView extends CodDaoDo {
 
     /**
      * 获取表名
@@ -147,11 +150,16 @@ public abstract class AbstractDataView {
         for (Field field : fields){
             CodDaoViewColumn codDaoViewColumn = field.getAnnotation(CodDaoViewColumn.class);
             if (codDaoViewColumn != null){
-                sb.append(getTableAlias(codDaoViewColumn.tName()))
-                        .append(".")
-                        .append(codDaoViewColumn.cName())
-                        .append(" as ")
-                        .append(StringUtils.isNotBlank(codDaoViewColumn.aliasName()) ? codDaoViewColumn.aliasName() : field.getName());
+                // 字段是 name 拼接
+                if (codDaoViewColumn.isName()){
+                    sb.append(getTableAlias(codDaoViewColumn.tName()))
+                            .append(".")
+                            .append(codDaoViewColumn.cName());
+                } else {
+                    sb.append(codDaoViewColumn.cName());
+                }
+                sb.append(" as ");
+                sb.append(StringUtils.isNotBlank(codDaoViewColumn.aliasName()) ? codDaoViewColumn.aliasName() : field.getName());
                 query.select(sb.toString());
                 sb.setLength(0);
             }
@@ -183,9 +191,40 @@ public abstract class AbstractDataView {
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field field : fields){
             CodDaoViewWhere codDaoViewWhere = field.getAnnotation(CodDaoViewWhere.class);
+            StringBuilder sb = new StringBuilder();
             if (codDaoViewWhere != null){
                 for (String s : codDaoViewWhere.value()){
-                    query.where(s);
+                    query.where(getHump(s));
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取where条件
+     */
+    public void getGroupBy(Finder.Query query){
+        Field[] fields = this.getClass().getDeclaredFields();
+        for (Field field : fields){
+            CodDaoViewGroupBy codDaoViewGroupBy = field.getAnnotation(CodDaoViewGroupBy.class);
+            if (codDaoViewGroupBy != null){
+                for (String s : codDaoViewGroupBy.value()){
+                    query.groupBy(getHump(s));
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取where条件
+     */
+    public void getOrderBy(Finder.Query query){
+        Field[] fields = this.getClass().getDeclaredFields();
+        for (Field field : fields){
+            CodDaoViewOrderBy codDaoViewOrderBy = field.getAnnotation(CodDaoViewOrderBy.class);
+            if (codDaoViewOrderBy != null){
+                for (String s : codDaoViewOrderBy.value()){
+                    query.orderBy(getHump(s));
                 }
             }
         }
@@ -215,6 +254,7 @@ public abstract class AbstractDataView {
                 if (i % 2 == 0){
                     sb.append(" = ");
                 }
+
                 i++;
             }
         } else {
@@ -224,6 +264,7 @@ public abstract class AbstractDataView {
                 String[] tempOns = on.trim().split("\\.");
                 table = tempOns[0];
                 field = tempOns[1];
+                sb.append(" ");
                 sb.append(getTableAlias(table)).append(".").append(field);
                 if (i % 2 == 0){
                     sb.append(" = ");
@@ -236,12 +277,27 @@ public abstract class AbstractDataView {
     }
 
     /**
+     * 获取驼峰式字段
+     * cod_user.id -> codUser.id
+     * cod_system_item.item_id -> codSystemItem.item_id
+     * @return 转换后
+     */
+    private String getHump(String str){
+        StringBuilder sb = new StringBuilder();
+        String[] tempOns = str.trim().split("\\.");
+        String table = tempOns[0];
+        String fieldName = tempOns[1];
+        sb.append(getTableAlias(table)).append(".").append(fieldName);
+        return sb.toString();
+    }
+
+    /**
      * on参数必须是2个
      * @param ons on参数
      * @return 是否正确
      */
     private boolean isOn(String[] ons){
-        return ons.length <= 2;
+        return ons.length % 2 == 0;
     }
 
     /**

@@ -1,11 +1,10 @@
 /*
  * Copyright (c) 2018-2019.
- * Beijing sky blue technology co., LTD.
- * All rights reserved
+ * sourcod All rights reserved
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.sourcod.com
+ * site：http://blog.sourcod.com
  */
 
 package com.tlkj.cod.dao.annotation;
@@ -17,18 +16,21 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Desc 条件
+ * Desc group by 注解
  *
  * @author sourcod
  * @version 1.0
- * @className CodDaoViewWhere
- * @date 2019/1/7 6:18 PM
+ * @className CodDaoViewGroupBy
+ * @date 2019/11/10 7:39 PM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.TYPE, ElementType.METHOD})
-public @interface CodDaoViewWhere {
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
+public @interface CodDaoViewGroupBy {
 
-    String[] value();
-
+    /**
+     * group by 条件
+     * @return
+     */
+    String[] value() default {};
 }

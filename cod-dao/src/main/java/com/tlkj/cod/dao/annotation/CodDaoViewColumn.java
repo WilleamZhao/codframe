@@ -10,8 +10,6 @@
 
 package com.tlkj.cod.dao.annotation;
 
-import com.tlkj.cod.dao.model.CodDaoDo;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -42,6 +40,11 @@ public @interface CodDaoViewColumn {
      * 为空默认主表表名
      */
     String tName() default "";
+
+    /**
+     * 是否是字段
+     */
+    boolean isName() default true;
 
     /**
      * 别名
