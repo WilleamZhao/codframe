@@ -1,11 +1,10 @@
 /*
  * Copyright (c) 2018-2019.
- * Beijing sky blue technology co., LTD.
- * All rights reserved
+ * sourcod All rights reserved
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.sourcod.com
+ * site：http://blog.sourcod.com
  */
 
 package com.tlkj.cod.dao.annotation;
@@ -30,4 +29,5 @@ import java.lang.annotation.Target;
 public @interface CodDaoViewWhere {
 
     String[] value();
+
 }

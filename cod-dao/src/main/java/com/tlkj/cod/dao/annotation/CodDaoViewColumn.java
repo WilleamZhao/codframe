@@ -1,16 +1,13 @@
 /*
- * Copyright (c) 2019.
- * Beijing sky blue technology co., LTD.
- * All rights reserved
+ * Copyright (c) 2018-2019.
+ * sourcod All rights reserved
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.sourcod.com
+ * site：http://blog.sourcod.com
  */
 
 package com.tlkj.cod.dao.annotation;
-
-import com.tlkj.cod.dao.model.CodDaoDo;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -42,6 +39,11 @@ public @interface CodDaoViewColumn {
      * 为空默认主表表名
      */
     String tName() default "";
+
+    /**
+     * 是否是字段
+     */
+    boolean isName() default true;
 
     /**
      * 别名
