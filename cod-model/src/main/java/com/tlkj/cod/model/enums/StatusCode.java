@@ -61,7 +61,17 @@ public enum StatusCode {
     /**
      * 参数错误
      */
-    PARAM_ERROR_CODE("0014", "参数错误", "参数错误")
+    PARAM_ERROR_CODE("0014", "参数错误", "参数错误"),
+
+    /**
+     * token 错误
+     */
+    TOKEN_ERROR_CODE("0017", "参数错误", "参数错误"),
+
+    /**
+     * JWT 错误
+     */
+    JWT_ERROR_CODE("0017", "参数错误", "参数错误")
     ;
 
 
