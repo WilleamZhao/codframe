@@ -17,7 +17,7 @@ import java.util.List;
  * @className CodServerFacadeImpl
  * @date 2019/6/18 11:10 AM
  */
-@Service("codServerFacadeImpl")
+@Service
 public class CodServerFacadeImpl implements CodServerFacade {
 
     private List<CodServerService> codServerServiceList;

@@ -13,16 +13,13 @@ package com.tlkj.cod.admin.service.impl;
 import com.tlkj.cod.admin.model.dto.CodAdminSetDto;
 import com.tlkj.cod.admin.model.entity.CodAdminSetDo;
 import com.tlkj.cod.admin.service.CodAdminSystemSetService;
-import com.tlkj.cod.config.model.config.CodCoreConfig;
 import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.dao.jdbc.Finder;
 import com.tlkj.cod.dao.jdbc.Pagination;
 import com.tlkj.cod.dao.jdbc.Updater;
-import com.tlkj.cod.data.model.config.CodDataConfig;
 import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.log.service.CodLogService;
 import com.tlkj.cod.model.enums.StatusCode;
-import com.tlkj.cod.model.system.core.SystemModel;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

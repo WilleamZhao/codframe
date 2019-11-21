@@ -48,7 +48,7 @@ public class CodSpringConfiguration extends WebMvcConfigurerAdapter{
      * 全局获取 spring 上下文
      */
     @Bean
-    public CodSpringContext codCommonSpringContext(){
+    public CodSpringContext codSpringContext(){
         return new CodSpringContext();
     }
 

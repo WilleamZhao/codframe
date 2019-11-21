@@ -36,7 +36,7 @@ public class CodAdminServerAction extends GeneralResponse {
 
     @Autowired
     @Lazy
-    public CodAdminServerAction(CodServerFacade codServerFacade){
+    public CodAdminServerAction(CodServerFacade codServerFacade) {
         this.codServerFacade = codServerFacade;
     }
 

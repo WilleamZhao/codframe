@@ -11,7 +11,6 @@
 package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.admin.service.CodAdminSystemDataSetService;
-import com.tlkj.cod.admin.service.CodAdminSystemSetService;
 import com.tlkj.cod.data.model.dto.CodDataConfigDto;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
@@ -35,8 +34,8 @@ import java.util.List;
 @RequestMapping("system/set")
 public class CodAdminSystemSetAction extends GeneralResponse {
 
-    @Autowired
-    CodAdminSystemSetService codAdminSystemSetService;
+    // @Autowired
+    // CodAdminSystemSetService codAdminSystemSetService;
 
     @Autowired
     CodAdminSystemDataSetService codAdminSystemDataSetService;

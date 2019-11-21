@@ -10,19 +10,12 @@
 package com.tlkj.cod.admin.service.impl;
 
 import com.tlkj.cod.admin.service.CodAdminSystemDataSetService;
-import com.tlkj.cod.dao.jdbc.Finder;
-import com.tlkj.cod.dao.jdbc.Updater;
-import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
-import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.data.model.dto.CodDataConfigDto;
 import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.log.service.CodLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,16 +37,6 @@ public class CodAdminSystemDataSetServiceImpl implements CodAdminSystemDataSetSe
 
     @Autowired
     CodLogService codLogService;
-
-    private Finder finder;
-
-    private Updater updater;
-
-    public CodAdminSystemDataSetServiceImpl(){
-        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DATA.name());
-        finder = new Finder(dataSource);
-        updater = new Updater(dataSource);
-    }
 
     @Override
     public List list(String key, String name, String page, String pageSize) {

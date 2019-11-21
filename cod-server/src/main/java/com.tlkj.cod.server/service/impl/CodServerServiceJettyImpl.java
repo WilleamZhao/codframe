@@ -55,7 +55,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Primary
 @Component(value = "codServerJetty")
-public class CodServerServiceJettyImpl implements CodServerService, Runnable {
+public class CodServerServiceJettyImpl implements CodServerService {
 
     private static Logger logger = LoggerFactory.getLogger(CodServerServiceJettyImpl.class);
 
@@ -70,7 +70,6 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
 
     private static CodModuleLauncherModel codModuleLauncherModel;
     private static CodServerConfig codServerConfig;
-    private static DispatcherServlet dispatcherServlet;
 
     public CodServerServiceJettyImpl(){
 
@@ -81,15 +80,15 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         return "codServerJetty";
     }
 
-    @Override
-    public void run() {
-
+    private Runnable runnable = () -> {
         codServerConfig = codServerConfig == null ? new CodServerJettyConfig() : codServerConfig;
 
         AnnotationConfigWebApplicationContext applicationContext = codModuleLauncherModel.getSpring();
 
         // 注册springMVC
         applicationContext.register(CodServerSpringMVCConfiguration.class);
+        // applicationContext.refresh();
+
         if (state == 1){
             // applicationContext.refresh();
         }
@@ -97,10 +96,10 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         applicationContext.setServletContext(new ContextHandler.StaticContext());
 
         // 刷新 springMVC
+        DispatcherServlet dispatcherServlet = null;
         if (state == 0){
             dispatcherServlet = new DispatcherServlet(applicationContext);
             dispatcherServlet.refresh();
-            // dispatcherServlet.destroy();
         }
 
         // initServlet();
@@ -176,7 +175,7 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
             System.err.println("启动jetty服务失败");
             e.printStackTrace();
         }
-    }
+    };
 
     @Override
     public void start(CodModuleLauncherModel codModuleLauncherModel, CodServerConfig codServerConfig) {
@@ -184,8 +183,10 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         CodServerServiceJettyImpl.codServerConfig = codServerConfig;
         // 设置服务信息
         setServerInfo();
-        Thread thread = new Thread(new CodServerServiceJettyImpl());
-        thread.start();
+        // 新建线程启动服务
+        ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("cod-server-start-pool").build();
+        ExecutorService executorService = new ThreadPoolExecutor(1, 1, 10,TimeUnit.SECONDS, new ArrayBlockingQueue<>(1), threadFactory);
+        executorService.execute(runnable);
     }
 
     private void setServerInfo(){
