@@ -85,6 +85,11 @@
             <artifactId>cod-mybatis</artifactId>
             <version>${codframe.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-spring</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
         <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-package</artifactId>
@@ -132,6 +137,7 @@
             <artifactId>cod-admin</artifactId>
             <version>${codframe.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
@@ -177,6 +183,10 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>webapp/WEB-INF/lib/</classpathPrefix>
                         </manifest>
+                        <manifestEntries>
+                            <project-version>${project.version}</project-version>
+                            <timestamp>${maven.build.timestamp}</timestamp>
+                        </manifestEntries>
                     </archive>
                     <!--<includes>
                         <include>**/*.jar</include>

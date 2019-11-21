@@ -12,7 +12,8 @@ package com.tlkj.cod.server.service.impl;
 
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import com.tlkj.cod.server.model.CodServerFilterModel;
-import com.tlkj.cod.server.model.server.CodServerTomcatModel;
+import com.tlkj.cod.server.model.config.CodServerConfig;
+import com.tlkj.cod.server.model.config.CodServerTomcatConfig;
 import com.tlkj.cod.server.service.CodServerService;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
@@ -59,7 +60,8 @@ public class CodServerServiceTomcatImpl implements CodServerService {
     private DispatcherServlet dispatcherServlet = null;
     private boolean initSpring = false;
 
-    private CodModuleLauncherModel codModuleLauncherModel;
+    private static CodModuleLauncherModel codModuleLauncherModel;
+    private static CodServerConfig codServerConfig;
 
     @Override
     public String support() {
@@ -89,11 +91,12 @@ public class CodServerServiceTomcatImpl implements CodServerService {
      * 启动服务
      */
     @Override
-    public void start(CodModuleLauncherModel codModuleLauncherModel) {
-        this.codModuleLauncherModel = codModuleLauncherModel;
+    public void start(CodModuleLauncherModel codModuleLauncherModel, CodServerConfig codServerConfig) {
+        CodServerServiceTomcatImpl.codModuleLauncherModel = codModuleLauncherModel;
         // 设置服务信息
         // setServerInfo();
-        CodServerTomcatModel codServerModel = (CodServerTomcatModel) this.codModuleLauncherModel.getServer();
+        CodServerTomcatConfig codServerModel = (CodServerTomcatConfig) codServerConfig;
+        CodServerServiceTomcatImpl.codServerConfig = codServerConfig;
 
         if (tomcat != null){
             return;
@@ -120,7 +123,7 @@ public class CodServerServiceTomcatImpl implements CodServerService {
 
         tomcat.setHost(host);
 
-        AnnotationConfigWebApplicationContext applicationContext = (AnnotationConfigWebApplicationContext) codModuleLauncherModel.getSpring();
+        AnnotationConfigWebApplicationContext applicationContext = codModuleLauncherModel.getSpring();
 
         // 注册springMVC
         // applicationContext.register(CodServerSpringMVCConfiguration.class);
@@ -257,6 +260,6 @@ public class CodServerServiceTomcatImpl implements CodServerService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        this.start(codModuleLauncherModel);
+        this.start(codModuleLauncherModel, codServerConfig);
     }
 }

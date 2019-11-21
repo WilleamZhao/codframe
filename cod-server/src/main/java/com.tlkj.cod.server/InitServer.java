@@ -14,15 +14,10 @@ import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import com.tlkj.cod.server.facade.CodServerFacade;
-import com.tlkj.cod.server.model.CodServerFilterModel;
-import com.tlkj.cod.server.model.server.CodServerModel;
-import com.tlkj.cod.server.service.CodServerService;
+import com.tlkj.cod.server.facade.impl.CodServerFacadeImpl;
+import com.tlkj.cod.server.model.config.CodServerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.filter.CharacterEncodingFilter;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Desc 初始化服务
@@ -49,10 +44,9 @@ public class InitServer implements CodModuleServerInitialize {
     @Override
     public void success(CodModuleLauncherModel codModuleLauncherModel) {
         // TODO 从配置模块里读取
-        CodServerFacade codServerFacade = (CodServerFacade) codModuleLauncherModel.getSpring().getBean("codServerFacadeImpl");
-        // 设置编码过滤器
-        setCharacterEncodingFilter();
-        codModuleLauncherModel.setServer(CodServerModel.getInstance());
+        CodServerFacade codServerFacade = codModuleLauncherModel.getBean(CodServerFacadeImpl.class);
+        // CodServerConfig codServerModel = codModuleLauncherModel.getBean(CodServerConfig.class);
+        // codModuleLauncherModel.setData(CodModuleOrderEnum.SERVER.getOrder(), codServerModel, false);
         codServerFacade.start(codModuleLauncherModel);
     }
 
@@ -74,25 +68,6 @@ public class InitServer implements CodModuleServerInitialize {
 
     @Override
     public void fail(Throwable e) {
-
-    }
-
-    /**
-     * TODO 编码方式
-     */
-    private void setCharacterEncodingFilter(){
-        CodServerModel codServer = CodServerModel.getInstance();
-        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
-        codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CharacterEncodingFilter());
-        codServerFilterModel.setName("character");
-
-        Map map = new HashMap();
-        map.put("encoding", "UTF-8");
-        map.put("forceEncoding", "true");
-        codServerFilterModel.setParamList(map);
-
-        codServer.addFilter(codServerFilterModel);
 
     }
 }

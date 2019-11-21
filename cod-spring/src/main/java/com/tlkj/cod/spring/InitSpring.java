@@ -1,20 +1,19 @@
 /*
  * Copyright (c) 2018-2019.
- * Beijing sky blue technology co., LTD.
- * All rights reserved
+ * sourcod All rights reserved
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.sourcod.com
+ * site：http://blog.sourcod.com
  */
 
-package com.tlkj.cod.core.launcher.init;
+package com.tlkj.cod.spring;
 
 
-import com.tlkj.cod.core.main.CodSpringConfiguration;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.init.CodModuleSpringInitialize;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.spring.model.config.CodSpringConfiguration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 
@@ -26,16 +25,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
  * @className InitModuleSpring
  * @date 2019/4/28 4:03 PM
  */
-public class InitModuleSpring implements CodModuleSpringInitialize {
-
-    /**
-     * spring scan
-     * @return
-     */
-    @Override
-    public String name() {
-        return "com.tlkj.cod.spring";
-    }
+public class InitSpring implements CodModuleSpringInitialize {
 
     @Override
     public String alias() {
@@ -49,20 +39,14 @@ public class InitModuleSpring implements CodModuleSpringInitialize {
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        /*
-         * spring annotation
-         */
-        AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = codModuleLauncherModel.getSpring();
-        annotationConfigWebApplicationContext.register(CodSpringConfiguration.class);
-        annotationConfigWebApplicationContext.scan("com.tlkj.cod.core");
-        annotationConfigWebApplicationContext.refresh();
         // set spring
-        codModuleLauncherModel.setSpring(annotationConfigWebApplicationContext);
+        codModuleLauncherModel.finish();
     }
 
     @Override
     public void success(CodModuleLauncherModel codModuleLauncherModel) {
-        codModuleLauncherModel.finish();
+        // AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = codModuleLauncherModel.getSpring();
+        // codModuleLauncherModel.setSpring(annotationConfigWebApplicationContext);
     }
 
     @Override

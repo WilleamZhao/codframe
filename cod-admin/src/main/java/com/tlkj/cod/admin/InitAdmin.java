@@ -4,6 +4,7 @@ import com.tlkj.cod.admin.model.config.CodAdminDatabaseConfig;
 import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
+import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
@@ -40,16 +41,12 @@ public class InitAdmin implements CodModuleInitialize {
         bean.setUrl(codAdminDatabaseConfig.getUrl());
         bean.setAutoCommit(true);
         CodDaoConnectionPool.getInstance().setDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name(), bean);
-
-        // 设置 初始化验证 filter
-        CodModuleServerModel codModuleServerModel = codModuleLauncherModel.getServer();
-
     }
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
         // DataConnectBean bean = new DataConnectBean();
-        CodDataServiceImpl codDataService = codModuleLauncherModel.getBean(CodDataServiceImpl.class);
+        CodDataService codDataService = codModuleLauncherModel.getBean(CodDataServiceImpl.class);
         codDataService.setData("cod.admin.database.config.driver", "com.mysql.jdbc.Driver");
         codDataService.setData("cod.admin.database.config.url", "jdbc:mysql://sourcoddatabase.mysql.rds.aliyuncs.com/mczoo_admin?characterEncoding=UTF-8");
         codDataService.setData("cod.admin.database.config.username", "sourcod");

@@ -29,7 +29,7 @@ import java.util.function.Function;
  * @className CodConfigServiceImpl
  * @date 2019/4/9 5:02 PM
  */
-// @Service("codConfigApolloServiceImpl")
+@Service("codConfigApolloServiceImpl")
 public class CodConfigApolloServiceImpl implements CodConfigService {
 
     private Map<String, Object> map = new HashMap<>();

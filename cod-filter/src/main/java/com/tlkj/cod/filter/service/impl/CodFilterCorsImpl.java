@@ -9,16 +9,14 @@
 
 package com.tlkj.cod.filter.service.impl;
 
-
+import com.tlkj.cod.config.model.config.CodCoreConfig;
 import com.tlkj.cod.core.spring.SpringContextUtil;
-import com.tlkj.cod.dao.jdbc.Finder;
-import com.tlkj.cod.dao.service.CodDaoService;
+import com.tlkj.cod.filter.model.config.CodFilterCorsConfig;
 import com.tlkj.cod.filter.service.CodFilterService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -40,10 +38,23 @@ public class CodFilterCorsImpl implements CodFilterService {
 
     private static Pattern pattern = Pattern.compile("MSIE (\\d+)");
 
+    private CodFilterCorsConfig codFilterCorsConfig;
+    private CodCoreConfig codCoreConfig;
+
+    @Autowired
+    public CodFilterCorsImpl(CodFilterCorsConfig codFilterCorsConfig){
+        this.codFilterCorsConfig = codFilterCorsConfig;
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        Finder finder = SpringContextUtil.getApplicationContext().getBean(Finder.class);
-        finder.from("");
+        if (codFilterCorsConfig == null){
+            this.codFilterCorsConfig = SpringContextUtil.getApplicationContext().getBean(CodFilterCorsConfig.class);
+        }
+
+        if (codCoreConfig == null){
+            this.codCoreConfig = (CodCoreConfig) SpringContextUtil.getApplicationContext().getBean("codCoreConfig");
+        }
     }
 
     @Override
@@ -62,7 +73,7 @@ public class CodFilterCorsImpl implements CodFilterService {
         response.setHeader("Access-Control-Allow-Headers", "Origin, x-requested-with, Authorization, cod_admin_token");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         // TODO 动态返回服务版本
-        response.setHeader("server", "codFrame v1.0.4");
+        response.setHeader("server", "codFrame v" + codCoreConfig.getFrameVersion());
         // response.setHeader("Access-Control-Allow-Credentials", "true");
         filterChain.doFilter(servletRequest, servletResponse);
         // User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)
@@ -103,6 +114,11 @@ public class CodFilterCorsImpl implements CodFilterService {
     @Override
     public void destroy() {
 
+    }
+
+    @Override
+    public boolean state() {
+        return "1".equals(codFilterCorsConfig.getState());
     }
 
     @Override

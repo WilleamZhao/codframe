@@ -50,6 +50,7 @@
         <module>cod-maven</module>
         <module>cod-i18n</module>
         <module>cod-pay</module>
+        <module>cod-spring</module>
     </modules>
 
     <name>codframe</name>

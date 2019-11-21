@@ -22,6 +22,7 @@ public interface CodDataService {
 
     /**
      * 获取数据
+     * @return 数据
      */
     String getDataValue(String key);
 

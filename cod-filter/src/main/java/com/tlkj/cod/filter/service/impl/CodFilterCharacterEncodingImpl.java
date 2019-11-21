@@ -11,13 +11,17 @@ package com.tlkj.cod.filter.service.impl;
 
 import com.tlkj.cod.filter.service.CodFilterService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Desc 编码过滤器
@@ -28,21 +32,21 @@ import java.io.IOException;
  * @date 2019/11/20 3:49 PM
  */
 @Service
-public class CodFilterCharacterEncoding implements CodFilterService {
+public class CodFilterCharacterEncodingImpl implements CodFilterService {
 
     @Override
     public boolean state() {
-        return false;
+        return true;
     }
 
     @Override
     public String name() {
-        return "character";
+        return "codFilterCharacterEncodingImpl";
     }
 
     @Override
     public String alias() {
-        return null;
+        return "编码过滤器";
     }
 
     @Override
@@ -53,6 +57,19 @@ public class CodFilterCharacterEncoding implements CodFilterService {
     @Override
     public String mapping() {
         return "/*";
+    }
+
+    @Override
+    public Filter filter() {
+        return new CharacterEncodingFilter();
+    }
+
+    @Override
+    public Map<String, String> params() {
+        Map<String, String> map = new HashMap<>();
+        map.put("encoding", "UTF-8");
+        map.put("forceEncoding", "true");
+        return map;
     }
 
     @Override

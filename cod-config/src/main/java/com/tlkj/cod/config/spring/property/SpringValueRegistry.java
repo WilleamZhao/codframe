@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * spring value 注册
  * @author sourcod
  */
 public class SpringValueRegistry {

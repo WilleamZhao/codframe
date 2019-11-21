@@ -105,7 +105,18 @@ public class CodModuleLauncherModel implements Serializable {
      * 获取单个Data
      */
     public Object getData(int order) {
-        return map.get(order);
+        return this.getData(order, Object.class);
+    }
+
+    /**
+     * 获取单个 Data
+     * @param order  序号
+     * @param tClass 类
+     * @param <T>    范型
+     * @return
+     */
+    public <T> T getData(int order, Class<T> tClass) {
+        return tClass.cast(map.get(order));
     }
 
     /**
@@ -169,29 +180,18 @@ public class CodModuleLauncherModel implements Serializable {
      * 设置spring
      */
     public void setSpring(ApplicationContext applicationContext){
-        map.put(CodModuleOrderEnum.SPRING.getOrder(), applicationContext);
-    }
-
-    /**
-     * server
-     */
-    public void setServer(CodModuleServerModel codModuleServerModel) {
-        map.put(CodModuleOrderEnum.SERVER.getOrder(), codModuleServerModel);
-    }
-
-    public CodModuleServerModel getServer() {
-        return (CodModuleServerModel) map.get(CodModuleOrderEnum.SERVER.getOrder());
+        this.setData(CodModuleOrderEnum.SPRING.getOrder(), applicationContext, false);
     }
 
     /**
      * 核心数据源
      */
-    public void setCodData(DataSource dataSource){
-        map.put(CodModuleOrderEnum.DATA.getOrder(), dataSource);
+    public void setCodData(DataSource dataSource) {
+        this.setData(CodModuleOrderEnum.DATA.getOrder(), dataSource, false);
     }
 
     public DataSource getCodData(){
-        return (DataSource) map.get(CodModuleOrderEnum.DATA.getOrder());
+        return this.getData(CodModuleOrderEnum.DATA.getOrder(), DataSource.class);
     }
 
     /**
@@ -203,7 +203,7 @@ public class CodModuleLauncherModel implements Serializable {
     }
 
     public DataSource getModuleDatasource(String name){
-        return (DataSource) datasourcdMap.get(name);
+        return datasourcdMap.get(name);
     }
 
     /**

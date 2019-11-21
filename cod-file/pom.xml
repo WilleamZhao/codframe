@@ -57,6 +57,12 @@
             <version>${codframe.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-spring</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

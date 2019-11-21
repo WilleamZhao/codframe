@@ -10,6 +10,7 @@ package com.tlkj.cod.launcher.exception;
  */
 public class CodModuleStartFailException extends Exception {
 
+    private static final long serialVersionUID = 7272817007981987095L;
 
     @Override
     public void printStackTrace() {

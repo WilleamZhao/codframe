@@ -27,10 +27,6 @@ public class CodCommonParamDefined {
     /**
      * 接口token名称
      */
-    public static final String API_TOKEN_NAME = "cod_api_token";
-
-    public static final String api_token_name1 = "cod_api_token";
-
-
+    public static final String API_TOKEN_NAME = "cod_token";
 
 }

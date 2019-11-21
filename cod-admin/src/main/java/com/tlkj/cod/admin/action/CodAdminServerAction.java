@@ -11,6 +11,9 @@ package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
+import com.tlkj.cod.server.facade.CodServerFacade;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +32,14 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("admin/server")
 public class CodAdminServerAction extends GeneralResponse {
 
+    private CodServerFacade codServerFacade;
+
+    @Autowired
+    @Lazy
+    public CodAdminServerAction(CodServerFacade codServerFacade){
+        this.codServerFacade = codServerFacade;
+    }
+
     /**
      * 服务列表
      */
@@ -44,6 +55,30 @@ public class CodAdminServerAction extends GeneralResponse {
     @RequestMapping(value = "update", method = {RequestMethod.POST})
     public Response update(HttpServletRequest request) {
         String name = request.getParameter("name");
+        return super.success();
+    }
+
+    /**
+     * 停止服务
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "stop", method = {RequestMethod.GET})
+    public Response stop(HttpServletRequest request){
+        String name = request.getParameter("name");
+        codServerFacade.stop();
+        return super.success();
+    }
+
+    /**
+     * 重启服务
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "restart", method = {RequestMethod.GET})
+    public Response restart(HttpServletRequest request){
+        String name = request.getParameter("name");
+        codServerFacade.restart();
         return super.success();
     }
 

@@ -1,14 +1,13 @@
 /*
  * Copyright (c) 2018-2019.
- * Beijing sky blue technology co., LTD.
- * All rights reserved
+ * sourcod All rights reserved
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.sourcod.com
+ * site：http://blog.sourcod.com
  */
 
-package com.tlkj.cod.server.model.server;
+package com.tlkj.cod.server.model.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +39,7 @@ public class CodServerTomcatConfig extends CodServerConfig {
     private String protocol = "org.apache.coyote.http11.Http11NioProtocol";
 
     /**
+     * tomcat存储自身信息的目录，比如日志等信息，根目录
      * 根目录
      */
     private String baseDir = ".";

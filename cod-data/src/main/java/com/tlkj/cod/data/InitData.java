@@ -4,6 +4,7 @@ import com.tlkj.cod.dao.bean.DataConnectBean;
 import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
 import com.tlkj.cod.dao.util.CodDaoConnectionPool;
 import com.tlkj.cod.data.model.config.CodDataConfig;
+import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.init.CodModuleDataInitialize;
@@ -31,7 +32,7 @@ public class InitData implements CodModuleDataInitialize {
 
     @Override
     public void success(CodModuleLauncherModel codModuleLauncherModel) {
-        CodDataServiceImpl codDataService = codModuleLauncherModel.getBean(CodDataServiceImpl.class);
+        CodDataService codDataService = codModuleLauncherModel.getBean(CodDataServiceImpl.class);
         codModuleLauncherModel.setData(CodModuleOrderEnum.DATA.getOrder(), codDataService, false);
     }
 

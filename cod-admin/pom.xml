@@ -55,6 +55,13 @@
             <version>${codframe.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-server</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+
         <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-model</artifactId>
@@ -78,6 +85,7 @@
             <artifactId>mail</artifactId>
             <version>1.4.5</version>
         </dependency>
+
 
     </dependencies>
 

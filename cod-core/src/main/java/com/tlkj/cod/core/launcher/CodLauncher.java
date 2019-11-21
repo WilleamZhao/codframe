@@ -14,9 +14,10 @@ import com.tlkj.cod.common.CodCommonDate;
 import com.tlkj.cod.core.common.CodCoreFindClass;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.core.main.CodSpringConfiguration;
 import com.tlkj.cod.launcher.exception.CodModuleStartFailException;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.spring.model.config.CodSpringConfiguration;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +42,6 @@ import java.util.Map;
  */
 public class CodLauncher {
 
-    // private static List<Integer> list = new ArrayList<>();
-    // private static LinkedList<CodModuleInitialize> linkedList = new LinkedList<>();
-
-    private static List list = new ArrayList();
     private static final CodModuleLauncherModel LAUNCHER_MODEL = CodModuleLauncherModel.getInstance();
     private static Logger logger = LoggerFactory.getLogger(CodLauncher.class);
 

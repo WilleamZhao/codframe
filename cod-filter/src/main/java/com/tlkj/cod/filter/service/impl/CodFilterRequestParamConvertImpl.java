@@ -125,6 +125,11 @@ public class CodFilterRequestParamConvertImpl implements CodFilterService {
     }
 
     @Override
+    public boolean state() {
+        return false;
+    }
+
+    @Override
     public String name() {
         return "codFilterRequestParamConvert";
     }

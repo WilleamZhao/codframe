@@ -20,6 +20,21 @@ public class InitFile implements CodModuleInitialize {
     }
 
     @Override
+    public String alias() {
+        return "文件";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
+    }
+
+    @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
         codModuleLauncherModel.finish();
     }

@@ -66,7 +66,7 @@ public enum StatusCode {
     /**
      * token 错误
      */
-    TOKEN_ERROR_CODE("0017", "参数错误", "参数错误"),
+    TOKEN_ERROR_CODE("0017", "token错误", "token不能为空"),
 
     /**
      * JWT 错误

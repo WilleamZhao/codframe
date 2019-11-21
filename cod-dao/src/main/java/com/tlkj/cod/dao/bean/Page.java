@@ -89,6 +89,9 @@ public class Page<T> {
     }
 
     public boolean isData(){
+        if (this.p == null){
+            return false;
+        }
         if (this.p.total == 0){
             return false;
         }

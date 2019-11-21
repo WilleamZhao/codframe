@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2018-2019.
+ * sourcod All rights reserved
+ *
+ * author: sourcod
+ * github: https://github.com/WilleamZhao
+ * site：http://blog.sourcod.com
+ */
+
 package com.tlkj.cod.filter.manager.impl;
 
 /**

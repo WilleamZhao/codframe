@@ -12,6 +12,7 @@ package com.tlkj.cod.server.service;
 
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import com.tlkj.cod.launcher.service.CodCoreServiceManagement;
+import com.tlkj.cod.server.model.config.CodServerConfig;
 
 /**
  * Desc 抽象web服务
@@ -24,13 +25,13 @@ import com.tlkj.cod.launcher.service.CodCoreServiceManagement;
 public interface CodServerService extends CodCoreServiceManagement {
 
     default String support(){
-        return "jetty";
+        return "codServerJetty";
     }
 
     /**
      * 启动
      */
-    void start(CodModuleLauncherModel codModuleLauncherModel);
+    void start(CodModuleLauncherModel codModuleLauncherModel, CodServerConfig codServerConfig);
 
     /**
      * 停止

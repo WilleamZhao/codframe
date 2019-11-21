@@ -122,19 +122,6 @@
             </exclusions>
         </dependency>
 
-        <!-- spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!-- Transaction -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
 
         <!-- userAgentUtils -->
         <dependency>
@@ -180,19 +167,19 @@
             <version>${codframe.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-spring</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
         <!--
         <dependency>
             <groupId>com.tlkj</groupId>
-            <artifactId>cod-server</artifactId>
+            <artifactId>cod-file</artifactId>
             <version>${codframe.version}</version>
         </dependency>
         -->
-
-        <!--<dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-filter</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>-->
 
     </dependencies>
 

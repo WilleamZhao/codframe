@@ -12,6 +12,7 @@ package com.tlkj.cod.server.service.impl;
 
 
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.server.model.config.CodServerConfig;
 import com.tlkj.cod.server.service.CodServerService;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,7 @@ public class CodServerServiceResinImpl implements CodServerService {
     }
 
     @Override
-    public void start(CodModuleLauncherModel codModuleLauncherModel) {
+    public void start(CodModuleLauncherModel codModuleLauncherModel, CodServerConfig codServerConfig) {
 
     }
 

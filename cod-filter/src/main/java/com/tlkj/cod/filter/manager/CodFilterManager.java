@@ -7,7 +7,7 @@
  * site：http://blog.sourcod.com
  */
 
-package com.tlkj.cod.filter;
+package com.tlkj.cod.filter.manager;
 
 /**
  * Desc 框架通用 filter

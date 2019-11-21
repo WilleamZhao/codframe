@@ -1,16 +1,19 @@
 package com.tlkj.cod.filter;
 
-import com.tlkj.cod.filter.service.impl.CodFilterCorsImpl;
-import com.tlkj.cod.filter.service.impl.CodFilterInitAdminImpl;
-import com.tlkj.cod.filter.service.impl.CodFilterJwtImpl;
-import com.tlkj.cod.filter.service.impl.CodFilterRequestParamConvertImpl;
+import com.tlkj.cod.core.spring.SpringContextUtil;
+import com.tlkj.cod.filter.service.CodFilterService;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import com.tlkj.cod.server.model.CodServerFilterModel;
-import com.tlkj.cod.server.model.server.CodServerModel;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.servlet.DispatcherType;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Desc
@@ -22,6 +25,8 @@ import javax.servlet.DispatcherType;
  */
 public class InitFilter implements CodModuleInitialize {
 
+    private Logger logger = LoggerFactory.getLogger(InitFilter.class);
+
     @Override
     public int order() {
         return CodModuleOrderEnum.FILTER.getOrder();
@@ -32,9 +37,38 @@ public class InitFilter implements CodModuleInitialize {
         return "过滤器";
     }
 
+    /**
+     * 初始化 filter
+     * @param codModuleLauncherModel 启动引导对象
+     */
     @Override
     public void success(CodModuleLauncherModel codModuleLauncherModel) {
+        // 获取所有 filter service
+        Map<String, CodFilterService> map = SpringContextUtil.getApplicationContext().getBeansOfType(CodFilterService.class);
+        // 遍历
+        Set<Map.Entry<String, CodFilterService>> set = map.entrySet();
+        List<CodServerFilterModel> list = new LinkedList<>();
+        for (Map.Entry<String, CodFilterService> entry : set){
+            String key = entry.getKey();
+            // 获取 filter service/
+            CodFilterService codFilterService = entry.getValue();
+            // 设置 filter model
+            if (codFilterService.state()) {
+                CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
+                codServerFilterModel.setName(codFilterService.name());
+                codServerFilterModel.setFilter(codFilterService.filter());
+                codServerFilterModel.setDispatcher(codFilterService.dispatcherType());
+                codServerFilterModel.setMapping(codFilterService.mapping());
+                codServerFilterModel.setParamList(codFilterService.params());
+                list.add(codServerFilterModel);
+            }
 
+            logger.info("加载 {} 过滤器, mapping = {}, name = {}, dispatcher = {}",
+                    StringUtils.isBlank(codFilterService.alias()) ? codFilterService.name() : codFilterService.alias(),
+                    codFilterService.mapping(), codFilterService.name(), codFilterService.dispatcherType().toString());
+        }
+        // 设置 filter
+        codModuleLauncherModel.setData(CodModuleOrderEnum.FILTER.getOrder(), list, false);
     }
 
     @Override
@@ -44,11 +78,7 @@ public class InitFilter implements CodModuleInitialize {
 
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
-        CodServerModel codServer = CodServerModel.getInstance();
-        setCors(codServer);
-        // setJwt(codServer);
-        setParamConvert(codServer);
-        setInitAdmin(codServer);
+        codModuleLauncherModel.finish();
     }
 
     @Override
@@ -56,66 +86,4 @@ public class InitFilter implements CodModuleInitialize {
 
     }
 
-    /**
-     * 设置cors
-     * @param codServer
-     */
-    private void setCors(CodServerModel codServer){
-        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
-        codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterCorsImpl());
-        codServerFilterModel.setName("cors");
-        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
-        codServer.addFilter(codServerFilterModel);
-    }
-
-    /**
-     * 设置黑白名单
-     * @param codServer
-     */
-    private void setAllowDisable(CodServerModel codServer){
-        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
-        codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterCorsImpl());
-        codServerFilterModel.setName("allowDisable");
-        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
-        codServer.addFilter(codServerFilterModel);
-    }
-
-    /**
-     * 设置JWT
-     * @param codServer
-     */
-    private void setJwt(CodServerModel codServer){
-        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
-        codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterJwtImpl());
-        codServerFilterModel.setName("token");
-        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
-        codServer.addFilter(codServerFilterModel);
-    }
-
-    /**
-     * 设置参数转换
-     */
-    private void setParamConvert(CodServerModel codServer){
-        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
-        codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterRequestParamConvertImpl());
-        codServerFilterModel.setName("param");
-        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
-        codServer.addFilter(codServerFilterModel);
-    }
-
-    /**
-     * 设置是否初始化过滤器
-     */
-    private void setInitAdmin(CodServerModel codServerModel){
-        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
-        codServerFilterModel.setMapping("/*");
-        codServerFilterModel.setFilter(new CodFilterInitAdminImpl());
-        codServerFilterModel.setName("initAdmin");
-        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
-        codServerModel.addFilter(codServerFilterModel);
-    }
 }

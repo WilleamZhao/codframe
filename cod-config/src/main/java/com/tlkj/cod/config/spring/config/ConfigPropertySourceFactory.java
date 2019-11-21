@@ -8,6 +8,9 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
+ *
+ * 配置源工厂
+ *
  * @author sourcod
  * @date 2019/05/31
  */

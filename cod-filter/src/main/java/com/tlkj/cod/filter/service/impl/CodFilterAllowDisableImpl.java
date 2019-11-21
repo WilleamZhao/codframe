@@ -10,7 +10,6 @@
 package com.tlkj.cod.filter.service.impl;
 
 import com.tlkj.cod.common.CodCommonNetWork;
-import com.tlkj.cod.filter.model.bo.CodFilterBo;
 import com.tlkj.cod.filter.model.config.CodFilterAllowDisableConfig;
 import com.tlkj.cod.filter.service.CodFilterService;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +38,7 @@ public class CodFilterAllowDisableImpl implements CodFilterService {
     private CodFilterAllowDisableConfig codFilterAllowDisableConfig;
 
     @Autowired
-    CodFilterAllowDisableImpl(CodFilterAllowDisableConfig codFilterAllowDisableConfig){
+    public CodFilterAllowDisableImpl(CodFilterAllowDisableConfig codFilterAllowDisableConfig){
         this.codFilterAllowDisableConfig = codFilterAllowDisableConfig;
     }
 
@@ -64,6 +63,7 @@ public class CodFilterAllowDisableImpl implements CodFilterService {
                     String[] allows = allow.split(",");
                     for (String allowIp : allows){
                         isVisit = CodCommonNetWork.isInRange(ip, allowIp);
+
                     }
                 }
             }
@@ -72,7 +72,7 @@ public class CodFilterAllowDisableImpl implements CodFilterService {
             if ("0".equals(type)){
                 String disable = codFilterAllowDisableConfig.getAllow();
                 if (StringUtils.isNotBlank(disable)){
-
+                    isVisit = CodCommonNetWork.isInRange(ip, disable);
                 }
                 CodCommonNetWork.isInRange(ip, codFilterAllowDisableConfig.getDisable());
 
@@ -83,6 +83,11 @@ public class CodFilterAllowDisableImpl implements CodFilterService {
     @Override
     public void destroy() {
 
+    }
+
+    @Override
+    public boolean state() {
+        return "1".equals(codFilterAllowDisableConfig.getState());
     }
 
     @Override
@@ -98,5 +103,10 @@ public class CodFilterAllowDisableImpl implements CodFilterService {
     @Override
     public int sort() {
         return 0;
+    }
+
+    @Override
+    public String mapping() {
+        return null;
     }
 }

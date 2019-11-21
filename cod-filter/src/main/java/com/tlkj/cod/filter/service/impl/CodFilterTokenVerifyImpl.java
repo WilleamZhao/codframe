@@ -9,7 +9,9 @@
 
 package com.tlkj.cod.filter.service.impl;
 
+import com.tlkj.cod.cache.CodCacheManager;
 import com.tlkj.cod.common.constant.CodCommonParamDefined;
+import com.tlkj.cod.core.spring.SpringContextUtil;
 import com.tlkj.cod.filter.common.CodFilterCommon;
 import com.tlkj.cod.filter.service.CodFilterService;
 import com.tlkj.cod.model.common.Response;
@@ -25,9 +27,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -43,6 +43,13 @@ import java.util.TreeMap;
  */
 @Service("codFilterTokenVerify")
 public class CodFilterTokenVerifyImpl implements CodFilterService {
+
+    private CodCacheManager codCacheManager;
+
+    @Override
+    public boolean state() {
+        return false;
+    }
 
     @Override
     public String name() {
@@ -60,8 +67,13 @@ public class CodFilterTokenVerifyImpl implements CodFilterService {
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public String mapping() {
+        return null;
+    }
 
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+         this.codCacheManager = (CodCacheManager) SpringContextUtil.getBean("codCacheManager");
     }
 
     @Override
@@ -70,6 +82,37 @@ public class CodFilterTokenVerifyImpl implements CodFilterService {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         // 获取请求 url
         String requestURI = request.getRequestURI();
+        System.out.println(requestURI);
+
+        // 1.获取全路径
+        //得到http://localhost:8888/CRM/loginController/login
+        StringBuffer url1 = request.getRequestURL();
+        System.out.println(url1.toString());
+
+        // 2.获取协议名和域名
+        //得到协议名 例如：http
+        String scheme = request.getScheme();
+        System.out.println(scheme);
+
+        //得到域名 localhost
+        String serverName = request.getServerName();
+        System.out.println(serverName);
+
+        // 3.获取请求所有参数  //map类型
+        // request.getParameterMap();
+        // System.out.println(serverName);
+
+        // 4.获取项目名
+        //   /CRM
+        String contextPath = request.getContextPath();
+        System.out.println(contextPath);
+
+        // 5.获取请求方法
+        //   /loginController/login
+        String servletPath = request.getServletPath();
+        System.out.println(servletPath);
+        String pathInfo = request.getPathInfo();
+        System.out.println(pathInfo);
 
         // 获取 token
         String tokenStr = request.getParameter(CodCommonParamDefined.API_TOKEN_NAME);
@@ -86,6 +129,9 @@ public class CodFilterTokenVerifyImpl implements CodFilterService {
             CodFilterCommon.response(response, response1);
             return;
         }
+
+        String tokenValue = codCacheManager.get(tokenStr, String.class);
+        System.out.println(tokenValue);
 
         Enumeration enumeration = request.getParameterNames();
         Map<String, String> map = new TreeMap<>();

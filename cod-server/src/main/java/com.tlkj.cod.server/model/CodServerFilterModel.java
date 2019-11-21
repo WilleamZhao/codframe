@@ -10,6 +10,9 @@
 
 package com.tlkj.cod.server.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import java.util.LinkedList;
@@ -23,6 +26,8 @@ import java.util.Map;
  * @className CodServerFilterModel
  * @date 2019/4/28 6:00 PM
  */
+@Getter
+@Setter
 public class CodServerFilterModel {
 
     /**
@@ -45,45 +50,9 @@ public class CodServerFilterModel {
      */
     private Map<String, String> paramList;
 
+    /**
+     * dispatcher
+     */
     private DispatcherType dispatcher = DispatcherType.REQUEST;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMapping() {
-        return mapping;
-    }
-
-    public void setMapping(String mapping) {
-        this.mapping = mapping;
-    }
-
-    public Filter getFilter() {
-        return filter;
-    }
-
-    public void setFilter(Filter filter) {
-        this.filter = filter;
-    }
-
-    public Map<String, String> getParamList() {
-        return paramList;
-    }
-
-    public void setParamList(Map<String, String> paramList) {
-        this.paramList = paramList;
-    }
-
-    public DispatcherType getDispatcher() {
-        return dispatcher;
-    }
-
-    public void setDispatcher(DispatcherType dispatcher) {
-        this.dispatcher = dispatcher;
-    }
 }

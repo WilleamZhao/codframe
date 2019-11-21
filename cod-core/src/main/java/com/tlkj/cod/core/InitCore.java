@@ -35,6 +35,11 @@ public class InitCore implements CodModuleInitialize {
     }
 
     @Override
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
+        codModuleLauncherModel.finish();
+    }
+
+    @Override
     public void success(CodModuleLauncherModel codModuleLauncherModel) {
 
     }
@@ -42,10 +47,6 @@ public class InitCore implements CodModuleInitialize {
     @Override
     public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
         codModuleLauncherModel.stop();
-    }
-    @Override
-    public void init(CodModuleLauncherModel codModuleLauncherModel) {
-
     }
 
     @Override

@@ -22,7 +22,6 @@ import java.io.Serializable;
  * @author sourcod
  * @date 2019年6月16日 20点48分
  */
-
 @Getter
 @Setter
 @Component
@@ -36,7 +35,17 @@ public class CodFileConfig extends CodCoreConfig implements Serializable {
     @Value("${cod.file.config.type:local}")
     private String type;
 
-    private String value;
+    /**
+     * 上传文件大小; 默认 50M
+     */
+    @Value("${cod.file.config.upload.size:52428800}")
+    private int uploadSize;
+
+    /**
+     * 最大内存占用; 默认 4G
+     */
+    @Value("${cod.file.config.memory.size:40960}")
+    private int memorySize;
 
 
 

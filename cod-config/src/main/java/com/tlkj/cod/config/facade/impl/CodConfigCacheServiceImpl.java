@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Desc
+ * Desc 缓存配置
  *
  * @author sourcod
  * @version 1.0

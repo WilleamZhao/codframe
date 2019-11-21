@@ -409,7 +409,9 @@ public final class CodLoggerAdapter extends MarkerIgnoringBase implements Locati
                         isThrowable = true;
                         throwable = (Throwable) tempObject[tempObject.length - 1];
                         // 打印异常信息
-                        throwable.printStackTrace();
+                        if (throwable != null){
+                            throwable.printStackTrace();
+                        }
                     }
                 }
             }

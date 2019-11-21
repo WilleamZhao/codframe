@@ -9,7 +9,9 @@
 
 package com.tlkj.cod.filter.service;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import java.util.Map;
 
 /**
  * Desc 过滤器 service
@@ -20,6 +22,14 @@ import javax.servlet.Filter;
  * @date 2019/9/3 2:38 PM
  */
 public interface CodFilterService extends Filter{
+
+    /**
+     * 是否开启
+     * 0: 关闭
+     * 1: 开启
+     * @return
+     */
+    boolean state();
 
     /**
      * 过滤器名称
@@ -38,4 +48,40 @@ public interface CodFilterService extends Filter{
      * @return
      */
     int sort();
+
+    /**
+     * mapping
+     * 默认所有
+     *
+     * @return
+     */
+    default String mapping(){
+        return "/*";
+    }
+
+    /**
+     * dispathcerType
+     * 默认请求
+     *
+     * @return
+     */
+    default DispatcherType dispatcherType(){
+        return DispatcherType.REQUEST;
+    }
+
+    /**
+     * filter
+     * @return
+     */
+    default Filter filter(){
+        return this;
+    }
+
+    /**
+     * 参数
+     * @return
+     */
+    default Map<String, String> params(){
+        return null;
+    }
 }

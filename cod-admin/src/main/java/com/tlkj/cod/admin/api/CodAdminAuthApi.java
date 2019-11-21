@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("admin/auth")
 public class CodAdminAuthApi extends GeneralResponse {
 
-    @Autowired
+    /*@Autowired
     public CodAdminAuthApi(){
 
-    }
+    }*/
 
 }

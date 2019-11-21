@@ -5,8 +5,6 @@ import com.tlkj.cod.config.facade.CodConfigFacade;
 import com.tlkj.cod.config.model.CodConfig;
 import com.tlkj.cod.config.model.enums.CodConfigSourceType;
 import com.tlkj.cod.config.service.CodConfigService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
  * @className CodConfigFacadeImpl
  * @date 2019/5/30 11:30 AM
  */
-// @Service
 public class CodConfigFacadeImpl implements CodConfigFacade {
 
     // @Autowired
@@ -32,7 +29,7 @@ public class CodConfigFacadeImpl implements CodConfigFacade {
     private static final List<Map<String, Object>> list = new ArrayList<>();
     private static final List<CodConfig> codConfigs = new ArrayList<>();
 
-    // @Autowired
+
     public CodConfigFacadeImpl(List<CodConfigService> codConfigServices){
         this.codConfigServiceList = sort(codConfigServices);
     }
