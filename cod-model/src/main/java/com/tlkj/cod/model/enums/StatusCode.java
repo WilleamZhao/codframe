@@ -10,6 +10,10 @@
 
 package com.tlkj.cod.model.enums;
 
+import com.tlkj.cod.common.CodCommonDynamicEnum;
+
+import java.util.Arrays;
+
 /**
  * Desc 返回状态码
  *
@@ -123,5 +127,38 @@ public enum StatusCode {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 动态添加状态码
+     * @param enumName   枚举名称
+     * @param statusCode 状态码
+     * @param statusName 状态名称
+     * @param statusDesc 状态描述
+     */
+    public static void addStatusCode(String enumName, String statusCode, String statusName, String statusDesc){
+        CodCommonDynamicEnum.addEnum(StatusCode.class, enumName, new Class<?>[]{String.class, String.class, String.class}, new Object[]{statusCode, statusName, statusDesc});
+    }
+
+    /**
+     * 获取状态码 ( 可获取动态添加枚举 )
+     * @param enumName 枚举名称
+     * @return
+     */
+    public static StatusCode getStatusCode(String enumName){
+        return CodCommonDynamicEnum.getStatusCode(enumName, StatusCode.class);
+    }
+
+
+    public static void main(String[] args) {
+        // 动态添加枚举
+        StatusCode.addStatusCode("ERROR_CODE", "a", "b", "c");
+
+        System.out.println(Arrays.deepToString(StatusCode.values()));
+        // 获取枚举
+        System.out.println(StatusCode.getStatusCode("ERROR_CODE").statusCode);
+        System.out.println(StatusCode.getStatusCode("ERROR_CODE").statusDesc);
+        System.out.println(StatusCode.getStatusCode("ERROR_CODE").statusName);
+
     }
 }

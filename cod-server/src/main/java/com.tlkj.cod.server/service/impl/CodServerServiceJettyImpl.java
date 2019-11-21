@@ -149,24 +149,18 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
 
         server = new Server();
 
-        // server.setHandler(context);
 
-        // TODO 添加统计 handler
+        // 添加统计 StatisticsHandler 优雅的关闭 jetty
         StatisticsHandler statisticsHandler = new StatisticsHandler();
         statisticsHandler.setHandler(context);
         server.setHandler(statisticsHandler);
 
-        // context.
-
         server.setStopAtShutdown(true);
 
-
         ServerConnector connector = new ServerConnector(server);
-
+        // 设置超时时间 默认 30 秒
         connector.setStopTimeout(30000);
-
         connector.setPort(codServerConfig.getPort());
-
         String host = codServerConfig.getHost();
         if (StringUtils.isNotBlank(host)) {
             connector.setHost(host);
