@@ -85,7 +85,7 @@ public class CodCommonDynamicEnum {
                                    Object[] additionalValues) throws Exception {
         Object[] parms = new Object[additionalValues.length + 2];
         parms[0] = value;
-        parms[1] = Integer.valueOf(ordinal);
+        parms[1] = ordinal;
         System.arraycopy(additionalValues, 0, parms, 2, additionalValues.length);
         return enumClass.cast(getConstructorAccessor(enumClass, additionalTypes).newInstance(parms));
     }
@@ -120,24 +120,39 @@ public class CodCommonDynamicEnum {
 
             // 2. Copy it
             T[] previousValues = (T[]) valuesField.get(enumType);
-            List<T> values = new ArrayList<T>(Arrays.asList(previousValues));
+            List<T> values = new ArrayList(Arrays.asList(previousValues));
 
-            // 3. build new enum
-            T newValue = (T) makeEnum(enumType, enumName, values.size(), additionalTypes, additionalValues);
+            // 判断是否已存在
+            if (!isEnum(previousValues, enumName)){
+                // 3. build new enum
+                T newValue = (T) makeEnum(enumType, enumName, values.size(), additionalTypes, additionalValues);
+                // 4. add new value
+                values.add(newValue);
+                // 5. Set new values field
+                setFailsafeFieldValue(valuesField, null, values.toArray((T[]) Array.newInstance(enumType, 0)));
 
-            // 4. add new value
-            values.add(newValue);
+                // 6. Clean enum cache
+                cleanEnumCache(enumType);
+            }
 
-            // 5. Set new values field
-            setFailsafeFieldValue(valuesField, null, values.toArray((T[]) Array.newInstance(enumType, 0)));
-
-            // 6. Clean enum cache
-            cleanEnumCache(enumType);
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * 判断是否存在
+     * @return
+     */
+    private static <T> boolean isEnum(Enum[] ts, String enumName){
+        for (Enum t1 : ts){
+            if (t1.name().equals(enumName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

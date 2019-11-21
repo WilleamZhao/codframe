@@ -153,6 +153,8 @@ public enum StatusCode {
     public static void main(String[] args) {
         // 动态添加枚举
         StatusCode.addStatusCode("ERROR_CODE", "a", "b", "c");
+        StatusCode.addStatusCode("ERROR_CODE", "a", "b", "c");
+        StatusCode.addStatusCode("ERROR_CODE", "a", "b", "c");
 
         System.out.println(Arrays.deepToString(StatusCode.values()));
         // 获取枚举
