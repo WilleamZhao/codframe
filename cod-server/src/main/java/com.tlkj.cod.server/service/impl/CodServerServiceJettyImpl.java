@@ -11,7 +11,6 @@
 package com.tlkj.cod.server.service.impl;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.tlkj.cod.core.launcher.CodLauncher;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
 import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 import com.tlkj.cod.server.model.CodServerFilterModel;
@@ -20,11 +19,8 @@ import com.tlkj.cod.server.model.config.CodServerSpringMVCConfiguration;
 import com.tlkj.cod.server.model.config.CodServerJettyConfig;
 import com.tlkj.cod.server.model.config.CodServerConfig;
 import com.tlkj.cod.server.service.CodServerService;
-import com.tlkj.cod.spring.common.CodSpringContext;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.threads.TaskThreadFactory;
 import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -39,9 +35,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.lang.management.ManagementFactory;
 import java.util.EnumSet;
 import java.util.EventListener;
@@ -243,31 +236,7 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         executorService.execute(() -> {
             try {
                 this.stop();
-                // 等待3秒
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                String name = ManagementFactory.getRuntimeMXBean().getName();
-                String pid = name.split("@")[0];
-                String os = System.getProperty("os.name");
-                if (os != null && os.startsWith("Windows")){
-                    Runtime.getRuntime().exec("Taskkill /f /IM " + pid);
-                } else {
-                    Process process = Runtime.getRuntime().exec("lsof -p " + pid);
-                    BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                    StringBuffer sb = new StringBuffer();
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line).append("\n");
-                    }
-                    String result = sb.toString();
-                    System.out.println(result);
-                }
-                // CodLauncher.main(null);
-
-                // this.start(codModuleLauncherModel, codServerConfig);
+                this.start(codModuleLauncherModel, codServerConfig);
             } catch (Exception e) {
                 e.printStackTrace();
             }

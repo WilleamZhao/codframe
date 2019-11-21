@@ -100,12 +100,6 @@
             <version>${codframe.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-core</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-
     </dependencies>
 
     <build>
