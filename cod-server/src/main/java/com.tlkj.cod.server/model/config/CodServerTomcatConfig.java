@@ -25,13 +25,28 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component("codServerTomcatModel")
-public class CodServerTomcatModel extends CodServerModel {
+public class CodServerTomcatConfig extends CodServerConfig {
 
     private static final long serialVersionUID = -3459632559913123565L;
+
+
+    /**
+     * tomcat 工作模式
+     * apr  org.apache.coyote.http11.Http11AprProtocol
+     * nio  org.apache.coyote.http11.Http11NioProtocol
+     * nio2 org.apache.coyote.http11.Http11Nio2Protocol
+     * bio  org.apache.coyote.http11.Http11Protocol
+     */
     private String protocol = "org.apache.coyote.http11.Http11NioProtocol";
 
+    /**
+     * 根目录
+     */
     private String baseDir = ".";
 
+    /**
+     * 项目文件名
+     */
     private String contextPath = "";
 
 }

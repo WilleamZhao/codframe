@@ -13,17 +13,16 @@ package com.tlkj.cod.server.model.server;
 import org.springframework.stereotype.Component;
 
 /**
- * Desc cod server jetty 配置
+ * Desc cod server resin 配置
  *
  * @author sourcod
  * @version 1.0
- * @className CodServerJettyModel
+ * @className CodServerResinModel
  * @date 2019/4/24 5:55 PM
  */
-@Component("codServerJettyModel")
-public class CodServerJettyModel extends CodServerModel {
+@Component("codServerResinModel")
+public class CodServerResinConfig extends CodServerConfig {
 
-    private static final long serialVersionUID = 2289630765748591392L;
-
+    private static final long serialVersionUID = 1376197623420840567L;
 
 }

@@ -61,6 +61,11 @@ public class InitModuleSpring implements CodModuleSpringInitialize {
     }
 
     @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+        codModuleLauncherModel.finish();
+    }
+
+    @Override
     public void fail(Throwable e) {
         System.out.println("初始化失败");
     }

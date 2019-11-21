@@ -11,6 +11,8 @@
 package com.tlkj.cod.core.main;
 
 import com.tlkj.cod.common.CodCommonSpringContext;
+import com.tlkj.cod.file.model.config.CodFileConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -47,14 +49,19 @@ public class CodSpringConfiguration extends WebMvcConfigurerAdapter{
      * 文件上传
      */
     @Bean(name = "multipartResolver")
-    public MultipartResolver multipartResolver(){
+    public MultipartResolver multipartResolver(CodFileConfig codFileConfig){
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("UTF-8");
         //resolveLazily属性启用是为了推迟文件解析，以在在UploadAction中捕获文件大小异常
         resolver.setResolveLazily(true);
-        resolver.setMaxInMemorySize(40960);
+        int memorySize = codFileConfig.getMemorySize();
+        System.out.println(memorySize);
+
+        resolver.setMaxInMemorySize(memorySize);
+
         //上传文件大小 50M 50*1024*1024
-        resolver.setMaxUploadSize(50*1024*1024);
+        int uploadSize = codFileConfig.getUploadSize();
+        resolver.setMaxUploadSize(uploadSize);
         return resolver;
     }
 
