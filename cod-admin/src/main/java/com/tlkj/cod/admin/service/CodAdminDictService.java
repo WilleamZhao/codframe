@@ -97,6 +97,13 @@ public interface CodAdminDictService {
     CodAdminDictItemBo getItem(String code);
 
     /**
+     * 根据 id 获取 item
+     * @param id 主键
+     * @return
+     */
+    CodAdminDictItemBo getItemById(String id);
+
+    /**
      * 删除字典数据
      * @param id id
      * @return

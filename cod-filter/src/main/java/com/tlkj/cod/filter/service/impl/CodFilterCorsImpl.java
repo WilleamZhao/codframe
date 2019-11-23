@@ -68,9 +68,9 @@ public class CodFilterCorsImpl implements CodFilterService {
         }
 
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, x-requested-with, Authorization, cod_admin_token");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, x-requested-with, Content-Type, Authorization, cod_admin_token");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         // TODO 动态返回服务版本
         response.setHeader("server", "codFrame v" + codCoreConfig.getFrameVersion());

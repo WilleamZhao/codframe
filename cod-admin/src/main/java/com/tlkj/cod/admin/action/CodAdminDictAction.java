@@ -115,11 +115,11 @@ public class CodAdminDictAction extends GeneralResponse {
      * 获取字典数据
      */
     @CodParamVerify(parameter = "itemId")
-    @RequestMapping(value = "getDictItem", method = {RequestMethod.GET})
+    @RequestMapping(value = "getItemById", method = {RequestMethod.GET})
     public Response getDictItem(HttpServletRequest request){
-        String itemId = request.getParameter("dict");
-
-        return super.success();
+        String itemId = request.getParameter("itemId");
+        CodAdminDictItemBo bo = codAdminDictService.getItemById(itemId);
+        return bo != null ? super.success(bo) : super.fail(StatusCode.DATA_NULL_CODE);
     }
 
     /**

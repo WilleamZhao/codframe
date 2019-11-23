@@ -461,6 +461,31 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
     }
 
     /**
+     * 根据 id 获取 item
+     * @param id 主键
+     * @return
+     */
+    @Override
+    public CodAdminDictItemBo getItemById(String id) {
+        Finder.Query query = finder.from(CodAdminDictItemDo.TABLE_NAME);
+        query.where("id", id);
+        CodAdminDictItemDo dictItemDo = query.first(CodAdminDictItemDo.class);
+        CodAdminDictItemBo bo = new CodAdminDictItemBo();
+        if (dictItemDo == null){
+            return bo;
+        }
+        bo.setId(dictItemDo.getId());
+        bo.setValue(dictItemDo.getItem_value());
+        bo.setName(dictItemDo.getItem_name());
+        bo.setCode(dictItemDo.getItem_code());
+        bo.setSimplePin(dictItemDo.getSimplepin());
+        bo.setRemark(dictItemDo.getRemark());
+        bo.setEnglishName(dictItemDo.getEnglish_name());
+        bo.setAllPin(dictItemDo.getAllpin());
+        return bo;
+    }
+
+    /**
      * 删除字典数据
      * @param id id
      * @return
