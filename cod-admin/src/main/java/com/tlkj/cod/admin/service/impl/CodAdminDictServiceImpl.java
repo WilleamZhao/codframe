@@ -338,6 +338,26 @@ public class CodAdminDictServiceImpl implements CodAdminDictService {
         return StatusCode.FAIL_CODE;
     }
 
+    @Override
+    public StatusCode updateDictItem(String id, CodAdminDictItemListDto codAdminDictItemListDto) {
+        Updater.Update update = updater.update(CodAdminDictItemDo.TABLE_NAME).where("id", id).set(codAdminDictItemListDto.toDo(CodAdminDictItemDo.class), CodAdminDictItemDo.class);
+        int i = update.update();
+        if (i == 1){
+            return StatusCode.SUCCESS_CODE;
+        }
+        return StatusCode.FAIL_CODE;
+    }
+
+    @Override
+    public StatusCode updateDictType(String id, CodAdminDictTypeListDto codAdminDictTypeListDto) {
+        Updater.Update update = updater.update(CodAdminDictTypeDo.TABLE_NAME).where("id", id).set(codAdminDictTypeListDto.toDo(CodAdminDictTypeDo.class), CodAdminDictTypeDo.class);
+        int i = update.update();
+        if (i == 1){
+            return StatusCode.SUCCESS_CODE;
+        }
+        return StatusCode.FAIL_CODE;
+    }
+
     /**
      * 保存字典类型
      * @param typeCode    类型代码
