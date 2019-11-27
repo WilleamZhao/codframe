@@ -109,10 +109,10 @@ public class CodServerServiceJettyImpl implements CodServerService {
         ServletContextHandler context = new ServletContextHandler();
 
         // 项目根目录
-        context.setContextPath("/");
+        context.setContextPath("/" + codServerConfig.getProjectName());
 
         // servlet
-        context.addServlet(servletHolder, "/" + codServerConfig.getProjectName() + "/*");
+        context.addServlet(servletHolder, "/*");
 
         // 获取 filters
         LinkedList<CodServerFilterModel> filters = CodServerServiceJettyImpl.codModuleLauncherModel.getData(CodModuleOrderEnum.FILTER.getOrder(), LinkedList.class);
