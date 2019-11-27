@@ -129,6 +129,8 @@ public class Finder extends CodDao {
         view.getJoins(query);
         view.getSelect(query);
         view.getWhere(query);
+        view.getGroupBy(query);
+        view.getOrderBy(query);
         return query;
     }
 
