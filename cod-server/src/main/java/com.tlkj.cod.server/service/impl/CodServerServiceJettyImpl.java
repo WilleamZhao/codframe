@@ -87,7 +87,9 @@ public class CodServerServiceJettyImpl implements CodServerService, Runnable {
         // set Dispatcher
         ServletHolder servletHolder = new ServletHolder(dispatcherServlet);
         ServletContextHandler context = new ServletContextHandler();
-        context.addServlet(servletHolder, "/" + codServerModel.getProjectName() + "/*");
+        context.setContextPath("/" + codServerModel.getProjectName());
+        System.out.println(codServerModel.getProjectName());
+        context.addServlet(servletHolder, "/*");
 
         LinkedList<CodServerFilterModel> filters = codServerModel.getFilters();
 

@@ -171,6 +171,28 @@ public class CodAdminDictAction extends GeneralResponse {
     }
 
     /**
+     * 更新字典数据
+     */
+    @CodParamVerify(parameter = "id")
+    @RequestMapping(value = "item/update", method = {RequestMethod.POST})
+    public Response updateDictItem(HttpServletRequest request, CodAdminDictItemListDto codAdminDictItemListDto){
+        String id = request.getParameter("id");
+        StatusCode statusCode = codAdminDictService.updateDictItem(id, codAdminDictItemListDto);
+        return StatusCode.verifyStatusCode(statusCode) ? super.success() : super.fail();
+    }
+
+    /**
+     * 更新字典类型数据
+     */
+    @CodParamVerify(parameter = "id")
+    @RequestMapping(value = "type/update", method = {RequestMethod.POST})
+    public Response updateDictType(HttpServletRequest request, CodAdminDictTypeListDto codAdminDictTypeListDto){
+        String id = request.getParameter("id");
+        StatusCode statusCode = codAdminDictService.updateDictType(id, codAdminDictTypeListDto);
+        return StatusCode.verifyStatusCode(statusCode) ? super.success() : super.fail();
+    }
+
+    /**
      * 删除字典数据
      */
     @CodParamVerify(parameter = "id")

@@ -11,6 +11,8 @@
 package com.tlkj.cod.admin.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.tlkj.cod.common.CodCommonModelConvert;
+import com.tlkj.cod.common.annotation.CodModelExclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,13 +27,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class CodAdminDictItemListDto {
+public class CodAdminDictItemListDto extends CodCommonModelConvert {
 
     private String id;
     private String typeId;
     private String itemName;
     private String itemCode;
     private String itemValue;
+    @CodModelExclude
     private String itemStatus;
     private String type;
     private String isFixed;

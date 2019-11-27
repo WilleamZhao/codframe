@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Setter
-@Component("codServerTomcatModel")
+// @Component("codServerTomcatModel")
 public class CodServerTomcatModel extends CodServerModel {
 
     private static final long serialVersionUID = -3459632559913123565L;

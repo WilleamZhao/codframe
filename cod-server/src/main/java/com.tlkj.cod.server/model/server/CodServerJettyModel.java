@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @className CodServerJettyModel
  * @date 2019/4/24 5:55 PM
  */
-@Component("codServerJettyModel")
+// @Component("codServerJettyModel")
 public class CodServerJettyModel extends CodServerModel {
 
     private static final long serialVersionUID = 2289630765748591392L;

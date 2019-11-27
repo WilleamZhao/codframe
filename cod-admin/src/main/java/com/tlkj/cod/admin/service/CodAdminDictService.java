@@ -77,6 +77,22 @@ public interface CodAdminDictService {
     StatusCode saveDictItem(String itemId, String typeId, String itemCode, String itemName, String itemValue, String isFixed, String itemStatus, String englishName, String sort, String remark);
 
     /**
+     * 更新字典数据
+     * @param id                      主键
+     * @param codAdminDictItemListDto 字典数据
+     * @return
+     */
+    StatusCode updateDictItem(String id, CodAdminDictItemListDto codAdminDictItemListDto);
+
+    /**
+     * 更新字典数据
+     * @param id                      主键
+     * @param codAdminDictTypeListDto 字典类型数据
+     * @return
+     */
+    StatusCode updateDictType(String id, CodAdminDictTypeListDto codAdminDictTypeListDto);
+
+    /**
      * 保存字典类型
      * @return
      */
