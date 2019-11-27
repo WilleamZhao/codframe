@@ -111,6 +111,8 @@ public class CodServerServiceJettyImpl implements CodServerService {
         // 项目根目录
         context.setContextPath("/" + codServerConfig.getProjectName());
 
+        System.out.println(codServerConfig.getProjectName());
+
         // servlet
         context.addServlet(servletHolder, "/*");
 
