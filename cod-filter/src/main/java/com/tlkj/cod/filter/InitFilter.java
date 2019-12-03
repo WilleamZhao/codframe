@@ -45,6 +45,7 @@ public class InitFilter implements CodModuleInitialize {
         // setJwt(codServer);
         setParamConvert(codServer);
         setInitAdmin(codServer);
+        setLicense(codServer);
     }
 
     @Override
@@ -111,6 +112,18 @@ public class InitFilter implements CodModuleInitialize {
         codServerFilterModel.setMapping("/*");
         codServerFilterModel.setFilter(new CodFilterInitAdmin());
         codServerFilterModel.setName("initAdmin");
+        codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
+        codServerModel.addFilter(codServerFilterModel);
+    }
+
+    /**
+     * 设置license过滤器
+     */
+    private void setLicense(CodServerModel codServerModel){
+        CodServerFilterModel codServerFilterModel = new CodServerFilterModel();
+        codServerFilterModel.setMapping("/*");
+        codServerFilterModel.setFilter(new CodFilterLicense());
+        codServerFilterModel.setName("license");
         codServerFilterModel.setDispatcher(DispatcherType.REQUEST);
         codServerModel.addFilter(codServerFilterModel);
     }
