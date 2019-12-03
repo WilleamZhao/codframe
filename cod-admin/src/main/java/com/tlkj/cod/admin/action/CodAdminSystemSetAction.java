@@ -14,7 +14,9 @@ import com.tlkj.cod.admin.service.CodAdminSystemDataSetService;
 import com.tlkj.cod.data.model.dto.CodDataConfigDto;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
+import com.tlkj.cod.server.facade.CodServerFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +41,10 @@ public class CodAdminSystemSetAction extends GeneralResponse {
 
     @Autowired
     CodAdminSystemDataSetService codAdminSystemDataSetService;
+
+    @Autowired
+    @Lazy
+    CodServerFacade codServerFacade;
 
     /**
      * 设置列表
@@ -87,5 +93,29 @@ public class CodAdminSystemSetAction extends GeneralResponse {
         String type = request.getParameter("type");
         boolean isSave = codAdminSystemDataSetService.delete(id);
         return success(isSave);
+    }
+
+    /**
+     * 停止服务
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "stop", method = {RequestMethod.GET})
+    public Response stop(HttpServletRequest request){
+        String name = request.getParameter("name");
+        codServerFacade.stop();
+        return super.success();
+    }
+
+    /**
+     * 重启服务
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "restart", method = {RequestMethod.GET})
+    public Response restart(HttpServletRequest request){
+        String name = request.getParameter("name");
+        codServerFacade.restart();
+        return super.success();
     }
 }

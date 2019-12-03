@@ -48,7 +48,7 @@ public class InitAdmin implements CodModuleInitialize {
         // DataConnectBean bean = new DataConnectBean();
         CodDataService codDataService = codModuleLauncherModel.getBean(CodDataServiceImpl.class);
         codDataService.setData("cod.admin.database.config.driver", "com.mysql.jdbc.Driver");
-        codDataService.setData("cod.admin.database.config.url", "jdbc:mysql://sourcoddatabase.mysql.rds.aliyuncs.com/mczoo_admin?characterEncoding=UTF-8");
+        codDataService.setData("cod.admin.database.config.url", "jdbc:mysql://sourcoddatabase.mysql.rds.aliyuncs.com/sourcod_admin?characterEncoding=UTF-8");
         codDataService.setData("cod.admin.database.config.username", "sourcod");
         codDataService.setData("cod.admin.database.config.password", "sourcodp@ssw0rd");
         /*CodAdminDatabaseConfig databaseConfig = (CodAdminDatabaseConfig) codModuleLauncherModel.getSpring().getBean("CodAdminDatabaseConfig");

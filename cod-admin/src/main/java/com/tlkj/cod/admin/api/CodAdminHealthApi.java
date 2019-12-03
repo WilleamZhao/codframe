@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019/11/23 1:44 PM
  */
 @RestController
-@RequestMapping("admin/health")
+@RequestMapping("admin/api/health")
 public class CodAdminHealthApi extends GeneralResponse {
 
     /**
