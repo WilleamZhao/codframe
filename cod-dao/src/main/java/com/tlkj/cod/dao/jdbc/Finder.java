@@ -706,6 +706,13 @@ public class Finder extends CodDao {
             return where(new Condition(ConditionType.NOT_NULL, getTableAndViewName(name), value));
         }
 
+        public Integer getCount() {
+            Generator g = createGenerator();
+            Integer count = jdbcTemplate.queryForObject(g.toCountSQL(),
+                    Integer.class, g.getParameters());
+            return count;
+        }
+
         public <T> Pagination<T> paginate(Class<T> klass, int page) {
             return paginate(klass, page, Pagination.DEFAULT_PER_PAGE);
         }
