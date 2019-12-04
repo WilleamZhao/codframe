@@ -75,6 +75,8 @@ public class CodLicenseTask {
                 } else {
                     codDataService.setData(projectName + "-license", "0");
                 }
+            } else {
+                codDataService.setData(projectName + "-license", "0");
             }
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
