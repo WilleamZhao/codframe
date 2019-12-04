@@ -11,7 +11,7 @@ package com.tlkj.cod.filter.common;
 
 import com.tlkj.cod.model.common.Response;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -27,17 +27,17 @@ public class CodFilterCommon {
 
     /**
      * 直接返回响应
-     * @param httpServletResponse
+     * @param ServletResponse
      * @param response            返回对象
      * @return
      */
-    public static void response(HttpServletResponse httpServletResponse, Response response) {
+    public static void response(ServletResponse ServletResponse, Response response) {
         String json = response.toString();
         PrintWriter writer = null;
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.setContentType("text/html; charset=utf-8");
+        ServletResponse.setCharacterEncoding("UTF-8");
+        ServletResponse.setContentType("text/html; charset=utf-8");
         try {
-            writer = httpServletResponse.getWriter();
+            writer = ServletResponse.getWriter();
             writer.print(json);
         } catch (IOException ex) {
 

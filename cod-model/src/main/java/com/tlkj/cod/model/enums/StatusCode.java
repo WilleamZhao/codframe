@@ -19,6 +19,8 @@ import java.util.Arrays;
  *
  * 1xxx 接口调用成功, 后台处理失败
  * 0xxx 接口调用失败
+ * 00xx 调用问题
+ * 09xx 服务问题
  *
  * @author sourcod
  * @version 1.0
@@ -75,7 +77,12 @@ public enum StatusCode {
     /**
      * JWT 错误
      */
-    JWT_ERROR_CODE("0017", "参数错误", "参数错误")
+    JWT_ERROR_CODE("0017", "参数错误", "参数错误"),
+
+    /**
+     * license 验证失败
+     */
+    LICENSE_ERROR_CODE("0901", "license 错误", "license 验证失败")
     ;
 
 

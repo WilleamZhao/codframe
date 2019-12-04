@@ -83,7 +83,9 @@ public class CodCommonHttpClient {
 
 		// 1. 设置参数
 		URIBuilder uriBuilder = new URIBuilder(url);
-		uriBuilder.addParameters(nvps);
+		if (nvps != null){
+			uriBuilder.addParameters(nvps);
+		}
 
 		// 2. 设置 HttpGet
 		HttpGet get = new HttpGet(uriBuilder.build());
@@ -100,7 +102,11 @@ public class CodCommonHttpClient {
 		if (entity != null){
 			entityString = (isok ? "&" : "") + EntityUtils.toString(entity, StringUtils.isBlank(charset) ? CHARSET : charset);
 		}
-		get.setURI(new URI(url + "?" + nvpString + entityString));
+		if (StringUtils.isNotBlank(nvpString) || StringUtils.isNotBlank(entityString)){
+			get.setURI(new URI(url + "?" + nvpString + entityString));
+		} else {
+			get.setURI(new URI(url));
+		}
 
 		if (headers != null && headers.length > 0){
 			get.setHeaders(headers);

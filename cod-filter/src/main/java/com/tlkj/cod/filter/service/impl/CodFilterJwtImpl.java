@@ -72,7 +72,7 @@ public class CodFilterJwtImpl implements CodFilterService {
                 Claims claims = ComCommonJwt.parseJWT(token);
                 response.setHeader("token",token);
                 System.out.println("real token:=============================="+token);
-                System.out.println("real ohter:=============================="+request.getHeader("Cookie"));
+                System.out.println("real other:=============================="+request.getHeader("Cookie"));
             } catch (Exception e){
                 System.out.println("token错误");
                 logger.info("token错误");
