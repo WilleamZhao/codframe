@@ -11,6 +11,7 @@ package com.tlkj.cod.filter;
 
 
 import com.tlkj.cod.common.CodCommonSpringContext;
+import com.tlkj.cod.core.spring.SpringContextUtil;
 import com.tlkj.cod.data.service.CodDataService;
 import com.tlkj.cod.data.service.impl.CodDataServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -50,7 +51,8 @@ public class CodFilterLicense implements Filter {
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        CodDataService codDataService = CodCommonSpringContext.getBean("codDataService", CodDataService.class);
+        CodDataService codDataService = CodCommonSpringContext.getBean("codData", CodDataService.class);
+        System.out.println(codDataService);
         String projectName = codDataService.getDataValue("cod.config.project.name");
         String license = codDataService.getDataValue(projectName + "-license");
         if (StringUtils.isNotBlank(license) && "1".equals(license) ){

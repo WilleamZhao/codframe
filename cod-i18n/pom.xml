@@ -12,7 +12,7 @@
     <artifactId>cod-i18n</artifactId>
 
     <description>国际化模块</description>
-    <name>cod-filter</name>
+    <name>cod-i18n</name>
     <url>http://codframe.sourcod.com</url>
 
     <dependencies>
