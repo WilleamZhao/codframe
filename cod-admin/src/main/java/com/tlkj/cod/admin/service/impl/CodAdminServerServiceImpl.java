@@ -212,8 +212,9 @@ public class CodAdminServerServiceImpl implements CodAdminServerService {
         update.set("server_port", serverPort);
         update.set("server_version", serverVersion);
         update.set("server_config", serverConfig);
-        update.set("server_tag", serverTag);
+        update.set("tag", serverTag);
         update.set("remark", remark);
+        update.dev(true);
         try {
             int i = update.update();
             if (i == 1){

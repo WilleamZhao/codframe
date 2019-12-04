@@ -36,7 +36,7 @@ public class CodAdminServerApi extends GeneralResponse {
     CodAdminServerService codAdminServerService;
 
     /**
-     * 获取前端url
+     * 获取服务 license
      */
     @RequestMapping(value = "getLicense", method = {RequestMethod.GET})
     public Response getLicense(HttpServletRequest request){

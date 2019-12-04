@@ -10,6 +10,7 @@
 package com.tlkj.cod.admin.action;
 
 import com.tlkj.cod.admin.service.CodAdminServerService;
+import com.tlkj.cod.dao.bean.Page;
 import com.tlkj.cod.model.common.GeneralResponse;
 import com.tlkj.cod.model.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,9 +97,10 @@ public class CodAdminServerAction extends GeneralResponse {
 
     /**
      * 自动检查服务
+     * 每30分钟检查一次
      * @return
      */
-    @Scheduled(cron = "0 1 * * * ?")
+    @Scheduled(cron="0 0/30 * * * ? ")
     public void autoCheck(){
         codAdminServerService.autoCheck();
     }
@@ -109,8 +111,10 @@ public class CodAdminServerAction extends GeneralResponse {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public Response list(HttpServletRequest request) {
         String projectName = request.getParameter("projectName");
-
-        return super.success();
+        String page = request.getParameter("projectName");
+        String pageSize = request.getParameter("projectName");
+        Page listPage = codAdminServerService.list(projectName, page, pageSize);
+        return listPage.isData() ? super.success(listPage) : super.fail();
     }
 
     /**
