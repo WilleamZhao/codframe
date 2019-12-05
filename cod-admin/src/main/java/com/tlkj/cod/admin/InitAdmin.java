@@ -49,11 +49,11 @@ public class InitAdmin implements CodModuleInitialize {
     @Override
     public void init(CodModuleLauncherModel codModuleLauncherModel) {
         // DataConnectBean bean = new DataConnectBean();
-        CodDataServiceImpl codDataService = codModuleLauncherModel.getBean(CodDataServiceImpl.class);
+        /*CodDataServiceImpl codDataService = codModuleLauncherModel.getBean(CodDataServiceImpl.class);
         codDataService.setData("cod.admin.database.config.driver", "com.mysql.jdbc.Driver");
         codDataService.setData("cod.admin.database.config.url", "jdbc:mysql://sourcoddatabase.mysql.rds.aliyuncs.com/mczoo_admin?characterEncoding=UTF-8");
         codDataService.setData("cod.admin.database.config.username", "sourcod");
-        codDataService.setData("cod.admin.database.config.password", "sourcodp@ssw0rd");
+        codDataService.setData("cod.admin.database.config.password", "sourcodp@ssw0rd");*/
         /*CodAdminDatabaseConfig databaseConfig = (CodAdminDatabaseConfig) codModuleLauncherModel.getSpring().getBean("CodAdminDatabaseConfig");
         bean.setPassword(databaseConfig.getPassword());
         bean.setUsername(databaseConfig.getUsername());
