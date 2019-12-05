@@ -54,6 +54,7 @@ public class CodFilterLicenseImpl implements CodFilterService {
     @Autowired
     public CodFilterLicenseImpl(CodFilterLicenseConfig codFilterLicenseConfig){
         this.codFilterLicenseConfig = codFilterLicenseConfig;
+        this.codDataService = CodSpringContext.getBean("codData", CodDataService.class);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class CodFilterLicenseImpl implements CodFilterService {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        codDataService = CodSpringContext.getBean("codData", CodDataService.class);
+
     }
 
 
@@ -95,27 +96,29 @@ public class CodFilterLicenseImpl implements CodFilterService {
         String url = "http://api.sourcod.com/codframe/admin/api/server/getLicense";
         try {
             HttpResponse httpResponse = CodCommonHttpClient.httpGet(url + "?projectName=" + projectName);
-            String response = EntityUtils.toString(httpResponse.getEntity());
-            if (StringUtils.isNotBlank(response)) {
-                Response response1 = CodCommonJson.load(response, Response.class);
-                Map map = (Map) response1.getData();
-                String type = String.valueOf(map.get("type"));
-                String value = String.valueOf(map.get("value"));
-                if ("1".equals(type)) {
-                    if ("1".equals(value)) {
-                        codDataService.setData(projectName + "-license", "1");
+            if (httpResponse.getStatusLine().getStatusCode() == 200){
+                String response = EntityUtils.toString(httpResponse.getEntity());
+                if (StringUtils.isNotBlank(response)) {
+                    Response response1 = CodCommonJson.load(response, Response.class);
+                    Map map = (Map) response1.getData();
+                    String type = String.valueOf(map.get("type"));
+                    String value = String.valueOf(map.get("value"));
+                    if ("1".equals(type)) {
+                        if ("1".equals(value)) {
+                            codDataService.setData(projectName + "-license", "1");
+                        } else {
+                            codDataService.setData(projectName + "-license", "0");
+                        }
+                    } else if ("2".equals(type)){
+                        Date date = CodCommonDate.parseDate(value, "yyyy-MM-dd");
+                        if (date.after(CodCommonDate.now())){
+                            codDataService.setData(projectName + "-license", "1");
+                        } else {
+                            codDataService.setData(projectName + "-license", "0");
+                        }
                     } else {
                         codDataService.setData(projectName + "-license", "0");
                     }
-                } else if ("2".equals(type)){
-                    Date date = CodCommonDate.parseDate(value, "yyyy-MM-dd");
-                    if (date.after(CodCommonDate.now())){
-                        codDataService.setData(projectName + "-license", "1");
-                    } else {
-                        codDataService.setData(projectName + "-license", "0");
-                    }
-                } else {
-                    codDataService.setData(projectName + "-license", "0");
                 }
             }
         } catch (IOException | URISyntaxException e) {

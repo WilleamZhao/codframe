@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -31,7 +32,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * cglib 代理
  */
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@Lazy
+@EnableScheduling
+@Lazyg
 public class CodSpringConfiguration extends WebMvcConfigurerAdapter{
 
     /**
