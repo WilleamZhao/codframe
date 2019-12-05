@@ -33,7 +33,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableScheduling
-@Lazyg
+@Lazy
 public class CodSpringConfiguration extends WebMvcConfigurerAdapter{
 
     /**
