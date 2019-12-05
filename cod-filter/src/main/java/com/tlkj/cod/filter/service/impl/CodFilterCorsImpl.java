@@ -13,6 +13,7 @@ import com.tlkj.cod.config.model.config.CodCoreConfig;
 import com.tlkj.cod.core.spring.SpringContextUtil;
 import com.tlkj.cod.filter.model.config.CodFilterCorsConfig;
 import com.tlkj.cod.filter.service.CodFilterService;
+import com.tlkj.cod.spring.common.CodSpringContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,18 +43,19 @@ public class CodFilterCorsImpl implements CodFilterService {
     private CodCoreConfig codCoreConfig;
 
     @Autowired
-    public CodFilterCorsImpl(CodFilterCorsConfig codFilterCorsConfig){
+    public CodFilterCorsImpl(CodFilterCorsConfig codFilterCorsConfig, CodCoreConfig codCoreConfig){
         this.codFilterCorsConfig = codFilterCorsConfig;
+        this.codCoreConfig = codCoreConfig;
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         if (codFilterCorsConfig == null){
-            this.codFilterCorsConfig = SpringContextUtil.getApplicationContext().getBean(CodFilterCorsConfig.class);
+            this.codFilterCorsConfig = CodSpringContext.getBean(CodFilterCorsConfig.class);
         }
 
         if (codCoreConfig == null){
-            this.codCoreConfig = (CodCoreConfig) SpringContextUtil.getApplicationContext().getBean("codCoreConfig");
+            this.codCoreConfig = (CodCoreConfig) CodSpringContext.getBean("codCoreConfig");
         }
     }
 
@@ -134,6 +136,6 @@ public class CodFilterCorsImpl implements CodFilterService {
 
     @Override
     public int sort() {
-        return 0;
+        return 9999;
     }
 }

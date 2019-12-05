@@ -102,7 +102,7 @@ public class CodFilterAllowDisableImpl implements CodFilterService {
 
     @Override
     public int sort() {
-        return 0;
+        return 20;
     }
 
     @Override

@@ -64,12 +64,12 @@ public class CodFilterLicenseImpl implements CodFilterService {
 
     @Override
     public String name() {
-        return null;
+        return "codFilterLicense";
     }
 
     @Override
     public String alias() {
-        return null;
+        return "License 过滤器";
     }
 
     @Override

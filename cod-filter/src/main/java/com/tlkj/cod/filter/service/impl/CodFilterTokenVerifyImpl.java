@@ -63,7 +63,7 @@ public class CodFilterTokenVerifyImpl implements CodFilterService {
 
     @Override
     public int sort() {
-        return 0;
+        return 30;
     }
 
     @Override

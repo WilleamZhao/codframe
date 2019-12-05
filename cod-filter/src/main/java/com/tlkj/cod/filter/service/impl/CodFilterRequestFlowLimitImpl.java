@@ -59,7 +59,7 @@ public class CodFilterRequestFlowLimitImpl implements CodFilterService {
 
     @Override
     public int sort() {
-        return 0;
+        return 10;
     }
 
     @Override

@@ -51,7 +51,7 @@ public class CodFilterCharacterEncodingImpl implements CodFilterService {
 
     @Override
     public int sort() {
-        return 0;
+        return 9998;
     }
 
     @Override

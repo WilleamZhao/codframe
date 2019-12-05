@@ -141,6 +141,6 @@ public class CodFilterRequestParamConvertImpl implements CodFilterService {
 
     @Override
     public int sort() {
-        return 0;
+        return 40;
     }
 }
