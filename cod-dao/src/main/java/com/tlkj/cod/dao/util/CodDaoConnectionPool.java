@@ -142,6 +142,23 @@ public class CodDaoConnectionPool {
     }
 
     /**
+     * 获取全部数据源
+     * @param name 数据源名称
+     * @return
+     */
+    public List<DataSource> getAll(String name){
+        return map.get(name);
+    }
+
+    /**
+     * 获取全部数据源
+     * @return
+     */
+    public Map getAll(){
+        return map;
+    }
+
+    /**
      * 动态获取数据源
      * @param name 数据源名称
      * @return
