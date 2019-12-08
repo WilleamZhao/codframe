@@ -6,7 +6,7 @@
   ~
   ~ author: sourcod
   ~ github: https://github.com/WilleamZhao
-  ~ site：http://codframe.com
+  ~ site：http://codframe.sourcod.com
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -15,14 +15,29 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.3</version>
+        <version>1.0.5-SNAPSHOP</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cod-wechat</artifactId>
 
+    <description>微信模块</description>
+
     <name>cod-wechat</name>
-    <url>http://codframe.tianlankeji.com</url>
+    <url>http://codframe.sourcod.com</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-common</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -31,21 +46,23 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-keep class com.tlkj.cod.wechat.**</option>
+                    </options>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-common</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>
-    </dependencies>
 
     <distributionManagement>
         <repository>
@@ -59,5 +76,4 @@
             <url>${codframe.nexus.snapshots.url</url>
         </snapshotRepository>
     </distributionManagement>
-
 </project>

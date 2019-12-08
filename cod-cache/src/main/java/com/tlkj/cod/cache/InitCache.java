@@ -5,14 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
-
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 
 /**
@@ -27,11 +26,28 @@ public class InitCache implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 4;
+        return -4;
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
+    public String alias() {
+        return "缓存";
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+
+    }
+
+    @Override
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
+        /*Object o = codModuleLauncherModel.getSpring().getBean(CodDataSourceConfig.class);
+        System.out.println(CodCommonJson.dump(o));*/
 
     }
 

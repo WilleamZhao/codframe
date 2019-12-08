@@ -6,7 +6,7 @@
   ~
   ~ author: sourcod
   ~ github: https://github.com/WilleamZhao
-  ~ site：http://codframe.com
+  ~ site：http://codframe.sourcod.com
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -15,32 +15,17 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.3</version>
+        <version>1.0.5-SNAPSHOP</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cod-util</artifactId>
 
     <name>cod-util</name>
-    <url>http://codframe.tianlankeji.com</url>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <url>http://codframe.sourcod.com</url>
 
     <dependencies>
-        <!-- aliyun log -->
+        <!-- aliyun codLog -->
         <dependency>
             <groupId>com.aliyun.openservices</groupId>
             <artifactId>aliyun-log</artifactId>
@@ -82,17 +67,25 @@
             <artifactId>spymemcached</artifactId>
             <version>${spymemcached.version}</version>
         </dependency>
+
         <!-- jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
         </dependency>
+
         <!-- ehcache -->
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
             <version>${ehcache.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- pinyin4j -->
@@ -103,6 +96,18 @@
         </dependency>
 
         <!-- cod -->
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-common</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <!-- cod -->
         <!--<dependency>
             <groupId>com.tlkj</groupId>
             <artifactId>cod-model</artifactId>
@@ -110,6 +115,31 @@
         </dependency>-->
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-keep class com.tlkj.cod.util.**</option>
+                    </options>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <distributionManagement>
         <repository>
@@ -123,5 +153,4 @@
             <url>${codframe.nexus.snapshots.url</url>
         </snapshotRepository>
     </distributionManagement>
-
 </project>

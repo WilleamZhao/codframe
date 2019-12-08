@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.common;
@@ -111,6 +111,10 @@ public class CodCommonIO {
     public static void outputFile(String path, String fileName, byte[] io, boolean append) throws IOException {
         if (!createPath(path)){
             return;
+        }
+        if (path.contains("com.tlkj.cod.core.launcher")){
+            System.out.println(path);
+
         }
         if (!fileName.startsWith("/")){
             fileName = "/" + fileName;

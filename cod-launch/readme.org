@@ -7,6 +7,6 @@
  - dao 2
  - cache 3
  - config 4
- - log 5
+ - codLog 5
  - core 6
  - server 7

@@ -6,7 +6,7 @@
   ~
   ~ author: sourcod
   ~ github: https://github.com/WilleamZhao
-  ~ site：http://codframe.com
+  ~ site：http://codframe.sourcod.com
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -15,42 +15,17 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.3</version>
+        <version>1.0.5-SNAPSHOP</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cod-core</artifactId>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <description>核心模块</description>
+    <url>http://codframe.sourcod.com</url>
 
     <dependencies>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core -->
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>8.5.23</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-logging-juli -->
-        <!--<dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-logging-juli</artifactId>
-            <version>8.5.2</version>
-        </dependency>-->
 
         <!-- jetty -->
         <dependency>
@@ -82,13 +57,29 @@
             <version>${jetty.version}</version>
         </dependency>
 
-
-
         <!-- Shiro -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <version>${shiro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -99,28 +90,38 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
             <version>${shiro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
             <version>${shiro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!-- Transaction -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- userAgentUtils -->
         <dependency>
@@ -160,21 +161,52 @@
             <version>${codframe.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-config</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-spring</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
         <!--
         <dependency>
             <groupId>com.tlkj</groupId>
-            <artifactId>cod-server</artifactId>
+            <artifactId>cod-file</artifactId>
             <version>${codframe.version}</version>
         </dependency>
         -->
 
-        <!--<dependency>
-            <groupId>com.tlkj</groupId>
-            <artifactId>cod-filter</artifactId>
-            <version>${codframe.version}</version>
-        </dependency>-->
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!--<plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-keep class com.tlkj.cod.core.**</option>
+                    </options>
+                </configuration>
+            </plugin>-->
+        </plugins>
+    </build>
 
     <distributionManagement>
         <repository>
@@ -188,4 +220,5 @@
             <url>${codframe.nexus.snapshots.url</url>
         </snapshotRepository>
     </distributionManagement>
+
 </project>

@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.config.annotation.aop;
@@ -38,6 +38,7 @@ public class CodValueAspect {
 
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("asd");
         return joinPoint.proceed();
     }
 }

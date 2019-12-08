@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache.model;
@@ -29,11 +29,34 @@ import org.apache.commons.lang3.StringUtils;
 @Deprecated
 public enum CodCacheTypeEnum {
 
+    /**
+     * ehcache缓存
+     */
     EHCACHE(1, "ehcache", "e", CodCacheEhcacheService.class),
+
+    /**
+     * file缓存
+     */
     FILE(2, "file", "f", CodCacheFileService.class),
+
+    /**
+     * json缓存
+     */
     JSON(3, "json", "j", CodCacheJsonService.class),
+
+    /**
+     * 数据库缓存
+     */
     DATABASE(4, "database", "db", CodCacheDBService.class),
-    MEMCACHED(5, "memcache", "m", CodCacheMemcachedService.class),
+
+    /**
+     * memcache缓存
+     */
+    MEMCACHE(5, "memcache", "m", CodCacheMemcachedService.class),
+
+    /**
+     * redis缓存
+     */
     REDIS(6, "redis", "r", CodCacheRedisService.class);
 
     private int state;

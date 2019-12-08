@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.wechat.mp.model;
@@ -28,7 +28,7 @@ public enum WxMpErrorEnum {
      */
     CODE_0(0, "请求成功"),
     /**
-     * 获取 access_token 时 AppSecret 错误，或者 access_token 无效。请开发者认真比对 AppSecret 的正确性，或查看是否正在为恰当的公众号调用接口
+     * 获取 cod_admin_token 时 AppSecret 错误，或者 cod_admin_token 无效。请开发者认真比对 AppSecret 的正确性，或查看是否正在为恰当的公众号调用接口
      */
     CODE_40001(40001, "获取 access_token 时 AppSecret 错误，或者 access_token 无效。请开发者认真比对 AppSecret 的正确性，或查看是否正在为恰当的公众号调用接口"),
     /**

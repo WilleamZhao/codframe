@@ -6,7 +6,7 @@
   ~
   ~ author: sourcod
   ~ github: https://github.com/WilleamZhao
-  ~ site：http://codframe.com
+  ~ site：http://codframe.sourcod.com
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -15,29 +15,20 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.3</version>
+        <version>1.0.5-SNAPSHOP</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cod-message</artifactId>
 
     <name>cod-message</name>
-    <url>http://codframe.tianlankeji.com</url>
+    <url>http://codframe.sourcod.com</url>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <properties>
+        <qcloudsms.version>1.0.6</qcloudsms.version>
+        <aliyun.sdk.core.version>3.7.0</aliyun.sdk.core.version>
+        <aliyun.sdk.dysmsapi.version>1.0.0</aliyun.sdk.dysmsapi.version>
+    </properties>
 
     <dependencies>
 
@@ -47,19 +38,20 @@
         <dependency>
             <groupId>com.github.qcloudsms</groupId>
             <artifactId>qcloudsms</artifactId>
-            <version>1.0.6</version>
+            <version>${qcloudsms.version}</version>
         </dependency>
 
         <!-- 阿里云短信 -->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>3.7.0</version>
+            <version>${aliyun.sdk.core.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-            <version>1.0.0</version>
+            <version>${aliyun.sdk.dysmsapi.version}</version>
         </dependency>
 
         <!-- cod -->
@@ -80,6 +72,31 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!--<plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-keep class com.tlkj.cod.message.**</option>
+                    </options>
+                </configuration>
+            </plugin>-->
+        </plugins>
+    </build>
 
     <distributionManagement>
         <repository>

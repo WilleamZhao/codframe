@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.model.common;
@@ -20,7 +20,7 @@ import com.tlkj.cod.model.enums.StatusCode;
  * @className GeneralResponse
  * @date 2018/9/12 下午12:48
  */
-public class GeneralResponse extends General{
+public class GeneralResponse extends General {
 
     /**
      * 成功返回

@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.common;
@@ -49,32 +49,32 @@ public class CodCommonNetWork {
         if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
             if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("Proxy-Client-IP");
-                if (logger.isInfoEnabled()) {
-                    logger.info("getIpAddress(HttpServletRequest) - Proxy-Client-IP - String ip=" + ip);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("getIpAddress(HttpServletRequest) - Proxy-Client-IP - String ip=" + ip);
                 }
             }
             if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("WL-Proxy-Client-IP");
-                if (logger.isInfoEnabled()) {
-                    logger.info("getIpAddress(HttpServletRequest) - WL-Proxy-Client-IP - String ip=" + ip);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("getIpAddress(HttpServletRequest) - WL-Proxy-Client-IP - String ip=" + ip);
                 }
             }
             if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("HTTP_CLIENT_IP");
-                if (logger.isInfoEnabled()) {
-                    logger.info("getIpAddress(HttpServletRequest) - HTTP_CLIENT_IP - String ip=" + ip);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("getIpAddress(HttpServletRequest) - HTTP_CLIENT_IP - String ip=" + ip);
                 }
             }
             if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-                if (logger.isInfoEnabled()) {
-                    logger.info("getIpAddress(HttpServletRequest) - HTTP_X_FORWARDED_FOR - String ip=" + ip);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("getIpAddress(HttpServletRequest) - HTTP_X_FORWARDED_FOR - String ip=" + ip);
                 }
             }
             if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
                 ip = request.getRemoteAddr();
-                if (logger.isInfoEnabled()) {
-                    logger.info("getIpAddress(HttpServletRequest) - getRemoteAddr - String ip=" + ip);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("getIpAddress(HttpServletRequest) - getRemoteAddr - String ip=" + ip);
                 }
             }
         } else if (ip.length() > 15) {
@@ -186,7 +186,7 @@ public class CodCommonNetWork {
         String a = "123.123.123.123";
         System.out.println(ipCheck(a));
         System.out.println(isInRange("123.123.255.255", "123.123.0.0/16"));
-        System.out.println(isInRange("123.123.123.123", "123.123.123.1-123.123.123.124"));
+        System.out.println(isInRange("123.123.123.123", "123.123.123.1-123.123.123.122"));
     }
 
 

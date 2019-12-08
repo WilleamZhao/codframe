@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.message.sms;
@@ -19,6 +19,8 @@ package com.tlkj.cod.message.sms;
  * @date 2019/1/31 3:20 PM
  */
 public interface SmsService {
+
+    String support();
 
     /**
      * 动态选择服务商发送短信

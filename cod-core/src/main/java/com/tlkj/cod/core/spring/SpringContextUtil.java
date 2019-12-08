@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.spring;
@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
  * @className SpringContextUtil
  * @date 2018/11/6 下午4:56
  */
+@Component
 public class SpringContextUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;

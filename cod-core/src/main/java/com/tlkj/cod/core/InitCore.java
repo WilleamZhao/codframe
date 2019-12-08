@@ -5,16 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core;
 
 import com.tlkj.cod.launcher.CodModuleInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import javax.servlet.ServletContext;
+import com.tlkj.cod.launcher.CodModuleOrderEnum;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
 
 /**
  * Desc 初始化 core
@@ -28,12 +26,27 @@ public class InitCore implements CodModuleInitialize {
 
     @Override
     public int order() {
-        return 1;
+        return CodModuleOrderEnum.CORE.getOrder();
     }
 
     @Override
-    public void init(LauncherModel launcherModel) {
-        // WebApplicationContextUtils.getWebApplicationContext(servletContext);
+    public String alias() {
+        return "核心";
+    }
+
+    @Override
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
+        codModuleLauncherModel.finish();
+    }
+
+    @Override
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
+
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+        codModuleLauncherModel.stop();
     }
 
     @Override

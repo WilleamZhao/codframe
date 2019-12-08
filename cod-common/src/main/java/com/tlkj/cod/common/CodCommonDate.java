@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.common;
@@ -15,6 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * 日期工具类
@@ -33,8 +35,13 @@ public class CodCommonDate {
     /**
      * Date format pattern  this is often used.
      */
-    public static final String PATTERN_YMDHMS="yyyy-MM-dd HH:mm:ss";
-    
+    public static final String PATTERN_YMDHMS = "yyyy-MM-dd HH:mm:ss";
+
+    /**
+     * 日期比较格式
+     */
+    public static final String PATTERN_DIFF = "yyyy'Y'MM'M'dd'D'HH'H'mm'm'ss'S'SSS'MS'";
+
     /**
      * Formats the given date according to the YMD pattern.
      * 
@@ -308,6 +315,15 @@ public class CodCommonDate {
         Calendar c = Calendar.getInstance();
         return c.getTime();
     }
+
+    /**
+     * 获取当前时间
+     * @return 当前时间
+     */
+    public static long nowLong() {
+        Calendar c = Calendar.getInstance();
+        return c.getTime().getTime();
+    }
     
     public static String getDate() {
 		return getDate(PATTERN_YMD);
@@ -341,10 +357,151 @@ public class CodCommonDate {
 		return formatter.format(date);
 	}
 
+    /**
+     * 获取日期差
+     * @param fromDate 开始 (小)
+     * @param toDate 结束 (大)
+     * @return 格式化好的日期 (yyyy'Y'MM'M'dd'D'HH'H'mm'm'ss'S'SSS'MS')
+     */
+    public static String getTimeDifference(Date fromDate, Date toDate) {
+        try{
+            //获取时间差
+            Calendar from = Calendar.getInstance();
+            from.setTime(fromDate);
+            Calendar to = Calendar.getInstance();
+            to.setTime(toDate);
+
+            int fromYear = from.get(Calendar.YEAR);
+            int fromMonth = from.get(Calendar.MONTH);
+            int fromDay = from.get(Calendar.DAY_OF_MONTH);
+            int fromHour = from.get(Calendar.HOUR_OF_DAY);
+            int fromMinute = from.get(Calendar.MINUTE);
+            int fromSecond = from.get(Calendar.SECOND);
+            int fromMilliSecond = from.get(Calendar.MILLISECOND);
+
+            int toYear = to.get(Calendar.YEAR);
+            int toMonth = to.get(Calendar.MONTH);
+            int toDay = to.get(Calendar.DAY_OF_MONTH);
+            int toHour = to.get(Calendar.HOUR_OF_DAY);
+            int toMinute = to.get(Calendar.MINUTE);
+            int toSecond = to.get(Calendar.SECOND);
+            int toMilliSecond = to.get(Calendar.MILLISECOND);
+
+            int year = toYear - fromYear;
+            int month = toMonth - fromMonth;
+            int day = toDay - fromDay;
+            int hour = toHour - fromHour;
+            int minute = toMinute - fromMinute;
+            int second = toSecond - fromSecond;
+            int milliSecond = toMilliSecond - fromMilliSecond;
+
+            String format = "";
+
+            Calendar diffTime = Calendar.getInstance();
+
+            // 毫秒
+            if (milliSecond != 0){
+                diffTime.set(Calendar.MILLISECOND, milliSecond);
+                format = "SSS'MS'";
+            } else {
+                format = "000'MS'";
+            }
+
+            // 秒
+            if (second != 0){
+                diffTime.set(Calendar.SECOND, second);
+                format = "ss'S'" + format;
+            } else {
+                format = "00'S'" + format;
+            }
+
+            // 分
+            if (minute != 0){
+                diffTime.set(Calendar.MINUTE, minute);
+                format = "mm'm'" + format;
+            } else {
+                format = "00'm'" + format;
+            }
+
+            // 小时
+            if (hour != 0){
+                diffTime.set(Calendar.HOUR_OF_DAY, hour);
+                format = "HH'H'" + format;
+            } else {
+                format = "00'H'" + format;
+            }
+
+            // 日
+            if (day != 0){
+                diffTime.set(Calendar.DAY_OF_MONTH, day);
+                format = "dd'D'" + format;
+            } else {
+                format = "00'D'" + format;
+            }
+
+            // 月
+            if (month != 0){
+                diffTime.set(Calendar.MONTH, month - 1);
+                format = "MM'M'" + format;
+            } else {
+                format = "00'M'" + format;
+            }
+
+            // 年
+            if (year != 0){
+                diffTime.set(Calendar.YEAR, year);
+                format = "yyyy'Y'" + format;
+            } else {
+                format = "0000'Y'" + format;
+            }
+            return formatDate(diffTime.getTime(), format);
+        }catch(Exception e){
+            System.out.println("计算错误");
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 判断是否润年
+     *
+     * @param date
+     * @return
+     */
+    public static boolean isLeapYear(String date) {
+
+        /**
+         * 详细设计： 1.被400整除是闰年，否则： 2.不能被4整除则不是闰年 3.能被4整除同时不能被100整除则是闰年
+         * 3.能被4整除同时能被100整除则不是闰年
+         */
+        Date d = parseDate(date);
+        GregorianCalendar gc = (GregorianCalendar) Calendar.getInstance();
+        gc.setTime(d);
+        int year = gc.get(Calendar.YEAR);
+        if ((year % 400) == 0){
+            return true;
+        } else if ((year % 4) == 0) {
+            if ((year % 100) == 0){
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
     
     
     /** This class should not be instantiated. */
     private CodCommonDate() {
     	
+    }
+
+    public static void main(String[] args) {
+        String a = CodCommonDate.getTimeDifference(CodCommonDate.parseDate("2018-08-07 20:59:00", PATTERN_YMDHMS), new Date());
+        System.out.println(a);
+        Date date = parseDate(a, PATTERN_DIFF);
+        System.out.println(formatDate(date, PATTERN_YMDHMS));
     }
 }

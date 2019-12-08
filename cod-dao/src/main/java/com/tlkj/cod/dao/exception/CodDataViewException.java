@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.dao.exception;
@@ -19,6 +19,8 @@ package com.tlkj.cod.dao.exception;
  * @date 2019/1/7 7:28 PM
  */
 public class CodDataViewException extends RuntimeException {
+
+    private static final long serialVersionUID = 3096318412518961159L;
 
     public CodDataViewException() {
         super();

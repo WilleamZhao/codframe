@@ -5,14 +5,17 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.message.sms.service.impl;
 
+import com.tlkj.cod.message.model.enums.CodMessageSmsSupportEnum;
 import com.tlkj.cod.message.sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Desc 短信服务
@@ -27,6 +30,20 @@ public class SmsServiceImpl implements SmsService {
 
     @Autowired
     AliSmsServiceImpl aliSmsService;
+
+    @Autowired
+    List<SmsService> smsServices;
+
+    /**
+     * 默认调用阿里云短信
+     * @return
+     */
+    @Override
+    public String support() {
+        return CodMessageSmsSupportEnum.ALI_SMS.name();
+    }
+
+
 
     @Override
     public boolean dynamicSend(String nationcode, String phone, String content, String signName, String templateCode) {

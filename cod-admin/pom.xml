@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>tlkj.codframe</artifactId>
+        <groupId>com.tlkj</groupId>
+        <version>1.0.5-SNAPSHOP</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <description>管理模块</description>
+    <artifactId>cod-admin</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-launch</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-dao</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-common</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-cache</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-file</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-http</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-log</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-server</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+
+        <!--<dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-model</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-core</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>tlkj-releases</id>
+            <name>tlkj-releases</name>
+            <url>${codframe.nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>tlkj-snapshots</id>
+            <name>tlkj-snapshots</name>
+            <url>${codframe.nexus.snapshots.url</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <configuration>
+                    <options>
+                        <option>-dontshrink</option>
+                        <option>-dontoptimize</option>
+                        <option>-adaptclassstrings</option>
+                        <option>-keepnames interface **</option>
+                        <!-- This option will save all original methods parameters in files defined in -keep sections,
+                             otherwise all parameter names will be obfuscate.-->
+                        <option>-keepparameternames</option>
+
+                        <option>-ignorewarnings</option>
+                        <!-- This option will save all original class files (without obfuscate) in service package-->
+                        <!--<option>-keep class com.slm.proguard.example.spring.boot.service { *; }</option>-->
+                        <!-- This option will save all original interfaces files (without obfuscate) in all packages.-->
+                        <option>-keep interface * extends * { *; }</option>
+
+                        <!--<option>-keep class com.tlkj.cod.admin.** {*;}</option>-->
+                    </options>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

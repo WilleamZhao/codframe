@@ -5,13 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache.model;
 
 /**
- * Desc codFrame缓存格式类型
+ * Desc codFrame 支持的缓存格式类型
  *
  * @author sourcod
  * @version 1.0
@@ -20,12 +20,35 @@ package com.tlkj.cod.cache.model;
  */
 public enum CodCacheFormatType {
 
+    /**
+     * 字符串
+     */
     STRING,
+
+    /**
+     * map
+     */
     MAP,
+
+    /**
+     * list
+     */
     LIST,
+
+    /**
+     * set
+     */
     SET,
+
+    /**
+     * object
+     */
     OBJECT,
-    File;
+
+    /**
+     * file
+     */
+    File
 
 
 

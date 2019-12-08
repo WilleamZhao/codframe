@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache;
@@ -30,7 +30,7 @@ public interface CodCacheManager {
      * @return 默认支持
      */
     default String getSupportType(){
-        return "ehcache";
+        return "codCacheEhcache";
     }
 
     /**

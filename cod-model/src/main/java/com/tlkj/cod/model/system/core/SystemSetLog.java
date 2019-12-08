@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.model.system.core;
@@ -48,13 +48,13 @@ public class SystemSetLog {
     /**
      * 日志等级
      */
-    private String level = "debug";
+    private String level = "info";
 
     /**
      * 是否打印控制台日志
      * 默认不打印
      */
-    private boolean console = false;
+    private boolean console = true;
 
     public String getType() {
         return type;

@@ -5,21 +5,31 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.launcher;
 
-import com.tlkj.cod.common.CodCommonFindChildClass;
-import com.tlkj.cod.core.launcher.init.InitSpring;
+import com.tlkj.cod.common.CodCommonDate;
+import com.tlkj.cod.core.common.CodCoreFindClass;
 import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.launcher.CodServerInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
+import com.tlkj.cod.launcher.exception.CodModuleStartFailException;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.spring.model.config.CodSpringConfiguration;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
+import org.springframework.core.env.MapPropertySource;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -32,11 +42,8 @@ import java.util.List;
  */
 public class CodLauncher {
 
-    // private static List<Integer> list = new ArrayList<>();
-    // private static LinkedList<CodModuleInitialize> linkedList = new LinkedList<>();
-
-    private static List list = new ArrayList();
-    private static final LauncherModel launcherModel = new LauncherModel();
+    private static final CodModuleLauncherModel LAUNCHER_MODEL = CodModuleLauncherModel.getInstance();
+    private static Logger logger = LoggerFactory.getLogger(CodLauncher.class);
 
     /**
      * 1. 加载模块
@@ -47,8 +54,10 @@ public class CodLauncher {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println("开始启动了");
-        if (launcherModel.isStart()){
+        logger.info("开始启动codFrame");
+        Date startDate = CodCommonDate.now();
+
+        if (LAUNCHER_MODEL.isStart()){
             return;
         }
         CodModuleInitialize codModuleInitialize = null;
@@ -58,17 +67,15 @@ public class CodLauncher {
         // 插入排序
         List<Integer> list = new ArrayList<>();
         try {
-            for (Class<?> c : CodCommonFindChildClass.getAllAssignedClass(CodModuleInitialize.class, "com.tlkj.cod")) {
+            for (Class<?> c : CodCoreFindClass.getAllAssignedClass(CodModuleInitialize.class, "com.tlkj.cod")) {
                 codModuleInitialize = (CodModuleInitialize) c.newInstance();
-
                 int order = codModuleInitialize.order();
-                if (order == CodModuleOrderEnum.SPRING.getOrder() && !c.isAssignableFrom(InitSpring.class)){
-                    System.out.println("order " + CodModuleOrderEnum.SPRING.getOrder() + " 是保留序号. 跳过");
+                if (!CodModuleOrderEnum.isAvailable(order, c)){
                     continue;
                 }
 
-                if (order == CodModuleOrderEnum.SERVER.getOrder() && !CodServerInitialize.class.isAssignableFrom(c)){
-                    System.out.println("order " + CodModuleOrderEnum.SERVER.getOrder() + " 是保留序号. 跳过");
+                // 不加载
+                if (codModuleInitialize.order() == Integer.MIN_VALUE){
                     continue;
                 }
 
@@ -81,29 +88,91 @@ public class CodLauncher {
                 list.add(order);
                 linkedList.add(i, codModuleInitialize);
             }
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             System.out.println("启动异常");
             e.printStackTrace();
         }
-        for (CodModuleInitialize module : linkedList){
+
+        /*
+         * 注入spring配置
+         */
+        LAUNCHER_MODEL.getSpring().register(CodSpringConfiguration.class);
+
+        LAUNCHER_MODEL.getSpring().register(CommonAnnotationBeanPostProcessor.class);
+
+        // TODO 验证license
+
+        // 设置环境
+        setEnv("dev");
+
+        int i = 1;
+        boolean isFinish = true;
+        m : for (CodModuleInitialize module : linkedList){
+            /*if (i > 6){
+                break;
+            }*/
             try {
-                module.init(launcherModel);
-            } catch (Exception e){
+                logger.info("开始启动 第 {} 个模块; 序号: {}; 名称: {}模块;", i, module.order(), getModelName(module));
+                LAUNCHER_MODEL.getSpring().scan(module.name());
+                module.init(LAUNCHER_MODEL);
+                switch (LAUNCHER_MODEL.getStateEnum()){
+                    case FAIL:
+                        LAUNCHER_MODEL.fail();
+                        throw new CodModuleStartFailException();
+                    case STOP:
+                        logger.info("停止启动模块{}", getModelName(module));
+                        break m;
+                    case SUCCESS:
+                        LAUNCHER_MODEL.getSpring().refresh();
+                        LAUNCHER_MODEL.next();
+                        break;
+                    case CONTINUE:
+                        break;
+                    default:
+                        break;
+                }
+                // 调用成功方法
+                module.success(LAUNCHER_MODEL);
+                logger.info("启动 {} 模块完成", getModelName(module));
+            } catch (Exception e) {
                 // TODO cod set log Debug
                 e.printStackTrace();
-                module.fail(e);
+                module.fail(LAUNCHER_MODEL, e);
+                switch (LAUNCHER_MODEL.getStateEnum()){
+                    case STOP:
+                        logger.error("{}模块 启动失败, 停止启动", getModelName(module));
+                        isFinish = false;
+                        break m;
+                    case CONTINUE:
+                        logger.error("{}模块 启动失败, 继续启动", getModelName(module));
+                        break;
+                    default:
+                        logger.error("{}模块 启动失败, 继续启动", getModelName(module));
+                        break;
+                }
             }
-            /*if (module.order() == 0) {
-                module.init(launcherModel);
-                // initSpring();
-            } else if (module.order() == 100){
-
-            } else {
-                module.init(launcherModel);
-            }*/
+            i++;
         }
-        System.out.println("启动模块数量:" + list.size());
-        System.out.println("codFrame框架 启动完成.");
+        // 所有模块启动完成后, 结束刷新
+        // LAUNCHER_MODEL.getSpring().refresh();
+        logger.info("总模块数量: {}; 启动模块数量: {};", list.size(), i - 1);
+        Date endDate = CodCommonDate.now();
+        String diffTime =CodCommonDate.getTimeDifference(startDate, endDate);
+        String time = CodCommonDate.formatDate(CodCommonDate.parseDate(diffTime, CodCommonDate.PATTERN_DIFF), "mm分:ss秒");
+        if (isFinish){
+            logger.info("codFrame 启动完成. 用时: {}", time);
+        } else {
+            logger.info("codFrame 启动失败. 用时: {}", time);
+        }
+    }
+
+    /**
+     * 获取模块名称
+     * 有别名返回别名 没有返回name
+     * @return 模块名称
+     */
+    private static String getModelName(CodModuleInitialize module){
+        return StringUtils.isEmpty(module.alias()) ? module.name() : module.alias();
     }
 
     private void orderModule(int order, LinkedList list, CodModuleInitialize codModuleInitialize){
@@ -119,8 +188,17 @@ public class CodLauncher {
         list.add(i, codModuleInitialize);
     }
 
-
-
-
+    /**
+     * 设置环境
+     */
+    private static void setEnv(String env){
+        // 设置环境
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("spring.profiles.active", env);
+        map.put("spring.profiles.default", env);
+        map.put("spring.liveBeansView.mbeanDomain", env);
+        MapPropertySource mapPropertySource = new MapPropertySource("springMbean", map);
+        LAUNCHER_MODEL.getSpring().getEnvironment().getPropertySources().addFirst(mapPropertySource);
+    }
 
 }
