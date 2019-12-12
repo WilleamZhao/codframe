@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache.model;
@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Desc CodFrame 缓存model
+ * Desc CodFrame 缓存实体 model
  *
  * @author sourcod
  * @version 1.0

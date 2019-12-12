@@ -5,11 +5,12 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.common;
 
+import com.sun.javafx.fxml.builder.URLBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -18,6 +19,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.StringEntity;
@@ -54,25 +56,56 @@ public class CodCommonHttpClient {
 	private static Integer PROCOTOL_HTTPS = 1;
 
 	public static HttpResponse httpGet(String url) throws IOException, URISyntaxException {
-		return httpGet(url, null, null, "");
+		return httpGet(url, null, null, null, "");
 	}
 
 	public static HttpResponse httpGet(String url, String charset) throws IOException, URISyntaxException {
-		return httpGet(url, null, null, charset);
+		return httpGet(url, null,  null,null, charset);
 	}
 
 	public static HttpResponse httpGet(String url, List<NameValuePair> nvps) throws IOException, URISyntaxException {
-		return httpGet(url, nvps, null, "");
+		return httpGet(url, nvps, null, null, "");
+	}
+
+	public static HttpResponse httpGet(String url, StringEntity entity) throws IOException, URISyntaxException {
+		return httpGet(url, entity, null);
+	}
+
+	public static HttpResponse httpGet(String url, StringEntity entity, Header[] headers) throws IOException, URISyntaxException {
+		return httpGet(url, null, entity, headers, "");
 	}
 	
 	public static HttpResponse httpGet(String url, List<NameValuePair> nvps, Header[] headers) throws IOException, URISyntaxException {
-		return httpGet(url, nvps, headers, "");
+		return httpGet(url, nvps, null, headers, "");
 	}
 
-	public static HttpResponse httpGet(String url, List<NameValuePair> nvps, Header[] headers, String charset) throws IOException, URISyntaxException {
-		HttpGet get = new HttpGet();
+	public static HttpResponse httpGet(String url, List<NameValuePair> nvps, StringEntity entity, Header[] headers, String charset) throws IOException, URISyntaxException {
+
+		// 1. 设置参数
+		URIBuilder uriBuilder = new URIBuilder(url);
+		if (nvps != null){
+			uriBuilder.addParameters(nvps);
+		}
+
+		// 2. 设置 HttpGet
+		HttpGet get = new HttpGet(uriBuilder.build());
+		String nvpString = "";
+		boolean isok = false;
 		if (nvps != null && nvps.size() > 0){
-			get.setURI(new URI(url + "?" + EntityUtils.toString(new UrlEncodedFormEntity(nvps), StringUtils.isBlank(charset) ? CHARSET : charset)));
+			nvpString = EntityUtils.toString(new UrlEncodedFormEntity(nvps), StringUtils.isBlank(charset) ? CHARSET : charset);
+			isok = true;
+		}
+
+
+
+		String entityString = "";
+		if (entity != null){
+			entityString = (isok ? "&" : "") + EntityUtils.toString(entity, StringUtils.isBlank(charset) ? CHARSET : charset);
+		}
+		if (StringUtils.isNotBlank(nvpString) || StringUtils.isNotBlank(entityString)){
+			get.setURI(new URI(url + "?" + nvpString + entityString));
+		} else {
+			get.setURI(new URI(url));
 		}
 
 		if (headers != null && headers.length > 0){
@@ -162,6 +195,10 @@ public class CodCommonHttpClient {
 		return httpsPost(url, null, body, null);
 	}
 
+	public static HttpResponse httpsPost(String url, StringEntity body, Header header) throws IOException, URISyntaxException {
+		return httpsPost(url, null, body, null, new Header[]{header});
+	}
+
 	public static HttpResponse httpsPost(String url, String cookie) throws IOException, URISyntaxException {
 		return httpsPost(url, null, null, cookie);
 	}
@@ -178,6 +215,29 @@ public class CodCommonHttpClient {
 		}
 
 		if (StringUtils.isNotBlank(cookie)){
+			post.addHeader(new BasicHeader("Cookie", cookie));
+		}
+
+		post.setURI(new URI(url));
+		return httpsPost(url, nvps, body, cookie, new Header[]{});
+	}
+
+	public static HttpResponse httpsPost(String url, List<NameValuePair> nvps, StringEntity body, String cookie, Header[] headers) throws URISyntaxException, IOException {
+		HttpPost post = new HttpPost();
+
+		if (nvps != null) {
+			post.setEntity(new UrlEncodedFormEntity(nvps));
+		}
+
+		if (headers.length > 0){
+			post.setHeaders(headers);
+		}
+
+		if (body != null) {
+			post.setEntity(body);
+		}
+
+		if (StringUtils.isNotBlank(cookie)) {
 			post.addHeader(new BasicHeader("Cookie", cookie));
 		}
 
@@ -204,6 +264,7 @@ public class CodCommonHttpClient {
 		try {
 			SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
 				// 信任所有
+				@Override
 				public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
 					return true;
 				}

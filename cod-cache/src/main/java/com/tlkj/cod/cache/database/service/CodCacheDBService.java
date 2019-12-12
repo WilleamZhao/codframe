@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache.database.service;
@@ -19,4 +19,18 @@ package com.tlkj.cod.cache.database.service;
  * @date 2019/2/13 10:50 AM
  */
 public interface CodCacheDBService {
+
+    /**
+     * 获取值
+     * @param key key
+     * @return value
+     */
+    Object get(String key);
+
+    /**
+     * 设置值
+     * @param key   key
+     * @param value value
+     */
+    boolean set(String key, String value);
 }

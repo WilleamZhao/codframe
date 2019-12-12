@@ -5,10 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.message.sms.service;
+
+import com.tlkj.cod.message.model.enums.CodMessageSmsSupportEnum;
+import com.tlkj.cod.message.sms.SmsService;
 
 /**
  * Desc ali短信服务接口
@@ -18,7 +21,7 @@ package com.tlkj.cod.message.sms.service;
  * @className AliSmsService
  * @date 2019/1/29 9:14 PM
  */
-public interface AliSmsService {
+public interface AliSmsService extends SmsService {
 
     /**
      * 发送短信接口
@@ -29,4 +32,8 @@ public interface AliSmsService {
      */
     boolean send(String phone, String code, String signName, String templateCode);
 
+    @Override
+    default String support(){
+        return CodMessageSmsSupportEnum.ALI_SMS.name();
+    }
 }

@@ -5,28 +5,41 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.dao.jdbc;
 
 import com.google.common.base.CaseFormat;
+import com.tlkj.cod.common.CodCommonClass;
 import com.tlkj.cod.common.CodCommonModelConvert;
-import com.tlkj.cod.dao.util.DBConnectionPool;
+import com.tlkj.cod.dao.exception.CodDataModelConvertException;
+import com.tlkj.cod.dao.model.enums.CodDaoDatasourceTypeEnum;
+import com.tlkj.cod.dao.util.CodDaoConnectionPool;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
+import java.beans.PropertyDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 更新工具类
@@ -42,8 +55,82 @@ public class Updater {
 
     private JdbcTemplate jdbcTemplate;
 
+    private Map<String, DataSource> map = new ConcurrentHashMap<>();
+
+    /**
+     * 默认自动提交
+     */
+    private boolean isAutoCommit = true;
+
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    public void init(){
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        // CodDaoConnectionPool.getInstance().getDataSource(CodDaoDatasourceTypeEnum.DEFAULT.name());
+        if (dataSource != null) {
+            this.jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+    }
+
     public Updater() {
 
+    }
+
+    /*public Updater() {
+
+    }*/
+
+    /**
+     * 设置自动提交
+     * @param name 数据源名称
+     */
+    public void setNotAutoCommit(String name){
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
+        try {
+            dataSource.getConnection().setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 设置自动提交
+     */
+    public Updater setNotAutoCommit(){
+        this.isAutoCommit = false;
+        DataSource dataSource = this.getJdbcTemplate().getDataSource();
+        try {
+            dataSource.getConnection().setAutoCommit(isAutoCommit);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+
+
+    /**
+     * 设置数据源
+     * @param name 数据源名称
+     * @return
+     */
+    public Updater to(String name) {
+        return to(CodDaoConnectionPool.getInstance().getDataSource(name));
+    }
+
+    public Updater to(DataSource dataSource) {
+        return new Updater(dataSource);
+    }
+
+    /**
+     * 设置默认数据源
+     * @param name 数据源名称
+     */
+    public Updater toDefault(String name) {
+        this.jdbcTemplate = new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name));
+        return this;
     }
 
     /**
@@ -56,70 +143,147 @@ public class Updater {
         execute("set names " + characterEncoding);
     }
 
-    @Autowired
-    public Updater(DBConnectionPool dbConnectionPool) {
-        jdbcTemplate = new JdbcTemplate(dbConnectionPool.getDataSource());
-    }
-
     public Updater(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public Updater(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    /**
+     * 插入
+     */
     public Update insert(String table) {
+        return new Update(getJdbcTemplate(), 1).from(table);
+    }
+
+    public Update insert(String table, String name) {
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
+        if (dataSource == null){
+            return null;
+        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return new Update(jdbcTemplate, 1).from(table);
     }
 
-
     public Update insert(Object object) {
-        return new Update(jdbcTemplate, 1, object);
+        return new Update(getJdbcTemplate(), 1, object);
     }
 
     public Update insert(String table, Object object) {
-        return new Update(jdbcTemplate, 1, object).from(table);
+        return new Update(getJdbcTemplate(), 1, object).from(table);
     }
 
+    /**
+     * 删除
+     */
     public Update delete(String table) {
+        return new Update(getJdbcTemplate(), 2).from(table);
+    }
+
+    public Update delete(String table, String name) {
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
+        if (dataSource == null){
+            return null;
+        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return new Update(jdbcTemplate, 2).from(table);
     }
 
+    /**
+     * 更新
+     */
     public Update update(String table) {
+        return new Update(getJdbcTemplate(), 0).from(table);
+    }
+
+    public Update update(String table, String name) {
+        DataSource dataSource = CodDaoConnectionPool.getInstance().getDataSource(name);
+        if (dataSource == null){
+            return null;
+        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return new Update(jdbcTemplate, 0).from(table);
     }
 
     public Update update(Object object) {
-        return new Update(jdbcTemplate, 0, object);
+        return new Update(getJdbcTemplate(), 0, object);
     }
 
     public Update update(String table, Object object) {
-        return new Update(jdbcTemplate, 0, object).from(table);
+        return new Update(getJdbcTemplate(), 0, object).from(table);
     }
 
+    /**
+     * 执行更新
+     */
     private int update(String sql, Object[] params) {
-        return this.jdbcTemplate.update(sql, params);
+        return getJdbcTemplate().update(sql, params);
     }
 
     public int update(String sql, Object[] params, Integer[] types) {
-        return this.jdbcTemplate.update(sql, params, types);
+        return getJdbcTemplate().update(sql, params, types);
     }
 
+    /**
+     * 批量更新
+     */
     public int[] batchUpdate(String... sql) {
-        return this.jdbcTemplate.batchUpdate(sql);
+        return getJdbcTemplate().batchUpdate(sql);
     }
 
+    /**
+     * 批量更新
+     */
     public int[] batchUpdate(String sql, List<Object[]> batchArgs){
-        return this.jdbcTemplate.batchUpdate(sql, batchArgs);
+        return getJdbcTemplate().batchUpdate(sql, batchArgs);
     }
 
+    /**
+     * 批量更新
+     */
     public int[] batchUpdate(String sql, BatchPreparedStatementSetter statementSetter){
-        return this.jdbcTemplate.batchUpdate(sql, statementSetter);
+        return getJdbcTemplate().batchUpdate(sql, statementSetter);
     }
 
     public void execute(String sql, PreparedStatementCallback callback) {
-        jdbcTemplate.execute(sql, callback);
+        getJdbcTemplate().execute(sql, callback);
     }
 
     public void execute(String sql) {
-        jdbcTemplate.execute(sql);
+        getJdbcTemplate().execute(sql);
+    }
+
+    /**
+     * 获取默认JDBC模版
+     */
+    private JdbcTemplate getJdbcTemplate() {
+        return getJdbcTemplate("");
+    }
+
+    /**
+     * 获取指定JDBC模版
+     * @param name
+     * @return
+     */
+    private JdbcTemplate getJdbcTemplate(String name) {
+        return StringUtils.isNotBlank(name) ? new JdbcTemplate(CodDaoConnectionPool.getInstance().getDataSource(name)) : jdbcTemplate;
+    }
+
+    /**
+     * TODO 执行文件
+     * 类似Mybatis
+     * @return
+     */
+    public Object executeFile(String url, Map map){
+        try {
+            InputStream in = new FileInputStream(url);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // this.jdbcTemplate.execute();
+        return null;
     }
 
     private static <T> String getTableName(Class<T> klass) {
@@ -509,6 +673,8 @@ public class Updater {
         private Integer rowCount;
         private int prefix;
 
+        private boolean autoCommit = true;
+
         public Update(JdbcTemplate jdbcTemplate, int prefix) {
             this.jdbcTemplate = jdbcTemplate;
             this.prefix = prefix;
@@ -732,12 +898,59 @@ public class Updater {
             return this;
         }
 
+        public Update set(String name, Object value, String typeName) {
+            setName.add(name);
+            setValue.add(setValue(value, typeName));
+            return this;
+        }
+
+        /**
+         * 设置类型
+         * @param o
+         * @param klass
+         * @return
+         */
+        public Update set(Object o, Class klass) {
+            if (!CodCommonModelConvert.class.isAssignableFrom(o.getClass())){
+                // 不是子类
+                return this;
+            }
+            Field[] fields = o.getClass().getDeclaredFields();
+            // 3. 设置值
+            for (Field field : fields) {
+                // 如果是修改, 不设置id
+                if (prefix == 0 && "id".equals(field.getName())){
+                    continue;
+                }
+                // 4. 私有的 && 非static && 非final
+                if (Modifier.isPrivate(field.getModifiers()) && !Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())){
+                    Object value = getFieldValueByName(field.getName(), o);
+                    if (value == null || StringUtils.isBlank(ObjectUtils.toString(value))){
+                        continue;
+                    }
+                    // 获取字段类型 class
+                    Class aClass = field.getType();
+                    set(field.getName(), value, aClass);
+                }
+            }
+            return this;
+        }
+
         /**
          * 框架约定
          * 更新时间
          */
         public Update updateTime(){
             set("update_time", "now()", Void.class);
+            return this;
+        }
+
+        /**
+         * 关闭自动提交
+         * @return
+         */
+        public Update closeAutoCommit(){
+            this.autoCommit = false;
             return this;
         }
 
@@ -750,19 +963,83 @@ public class Updater {
             if (dev) {
                 System.out.println(g.toSQL());
             }
-            return jdbcTemplate.update(g.toSQL(), g.getParameters());
+            int rows = jdbcTemplate.update(g.toSQL(), g.getParameters());
+            /*if (autoCommit){
+                Connection connection = null;
+                try {
+                    connection = getConnection();
+                    connection.commit();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (connection != null) {
+                            connection.close();
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }*/
+            return rows;
+        }
+
+        /**
+         * 提交
+         */
+        public void commit() {
+            try {
+                getConnection().commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException();
+            }
+        }
+
+        /**
+         * 回滚
+         */
+        public void rollback() {
+            try {
+                getConnection().rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException();
+            }
+        }
+
+        /**
+         * 关闭
+         */
+        public void close() {
+            try {
+                getConnection().close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * 获取连接
+         */
+        private Connection getConnection() throws SQLException {
+            return this.jdbcTemplate.getDataSource().getConnection();
+        }
+
+        private String setValue(Object value, Class klass) {
+            return setValue(value, klass != null ? klass.getCanonicalName() : String.class.toString());
         }
 
         /**
          * 设置不同类型sql语句
          *
          * @param value
-         * @param klass
+         * @param klassName
          * @return
          */
-        private String setValue(Object value, Class klass) {
+        private String setValue(Object value, String klassName) {
             String v = null;
-            switch (klass.getCanonicalName()) {
+            switch (klassName) {
                 case "java.lang.String":
                     v = "'" + value + "'";
                     break;
@@ -784,12 +1061,15 @@ public class Updater {
                 case "java.lang.Void":
                     v = value != null ? value.toString() : "";
                     break;
+                case "":
+                    break;
                 default:
                     // v = value != null ? value.toString() : "";
                     break;
             }
             return v;
         }
+
 
         /**
          * 获取属性类型(type)，属性名(name)，属性值(value)的map组成的list
@@ -821,10 +1101,9 @@ public class Updater {
          */
         private Object getFieldValueByName(String fieldName, Object o) {
             try {
-                String firstLetter = fieldName.substring(0, 1).toUpperCase();
-                String getter = "get" + firstLetter + fieldName.substring(1);
-                Method method = o.getClass().getMethod(getter);
-                return method.invoke(o);
+                PropertyDescriptor pd = new PropertyDescriptor(fieldName, o.getClass());
+                Method rM = pd.getReadMethod();
+                return rM.invoke(o);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return null;

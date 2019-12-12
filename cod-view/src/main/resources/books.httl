@@ -1,0 +1,43 @@
+<!--
+  ~ Copyright (c) 2018-2019.
+  ~ sourcod All rights reserved
+  ~
+  ~ author: sourcod
+  ~ github: https://github.com/WilleamZhao
+  ~ site：http://blog.sourcod.com
+  -->
+
+<!--## 定义变量类型，未定义的变量以Object类型处理 -->
+<html>
+<body>
+
+<!--## 定义宏，可当变量或方法执行 -->
+<img alt="${book}" src="${book}" />
+
+<!--## 条件判断 -->
+<table>
+
+    <!--## 循环输出，类型可省，将基于泛型推导 -->
+    <tr>
+
+        <!--## 变量输出 -->
+        <td>${book}</td>
+
+        <!--## 执行宏输出，也可以用${cover} -->
+        <td>${user}</td>
+
+        <!--## 变量赋值，类型可省，将基于表达式推导 -->
+        <!--##set(int price = book.price * book.discount)-->
+        <td>${price}</td>
+    </tr>
+
+    <!--## 条件中断循环 -->
+
+    <!--## 当循环数据为空时执行 -->
+    没有数据。
+</table>
+没有权限。
+没有登录。
+
+</body>
+</html>

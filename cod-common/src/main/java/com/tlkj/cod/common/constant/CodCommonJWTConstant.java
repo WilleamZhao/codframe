@@ -5,13 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.common.constant;
 
 /**
- * Desc
+ * Desc JWT常量
  *
  * @className CodCommonJWTConstant
  *

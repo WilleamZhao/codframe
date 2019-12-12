@@ -43,9 +43,10 @@ build/
 Icon?
 ehthumbs.db
 Thumbs.db
+*.db
 
 # Other
-*.log
+*.codLog
 *.cache
 *.diff
 *.patch
@@ -78,6 +79,5 @@ java.io.tempdir
 java.io.*
 codCache
 deploy
-/cod-package/codframe/
+/qrcode.jpg
 .cod-temp
-

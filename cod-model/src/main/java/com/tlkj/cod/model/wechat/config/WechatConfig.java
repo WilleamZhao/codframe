@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.model.wechat.config;
@@ -45,7 +45,7 @@ public class WechatConfig {
     /**
      * 通知地址
      */
-    @Value("${wechat.pay.notifyUrl:https://api.tianlankeji.com/zdqdp/wechat/pay/notify}")
+    @Value("${wechat.pay.notifyUrl:https://api.sourcod.com/zdqdp/wechat/pay/notify}")
     private String notifyUrl;
 
     public String getAppId() {

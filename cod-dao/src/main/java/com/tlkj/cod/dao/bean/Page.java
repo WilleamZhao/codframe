@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.dao.bean;
@@ -83,6 +83,16 @@ public class Page<T> {
             return false;
         }
         if (page.p.total == 0){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isData(){
+        if (this.p == null){
+            return false;
+        }
+        if (this.p.total == 0){
             return false;
         }
         return true;

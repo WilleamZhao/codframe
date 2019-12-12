@@ -5,13 +5,13 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.security.util;
 
-import com.tlkj.cod.model.enums.PermissionCode;
-import com.tlkj.cod.model.system.dto.CodFramePermissionItemDto;
+import com.tlkj.cod.core.model.dto.CodCorePermissionItemDto;
+import com.tlkj.cod.core.model.enums.PermissionCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,11 +126,11 @@ public class PermissionUtil {
      * @param type          权限类型: 0: 基础权限; 1: 自定义权限;
      * @return 权限列表
      */
-    public static List<CodFramePermissionItemDto> getPermission(int permissionNum, int type){
-        List<CodFramePermissionItemDto> maps = new ArrayList<>();
+    public static List<CodCorePermissionItemDto> getPermission(int permissionNum, int type){
+        List<CodCorePermissionItemDto> maps = new ArrayList<>();
         for (PermissionCode code : PermissionCode.values()){
             if (hasPermission(permissionNum, code.name()) && code.getPermissionType() == type){
-                CodFramePermissionItemDto codFramePermissionDto = new CodFramePermissionItemDto();
+                CodCorePermissionItemDto codFramePermissionDto = new CodCorePermissionItemDto();
                 codFramePermissionDto.setName(code.getPermissionName());
                 codFramePermissionDto.setNum(code.getPermissionNum());
                 codFramePermissionDto.setCode(code.name().toLowerCase());
@@ -146,7 +146,7 @@ public class PermissionUtil {
      * @param permissionNum 权限
      * @return 权限列表
      */
-    public static List<CodFramePermissionItemDto> getPermission(int permissionNum){
+    public static List<CodCorePermissionItemDto> getPermission(int permissionNum){
         return getPermission(permissionNum, 0);
     }
 
@@ -154,7 +154,7 @@ public class PermissionUtil {
      * 获取全部权限
      * @return 权限列表
      */
-    public static List<CodFramePermissionItemDto> getAllPermission(){
+    public static List<CodCorePermissionItemDto> getAllPermission(){
         return getPermission(getMaxPermission());
     }
 
@@ -163,8 +163,8 @@ public class PermissionUtil {
      * 标识已有权限
      * @return 标识后权限
      */
-    public static List<CodFramePermissionItemDto> intersect(List<CodFramePermissionItemDto> bos){
-        for (CodFramePermissionItemDto bo : bos){
+    public static List<CodCorePermissionItemDto> intersect(List<CodCorePermissionItemDto> bos){
+        for (CodCorePermissionItemDto bo : bos){
             if (hasPermission(getMaxPermission(), bo.getNum())){
                 bo.setState(true);
             }
@@ -177,10 +177,10 @@ public class PermissionUtil {
      * @param permissionNum 权限数
      * @return 转换后对象
      */
-    public static List<CodFramePermissionItemDto> convertPermission(int permissionNum){
-        List<CodFramePermissionItemDto> list = new ArrayList<>();
+    public static List<CodCorePermissionItemDto> convertPermission(int permissionNum){
+        List<CodCorePermissionItemDto> list = new ArrayList<>();
         // 获取最大权限
-        for (CodFramePermissionItemDto code : getPermission(getMaxPermission())){
+        for (CodCorePermissionItemDto code : getPermission(getMaxPermission())){
             if (hasPermission(permissionNum, code.getNum())){
                 code.setState(true);
                 list.add(code);

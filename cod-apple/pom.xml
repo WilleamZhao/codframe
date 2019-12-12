@@ -7,7 +7,7 @@
   ~
   ~ author: sourcod
   ~ github: https://github.com/WilleamZhao
-  ~ site：http://codframe.com
+  ~ site：http://codframe.sourcod.com
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -15,9 +15,11 @@
     <parent>
         <artifactId>tlkj.codframe</artifactId>
         <groupId>com.tlkj</groupId>
-        <version>1.0.3</version>
+        <version>1.0.5-SNAPSHOP</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <description>苹果相关模块</description>
 
     <artifactId>cod-apple</artifactId>
 
@@ -37,6 +39,11 @@
             <artifactId>cod-core</artifactId>
             <version>${codframe.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tlkj</groupId>
+            <artifactId>cod-common</artifactId>
+            <version>${codframe.version}</version>
+        </dependency>
     </dependencies>
 
     <distributionManagement>
@@ -51,4 +58,35 @@
             <url>${codframe.nexus.snapshots.url</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!--<plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <version>2.1.1</version>
+                <executions>
+                    <execution>
+                        &lt;!&ndash; 混淆时刻，这里是打包的时候混淆&ndash;&gt;
+                        <phase>package</phase>
+                        <goals>
+                            &lt;!&ndash; 使用插件的什么功能，当然是混淆&ndash;&gt;
+                            <goal>proguard</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+        </plugins>
+    </build>
 </project>

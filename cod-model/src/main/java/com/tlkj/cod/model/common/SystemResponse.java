@@ -5,13 +5,14 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.model.common;
 
 import com.tlkj.cod.model.enums.StatusCode;
 import com.tlkj.cod.model.enums.SystemStatusCode;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
@@ -147,14 +148,35 @@ public class SystemResponse<T> implements Serializable, Cloneable {
      * 失败
      */
     public SystemResponse<T> fail(StatusCode statusCode){
-        return fail(statusCode, null);
+        return fail(statusCode, "", null);
+    }
+
+    /**
+     * 失败
+     */
+    public SystemResponse<T> fail(StatusCode statusCode, String msg){
+        return fail(statusCode, msg, null);
     }
 
     /**
      * 失败
      */
     public SystemResponse<T> fail(StatusCode statusCode, T T){
+        return fail(statusCode, statusCode.getStatusDesc(), T);
+    }
+
+    /**
+     * 失败
+     */
+    public SystemResponse<T> fail(StatusCode statusCode, String msg, T T){
+        return fail(statusCode, statusCode.getStatusName(), msg, T);
+    }
+
+    public SystemResponse<T> fail(StatusCode statusCode, String name, String msg, T T){
         this.statusCode = statusCode;
+        this.msg = msg;
+        this.name = name;
+        this.code = statusCode.getStatusCode();
         this.data = T;
         return this;
     }
@@ -180,9 +202,9 @@ public class SystemResponse<T> implements Serializable, Cloneable {
     public Response<T> toResponse(){
         Response<T> responseData = new Response<>();
         if (this.statusCode != null){
-            responseData.setCode(statusCode.getStatusCode());
-            responseData.setName(statusCode.getStatusName());
-            responseData.setMsg(statusCode.getStatusDesc());
+            responseData.setCode(StringUtils.isBlank(this.code) ? statusCode.getStatusCode() : this.code);
+            responseData.setName(StringUtils.isBlank(this.name) ? statusCode.getStatusName() : this.name);
+            responseData.setMsg(StringUtils.isBlank(this.msg) ? statusCode.getStatusDesc() : this.msg);
             if (this.data != null) {
                 responseData.setData(this.data);
             }

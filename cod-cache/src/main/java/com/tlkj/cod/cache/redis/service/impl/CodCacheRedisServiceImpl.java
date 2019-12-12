@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.cache.redis.service.impl;
@@ -1449,6 +1449,10 @@ public class CodCacheRedisServiceImpl implements CodCacheRedisService, CodCacheM
         }
     }
 
+    @Override
+    public String getSupportType() {
+        return "codCacheRedis";
+    }
 
     /* CodCacheManager-start */
     @Override

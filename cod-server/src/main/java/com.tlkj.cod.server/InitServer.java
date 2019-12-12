@@ -5,23 +5,19 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.server;
 
-import com.tlkj.cod.filter.CorsFilter;
-import com.tlkj.cod.launcher.CodModuleInitialize;
 import com.tlkj.cod.launcher.CodModuleOrderEnum;
-import com.tlkj.cod.launcher.CodServerInitialize;
-import com.tlkj.cod.launcher.model.LauncherModel;
-import com.tlkj.cod.server.model.FilterModel;
-import com.tlkj.cod.server.model.server.CodServerModel;
-import com.tlkj.cod.server.service.CodServer;
-import org.springframework.web.filter.CharacterEncodingFilter;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.tlkj.cod.launcher.init.CodModuleServerInitialize;
+import com.tlkj.cod.launcher.model.CodModuleLauncherModel;
+import com.tlkj.cod.server.facade.CodServerFacade;
+import com.tlkj.cod.server.facade.impl.CodServerFacadeImpl;
+import com.tlkj.cod.server.model.config.CodServerConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Desc 初始化服务
@@ -31,58 +27,47 @@ import java.util.Map;
  * @className InitServer
  * @date 2019/4/28 5:11 PM
  */
-public class InitServer implements CodModuleInitialize, CodServerInitialize {
+public class InitServer implements CodModuleServerInitialize {
 
-    public InitServer(){
-
-    }
+    private static Logger logger = LoggerFactory.getLogger(InitServer.class);
 
     @Override
     public int order() {
         return CodModuleOrderEnum.SERVER.getOrder();
     }
 
+    @Override
+    public String alias() {
+        return "服务";
+    }
 
     @Override
-    public void init(LauncherModel launcherModel) {
-
+    public void success(CodModuleLauncherModel codModuleLauncherModel) {
         // TODO 从配置模块里读取
+        CodServerFacade codServerFacade = codModuleLauncherModel.getBean(CodServerFacadeImpl.class);
+        // CodServerConfig codServerModel = codModuleLauncherModel.getBean(CodServerConfig.class);
+        // codModuleLauncherModel.setData(CodModuleOrderEnum.SERVER.getOrder(), codServerModel, false);
+        codServerFacade.start(codModuleLauncherModel);
+    }
 
-        CodServer codServer = (CodServer) launcherModel.getSpring().getBean("codServerJetty");
-        System.out.println("初始化server");
-        launcherModel.setServer(this.setCodServerDefault());
-        codServer.start(launcherModel);
+    /**
+     * 初始化
+     * order < 0 : null;
+     * @param codModuleLauncherModel 启动引导对象
+     */
+    @Override
+    public void init(CodModuleLauncherModel codModuleLauncherModel) {
+        codModuleLauncherModel.finish();
+    }
+
+    @Override
+    public void fail(CodModuleLauncherModel codModuleLauncherModel, Throwable e) {
+        logger.info("启动服务失败", e);
+        codModuleLauncherModel.stop();
     }
 
     @Override
     public void fail(Throwable e) {
-        System.out.println("启动服务失败");
-        e.printStackTrace();
-    }
 
-    /**
-     * TODO 设置默认配置
-     * @return
-     */
-    private CodServerModel setCodServerDefault(){
-        CodServerModel codServer = new CodServerModel();
-        FilterModel filterModel = new FilterModel();
-        filterModel.setMapping("/*");
-        filterModel.setFilter(new CorsFilter());
-        filterModel.setName("cors");
-        codServer.addFilter(filterModel);
-
-        FilterModel filterModel1 = new FilterModel();
-        filterModel1.setMapping("/*");
-        filterModel1.setFilter(new CharacterEncodingFilter());
-        filterModel1.setName("character");
-
-        Map map = new HashMap();
-        map.put("encoding", "UTF-8");
-        map.put("forceEncoding", "true");
-        filterModel1.setParamList(map);
-
-        codServer.addFilter(filterModel1);
-        return codServer;
     }
 }

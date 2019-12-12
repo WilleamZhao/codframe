@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.config.annotation.aop;
@@ -13,7 +13,6 @@ package com.tlkj.cod.config.annotation.aop;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringValueResolver;
 
 /**
@@ -28,11 +27,13 @@ public class CodConfigValueResolver implements StringValueResolver, BeanFactoryA
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-
+        System.out.println("asdasdasd");
     }
 
     @Override
     public String resolveStringValue(String strVal) {
-        return null;
+        System.out.println("asd");
+        return "asdasd";
     }
+
 }

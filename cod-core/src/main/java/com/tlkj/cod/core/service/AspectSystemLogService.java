@@ -5,7 +5,7 @@
  *
  * author: sourcod
  * github: https://github.com/WilleamZhao
- * site：http://codframe.com
+ * site：http://codframe.sourcod.com
  */
 
 package com.tlkj.cod.core.service;
@@ -17,7 +17,7 @@ import com.tlkj.cod.model.enums.StatusCode;
  *
  * @author sourcod
  * @version 1.0
- * @className LogService
+ * @className CodLogService
  * @date 2018/11/6 下午4:36
  */
 public interface AspectSystemLogService {
