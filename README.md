@@ -51,34 +51,34 @@
    | cod-admin  | 管理模块       |        |
    | cod-apple  | 苹果相关模块       |        |
    | cod-boot  | 启动模块       |  DONE      |
-   | cod-cache   | 缓存模块       |        |
+   | cod-cache   | 缓存模块       |  DONE      |
    | cod-common  | 公共模块       |        |
-   | cod-config  | 配置模块       |        |
-   | cod-core    | 核心模块       |        |
-   | cod-dao     | 数据库操作模块 |        |
-   | cod-data     | 核心数据模块 |        |
+   | cod-config  | 配置模块       | DONE       |
+   | cod-core    | 核心模块       |  DONE      |
+   | cod-dao     | 数据库操作模块 |  DONE      |
+   | cod-data     | 核心数据模块 |   DONE     |
    | cod-email     | 邮件相关模块 |        |
    | cod-file     | 文件相关模块 |        |
-   | cod-facade  | 外部访问模块   |        |
    | cod-filter  | 过滤器模块     |        |
+   | cod-framework-bom  | pom     |  DONE      |
    | cod-http     | http请求模块       |        |
    | cod-i18n     | 国际化模块       |        |
    | cod-launch     | 启动引导模块       |   DONE     |
-   | cod-log     | 日志模块       |        |
+   | cod-log     | 日志模块       |   DONE     |
    | cod-maven     | maven相关模块       |        |
    | cod-message | 消息模块       |        |
-   | cod-model   | model模块      |        |
+   | cod-model   | model模块      |   DONE     |
    | cod-mybatis | mybatis模块   |        |
-   | cod-package | 打包模块   |        |
-   | cod-pay     | 支付模块   |        |
+   | cod-package | 打包模块   |  DONE      |
+   | cod-pay     | 支付模块   |  DONE      |
    | cod-search  | 全文检索模块   |        |
-   | cod-service | 内部访问模块   |        |
+   | cod-service | 内部访问模块   |  DONE      |
    | cod-test | 测试模块   |        |
    | cod-user | 通用业务用户模块   |        |
-   | cod-util    | 工具模块       |        |
-   | cod-video  | 视频相关模块       |        |
+   | cod-util    | 工具模块       |  DONE      |
+   | cod-video  | 视频相关模块       |  DONE      |
    | cod-view  | 视图相关模块       |        |
-   | cod-wechat  | 微信模块       |        |
+   | cod-wechat  | 微信模块       |   DONE     |
    
  * 使用方式
    
