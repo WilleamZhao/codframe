@@ -127,7 +127,7 @@
         <jedis.version>2.9.0</jedis.version>
 
         <!-- configuration -->
-        <yaml.version>1.17</yaml.version>
+        <yaml.version>1.31</yaml.version>
 
         <!-- codFrame框架 -->
         <codframe.version>${project.version}</codframe.version>
