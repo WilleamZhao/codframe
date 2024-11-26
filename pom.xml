@@ -78,7 +78,7 @@
         <jetty.version>9.4.12.v20180830</jetty.version>
 
         <!-- spring -->
-        <spring.version>4.1.6.RELEASE</spring.version>
+        <spring.version>5.2.2.RELEASE</spring.version>
 
         <!-- jsoup -->
         <jsoup.version>1.8.3</jsoup.version>
