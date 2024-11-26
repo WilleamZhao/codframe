@@ -29,7 +29,7 @@
     <properties>
         <zxing.version>3.3.3</zxing.version>
         <oshi.version>3.13.2</oshi.version>
-        <httpclient.version>4.5.3</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <bcprov.version>1.60</bcprov.version>
     </properties>
 
