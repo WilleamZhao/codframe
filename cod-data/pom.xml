@@ -14,7 +14,7 @@
     <description>核心数据模块(内置数据库)</description>
 
     <properties>
-        <h2.version>1.4.197</h2.version>
+        <h2.version>2.1.210</h2.version>
     </properties>
 
     <dependencies>
